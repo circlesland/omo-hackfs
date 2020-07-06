@@ -1,22 +1,33 @@
 <script>
-  export let name;
-  name = "omo earth starter";
+  import OmoButton from "./omo-elements/1-atoms/OmoButton";
+  import OmoHero from "./omo-elements/2-molecules/OmoHero";
+  import OmoImageGrid from "./omo-elements/3-organisms/OmoImageGrid";
+
+  export let hero = {
+    uptitle: "omo earth dapp starter",
+    title: "welcome to the omo dapp builder"
+  };
+  export let button = {
+    text: "Getting Started",
+    design: "btn-secondary btn-xl"
+  };
 </script>
 
 <style>
-  h1 {
-    color: purple;
+  .wrap {
+    @apply p-12;
   }
-
-  .btn-red {
-    @apply bg-red-500 text-white font-bold py-2 px-4 rounded;
-  }
-
-  .btn-red:hover {
-    @apply bg-red-700;
+  .center {
+    @apply flex justify-center;
   }
 </style>
 
-<h1>Hello {name}!</h1>
-<a class="btn-blue" href="/">Button blue</a>
-<a class="btn-red" href="/">Button red</a>
+<OmoHero data={hero} />
+
+<div class="center">
+  <OmoButton data={button} />
+</div>
+
+<div class="wrap">
+  <OmoImageGrid />
+</div>
