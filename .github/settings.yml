@@ -1,0 +1,8 @@
+# Labels: define labels for Issues and Pull Requests
+labels:
+  - name: IDEA
+    color: 13307f
+  - name: KNOWLEDGE
+    color: 13307f
+  - name: PROTOTYPE
+    color: 13307f
