@@ -4,9 +4,8 @@
 
 @tailwind utilities;
 
-
 /** Global styles**/
-
+/* 
 .omo-block+.omo-block {
   @apply mt-4
-}
+} */

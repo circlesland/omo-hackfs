@@ -10,7 +10,8 @@
 
   export let button = {
     text: "Getting Started",
-    design: "btn-secondary btn-xl"
+    design: "btn-secondary btn-xl",
+    link: "/?page=omouser"
   };
 </script>
 

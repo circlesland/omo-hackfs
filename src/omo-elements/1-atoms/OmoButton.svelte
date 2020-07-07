@@ -1,7 +1,8 @@
 <script>
   export let data = {
     text: "button",
-    design: "btn-primary"
+    design: "btn-primary",
+    link: "/"
   };
 </script>
 
@@ -27,4 +28,4 @@
   }
 </style>
 
-<a class={data.design} href="/">{data.text}</a>
+<a class={data.design} href={data.link}>{data.text}</a>
