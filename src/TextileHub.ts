@@ -5,27 +5,28 @@ import * as uuid from "uuid";
 /**
  * Interface to Textile Hub
  */
-export class Textile {
+export class TextileHub {
     private auth: UserAuth | null;
     private threadId: ThreadID;
 
-    private static instance: Textile;
+    private static instance: TextileHub;
 
     private constructor() {
         this.auth = null;
         this.threadId = ThreadID.fromString(process.env.THREADID || '');
     }
 
-    static getInstance() {
+    static getInstance(): TextileHub {
         if (this.instance == null)
-            this.instance = new Textile();
+            this.instance = new TextileHub();
         return this.instance;
     }
 
-    async init(seed: boolean) {
-        var client = await this.getClient();
-        await this.initDB(client, seed);
-        await this.initSubscription(client);
+    async init(seed: boolean): Promise<TextileHub> {
+        // var client = await this.getClient();
+        // await this.initDB(client, seed);
+        // await this.initSubscription(client);
+        return this;
     }
 
     async initDB(client: Client, seed: boolean) {

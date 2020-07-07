@@ -7,6 +7,8 @@ const path = require('path');
 const mode = process.env.NODE_ENV || 'development';
 const prod = mode === 'production';
 
+const { mdsvex } = require('mdsvex')
+
 module.exports = {
 	entry: {
 		bundle: ['./src/index.ts', './src/styles.css']
@@ -15,7 +17,7 @@ module.exports = {
 		alias: {
 			svelte: path.resolve('node_modules', 'svelte')
 		},
-		extensions: ['.mjs', '.tsx', '.ts', '.js', '.svelte'],
+		extensions: ['.mjs', '.tsx', '.ts', '.js', '.svelte', '.svx'],
 		mainFields: ['svelte', 'browser', 'module', 'main']
 	},
 	output: {
@@ -26,13 +28,14 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.svelte$/,
+				test: /.(svelte|html|svx)$/,
 				use: {
 					loader: 'svelte-loader',
 					options: {
 						emitCss: true,
-						hotReload: true
-					}
+						hotReload: true,
+						preprocess: mdsvex()
+					},
 				}
 			},
 			{
