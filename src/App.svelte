@@ -1,23 +1,5 @@
 <script>
-  export let name;
-  name = "omo earth starter";
+  import OmoHome from "./omo-elements/5-pages/OmoHome";
 </script>
 
-<style>
-  h1 {
-    color: purple;
-  }
-
-  .btn-red {
-    @apply bg-red-500 text-white font-bold py-2 px-4 rounded;
-  }
-
-  .btn-red:hover {
-    @apply bg-red-700;
-  }
-</style>
-
-<h1>Hello {name}!</h1>
-<a class="btn-blue" href="/">Button blue</a>
-<a class="btn-red" href="/">Button red</a>
-<a class="btn-blue-foo" href="/">Button red</a>
+<OmoHome />
