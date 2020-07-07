@@ -8,3 +8,4 @@
 </script>
 
 <OmoHero data={hero} />
+<slot />
