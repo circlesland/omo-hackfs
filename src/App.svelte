@@ -20,3 +20,4 @@
 <h1>Hello {name}!</h1>
 <a class="btn-blue" href="/">Button blue</a>
 <a class="btn-red" href="/">Button red</a>
+<a class="btn-blue-foo" href="/">Button red</a>

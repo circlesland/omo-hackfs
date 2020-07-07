@@ -1,7 +1,13 @@
 import App from './App.svelte';
+import { Textile } from './Textile';
 
-const app = new App({
-    target: document.body,
+var app;
+
+var textile = Textile.getInstance();
+textile.init().then(() => {
+    app = new App({
+        target: document.body,
+    });
 });
 
 export default app;

@@ -1,3 +1,6 @@
+const webpack = require("webpack");
+const dotenv = require('dotenv').config({ path: __dirname + '/.env' });
+
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const path = require('path');
 
@@ -53,6 +56,9 @@ module.exports = {
 	plugins: [
 		new ExtractTextPlugin('styles.css', {
 			disable: process.env.NODE_ENV === 'development',
+		}),
+		new webpack.DefinePlugin({
+			"process.env": JSON.stringify(dotenv.parsed)
 		}),
 	],
 	devtool: prod ? false : 'source-map'
