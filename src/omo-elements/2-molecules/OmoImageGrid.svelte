@@ -42,11 +42,11 @@
 
 <style>
   .wrap {
-    @apply py-4 grid grid-cols-6 gap-3;
+    @apply py-4 grid grid-cols-3 gap-3;
   }
 </style>
 
-<div class="wrap">
+<div class="wrap lg:grid-cols-6">
   {#each logos as data, i (data.id)}
     <OmoCard {data} />
   {/each}
