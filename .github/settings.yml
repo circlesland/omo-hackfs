@@ -1,8 +1,22 @@
 # Labels: define labels for Issues and Pull Requests
 labels:
+  - name: DREAM
+    color: 7ecde5
+  - name: WISH (Feature)
+    color: F8D571
+  - name: PAIN (Bug)
+    color: ea444f
+  - name: GOAL
+    color: 2AD78B
+    
   - name: IDEA
-    color: 13307f
-  - name: KNOWLEDGE
     color: 13307f
   - name: PROTOTYPE
     color: 13307f
+  - name: KNOWLEDGE
+    color: 13307f
+  - name: QUESTION
+    color: 13307f
+  - name: TODO
+    color: 13307f
+ 
