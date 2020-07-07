@@ -4,7 +4,7 @@
   import OmoImageGrid from "./../2-molecules/OmoImageGrid";
 
   export let hero = {
-    uptitle: "omo earth dapp starter",
+    uptitle: "omo earth starter template",
     title: "welcome to the omo dapp builder"
   };
 

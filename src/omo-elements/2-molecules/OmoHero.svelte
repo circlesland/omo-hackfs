@@ -1,4 +1,5 @@
 <script>
+  import OmoTitle from "./../1-atoms/OmoTitle";
   export let data = {
     uptitle: "uptitle",
     title: "title",
@@ -17,9 +18,6 @@
   .uptitle {
     @apply text-gray-500 uppercase py-4 text-green-400 font-bold;
   }
-  .title {
-    @apply uppercase text-4xl text-blue-900 mb-1;
-  }
   .subline {
     @apply text-xl text-gray-600 italic font-light tracking-wide mb-6 py-4;
   }
@@ -31,7 +29,8 @@
 <div class="wrap">
   <div class="inside">
     <p class="uptitle">{data.uptitle}</p>
-    <h1 class="title">{data.title}</h1>
+    <OmoTitle title={data.title} />
+    <!-- <h1 class="title">{data.title}</h1> -->
     {#if data.subline}
       <div class="subline">{data.subline}</div>
     {/if}
