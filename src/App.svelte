@@ -3,11 +3,11 @@
   import { onMount } from "svelte";
 
   import OmoHome from "./omo-elements/5-pages/OmoHome";
-  import OmoUser from "./omo-elements/5-pages/OmoUser";
+  import OmoDocs from "./omo-elements/5-pages/OmoDocs";
 
   var router = [
     { route: "?page=home", quant: OmoHome, name: null },
-    { route: "?page=user", quant: OmoUser, name: null }
+    { route: "?page=docs", quant: OmoDocs, name: null }
   ];
 
   onMount(() => {

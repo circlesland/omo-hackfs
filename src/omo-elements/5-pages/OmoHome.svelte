@@ -1,10 +1,10 @@
 <script>
-  import OmoLanding from "./../3-organisms/OmoLanding";
-  import OmoFullPage from "./../4-layouts/OmoFullPage";
+  import OmoFullScreenLayout from "./../4-layouts/OmoFullScreenLayout";
+  import OmoStart from "./../3-organisms/OmoStart";
   import MD from "./../1-atoms/MD";
 </script>
 
-<OmoFullPage>
-  <OmoLanding />
-</OmoFullPage>
-<MD />
+<OmoFullScreenLayout>
+  <OmoStart />
+  <MD />
+</OmoFullScreenLayout>
