@@ -3,9 +3,11 @@
 
   export let card = {
     name: "Omo Sapiens",
-    image: "/",
-    link: "link"
+    image: "/logos/omo.png",
+    link: "/"
   };
 </script>
 
-<OmoCard data={card} />
+<div class="pt-10 h-full bg-gray-100">
+  <OmoCard data={card} />
+</div>

@@ -11,7 +11,7 @@
   export let button = {
     text: "Getting Started",
     design: "btn-secondary btn-xl",
-    link: "/?page=omouser"
+    link: "/?page=docs"
   };
 </script>
 
