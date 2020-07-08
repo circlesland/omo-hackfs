@@ -29,6 +29,7 @@ module.exports = {
 		rules: [
 			{
 				test: /.(svelte|html|svx)$/,
+				exclude: /node_modules/,
 				use: {
 					loader: 'svelte-loader',
 					options: {

@@ -5,6 +5,8 @@
     uptitle: "Odentity",
     title: "Login"
   };
+
+  export let mail;
 </script>
 
 <OmoHero data={hero} />

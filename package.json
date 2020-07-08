@@ -28,9 +28,15 @@
   },
   "dependencies": {
     "@textile/hub": "^0.3.0",
+    "@textile/threads-core": "^0.1.30",
+    "@textile/threads-database": "^0.6.1",
     "@types/json-schema": "^7.0.5",
+    "@types/nodemailer": "^6.4.0",
     "@types/uuid": "^8.0.0",
+    "emailjs": "^3.2.1",
+    "isomorphic-ws": "^4.0.1",
     "json-schema": "^0.2.5",
+    "rxjs": "^6.6.0",
     "uuid": "^8.2.0"
   }
 }
