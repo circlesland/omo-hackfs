@@ -1,0 +1,24 @@
+<script>
+  import { curRoute } from "./../../router.ts";
+  import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
+  import OmoButton from "./../1-atoms/OmoButton.svelte";
+</script>
+
+<style>
+  a {
+    @apply text-primary;
+  }
+</style>
+
+<OmoIconsFA />
+<header class="bg-secondary">
+  <nav class="flex justify-between w-full bg-gray-200 text-primary p-2">
+    <i class="fas fa-arrow-left p-2 hover:bg-secondary" />
+    <div class="justify-center">
+      <a href="/">
+        <img class="h-8" src="/logos/omo.svg" alt="logo" />
+      </a>
+    </div>
+    <i class="fas fa-arrow-right p-2 hover:bg-secondary" />
+  </nav>
+</header>

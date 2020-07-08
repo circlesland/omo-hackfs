@@ -16,7 +16,7 @@ body {
 }
 
 h1 {
-  @apply uppercase text-4xl py-4;
+  @apply uppercase text-4xl py-2;
 }
 
 h2 {

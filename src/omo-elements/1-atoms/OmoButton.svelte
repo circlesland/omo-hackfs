@@ -1,29 +1,32 @@
 <script>
   export let data = {
     text: "button",
-    design: "btn-primary",
+    design: "o-btn-primary",
     link: "/"
   };
 </script>
 
 <style>
-  .btn-primary {
-    @apply bg-blue-800 text-white font-bold py-2 px-4 rounded;
+  .o-btn-primary {
+    @apply bg-primary text-white font-bold py-2 px-4 rounded;
   }
 
-  .btn-secondary {
-    @apply bg-green-500 text-white font-bold py-2 px-4 rounded;
+  .o-btn-secondary {
+    @apply bg-secondary text-white font-bold py-2 px-4 rounded;
   }
 
-  .btn-xl {
+  .o-btn-xl {
     @apply text-xl;
   }
+  .o-btn-sm {
+    @apply py-1 px-3;
+  }
 
-  .btn-primary:hover {
+  .o-btn-primary:hover {
     @apply bg-blue-400;
   }
 
-  .btn-secondary:hover {
+  .o-btn-secondary:hover {
     @apply bg-green-400;
   }
 </style>

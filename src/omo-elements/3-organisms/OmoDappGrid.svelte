@@ -4,9 +4,7 @@
 
   export let hero = {
     uptitle: "My Omo Sapiens Universe",
-    title: "Hello Omo",
-    subline:
-      "Please create first your omo sapiens odentity, by signing up on the odentity dapp to unlock your chat dapp"
+    title: "Welcome Omo"
   };
   export let logos = [
     {

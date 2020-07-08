@@ -10,7 +10,7 @@
   }
   .omo-font-title {
     font-family: OstrichSansHeavy;
-    @apply uppercase text-6xl text-blue-900 mb-1;
+    @apply text-primary uppercase text-6xl mb-1;
   }
 </style>
 

@@ -10,14 +10,8 @@
 
   export let button = {
     text: "Getting Started",
-    design: "btn-secondary btn-xl",
+    design: "o-btn-primary btn-xl",
     link: "/?page=docs"
-  };
-
-  export let login = {
-    text: "Login",
-    design: "btn-primary btn-lg",
-    link: "/?page=omosapiens"
   };
 
   export let logos = [
@@ -58,6 +52,12 @@
       link: "https://www.joincircles.net"
     }
   ];
+
+  export let login = {
+    text: "Login",
+    design: "o-btn-secondary o-btn-sm",
+    link: "/?page=odentity"
+  };
 </script>
 
 <style>
@@ -74,11 +74,9 @@
 <div class="center">
   <OmoButton data={button} />
 </div>
-
 <div class="center">
   <OmoButton data={login} />
 </div>
-
 <div class="wrap">
   <OmoImageGrid {logos} />
 </div>

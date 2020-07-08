@@ -16,7 +16,7 @@
     @apply mx-auto text-center;
   }
   .uptitle {
-    @apply text-gray-500 uppercase py-4 text-green-400 font-bold;
+    @apply text-secondary uppercase pt-4 font-bold;
   }
   .subline {
     @apply text-xl text-gray-600 italic font-light tracking-wide mb-6 py-4;
