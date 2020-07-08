@@ -55,7 +55,7 @@ export class ChatRoom {
         //     }
         // });
         this.room = null;
-        this.bucketaddress = "localhost:8080/?page=chatInvite&invite=";
+        this.bucketaddress = "https://bafzbeiagzbglqm4ibz6hfd4v25kt2yjgjqhq3lq6fgpxmieiqibuhlnpum.textile.space/?page=omochat&invite=";
     }
     async initNew(email: string) {
         await this.initDB();
@@ -65,11 +65,11 @@ export class ChatRoom {
         this.usermail = email;
         if (!this.db) return;
         this.getObservable(this.db, "omoearthchat");
-        this.messageSubscription(this.db, "omoearthchat", () => { })
+        // this.messageSubscription(this.db, "omoearthchat", () => { })
     }
 
-    async initFromInvite(invite: string, email: string) {
-        var json = JSON.parse(invite);
+    async initFromInvite(invite: string) {
+        var json = JSON.parse(atob(invite));
         var dbInfo: DBInfo = {
             key: json.thread,
             addrs: json.addrs
@@ -79,14 +79,15 @@ export class ChatRoom {
         await this.initDB2();
         if (!this.db) return;
         const identity = await Libp2pCryptoIdentity.fromRandom();
+
         await this.db.startFromInfo(identity, dbInfo)
         this.room = await this.createNewRoom("omoearthchat")
 
         // this.threadId = this.db.threadID;
-        this.usermail = email;
+        this.usermail = json.email;
         // if (!this.db) return;
         // this.getObservable(this.db, "omoearthchat");
-        this.messageSubscription(this.db, "omoearthchat", () => { })
+        // this.messageSubscription(this.db, "omoearthchat", () => { })
 
     }
 
@@ -105,6 +106,7 @@ export class ChatRoom {
             key: process.env.USER_API_KEY2 || '',
             secret: process.env.USER_API_SECRET2 || ''
         }
+        console.log(keyInfo);
         this.db = await Database.withKeyInfo(keyInfo, this.threadId.toString());
     }
 
@@ -119,10 +121,10 @@ export class ChatRoom {
         return chat
     }
 
-    async messageSubscription(db: Database, roomname: string, callback: any) {
+    async messageSubscription(roomname: string, callback: any) {
+        if (!this.db) return;
         const filter = `${roomname}.*.0` // filter to our chat room collection
-        db.emitter.on(filter, (values: any, type: any) => {
-            //console.log(values)
+        this.db.emitter.on(filter, (values: any, type: any) => {
             const message: Message = values.event.patch;
             console.log(message.text)
             callback(message);
@@ -136,7 +138,6 @@ export class ChatRoom {
     }
 
     async sendMessage(text: string, author: string) {
-
         const message: Message = {
             _id: '',
             author: author,
@@ -179,7 +180,8 @@ export class ChatRoom {
 
         const serialize = {
             thread,
-            addrs
+            addrs,
+            email
         };
         console.log(JSON.stringify(serialize));
         window['Email'].send({
@@ -189,9 +191,9 @@ export class ChatRoom {
             To: email,
             From: 'team@omo.earth',
             Subject: `${this.usermail} invites you to chat with him @omoearthackfs chatroom`,
-            Body: `Please follow this link <a href="${this.bucketaddress}${JSON.stringify(serialize)}">chat now</a>`
+            Body: `Please follow this link <a target="_blank" href="${this.bucketaddress}${btoa(JSON.stringify(serialize))}">chat now</a>`
         }).then(
-            message => alert(message)
+            // message => alert(message)
         );
 
         // sendmail({

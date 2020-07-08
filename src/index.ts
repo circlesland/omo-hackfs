@@ -4,8 +4,7 @@ import { ChatRoom } from "./Core/Chat";
 
 var app;
 
-window["ChatRoom1"] = new ChatRoom();
-window["ChatRoom2"] = new ChatRoom();
+window["ChatRoom"] = new ChatRoom();
 
 // Quanta.getInstance().init(true).then(quanta => {
 app = new App({
