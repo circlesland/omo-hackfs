@@ -20,6 +20,27 @@
       image: "/logos/chat.svg",
       link: "?page=omochat",
       locked: true
+    },
+    {
+      id: "3",
+      name: "Contacts",
+      image: "/logos/chat.svg",
+      link: "?page=omosapiens",
+      locked: true
+    },
+    {
+      id: "4",
+      name: "Omo Pay",
+      image: "/logos/chat.svg",
+      link: "?page=omopay",
+      locked: true
+    },
+    {
+      id: "5",
+      name: "Handbook",
+      image: "/logos/chat.svg",
+      link: "?page=docs",
+      locked: true
     }
   ];
 </script>

@@ -6,22 +6,32 @@
     {
       icon: "fa-user-circle",
       text: "omo pay",
-      link: ""
+      link: "/?page=omopay",
+      design: "text-blue-400 hover:text-secondary"
     },
     {
       icon: "fa-users",
       text: "contacts",
-      link: ""
+      link: "/?page=omosapiens",
+      design: "text-blue-400 hover:text-secondary"
+    },
+    {
+      icon: "fa-plus",
+      text: "actions",
+      link: "/?page=omoactions",
+      design: "bg-secondary text-white"
     },
     {
       icon: "fa-comments",
       text: "messages",
-      link: "/?page=omochat"
+      link: "/?page=omochat",
+      design: "text-blue-400 hover:text-secondary"
     },
     {
       icon: "fa-home",
       text: "dapps",
-      link: "/?page=omodapps"
+      link: "/?page=omodapps",
+      design: "text-blue-400 hover:text-secondary"
     }
   ];
 </script>
@@ -36,11 +46,11 @@
 <div class="bottomNav fixed bottom-0 w-full">
   <nav class="bottom-0 w-full bg-primary">
     <ul
-      class="flex justify-around md:justify-end items-center text-center
-      opacity-75 font-semibold">
+      class="flex justify-around md:justify-center items-center text-center
+      font-semibold">
       {#each navitems as item}
-        <li>
-          <a href={item.link} class="text-blue-600 hover:text-secondary">
+        <li class={item.design}>
+          <a href={item.link} class={item.design}>
             <div>
               <i class="text-lg fas {item.icon}" />
               <br />

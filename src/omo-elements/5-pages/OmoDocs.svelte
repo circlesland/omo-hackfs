@@ -16,7 +16,7 @@
   const blogs = [
     { text: "Overview", component: Overview },
     { text: "Introduction", component: Introduction },
-    { text: "Omo Sapiens", component: OmoIdentity },
+    { text: "Odentity", component: OmoIdentity },
     { text: "OmoEarthPOC", component: OmoEarthPOC },
     { text: "Design System", component: DesignSystem },
     { text: "Omo Blocks", component: OmoBlocks },

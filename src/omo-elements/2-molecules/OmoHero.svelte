@@ -26,7 +26,7 @@
   }
 </style>
 
-<div class="wrap">
+<div class="wrap w-full bg-gray-100 rounded;">
   <div class="inside">
     <p class="uptitle">{data.uptitle}</p>
     <OmoTitle title={data.title} />

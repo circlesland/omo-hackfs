@@ -12,11 +12,11 @@
 
 <OmoIconsFA />
 <header class="bg-secondary">
-  <nav class="flex justify-between w-full bg-gray-200 text-primary p-2">
+  <nav class="flex justify-between w-full bg-gray-200 text-primary">
     <i class="fas fa-arrow-left p-2 hover:bg-secondary" />
-    <div class="justify-center">
+    <div class="pt-1 justify-center">
       <a href="/">
-        <img class="h-8" src="/logos/omo.svg" alt="logo" />
+        <img class="h-6" src="/logos/omo.svg" alt="logo" />
       </a>
     </div>
     <i class="fas fa-arrow-right p-2 hover:bg-secondary" />
