@@ -10,7 +10,7 @@
 
 <style>
   .wrap {
-    @apply flex flex-col text-center mx-auto py-16;
+    @apply flex flex-col text-center mx-auto py-12;
   }
   .inside {
     @apply mx-auto text-center;

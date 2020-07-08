@@ -1,7 +1,7 @@
 <style>
   .omo-block {
     display: grid;
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 25% 75%;
     height: 100%;
   }
 </style>

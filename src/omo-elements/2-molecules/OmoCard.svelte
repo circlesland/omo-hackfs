@@ -2,7 +2,8 @@
   export let data = {
     name: "name",
     image: "image",
-    link: "link"
+    link: "link",
+    locked: true
   };
 </script>
 
@@ -29,7 +30,11 @@
 
 <div class="wrap">
   <a href={data.link} class="link">
-    <img class="image" src={data.image} alt="image" />
+    {#if data.locked}
+      <img class="image" src="/logos/chat-locked.svg" alt={data.name} />
+    {:else}
+      <img class="image" src={data.image} alt={data.name} />
+    {/if}
     <div class="inside-wrap">
       <h1 class="name">{data.name}</h1>
     </div>
