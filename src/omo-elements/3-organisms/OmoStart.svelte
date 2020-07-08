@@ -2,10 +2,18 @@
   import OmoButton from "./../1-atoms/OmoButton";
   import OmoHero from "./../2-molecules/OmoHero";
   import OmoImageGrid from "./../2-molecules/OmoImageGrid";
+  import OmoBanner from "./../2-molecules/OmoBanner";
+
+  const vision = {
+    title: "share your dreams",
+    subline: "and jump quantum leaps ahead of your time",
+    image: "/images/joyfulwomen.jpg",
+    button: true
+  };
 
   export let hero = {
-    uptitle: "omo earth ",
-    title: "evolving dreams into passionate teams"
+    uptitle: "omo earth",
+    title: "we empower your dreams"
   };
 
   export let button = {
@@ -68,6 +76,8 @@
     @apply flex justify-center py-2;
   }
 </style>
+
+<OmoBanner quant={vision} />
 
 <OmoHero data={hero} />
 
