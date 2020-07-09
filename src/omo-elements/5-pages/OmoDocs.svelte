@@ -1,6 +1,6 @@
 <script>
   import OmoMarkdown from "./../3-organisms/OmoMarkdown";
-  import OmoAsideMainLayout from "./../4-layouts/OmoAsideMainLayout";
+  import OmoLayoutAsideContent from "./../4-layouts/OmoLayoutAsideContent";
 
   import Overview from "./../../omo-docs/Overview.svx";
   import Introduction from "./../../omo-docs/Introduction.svx";
@@ -30,15 +30,15 @@
 
 <style>
   .list {
-    @apply py-4 px-6 bg-gray-100 h-full;
+    @apply py-4 px-6 bg-gray-100;
   }
   .item {
     @apply text-lg;
   }
 </style>
 
-<OmoAsideMainLayout>
-  <div slot="left">
+<OmoLayoutAsideContent>
+  <div slot="aside">
     <ul class="list">
       {#each blogs as blog}
         <li
@@ -49,10 +49,9 @@
       {/each}
     </ul>
   </div>
-
-  <div slot="right">
+  <div slot="content">
     <OmoMarkdown>
       <svelte:component this={selected.component} />
     </OmoMarkdown>
   </div>
-</OmoAsideMainLayout>
+</OmoLayoutAsideContent>

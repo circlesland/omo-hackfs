@@ -1,5 +1,6 @@
 <script>
   import OmoProfileGrid from "./../2-molecules/OmoProfileGrid";
+  import OmoLayoutOverflowY from "./../4-layouts/OmoLayoutOverflowY";
 
   // export let omos = [
   //   {
@@ -30,4 +31,6 @@
   }
 </style>
 
-<OmoProfileGrid logos={omos} />
+<OmoLayoutOverflowY>
+  <OmoProfileGrid logos={omos} />
+</OmoLayoutOverflowY>

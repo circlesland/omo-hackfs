@@ -44,16 +44,31 @@
   console.log(router);
 </script>
 
-<div class="w-full h-full flex flex-col">
-  <div class="flex-none">
+<style>
+  .app {
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 2rem 1fr 4rem;
+  }
+  main {
+    display: grid;
+    grid-template-columns: 1fr;
+    overflow: hidden;
+  }
+</style>
+
+<div class="app">
+  <header>
     <OmoNavTop />
-  </div>
-  <div class="flex-grow h-full overflow-y">
+  </header>
+  <main>
     <svelte:component
       this={router.find(x => x.route == $curRoute).quant}
       {router} />
-  </div>
-  <div class="flex-none">
+  </main>
+  <footer>
     <OmoNavBottom />
-  </div>
+  </footer>
 </div>

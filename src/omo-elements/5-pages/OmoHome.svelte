@@ -1,8 +1,8 @@
 <script>
-  import OmoFullScreenLayout from "./../4-layouts/OmoFullScreenLayout";
+  import OmoLayoutOverflowY from "./../4-layouts/OmoLayoutOverflowY";
   import OmoStart from "./../3-organisms/OmoStart";
 </script>
 
-<OmoFullScreenLayout>
+<OmoLayoutOverflowY>
   <OmoStart />
-</OmoFullScreenLayout>
+</OmoLayoutOverflowY>

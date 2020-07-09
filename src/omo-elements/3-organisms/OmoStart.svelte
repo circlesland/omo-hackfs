@@ -6,7 +6,7 @@
 
   const vision = {
     title: "share your dreams",
-    subline: "and jump quantum leaps ahead of your time",
+    subline: "and jump every year one quantum leap ahead of your time",
     image: "/images/joyfulwomen.jpg",
     button: true
   };

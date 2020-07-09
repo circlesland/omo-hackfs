@@ -1,10 +1,7 @@
-<style>
-  .wrap {
-    @apply px-20 py-16;
-    overflow-y: scroll;
-  }
-</style>
+<script>
+  import OmoLayoutOverflowY from "./../4-layouts/OmoLayoutOverflowY";
+</script>
 
-<div class="wrap">
+<OmoLayoutOverflowY>
   <slot />
-</div>
+</OmoLayoutOverflowY>

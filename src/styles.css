@@ -5,14 +5,10 @@
 @tailwind utilities;
 
 /** Global styles**/
-/* 
-.omo-block+.omo-block {
-  @apply mt-4
-} */
 
 html,
 body {
-  height: 100%;
+  overflow: hidden;
 }
 
 h1 {
