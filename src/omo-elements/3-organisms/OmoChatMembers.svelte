@@ -1,21 +1,29 @@
 <script>
   import { ChatRoom } from "./../../Core/Chat.ts";
-  const users = [
-    { mail: "x@omo.earth", bg: "bg-green-300" },
-    { mail: "y@omo.earth", bg: "bg-blue-300" }
-  ];
+
+  export let users = [];
+
+  fetch("https://randomuser.me/api?results=15")
+    .then(response => response.json())
+    .then(
+      data =>
+        (users = data.results.map(item => {
+          item.amount = Math.floor(Math.random() * 200) - 100;
+          return item;
+        }))
+    );
 
   export let mail;
 </script>
 
-<style>
-  .left {
-    @apply bg-gray-200 h-full;
-  }
-  .item {
-    @apply text-xl;
-  }
-</style>
+<div class="py-6 px-8 text-md">
+  {#each users as user}
+    <div class="flex h-12 mb-4 w-full bg-gray-100">
+      <img src={user.picture.medium} class="h-full w-auto" />
+      <p class="py-3 px-4 rounded w-full">{user.email}</p>
+    </div>
+  {/each}
+</div>
 
 <div class="flex">
   <input
@@ -31,10 +39,4 @@
     class="px-6 bg-green-400 text-gray-800 font-bold p-3 uppercase ">
     Invite
   </button>
-
 </div>
-<ul class="py-6 px-8">
-  {#each users as user}
-    <p class="mb-4 py-2 px-3 rounded {user.bg}">{user.mail}</p>
-  {/each}
-</ul>

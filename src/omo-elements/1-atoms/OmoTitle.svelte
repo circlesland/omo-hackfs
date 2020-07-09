@@ -1,17 +1,14 @@
 <script>
-  export let title = "title";
+  export let data = { title: "title" };
 </script>
 
 <style>
-  @font-face {
-    font-family: "OstrichSansHeavy";
-    font-weight: 500;
-    src: url("/fonts/ostrich/OstrichSansHeavy.woff") format("woff");
-  }
+  @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap");
   .omo-font-title {
-    font-family: OstrichSansHeavy;
-    @apply uppercase text-6xl text-blue-900 mb-1;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 900;
+    @apply uppercase text-primary;
   }
 </style>
 
-<h1 class="omo-font-title">{title}</h1>
+<h1 class="omo-font-title">{data.title}</h1>

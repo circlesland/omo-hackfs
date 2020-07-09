@@ -4,9 +4,7 @@
 
   export let hero = {
     uptitle: "My Omo Sapiens Universe",
-    title: "Hello Omo",
-    subline:
-      "Please create first your omo sapiens odentity, by signing up on the odentity dapp to unlock your chat dapp"
+    title: "Welcome Omo Samuel"
   };
   export let logos = [
     {
@@ -21,6 +19,27 @@
       name: "Omo Chat",
       image: "/logos/chat.svg",
       link: "?page=omochat",
+      locked: true
+    },
+    {
+      id: "3",
+      name: "Contacts",
+      image: "/logos/chat.svg",
+      link: "?page=omosapiens",
+      locked: true
+    },
+    {
+      id: "4",
+      name: "Omo Pay",
+      image: "/logos/chat.svg",
+      link: "?page=omopay",
+      locked: true
+    },
+    {
+      id: "5",
+      name: "Handbook",
+      image: "/logos/chat.svg",
+      link: "?page=docs",
       locked: true
     }
   ];
