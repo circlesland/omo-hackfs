@@ -5,7 +5,7 @@
 
 <style>
   .wrap {
-    @apply p-4 grid gap-3;
+    @apply p-4 grid gap-6;
   }
 </style>
 
