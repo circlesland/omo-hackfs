@@ -4,7 +4,8 @@
 
   export let hero = {
     uptitle: "my balance",
-    title: "624 Ø"
+    title: "624 Ø",
+    bg: "bg-gray-200"
   };
   export let transactions = [];
 

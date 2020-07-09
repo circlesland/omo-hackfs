@@ -23,7 +23,7 @@
   }
 
   .o-btn-primary:hover {
-    @apply bg-blue-400;
+    @apply bg-blue-800;
   }
 
   .o-btn-secondary:hover {

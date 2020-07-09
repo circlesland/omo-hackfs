@@ -1,7 +1,8 @@
 <style>
   .omo-layout {
+    min-height: 100%;
     display: grid;
-    grid-template-columns: 24rem 1fr;
+    grid-template-columns: 20rem 1fr;
     grid-template-rows: 1fr;
   }
   aside {
@@ -9,12 +10,15 @@
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: 1fr;
+    @apply bg-gray-200;
+    overflow: hidden;
   }
   .content {
     min-height: 100%;
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: 1fr;
+    overflow: hidden;
   }
 </style>
 

@@ -30,6 +30,5 @@
         {action.title}
       </div>
     {/each}
-    <div class="pb-16" />
   </div>
 </div>

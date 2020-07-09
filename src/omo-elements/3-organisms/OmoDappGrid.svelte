@@ -4,7 +4,7 @@
 
   export let hero = {
     uptitle: "My Omo Sapiens Universe",
-    title: "Welcome Omo"
+    title: "Welcome Omo Samuel"
   };
   export let logos = [
     {
