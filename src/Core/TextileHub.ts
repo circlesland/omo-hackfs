@@ -1,4 +1,4 @@
-import { Client, ThreadID, createUserAuth, UserAuth } from '@textile/hub';
+import { Client, ThreadID, createUserAuth, UserAuth, KeyInfo, createAPISig } from '@textile/hub';
 import { QuantSchema, AuthorSchema, BookSchema, LibrarySchema } from '../Helper/JsonSchema';
 import * as uuid from "uuid";
 
@@ -6,11 +6,9 @@ import * as uuid from "uuid";
  * Interface to Textile Hub
  */
 export class TextileHub {
-    private auth: UserAuth | null;
     private static instance: TextileHub;
 
     private constructor() {
-        this.auth = null;
     }
 
     static getInstance(): TextileHub {
@@ -20,8 +18,21 @@ export class TextileHub {
     }
 
     async getClient(): Promise<Client> {
-        if (this.auth == null)
-            this.auth = await createUserAuth(process.env.USER_API_KEY || '', process.env.USER_API_SECRET || '');
-        return Client.withUserAuth(this.auth);
+        const auth: KeyInfo = {
+            key: process.env.USER_API_KEY || '',
+            secret: process.env.USER_API_SECRET || ''
+        }
+        // let auth = await createUserAuth(process.env.USER_API_KEY || '', process.env.USER_API_SECRET || '');
+        return Client.withKeyInfo(auth);
+    }
+
+    /**
+ * getAPISig uses helper function to create a new sig
+ * 
+ * seconds (300) time until the sig expires
+ */
+    async getAPISig(seconds: number = 300) {
+        const expiration = new Date(Date.now() + 1000 * seconds)
+        return await createAPISig(process.env.USER_API_SECRET || '', expiration)
     }
 }

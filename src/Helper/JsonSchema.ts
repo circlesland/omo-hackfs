@@ -91,3 +91,65 @@ export const AuthorSchema: JSONSchema7 = {
         }
     },
 };
+
+export const OmoSchema: JSONSchema7 = {
+    $id: "https://example.com/omo.schema.json",
+    $schema: "http://json-schema.org/draft-07/schema#",
+    title: "Omo",
+    type: "object",
+    required: ["_id"],
+    properties: {
+        _id: {
+            type: "string",
+        },
+        name: {
+            type: "string",
+        },
+        profileImage: {
+            type: "string"
+        }
+    },
+};
+export const IdentityProviderSchema: JSONSchema7 = {
+    $id: "https://example.com/identityprovider.schema.json",
+    $schema: "http://json-schema.org/draft-07/schema#",
+    title: "IdentityProvider",
+    type: "object",
+    required: ["_id"],
+    properties: {
+        _id: {
+            type: "string",
+        },
+        omoid: {
+            type: "string",
+        },
+        type: {
+            type: "string",
+        },
+        externalReference: {
+            type: "string"
+        }
+    },
+};
+
+export const LoginRequestSchema: JSONSchema7 = {
+    $id: "https://example.com/loginrequest.schema.json",
+    $schema: "http://json-schema.org/draft-07/schema#",
+    title: "LoginRequest",
+    type: "object",
+    required: ["_id"],
+    properties: {
+        _id: {
+            type: "string",
+        },
+        omoProviderId: {
+            type: "string",
+        },
+        timestamp: {
+            type: "string",
+        },
+        verified: {
+            type: "boolean"
+        },
+    },
+};
