@@ -43,17 +43,9 @@ export class ChatRoom {
     room: Collection<Message> | null;
 
     constructor() {
-        // this.threadId = ThreadID.fromString(process.env.QUANTATHREAD || '');
         this.threadId = ThreadID.fromRandom();
         this.db = null;
         this.usermail = '';
-        // this.transporter = nodemailer.createTransport({
-        //     service: process.env.SMTPHOST,
-        //     auth: {
-        //         user: process.env.SMTPUSER,
-        //         pass: process.env.SMTPPASSWORD
-        //     }
-        // });
         this.room = null;
         this.bucketaddress = "https://bafzbeiagzbglqm4ibz6hfd4v25kt2yjgjqhq3lq6fgpxmieiqibuhlnpum.textile.space/?page=omochat&invite=";
     }

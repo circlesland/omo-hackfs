@@ -1,4 +1,5 @@
 <script>
+  import MagicLogin from "./omo-elements/5-pages/MagicLogin.svelte";
   import { curId, curRoute } from "./Router.ts";
   import { onMount } from "svelte";
 
@@ -13,7 +14,8 @@
     { route: "?page=docs", quant: OmoDocs, name: null },
     { route: "?page=omosapiens", quant: OmoSapiens, name: null },
     { route: "?page=omochat", quant: OmoChat, name: null },
-    { route: "?page=odentity", quant: Odentity, name: null }
+    { route: "?page=odentity", quant: Odentity, name: null },
+    { route: "?page=magicLogin", quant: MagicLogin, name: null }
   ];
 
   onMount(() => {
