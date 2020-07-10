@@ -2,10 +2,17 @@
   import OmoImageGrid from "./../2-molecules/OmoImageGrid";
   import OmoHero from "./../2-molecules/OmoHero";
 
-  export let hero = {
+  let omo = { _id: "adgadf" };
+
+  store.odentity.currentOmo().then(o => {
+    omo = o;
+  });
+
+  $: hero = {
     uptitle: "My Omo Sapiens Universe",
-    title: "Welcome Omo Samuel"
+    title: `Welcome Omo ${omo.firstname ? omo.firstname : omo._id}`
   };
+
   export let logos = [
     {
       id: "1",

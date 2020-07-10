@@ -22,7 +22,3 @@
 </style>
 
 <OmoBanner quant={vision} />
-
-<div class="wrap">
-  <OmoButton data={login} />
-</div>

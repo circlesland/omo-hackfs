@@ -15,6 +15,14 @@
   import OmoNavTop from "./omo-elements/2-molecules/OmoNavTop";
   import OmoNavBottom from "./omo-elements/2-molecules/OmoNavBottom";
 
+  import OmoButton from "./omo-elements/1-atoms/OmoButton";
+
+  export let login = {
+    text: "Test Login",
+    design: "o-btn-primary o-btn-xl uppercase w-1/2 text-center",
+    link: "/?page=omoauth"
+  };
+
   var router = [
     { route: "?page=home", quant: OmoHome, name: null },
     { route: "?page=docs", quant: OmoDocs, name: null },
@@ -69,7 +77,6 @@
 <div class="app">
   <header>
     <OmoNavTop />
-    {JSON.stringify(omo)}
   </header>
   <main>
     <svelte:component
@@ -77,6 +84,10 @@
       {router} />
   </main>
   <footer>
-    <OmoNavBottom />
+    {#if omo != null}
+      <OmoNavBottom />
+    {:else}
+      <OmoButton data={login} />
+    {/if}
   </footer>
 </div>

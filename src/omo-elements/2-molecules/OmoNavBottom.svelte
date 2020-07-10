@@ -18,7 +18,7 @@
     {
       icon: "fa-plus",
       text: "actions",
-      link: "/?page=omoactions",
+      link: "javascript:store.odentity.logout()",
       design: "bg-secondary text-white"
     },
     {

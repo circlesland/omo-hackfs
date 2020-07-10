@@ -5,11 +5,6 @@
 
   export let steps = [
     {
-      sort: "0",
-      title: "Welcome",
-      locked: false
-    },
-    {
       sort: "1",
       title: "Add first name",
       locked: false
@@ -66,10 +61,18 @@
 
   export let hero = {
     uptitle: "Welcome",
-    title: "Hello, I am Mama Omo",
+    title: "What is your name",
     subline:
       "I am here to assist you in growing your passions and building your dreamteams"
   };
+
+  export let firstname = "";
+
+  async function saveFirstname() {
+    var omo = await store.odentity.currentOmo();
+    omo.firstname = firstname;
+    await store.odentity.updateOmo(omo);
+  }
 </script>
 
 <style>
@@ -152,15 +155,15 @@
   <div class="content-bottom">
     <div class="flex">
       <input
+        bind:value={firstname}
         class="w-full p-3 border-t mr-0 border-b border-l text-gray-800
         border-gray-200 bg-white"
         placeholder="placeholder" />
-      <a href="?page=omodapps">
-        <button
-          class="px-6 bg-green-400 text-gray-800 font-bold p-3 uppercase ">
-          next
-        </button>
-      </a>
+      <button
+        on:click={saveFirstname}
+        class="px-6 bg-green-400 text-gray-800 font-bold p-3 uppercase ">
+        save
+      </button>
     </div>
   </div>
 </div>
