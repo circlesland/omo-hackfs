@@ -5,6 +5,16 @@
     title: "Omo Auth"
   };
   export let mail;
+  function login() {
+    loading = true;
+    store.odentity.login(mail, "email", async it => {
+      var omo = await store.odentity.currentOmo();
+      if (omo != null) window.location = "/?page=odentity";
+      else alert("something went wrong");
+      loading = false;
+    });
+  }
+  export let loading = false;
 </script>
 
 <style>
@@ -19,20 +29,24 @@
 <div class="omo-auth flex flex-col justify-center items-center w-1/2 mx-auto">
   <div class="-mt-32">
     <OmoHero data={hero} />
-    <div class="flex">
-      <input
-        class="w-full p-3 border-t mr-0 border-b border-l text-gray-800
-        border-gray-200 bg-white"
-        placeholder="enter your mail" />
-      <a href="?page=odentity">
-        <button class="px-6 bg-green-400 text-gray-800 font-bold p-3 uppercase">
+    {#if !loading}
+      <div class="flex">
+        <input
+          bind:value={mail}
+          class="w-full p-3 border-t mr-0 border-b border-l text-gray-800
+          border-gray-200 bg-white"
+          placeholder="enter your mail" />
+        <button
+          on:click={login}
+          class="px-6 bg-green-400 text-gray-800 font-bold p-3 uppercase">
           login
         </button>
-      </a>
-    </div>
-    <p class="text-gray-400 hover:text-secondary text-center mt-2">
-      change auth provider
-    </p>
-
+      </div>
+      <p class="text-gray-400 hover:text-secondary text-center mt-2">
+        change auth provider
+      </p>
+    {:else}
+      <p>loading...</p>
+    {/if}
   </div>
 </div>

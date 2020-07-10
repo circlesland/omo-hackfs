@@ -1,4 +1,3 @@
-import * as uuid from "uuid";
 import { Instance } from "@textile/threads-store";
 
 export class Omo implements Instance {
@@ -7,6 +6,6 @@ export class Omo implements Instance {
     profileImage?: string;
 
     constructor() {
-        this._id = uuid.v4();
+        this._id = '';
     }
 }

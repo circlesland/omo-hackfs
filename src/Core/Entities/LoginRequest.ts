@@ -1,4 +1,3 @@
-import * as uuid from "uuid";
 import { Instance } from "@textile/threads-store";
 
 export class LoginRequest implements Instance {
@@ -8,7 +7,7 @@ export class LoginRequest implements Instance {
     verified: boolean;
 
     constructor() {
-        this._id = uuid.v4();
+        this._id = '';
         this.verified = false;
     }
 }
