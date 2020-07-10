@@ -4,14 +4,8 @@
 
   const vision = {
     title: "we invest in your dreams",
-    subline: "COMING SOON (alpha test now)",
+    subline: "grow with us your passions like nature",
     image: "/images/joyfulwomen.jpg"
-  };
-
-  export let login = {
-    text: "Test Login",
-    design: "o-btn-primary o-btn-xl uppercase w-1/2 text-center",
-    link: "/?page=omoauth"
   };
 </script>
 

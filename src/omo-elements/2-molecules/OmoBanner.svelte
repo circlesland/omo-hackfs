@@ -14,20 +14,25 @@
   .omo-font-title {
     font-family: "Montserrat", sans-serif;
     font-weight: 900;
-    @apply uppercase text-6xl text-white;
+    @apply uppercase text-secondary;
   }
 </style>
 
 <div
-  class="bg-cover bg-center rounded h-auto text-white py-48 px-16 object-fill"
+  class="bg-cover bg-center h-auto text-white py-48 px-16 object-fill"
   style="background-image: url({quant.image})">
-  <div class="md:w-2/3 m-auto text-center px-16 py-8 rounded">
+  <div
+    class="md:w-2/3 m-auto text-center px-16 py-8"
+    style="background-color: rgba(11, 42, 77, 0.5);">
     <!-- <p class="text-gray-300 text-s uppercase text-green-400 font-bold">
       {quant.uptitle}
     </p> -->
-    <h1 class="omo-font-title">{quant.title}</h1>
+    <h1 class="omo-font-title text-4xl md:text-5xl lg:text-6xl">
+      {quant.title}
+    </h1>
     <p
-      class="font-light font-sans tracking-wide font-bold text-3xl text-gray-400">
+      class="font-light font-sans tracking-wide text-2xl md:text-3xl lg:text-4xl
+      text-white">
       {quant.subline}
     </p>
   </div>

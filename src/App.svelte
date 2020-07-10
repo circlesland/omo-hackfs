@@ -18,8 +18,8 @@
   import OmoButton from "./omo-elements/1-atoms/OmoButton";
 
   export let login = {
-    text: "Test Login",
-    design: "o-btn-primary o-btn-xl uppercase w-1/2 text-center",
+    text: "Login (alpha test)",
+    design: "o-btn-secondary w-full h-16 o-btn-2xl uppercase w-1/2 text-center",
     link: "/?page=omoauth"
   };
 
@@ -87,7 +87,9 @@
     {#if omo != null}
       <OmoNavBottom />
     {:else}
-      <OmoButton data={login} />
+      <div class="flex justify-content bg-primary mx-auto">
+        <OmoButton data={login} />
+      </div>
     {/if}
   </footer>
 </div>
