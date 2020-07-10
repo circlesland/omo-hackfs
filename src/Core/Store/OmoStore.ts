@@ -1,10 +1,4 @@
-import LevelDatastore from "datastore-level";
-import { Collection, Database, JSONSchema } from "@textile/threads-database";
-import { BookSchema } from "../../Helper/JsonSchema";
-import { ThreadID, KeyInfo, createUserAuth } from "@textile/hub";
-import { Instance, Op, Update } from "@textile/threads-store";
 import { OdentityStore } from "./OdentityStore";
-import Client, { DBInfo } from "@textile/threads-client";
 import { TextileHub } from "../TextileHub";
 
 /**
