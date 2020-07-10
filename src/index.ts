@@ -7,12 +7,17 @@ import { TextileHub } from "./Core/TextileHub";
 var app;
 
 window["ChatRoom"] = new ChatRoom();
-OmoStore.getInstance().init().then(() => {
+OmoStore.getInstance().then(async (store) => {
+
+  window['store'] = store;
+  window['hub'] = TextileHub.getInstance();
   app = new App({
     target: document.body,
+    props: {
+      omo: await store.odentity.currentOmo()
+    }
   });
 });
 
-window['store'] = OmoStore.getInstance();
-window['hub'] = TextileHub.getInstance();
+
 export default app;

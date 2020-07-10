@@ -46,7 +46,9 @@
   function handlerBackNavigation(event) {
     curRoute.set(event.state.path);
   }
-  console.log(router);
+  export let omo;
+
+  if (omo == null) curRoute.set("?page=home");
 </script>
 
 <style>
@@ -67,6 +69,7 @@
 <div class="app">
   <header>
     <OmoNavTop />
+    {JSON.stringify(omo)}
   </header>
   <main>
     <svelte:component

@@ -1,4 +1,3 @@
-import * as uuid from "uuid";
 import { Instance } from "@textile/threads-store";
 
 export class IdentityProvider implements Instance {
@@ -8,6 +7,6 @@ export class IdentityProvider implements Instance {
     externalReference?: string;
 
     constructor() {
-        this._id = uuid.v4();
+        this._id = '';
     }
 }
