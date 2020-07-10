@@ -3,59 +3,48 @@
   import OmoProgressBar from "./../2-molecules/OmoProgressBar";
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
 
-  export let steps = [
+  export let data = [
     {
-      sort: "1",
-      title: "Add first name",
-      locked: false
+      title: "Odentity",
+      level: 2,
+      steps: [
+        {
+          title: "Add first 9",
+          locked: false,
+          step: 9
+        },
+        {
+          title: "Add last 4",
+          locked: false,
+          step: 4
+        },
+        {
+          title: "Add last 1",
+          locked: false,
+          step: 1
+        },
+        {
+          title: "Add last 2",
+          locked: false,
+          step: 2
+        }
+      ]
     },
     {
-      sort: "2",
-      title: "Add last name",
-      locked: false
-    },
-    {
-      sort: "3",
-      title: "Add image",
-      locked: false
-    },
-    {
-      sort: "4",
-      title: "Add birthday",
-      locked: true
-    },
-    {
-      sort: "5",
-      title: "Add address",
-      locked: true
-    }
-  ];
-
-  export let auth = [
-    {
-      sort: "1",
-      title: "OmoEarthAuth Email",
-      locked: false
-    },
-    {
-      sort: "1",
-      title: "Circles Wallet",
-      locked: true
-    },
-    {
-      sort: "1",
-      title: "Github",
-      locked: true
-    },
-    {
-      sort: "1",
-      title: "Github",
-      locked: true
-    },
-    {
-      sort: "1",
-      title: "Github",
-      locked: true
+      title: "Omo Auth",
+      level: 1,
+      steps: [
+        {
+          title: "OmoEarthAuth Email",
+          locked: false,
+          step: 1
+        },
+        {
+          title: "Circles Wallet",
+          locked: true,
+          step: 2
+        }
+      ]
     }
   ];
 
@@ -105,42 +94,40 @@
 <div class="omo-layout">
   <div class="aside">
     <div class="omo-left py-6 px-8 text-md">
-      <p class="uppercase text-md font-bold text-gray-600">MY ODENTITY</p>
-      {#each steps as step}
-        {#if step.locked}
-          <div
-            class="flex flex-col justify-center bg-gray-300 h-12 mb-4 w-full">
-            <div class="text-center">
-              <i class="fas fa-lock text-gray-500" />
+
+      {#each data.sort((first, second) => {
+        if (first.level < second.level) return -1;
+        if (first.level > second.level) return 1;
+        return 0;
+      }) as level, i}
+        <p class="uppercase text-md font-bold text-gray-600">
+          {level.level}. {level.title}
+        </p>
+        {#each level.steps.sort((first, second) => {
+          if (first.step < second.step) return -1;
+          if (first.step > second.step) return 1;
+          return 0;
+        }) as step, i}
+          {#if step.locked}
+            <div
+              class="flex flex-col justify-center bg-gray-300 h-12 mb-4 w-full">
+              <div class="text-center">
+                <i class="fas fa-lock text-gray-500" />
+              </div>
             </div>
-          </div>
-        {:else}
-          <div class="flex h-12 mb-4 w-full bg-gray-100 hover:bg-secondary">
-            <p class="py-2 px-4 text-xl font-bold text-primary">{step.sort}</p>
-            <p class="py-3 px-4 rounded w-full">{step.title}</p>
-          </div>
-        {/if}
-      {/each}
-      <p class="uppercase text-md font-bold mt-8 text-gray-600">
-        AUTHENTICATIONS
-      </p>
-      {#each auth as step}
-        {#if step.locked}
-          <div
-            class="flex flex-col justify-center bg-gray-300 h-12 mb-4 w-full">
-            <div class="text-center">
-              <i class="fas fa-lock text-gray-500" />
+          {:else}
+            <div class="flex h-12 mb-4 w-full bg-gray-100 hover:bg-secondary">
+              <p class="py-2 px-4 text-xl font-bold text-primary">
+                {step.step}
+              </p>
+              <p class="py-3 px-4 rounded w-full">{step.title}</p>
             </div>
-          </div>
-        {:else}
-          <div class="flex h-12 mb-4 w-full bg-gray-100 hover:bg-secondary">
-            <p class="py-2 px-4 text-xl font-bold text-primary">{step.sort}</p>
-            <p class="py-3 px-4 rounded w-full">{step.title}</p>
-          </div>
-        {/if}
+          {/if}
+        {/each}
       {/each}
     </div>
   </div>
+
   <div class="content-top">
     <OmoProgressBar />
   </div>
