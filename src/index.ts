@@ -1,20 +1,24 @@
 import App from "./App.svelte";
-import { Quanta } from "./Core/Quanta";
 import { ChatRoom } from "./Core/Chat";
-import { OmoStore } from "./Core/Store/OmoStore";
-import { TextileHub } from "./Core/TextileHub";
+import { OmoCore } from "./Core/OmoCore";
+import { subscribe, parse, ExecutionResult } from "graphql";
 
 var app;
 
 window["ChatRoom"] = new ChatRoom();
-OmoStore.getInstance().then(async (store) => {
-
-  window['store'] = store;
-  window['hub'] = TextileHub.getInstance();
+OmoCore.load().then(async (o) => {
+  window['omo'] = o;
+  window['o'] = o;
+  window["subscribe"] = async (query) =>
+    (await subscribe({
+      schema: o.graphql.getSchema(),
+      document: parse(query),
+      rootValue: "data",
+    })) as AsyncIterableIterator<ExecutionResult>;
   app = new App({
     target: document.body,
     props: {
-      omo: await store.odentity.currentOmo()
+      omo: await o.store.odentity.currentOmo()
     }
   });
 });

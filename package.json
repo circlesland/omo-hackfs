@@ -35,8 +35,11 @@
     "@types/nodemailer": "^6.4.0",
     "@types/uuid": "^8.0.0",
     "emailjs": "^3.2.1",
+    "graphql": "^15.3.0",
+    "graphql-subscriptions": "^1.1.0",
     "isomorphic-ws": "^4.0.1",
     "json-schema": "^0.2.5",
+    "pluralize": "^8.0.0",
     "rxjs": "^6.6.0",
     "uuid": "^8.2.0"
   }
