@@ -3,12 +3,8 @@
   import OmoVideo from "./../2-molecules/OmoVideo";
   import OmoProfilePage from "./../2-molecules/OmoProfilePage";
 
-  import OmoProgressBar from "./../2-molecules/OmoProgressBar";
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
 
-  export let progressbar = {
-    height: "h-4"
-  };
   export let data = [
     {
       type: "leap",
@@ -475,10 +471,9 @@
   .omo-layout {
     display: grid;
     grid-template-areas:
-      "aside content-top"
       "aside content-center";
     grid-template-columns: 24rem 1fr;
-    grid-template-rows: 0.5rem 1fr;
+    grid-template-rows: 1fr;
     overflow: hidden;
   }
   .aside {
@@ -544,9 +539,6 @@
     </div>
   </div>
 
-  <div class="content-top">
-    <OmoProgressBar style={progressbar} />
-  </div>
   <div class="content-center">
     <OmoVideo />
     <OmoProfilePage />

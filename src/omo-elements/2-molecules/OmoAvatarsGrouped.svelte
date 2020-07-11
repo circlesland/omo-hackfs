@@ -17,13 +17,26 @@
         "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
     }
   ];
+
+  export let omodreamers = [];
+
+  fetch("https://randomuser.me/api?results=8")
+    .then(response => response.json())
+    .then(
+      data =>
+        (omodreamers = data.results.map((item, i) => {
+          item.profile = item.picture.large;
+          return item;
+        }))
+    );
 </script>
 
-<div class="flex overflow-hidden p-8 bg-gray-200">
-  {#each data as user}
+<div class="flex overflow-hidden p-8 bg-gray-200 pl-16">
+  {#each omodreamers as dreamer}
     <img
-      class="inline-block h-16 w-16 rounded-full text-white shadow-solid"
-      src={user.image}
+      class="inline-block border-white border-4 -ml-3 h-20 w-20 rounded-full
+      text-white shadow-solid"
+      src={dreamer.profile}
       alt="" />
   {/each}
 </div>

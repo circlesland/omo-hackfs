@@ -22,7 +22,7 @@
 </script>
 
 <div class="relative">
-  <div class="overflow-hidden {style.height} mb-4 text-xs flex bg-gray-100">
+  <div class="overflow-hidden {style.height} text-xs flex bg-gray-100">
     {#each progress as p}
       <div
         class="{p.style} shadow-none flex flex-col text-center whitespace-nowrap

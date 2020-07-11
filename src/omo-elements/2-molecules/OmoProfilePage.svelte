@@ -1,5 +1,11 @@
 <script>
   import OmoAvatarsGrouped from "./../2-molecules/OmoAvatarsGrouped";
+  import OmoProgressBar from "./../2-molecules/OmoProgressBar";
+
+  export let progressbar = {
+    height: "h-6"
+  };
+
   export let city = {};
 
   fetch("https://randomuser.me/api")
@@ -12,42 +18,59 @@
     <div class="container mx-auto px-12">
       <div
         class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6
-        shadow-xl rounded-lg -mt-32">
-        <div
-          class="px-6 flex flex-wrap justify-between bg-primary text-secondary">
-          <div class="w-full lg:order-1 ">
-            <div class="flex py-4 lg:pt-4 pt-8">
-              <div class="mr-4 p-3 text-center">
-                <span
-                  class="text-2xl font-bold block uppercase tracking-wide
-                  text-white">
-                  10 / 13
+        shadow-xl rounded-lg -mt-40">
+        <div class="w-full px-6 bg-primary text-secondary">
+          <div class="flex py-4 flex-wrap justify-center lg:pt-4 pt-8">
+            <div class="mr-4 p-3 text-center">
+              <span
+                class="text-2xl font-bold block uppercase tracking-wide
+                text-white">
+                10
+                <span class="text-blue-500">
+                  /
+                  <span class="text-md">13</span>
                 </span>
-                <span class="text-sm uppercase text-blue-600">
-                  Omo Dreamers
-                </span>
-              </div>
-              <div class="mr-4 p-3 text-center">
-                <span
-                  class="text-2xl font-bold block uppercase tracking-wide
-                  text-white">
-                  4 / 28
-                </span>
-                <span class="text-sm uppercase text-blue-600">
-                  Campaign Days
-                </span>
-              </div>
-              <div class="lg:mr-4 p-3 text-center">
-                <span
-                  class="text-2xl font-bold block uppercase tracking-wide
-                  text-white">
-                  Ø 28 / Ø 91
-                </span>
-                <span class="text-sm uppercase text-blue-600">
-                  Weekly Funding
-                </span>
-              </div>
+              </span>
+              <span class="text-sm uppercase text-blue-500 font-bold">
+                Omo Dreamers
+              </span>
             </div>
+            <div class="mr-4 p-3 text-center">
+              <span
+                class="text-2xl font-bold block uppercase tracking-wide
+                text-white">
+                4
+                <span class="text-blue-500">
+                  /
+                  <span class="text-md">28</span>
+                </span>
+              </span>
+              <span class="text-sm uppercase text-blue-500 font-bold">
+                Campaign Days
+              </span>
+            </div>
+            <div class="lg:mr-4 p-3 text-center">
+              <span
+                class="text-2xl font-bold block uppercase tracking-wide
+                text-white">
+                Ø 28
+                <span class="text-blue-500">
+                  /
+                  <span class="text-md">Ø 91</span>
+                </span>
+              </span>
+              <span class="text-sm uppercase text-blue-600 font-bold">
+                Funding Goal
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="relative border-t-2 border-b-2 border-white">
+          <div class="overflow-hidden h-8 text-xs flex bg-gray-200">
+            <div
+              style="width: {8 * 7.69}%"
+              class="shadow-none flex flex-col text-center whitespace-nowrap
+              text-white justify-center bg-secondary" />
           </div>
         </div>
         <OmoAvatarsGrouped />
