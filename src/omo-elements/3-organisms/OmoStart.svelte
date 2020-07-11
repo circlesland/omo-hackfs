@@ -5,7 +5,7 @@
   const vision = {
     title: "seed your dreams",
     subline:
-      "and grow your passions like nature while investing in the emerging universal basic income economy of tomorrow",
+      "and grow your passions like nature while empowering the emerging universal basic income economy of tomorrow",
     image: "/images/joyfulwomen.jpg"
   };
 </script>

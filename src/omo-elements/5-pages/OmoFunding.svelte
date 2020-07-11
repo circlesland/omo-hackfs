@@ -1,8 +1,14 @@
 <script>
   import OmoHero from "./../2-molecules/Omohero";
+  import OmoVideo from "./../2-molecules/OmoVideo";
+  import OmoProfilePage from "./../2-molecules/OmoProfilePage";
+
   import OmoProgressBar from "./../2-molecules/OmoProgressBar";
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
 
+  export let progressbar = {
+    height: "h-4"
+  };
   export let data = [
     {
       type: "leap",
@@ -456,13 +462,6 @@
     }
   ];
 
-  export let hero = {
-    uptitle: "Welcome",
-    title: "What is your name",
-    subline:
-      "I am here to assist you in growing your passions and building your dreamteams"
-  };
-
   export let firstname = "";
 
   async function saveFirstname() {
@@ -477,10 +476,9 @@
     display: grid;
     grid-template-areas:
       "aside content-top"
-      "aside content-center"
-      "aside content-bottom";
+      "aside content-center";
     grid-template-columns: 24rem 1fr;
-    grid-template-rows: 1rem 1fr 3rem;
+    grid-template-rows: 0.5rem 1fr;
     overflow: hidden;
   }
   .aside {
@@ -493,9 +491,7 @@
   }
   .content-center {
     grid-area: content-center;
-  }
-  .content-bottom {
-    grid-area: content-bottom;
+    overflow-x: scroll;
   }
 </style>
 
@@ -549,28 +545,11 @@
   </div>
 
   <div class="content-top">
-    <OmoProgressBar />
+    <OmoProgressBar style={progressbar} />
   </div>
   <div class="content-center">
-    <div class="h-full flex flex-col justify-center">
-      <div class="text-center">
-        <OmoHero data={hero} />
-        <p class="text-gray-400 hover:text-secondary">skip</p>
-      </div>
-    </div>
+    <OmoVideo />
+    <OmoProfilePage />
   </div>
-  <div class="content-bottom">
-    <div class="flex">
-      <input
-        bind:value={firstname}
-        class="w-full p-3 border-t mr-0 border-b border-l text-gray-800
-        border-gray-200 bg-white"
-        placeholder="placeholder" />
-      <button
-        on:click={saveFirstname}
-        class="px-6 bg-green-400 text-gray-800 font-bold p-3 uppercase ">
-        save
-      </button>
-    </div>
-  </div>
+
 </div>

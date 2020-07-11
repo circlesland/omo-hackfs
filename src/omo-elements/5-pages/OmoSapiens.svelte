@@ -17,9 +17,7 @@
               item.first = item.name.first;
               item.last = item.name.last;
               item.profile = item.picture.large;
-              item.image = `https://source.unsplash.com/random?sig=${Math.floor(
-                Math.random() * 100
-              )}`;
+              item.image = `https://source.unsplash.com/featured/?${item.location.city},city`;
               item.follower = Math.floor(Math.random() * 12 + 1);
               item.dream = texts[i + 1].replace("</p>", "");
               return item;

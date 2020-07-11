@@ -7,13 +7,13 @@
       icon: "fa-user-circle",
       text: "omo pay",
       link: "/?page=omopay",
-      design: "text-blue-400 hover:text-secondary"
+      design: "text-blue-600 hover:text-secondary"
     },
     {
       icon: "fa-users",
       text: "contacts",
       link: "/?page=omosapiens",
-      design: "text-blue-400 hover:text-secondary"
+      design: "text-blue-600 hover:text-secondary"
     },
     {
       icon: "fa-plus",
@@ -25,13 +25,13 @@
       icon: "fa-comments",
       text: "messages",
       link: "/?page=omochat",
-      design: "text-blue-400 hover:text-secondary"
+      design: "text-blue-600 hover:text-secondary"
     },
     {
       icon: "fa-home",
       text: "dapps",
       link: "/?page=omodapps",
-      design: "text-blue-400 hover:text-secondary"
+      design: "text-blue-600 hover:text-secondary"
     }
   ];
 </script>
