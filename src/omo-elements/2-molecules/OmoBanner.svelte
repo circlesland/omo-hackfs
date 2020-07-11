@@ -31,7 +31,7 @@
       {quant.title}
     </h1>
     <p
-      class="font-light font-sans tracking-wide text-2xl md:text-3xl lg:text-4xl
+      class="font-light font-sans tracking-wide text-xl md:text-2xl lg:text-3xl
       text-white">
       {quant.subline}
     </p>
