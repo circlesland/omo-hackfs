@@ -30,20 +30,27 @@
     },
     {
       id: "3",
-      name: "Contacts",
+      name: "Omo Funding",
+      image: "/logos/chat.svg",
+      link: "?page=omofunding",
+      locked: true
+    },
+    {
+      id: "4",
+      name: "Dreams",
       image: "/logos/chat.svg",
       link: "?page=omosapiens",
       locked: true
     },
     {
-      id: "4",
+      id: "5",
       name: "Omo Pay",
       image: "/logos/chat.svg",
       link: "?page=omopay",
       locked: true
     },
     {
-      id: "5",
+      id: "6",
       name: "Handbook",
       image: "/logos/chat.svg",
       link: "?page=docs",

@@ -12,6 +12,8 @@
   import OmoPay from "./omo-elements/5-pages/OmoPay";
   import OmoAuth from "./omo-elements/5-pages/OmoAuth";
   import OmoActions from "./omo-elements/5-pages/OmoActions";
+  import OmoFunding from "./omo-elements/5-pages/OmoFunding";
+
   import OmoNavTop from "./omo-elements/2-molecules/OmoNavTop";
   import OmoNavBottom from "./omo-elements/2-molecules/OmoNavBottom";
 
@@ -34,6 +36,8 @@
     { route: "?page=odentity", quant: Odentity, name: null },
     { route: "?page=omoauth", quant: OmoAuth, name: null },
     { route: "?page=odentity", quant: Odentity, name: null },
+    { route: "?page=omofunding", quant: OmoFunding, name: null },
+
     { route: "?page=magicLogin", quant: MagicLogin, name: null }
   ];
 

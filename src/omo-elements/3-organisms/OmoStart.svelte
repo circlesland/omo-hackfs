@@ -4,7 +4,7 @@
 
   const vision = {
     title: "we invest in your dreams",
-    subline: "grow with us your passions like nature",
+    subline: "seed your dreams and grow your passions like nature",
     image: "/images/joyfulwomen.jpg"
   };
 </script>

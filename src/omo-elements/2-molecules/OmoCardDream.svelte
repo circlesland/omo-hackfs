@@ -16,7 +16,7 @@
   <div class="relative">
     <div class="overflow-hidden h-3 text-xs flex bg-gray-200">
       <div
-        style="width: {data.follower * 10}%"
+        style="width: {data.follower * 7.69}%"
         class="shadow-none flex flex-col text-center whitespace-nowrap
         text-white justify-center bg-secondary" />
     </div>
@@ -38,7 +38,7 @@
         <span
           class="text-xs font-semibold inline-block py-1 px-2 uppercase
           text-white bg-primary">
-          {data.follower} / 10
+          {data.follower} / 13
         </span>
       </div>
       <div class="text-right">
@@ -59,7 +59,7 @@
   </div>
 
   <div class="h-10 flex items-center justify-between bg-gray-100">
-    <div class="text-gray-500 font-bold text-lg px-4 py-1">Ø 10 / week</div>
+    <div class="text-gray-500 font-bold text-lg px-4 py-1">Ø 7 / week</div>
     <a
       href="/"
       class="text-white bg-secondary font-bold text-lg px-4 py-2 uppercase">
