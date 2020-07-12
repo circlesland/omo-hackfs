@@ -2,8 +2,6 @@ import { Quant } from "../Entities/Quant";
 import { JSONSchema } from "@textile/threads-database";
 import { PubSub } from "graphql-subscriptions";
 import { Quantum } from "./Quantum";
-import { JSONSchema4, JSONSchema6Definition, JSONSchema7Definition } from "json-schema";
-import { Query } from "@textile/threads-client";
 let pluralize = require('pluralize');
 
 
@@ -175,6 +173,7 @@ export class ModelQuant {
             subscribe: async () => { console.warn("Subscrition not working in the moment"); return ModelQuant.pubsub.asyncIterator(this.collectionName + "_deleted") },
         }
     }
+
     getGraphQlMutation() {
         if (this.isManyToMany) return "";
         var args = this.getArguments();

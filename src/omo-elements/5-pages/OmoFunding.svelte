@@ -4,6 +4,19 @@
 
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
 
+  var urlParams = new URLSearchParams(window.location.search);
+  export let dream = {};
+  if (urlParams.has("data")) {
+    var id = urlParams.get("data");
+    o.graphql
+      .query(
+        `DreamById(_id:"${id}") {_id first last profile image follower city dream}`
+      )
+      .then(result => {
+        dream = result.data.DreamById;
+      });
+  }
+
   export let data = [
     {
       type: "leap",
@@ -539,6 +552,7 @@
 
   <div class="content-center">
     <OmoVideo />
+    {JSON.stringify(dream)}
     <OmoProfilePage />
   </div>
 
