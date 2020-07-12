@@ -3,7 +3,7 @@
   import OmoBanner from "./../2-molecules/OmoBanner";
 
   const vision = {
-    title: "seed your dreams",
+    title: "seed your dreams test",
     subline:
       "and grow your passions like nature while empowering the emerging universal basic income economy of tomorrow",
     image: "/images/joyfulwomen.jpg"
