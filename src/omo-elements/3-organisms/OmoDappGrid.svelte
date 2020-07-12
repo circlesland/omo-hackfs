@@ -9,8 +9,8 @@
   });
 
   $: hero = {
-    uptitle: "My Omo Sapiens Universe",
-    title: `Welcome Omo `
+    uptitle: "My Omo Dapps",
+    title: `Welcome, Omo Sapiens`
   };
 
   export let logos = [
