@@ -1,5 +1,5 @@
 <script>
-  import OmoTitle from "../1-atoms/OmoTitle";
+  import OmoTitle from "./../1-atoms/OmoTitle";
   export let data = {
     uptitle: "uptitle",
     title: "title",

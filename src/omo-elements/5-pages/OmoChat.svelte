@@ -1,8 +1,8 @@
 <script>
-  import OmoLayoutChat from "../4-layouts/OmoLayoutChat";
-  import OmoInput from "../1-atoms/OmoInput";
-  import OmoButton from "../1-atoms/OmoButton";
-  //   import { ChatRoom } from "../../Core/Chat.ts";
+  import OmoLayoutChat from "./../4-layouts/OmoLayoutChat";
+  import OmoInput from "./../1-atoms/OmoInput";
+  import OmoButton from "./../1-atoms/OmoButton";
+  //   import { ChatRoom } from "./../../Core/Chat.ts";
 
   export let users = [];
 

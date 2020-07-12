@@ -1,6 +1,6 @@
 <script>
-  import OmoImageGrid from "../2-molecules/OmoImageGrid";
-  import OmoHero from "../2-molecules/OmoHero";
+  import OmoImageGrid from "./../2-molecules/OmoImageGrid";
+  import OmoHero from "./../2-molecules/OmoHero";
 
   let omo = { _id: "Omo" };
 

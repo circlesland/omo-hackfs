@@ -1,8 +1,8 @@
-import { OmoSchema, IdentityProviderSchema, LoginRequestSchema } from ".../Helper/JsonSchema";
+import { OmoSchema, IdentityProviderSchema, LoginRequestSchema } from "../../Helper/JsonSchema";
 import { Omo } from "../Entities/Omo";
 import { IdentityProvider } from "../Entities/IdentityProvider";
 import { LoginRequest } from "../Entities/LoginRequest";
-import { EmailProvider } from ".../Identity/EmailProvider";
+import { EmailProvider } from "../../Identity/EmailProvider";
 import { Client, ThreadID } from "@textile/hub";
 import { QueryJSON } from "@textile/threads-client";
 import { TextileHub } from "../TextileHub";

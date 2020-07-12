@@ -1,5 +1,5 @@
 import { OmoCollection } from "./OmoCollection";
-import { QuantSchema, LibrarySchema, AuthorSchema, BookSchema, AddressSchema } from ".../Helper/JsonSchema";
+import { QuantSchema, LibrarySchema, AuthorSchema, BookSchema, AddressSchema } from "../../Helper/JsonSchema";
 import { TextileHub } from "../TextileHub";
 import { ThreadID, Client } from "@textile/hub";
 import { Quant } from "../Entities/Quant";

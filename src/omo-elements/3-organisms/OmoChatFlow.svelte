@@ -1,6 +1,6 @@
 <script>
-  import OmoInput from "../1-atoms/OmoInput";
-  import OmoButton from "../1-atoms/OmoButton";
+  import OmoInput from "./../1-atoms/OmoInput";
+  import OmoButton from "./../1-atoms/OmoButton";
 
   export let messages = [];
   var urlParams = new URLSearchParams(window.location.search);

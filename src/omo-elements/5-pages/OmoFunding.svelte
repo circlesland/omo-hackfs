@@ -1,9 +1,9 @@
 <script>
-  import OmoHero from "../2-molecules/Omohero";
-  import OmoVideo from "../2-molecules/OmoVideo";
-  import OmoProfilePage from "../2-molecules/OmoProfilePage";
+  import OmoHero from "./../2-molecules/Omohero";
+  import OmoVideo from "./../2-molecules/OmoVideo";
+  import OmoProfilePage from "./../2-molecules/OmoProfilePage";
 
-  import OmoIconsFA from "../1-atoms/OmoIconsFA.svelte";
+  import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
 
   export let data = [
     {
