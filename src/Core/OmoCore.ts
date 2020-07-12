@@ -1,23 +1,26 @@
 import { OmoStore } from "./Store/OmoStore";
-import { Quanta } from "./Data/Quanta";
+import { Quantum } from "./Data/Quantum";
 import { GraphQL } from "./Data/GraphQL";
 import { Omo } from "./Entities/Omo";
+import { TextileHub } from "./TextileHub";
 
 export class OmoCore {
     store: OmoStore;
-    quanta: Quanta;
+    quantum: Quantum;
     graphql: GraphQL;
+    hub: TextileHub;
 
-    private constructor(store, quanta, graphql) {
+    private constructor(store, quantum, graphql) {
         this.store = store;
-        this.quanta = quanta;
+        this.quantum = quantum;
         this.graphql = graphql;
+        this.hub = TextileHub.getInstance();
     }
 
     static async load(): Promise<OmoCore> {
         var store = await OmoStore.getInstance();
-        var quanta = await Quanta.initQuanta();
-        var graphQL = await GraphQL.init(quanta);
-        return new OmoCore(store, quanta, graphQL);
+        var quantum = await Quantum.initQuantum();
+        var graphQL = await GraphQL.init(quantum);
+        return new OmoCore(store, quantum, graphQL);
     }
 }

@@ -27,6 +27,7 @@
     "dev": "webpack-dev-server --content-base public"
   },
   "dependencies": {
+    "@graphql-tools/schema": "^6.0.12",
     "@textile/hub": "^0.3.3",
     "@textile/threads": "^0.3.1",
     "@textile/threads-core": "^0.1.30",

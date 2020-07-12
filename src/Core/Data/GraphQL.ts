@@ -1,29 +1,32 @@
 import { Quant } from "../Entities/Quant";
-import { Quanta } from "./Quanta";
-import { GraphQLObjectType, GraphQLString, Thunk, GraphQLFieldConfigMap, GraphQLSchema, GraphQLID, printSchema, GraphQLList, GraphQLBoolean, graphql, subscribe, parse, ExecutionResult } from "graphql";
+import { Quantum } from "./Quantum";
+import { GraphQLObjectType, GraphQLString, Thunk, GraphQLFieldConfigMap, GraphQLSchema, GraphQLID, printSchema, GraphQLList, GraphQLBoolean, graphql, subscribe, parse, ExecutionResult, GraphQLInt, GraphQLFloat, GraphQLObjectTypeConfig, buildSchema } from "graphql";
 import { PubSub } from 'graphql-subscriptions';
 import { JSONSchema } from "@textile/threads-database";
 let pluralize = require('pluralize');
+import { makeExecutableSchema } from '@graphql-tools/schema';
+import { ModelHelper } from "./ModelHelper";
+import { ModelQuant } from "./ModelQuant";
 
 
 export class GraphQL {
     private quanta: Quant[];
-    private Quanta: Quanta;
+    private quantum: Quantum;
     private graphQLSchema: GraphQLSchema;
-    private static pubsub = new PubSub();
+    // static pubsub = new PubSub();
 
 
-    private constructor(quanta: Quant[], Quanta: Quanta) {
-        this.Quanta = Quanta;
+    private constructor(quanta: Quant[], quantum: Quantum) {
+        this.quantum = quantum;
         this.quanta = quanta;
         this.graphQLSchema = this.updateGraphQLSchema();
     }
 
-    private async subscribeQuantaUpdate(quanta: Quanta) {
-        await quanta.subscribe(async quantArray => {
+    private async subscribeQuantaUpdate(quantum: Quantum) {
+        await quantum.subscribe(async quantArray => {
             this.quanta = quantArray;
             this.updateGraphQLSchema();
-            await quanta.subscribeChanges(GraphQL.pubsub, this.quanta);
+            await quantum.subscribeChanges(ModelQuant.pubsub, this.quanta);
         })
     }
 
@@ -50,99 +53,68 @@ export class GraphQL {
     async mutation(query) {
         return await graphql(this.getSchema(), `mutation { ${query} }`);
     }
-    /**
-     * example call 
-     * o.graphql.subscription("{Books {name }}").then(
-        subscription => {
-          (async () => {
-            for await (let value of subscription) {
-              console.log(value.data);
+
+    private updateGraphQLSchema(): GraphQLSchema {
+        //         const resolvers = {
+        //             Query: {
+        //                 posts: () => posts,
+        //                 author: (_, { id }) => authors.find(a => a.id == id),
+        //             },
+
+        //             Mutation: {
+        //                 upvotePost: (_, { postId }) => {
+        //                     const post = posts.find(p => p.id == postId);
+        //                     if (!post) {
+        //                         throw new Error(`Couldn't find post with id ${postId}`);
+        //                     }
+        //                     post.votes += 1;
+        //                     return post;
+        //                 },
+        //             },
+
+        //             Author: {
+        //                 posts: author => posts.filter(p => p.authorId == author.id),
+        //             },
+
+        //             Post: {
+        //                 author: post => authors.find(a => a.id == post.authorId),
+        //             },
+        //         };
+
+        //         this.graphQLSchema = makeExecutableSchema({
+        //             typeDefs,
+        //             resolvers,
+        //         });
+
+        var modelHelper = new ModelHelper(this.quanta);
+        window['modelHelper'] = modelHelper;
+        var typeDefs: any = modelHelper.getGraphQLTypeDefs();
+        var resolvers: any = modelHelper.getGraphQLResolvers(this.quantum);
+        // makeExecutableSchema({typeDefs,{}})
+        this.graphQLSchema = makeExecutableSchema({ typeDefs, resolvers });
+        console.info("GRAPHQL UPDATED")
+        window['pubsub'] = ModelQuant.pubsub;
+        return this.graphQLSchema;
+    }
+
+    subscribe(query, callback) {
+        this.getSubscription(query).then(
+            subscription => {
+                (async () => {
+                    for await (let value of subscription)
+                        callback(value.data);
+                })();
             }
-          })();
-        }
-      );
-     */
-    async subscription(query) {
+        )
+    }
+    private async getSubscription(query) {
         return (await subscribe({
             schema: this.getSchema(),
-            document: parse("subscription " + query),
+            document: parse(query),
             rootValue: "data",
         })) as AsyncIterableIterator<ExecutionResult>;
     }
 
-    private updateGraphQLSchema(): GraphQLSchema {
-        let map = this.getQuantTypeMap(this.quanta);
-        this.graphQLSchema = new GraphQLSchema({
-            query: new GraphQLObjectType({
-                fields: this.getQueries(map),
-                name: "query",
-            }),
-            mutation: new GraphQLObjectType({
-                fields: this.getMutations(map),
-                name: "mutation"
-            }),
-            subscription: new GraphQLObjectType({
-                fields: this.getSubscriptions(map),
-                name: "subscription"
-            })
-        });
-        return this.graphQLSchema;
-    }
-
-    private getSubscriptions(map: Map<Quant, GraphQLObjectType>): Thunk<GraphQLFieldConfigMap<any, any>> {
-        var subscriptions: Thunk<GraphQLFieldConfigMap<any, any>> = {};
-        map.forEach((type, quant) => {
-            let collection = this.Quanta.getCollection(quant.collectionName);
-
-            subscriptions[pluralize(quant.name)] = {
-                type: GraphQLList(type),
-                subscribe: async () => GraphQL.pubsub.asyncIterator(quant.collectionName + "_changed"),
-                resolve: async () => await collection.find({})
-            };
-            subscriptions[`${quant.name}ById`] = {
-                args: { ID: { type: GraphQLID } },
-                type: type,
-                subscribe: async (root: any, data: any) => GraphQL.pubsub.asyncIterator(data.ID + "_changed"),
-                resolve: async (payload: any) => { console.log(JSON.stringify(payload)); return await collection.findById(payload.id); }
-            };
-            subscriptions[quant.name + "Added"] = {
-                type: type,
-                subscribe: async () => GraphQL.pubsub.asyncIterator(quant.collectionName + "_added"),
-                resolve: async (id: string) => await collection.findById(id)
-            };
-            subscriptions[quant.name + "Updated"] = {
-                type: type,
-                subscribe: async () => GraphQL.pubsub.asyncIterator(quant.collectionName + "_updated"),
-                resolve: async (id: string) => await collection.findById(id)
-            };
-            subscriptions[quant.name + "Deleted"] = {
-                type: GraphQLID,
-                subscribe: async () => GraphQL.pubsub.asyncIterator(quant.collectionName + "_deleted"),
-                resolve: async (id: string) => id
-            };
-        })
-        return subscriptions;
-    }
-
-    private getQueries(map: Map<Quant, GraphQLObjectType>): Thunk<GraphQLFieldConfigMap<any, any>> {
-        var queries: Thunk<GraphQLFieldConfigMap<any, any>> = {};
-        map.forEach((type, quant) => {
-            var collection = this.Quanta.getCollection(quant.name);
-            queries[pluralize(quant.name)] = {
-                type: GraphQLList(type),
-                resolve: async () => {
-                    return await collection.find({})
-                }
-            };
-
-            queries[quant.name + 'ById'] = {
-                type,
-                args: { ID: { type: GraphQLID } },
-                resolve: async (root: any, payload: any) => await collection.findById(payload.ID)
-            };
-        })
-        return queries;
-    }
 
     private getArguments(schema: JSONSchema) {
         var args = {};
@@ -158,7 +130,7 @@ export class GraphQL {
     private getMutations(map: Map<Quant, GraphQLObjectType>): Thunk<GraphQLFieldConfigMap<any, any>> {
         var mutations: Thunk<GraphQLFieldConfigMap<any, any>> = {};
         map.forEach((type, quant) => {
-            let collection = this.Quanta.getCollection(quant.collectionName);
+            let collection = this.quantum.getCollectionWithoutSchema(quant.collectionName);
             let schema = JSON.parse(quant.jsonSchema);
             let args = this.getArguments(schema);
             mutations[`add${quant.name}`] = {
@@ -212,35 +184,11 @@ export class GraphQL {
         return mutations;
     }
 
-    private getQuantTypeMap(quanta: Quant[]): Map<Quant, GraphQLObjectType<any, any>> {
-        var map: Map<Quant, GraphQLObjectType<any, any>> = new Map();
-        quanta.forEach(quant => {
-            map.set(quant, new GraphQLObjectType({
-                fields: this.getFields(quant),
-                name: quant.name
-            }));
-        })
-        return map;
-    }
-
-    private getFields(quant: Quant): Thunk<GraphQLFieldConfigMap<any, any>> {
-        var schema: JSONSchema = JSON.parse(quant.jsonSchema);
-        var fields: Thunk<GraphQLFieldConfigMap<any, any>> = {};
-
-        if (schema.properties) {
-            let properties = Object.keys(schema.properties);
-            properties.forEach(property => {
-                fields[property] = { type: GraphQLString }
-            });
-        }
-        return fields;
-    }
-
-    static async init(quanta: Quanta): Promise<GraphQL> {
-        var quant = await quanta.all();
-        var graphql = new GraphQL(quant, quanta);
-        await quanta.subscribeChanges(this.pubsub, quant);
-        graphql.subscribeQuantaUpdate(quanta);
+    static async init(quantum: Quantum): Promise<GraphQL> {
+        var quant = await quantum.all();
+        var graphql = new GraphQL(quant, quantum);
+        await quantum.subscribeChanges(ModelQuant.pubsub, quant);
+        graphql.subscribeQuantaUpdate(quantum);
         return graphql;
     }
 }

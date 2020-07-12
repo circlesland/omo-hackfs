@@ -28,8 +28,10 @@ export class TextileHub {
     }
 
     async deleteThread(thread, client) {
+        if (client == undefined) client = await this.getClient();
         var t = ThreadID.fromString(thread);
         try {
+
             await client.deleteDB(t);
             console.log("THREAD DELETED " + thread);
 
