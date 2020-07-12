@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^2.3.0",
+    "copy-webpack-plugin": "^6.0.3",
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.1",
     "dotenv": "^8.2.0",
@@ -27,6 +28,7 @@
     "dev": "webpack-dev-server --content-base public"
   },
   "dependencies": {
+    "@graphql-tools/schema": "^6.0.12",
     "@textile/hub": "^0.3.3",
     "@textile/threads": "^0.3.1",
     "@textile/threads-core": "^0.1.30",

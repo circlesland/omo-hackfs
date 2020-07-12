@@ -87,7 +87,8 @@ export class OdentityStore {
         else {
             this.hub.observeUpdate(this.threadId, "LoginRequest", request._id, async (request: LoginRequest) => {
                 if (identityProvider != undefined) {
-                    this._currentOmo = (await client.findByID<Omo>(this.threadId, "Omo", identityProvider.omoid || '')).instance;
+                    var newClient = await this.hub.getClient();
+                    this._currentOmo = (await newClient.findByID<Omo>(this.threadId, "Omo", identityProvider.omoid || '')).instance;
                     localStorage.setItem("loggedInOmo", this._currentOmo._id);
                     callback(request);
                 }

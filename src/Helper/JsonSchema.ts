@@ -1,4 +1,6 @@
 import { JSONSchema7 } from "json-schema";
+import { ModelQuant } from "../Core/Data/ModelQuant";
+
 
 export const QuantSchema: JSONSchema7 = {
     $id: "https://example.com/quant.schema.json",
@@ -36,6 +38,7 @@ export const LibrarySchema: JSONSchema7 = {
     title: "Library",
     type: "object",
     required: ["_id"],
+    definitions: ModelQuant.definitons,
     properties: {
         _id: {
             type: "string",
@@ -48,12 +51,13 @@ export const LibrarySchema: JSONSchema7 = {
     },
 };
 
-export const BookSchema: JSONSchema7 = {
+export const BookSchema = {
     $id: "https://example.com/person.schema.json",
     $schema: "http://json-schema.org/draft-07/schema#",
     title: "Book",
     type: "object",
     required: ["_id"],
+    definitions: ModelQuant.definitons,
     properties: {
         _id: {
             type: "string",
@@ -66,12 +70,13 @@ export const BookSchema: JSONSchema7 = {
     },
 };
 
-export const AuthorSchema: JSONSchema7 = {
+export const AuthorSchema = {
     $id: "https://example.com/person.schema.json",
     $schema: "http://json-schema.org/draft-07/schema#",
     title: "Author",
     type: "object",
     required: ["_id"],
+    definitions: ModelQuant.definitons,
     properties: {
         _id: {
             type: "string",
@@ -80,9 +85,36 @@ export const AuthorSchema: JSONSchema7 = {
         name: {
             type: "string",
             description: "The book title",
+        },
+        books: {
+            $ref: "#/definitions/oneToMany",
+            description: "Book"
         }
+    }
+};
+export const AddressSchema: JSONSchema7 = {
+    $id: "https://example.com/address.schema.json",
+    $schema: "http://json-schema.org/draft-07/schema#",
+    title: "Address",
+    type: "object",
+    required: ["_id"],
+    definitions: ModelQuant.definitons,
+    properties: {
+        _id: {
+            type: "string",
+        },
+        street: {
+            type: "string",
+        },
+        zipcode: {
+            type: "string",
+        },
+        city: {
+            type: "string",
+        },
     },
 };
+
 
 export const OmoSchema: JSONSchema7 = {
     $id: "https://example.com/omo.schema.json",

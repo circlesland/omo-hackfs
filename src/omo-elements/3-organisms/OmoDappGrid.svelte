@@ -4,11 +4,9 @@
 
   let omo = { _id: "Omo" };
 
-  // store.odentity.currentOmo().then(o => {
-  //   omo = o;
-  // });
-
-  // ${omo.firstname ? omo.firstname : omo._id}
+  o.store.odentity.currentOmo().then(o => {
+    omo = o;
+  });
 
   $: hero = {
     uptitle: "My Omo Dapps",
@@ -20,21 +18,21 @@
       id: "1",
       name: "Odentity",
       image: "/logos/identity.svg",
-      link: "?page=odentity",
+      link: "javascript:navigate('odentity')",
       locked: false
     },
     {
       id: "2",
       name: "Omo Chat",
       image: "/logos/chat.svg",
-      link: "?page=omochat",
+      link: "javascript:navigate('omochat')",
       locked: true
     },
     {
       id: "3",
       name: "Omo Funding",
       image: "/logos/chat.svg",
-      link: "?page=omofunding",
+      link: "javascript:navigate('omofunding')",
       locked: true
     },
     {
@@ -48,14 +46,14 @@
       id: "5",
       name: "Omo Pay",
       image: "/logos/chat.svg",
-      link: "?page=omopay",
+      link: "javascript:navigate('omopay')",
       locked: true
     },
     {
       id: "6",
       name: "Handbook",
       image: "/logos/chat.svg",
-      link: "?page=docs",
+      link: "javascript:navigate('docs')",
       locked: true
     }
   ];

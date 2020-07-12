@@ -2,6 +2,7 @@ import { JSONSchema } from "@textile/threads-database";
 import { Client, ThreadID } from "@textile/hub";
 import { TextileHub } from "../TextileHub";
 import { QueryJSON } from "@textile/threads-client";
+import { Quant } from "../Entities/Quant";
 
 export class OmoCollection<T> {
     private jsonSchema?: JSONSchema;
@@ -16,6 +17,33 @@ export class OmoCollection<T> {
 
     private async createCollectionIfNotExist(client: Client) {
         try {
+            // @TODO remove after testing
+            try {
+                await client.deleteCollection(this.threadId, this.collectionName);
+            }
+            catch (e) { }
+            // @TODO check whether collection is existing first
+            if (this.jsonSchema == undefined || this.jsonSchema.properties == undefined) return;
+            var properties: any = this.jsonSchema.properties;
+            Object.keys(properties).forEach((prop) => {
+                if (properties[prop].type.toLowerCase() == "1TON") {
+
+                    properties[prop].type = "string";
+                }
+                if (properties[prop].type.toLowerCase() == "NTOM") {
+
+                    properties[prop].type = "string";
+                }
+                if (properties[prop].type.toLowerCase() == "1TO1") {
+
+                    properties[prop].type = "string";
+                }
+                if (properties[prop].type.toLowerCase() == "NTO1") {
+
+                    properties[prop].type = "string";
+                }
+            });
+            this.jsonSchema.properties = properties;
             await client.newCollection(this.threadId, this.collectionName, this.jsonSchema);
         }
         catch (e) {
@@ -30,8 +58,8 @@ export class OmoCollection<T> {
         return collection;
     }
 
-    static byName<T>(collectionName: string, threadId: ThreadID): OmoCollection<T> {
-        return new OmoCollection<T>(collectionName, threadId);
+    static byName<T>(collectionName: string, threadId: ThreadID, jsonSchema?: JSONSchema): OmoCollection<T> {
+        return new OmoCollection<T>(collectionName, threadId, jsonSchema);
     }
 
     async all(externalClient?: Client): Promise<T[]> {
@@ -53,10 +81,12 @@ export class OmoCollection<T> {
         return result.instancesList;
     }
 
-    async findById<T>(id: string): Promise<T> {
+    async findById<T>(id: string): Promise<T | null> {
         var client = await TextileHub.getInstance().getClient();
         var result = await client.findByID<T>(this.threadId, this.collectionName, id);
-        return result.instance;
+        if (result.instance)
+            return result.instance;
+        return null
     }
 
     async create(value: any): Promise<any> {
@@ -69,7 +99,7 @@ export class OmoCollection<T> {
         throw new Error("Item couldn't created");
     }
 
-    async createMany(string, values: any[]): Promise<any> {
+    async createMany(values: any[]): Promise<any> {
         var client = await TextileHub.getInstance().getClient();
         var result = await client.create(this.threadId, this.collectionName, values);
         if (result.length) {
@@ -118,4 +148,47 @@ export class OmoCollection<T> {
         var toDelete = all.map(x => x._id);
         await this.deleteMany(toDelete);
     }
+
+    async addColumn(name: string, type: string) {
+        type = type.toLowerCase();
+        if (this.jsonSchema == null) throw new Error("jsonSchema not loaded");
+        if (name == null || name == "") throw new Error("Column name cannot be empty");
+        if (type != "string") throw new Error("Sorrrry in this stage only strings are allowed. We are working on it.");
+        if (this.jsonSchema.properties) {
+            if (Object.values(this.jsonSchema.properties).some(x => x == name)) throw new Error("Column is already existing");
+            this.jsonSchema.properties[name] = { type: "string" };
+            var client = await TextileHub.getInstance().getClient();
+            await client.updateCollection(this.threadId, this.collectionName, this.jsonSchema);
+            var quantCollection: OmoCollection<Quant> = window['o'].quanta.quantaCollection;
+            var quantResponse = await quantCollection.find<any>({ ands: [{ fieldPath: "collectionName", value: { string: this.collectionName } }] });
+            var quant = quantResponse[0];
+            quant.jsonSchema = JSON.stringify(this.jsonSchema);
+            await quantCollection.save(quant);
+        }
+    }
+
+
+    async deleteColumn(name: string) {
+        if (this.jsonSchema == null) throw new Error("jsonSchema not loaded");
+        if (name == null || name == "") throw new Error("Column name cannot be empty");
+        if (this.jsonSchema.properties) {
+            if (this.jsonSchema.properties[name] == undefined) throw new Error("Column does not exist");
+            var client = await TextileHub.getInstance().getClient();
+
+            var temp = await client.find(this.threadId, this.collectionName, {});
+            await client.deleteCollection(this.threadId, this.collectionName);
+
+            delete this.jsonSchema.properties[name];
+            await client.newCollection(this.threadId, this.collectionName, this.jsonSchema);
+            // await client.create(this.threadId, this.collectionName, temp.instancesList);
+            // await client.updateCollection(this.threadId, this.collectionName, this.jsonSchema);
+            var quantCollection: OmoCollection<Quant> = window['o'].quanta.quantaCollection;
+            var quantResponse = await quantCollection.find<any>({ ands: [{ fieldPath: "collectionName", value: { string: this.collectionName } }] });
+            var quant = quantResponse[0];
+            quant.jsonSchema = JSON.stringify(this.jsonSchema);
+            await quantCollection.save(quant);
+        }
+    }
+
+
 }

@@ -1,0 +1,48 @@
+name: "Textile Bucket - Deploy"
+on:
+  push:
+    branches:
+      - master2
+  pull_request:
+    branches:
+      - master2
+
+jobs:
+  bucket_push:
+    runs-on: ubuntu-latest
+    name: push textile bucket
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+       
+      - run: npm run build
+        env:
+          NODE_ENV: production
+          USER_API_KEY: ${{ secrets.TEXTILE_ACCOUNT_KEY }}
+          USER_API_SECRET: ${{ secrets.TEXTILE_ACCOUNT_SECRET }}
+          SMTPHOST: ${{ secrets.SMTP_HOST }}
+          SMTPUSER: ${{ secrets.SMTP_USER }}
+          SMTPPASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      - name: push # push to a known bucket
+        id: bucket
+        uses: textileio/github-action-buckets@v14
+        with:
+          key: ${{ secrets.TEXTILE_ACCOUNT_KEY }}
+          secret: ${{ secrets.TEXTILE_ACCOUNT_SECRET }}
+          bucket: "showcase"
+          path: 'public'
+          thread: ${{ secrets.THREAD }}
+      - run: echo "bucket - ${{ steps.bucket.outputs.key }}"
+      - run: echo "ipfs - ${{ steps.bucket.outputs.ipfs }}"
+      - run: echo "ipfs link - ${{ steps.bucket.outputs.ipfsUrl }}"
+      - run: echo "ipns - ${{ steps.bucket.outputs.ipns }}"
+      - run: echo "ipns link - ${{ steps.bucket.outputs.ipnsUrl }}"
+      - run: echo "hub - ${{ steps.bucket.outputs.hub }}"
+      - run: echo "www - ${{ steps.bucket.outputs.www }}"

@@ -6,6 +6,7 @@ const path = require('path');
 
 const mode = process.env.NODE_ENV || 'development';
 const prod = mode === 'production';
+// const CopyPlugin = require('copy-webpack-plugin');
 
 const { mdsvex } = require('mdsvex')
 
@@ -64,6 +65,11 @@ module.exports = {
 		new webpack.DefinePlugin({
 			"process.env": JSON.stringify(dotenv.parsed)
 		}),
+		// new CopyPlugin({
+		// 	patterns: [
+		// 		{ from: 'public', to: '' },
+		// 	],
+		// }),
 	],
 	devtool: prod ? false : 'source-map'
 };

@@ -9,12 +9,7 @@ window["ChatRoom"] = new ChatRoom();
 OmoCore.load().then(async (o) => {
   window['omo'] = o;
   window['o'] = o;
-  window["subscribe"] = async (query) =>
-    (await subscribe({
-      schema: o.graphql.getSchema(),
-      document: parse(query),
-      rootValue: "data",
-    })) as AsyncIterableIterator<ExecutionResult>;
+
   app = new App({
     target: document.body,
     props: {
@@ -22,6 +17,7 @@ OmoCore.load().then(async (o) => {
     }
   });
 });
+
 
 
 export default app;

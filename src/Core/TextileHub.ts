@@ -28,8 +28,10 @@ export class TextileHub {
     }
 
     async deleteThread(thread, client) {
+        if (client == undefined) client = await this.getClient();
         var t = ThreadID.fromString(thread);
         try {
+
             await client.deleteDB(t);
             console.log("THREAD DELETED " + thread);
 
@@ -74,6 +76,6 @@ export class TextileHub {
 
     async observeUpdate(threadId: ThreadID, collection: string, id: string, callback: any, extClient?: Client) {
         let client = extClient ? extClient : await this.getClient();
-        client.listen(threadId, [{ collectionName: collection, instanceID: id, actionTypes: [''] }], callback)
+        client.listen(threadId, [{ collectionName: collection, instanceID: id, actionTypes: ['SAVE'] }], callback)
     };
 }

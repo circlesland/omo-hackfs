@@ -1,7 +1,7 @@
 api_target: api.textile.io:443
-key: bafzbeiagzbglqm4ibz6hfd4v25kt2yjgjqhq3lq6fgpxmieiqibuhlnpum
+key: bafzbeib4jumayxhcgcsu5xaqwtpglviwu7cjupwd6nbrao3j2cgi7czd5a
 log:
   debug: false
-org: omoearthathackfs
+org: omoearth-hackfs
 project: omo-earth-test
-thread: bafkssdo3y5iynunynncwm2vkddxvnzsfksuir6gd7yjsmg3rjbpyuii
+thread: bafkqtcj3pzmu6tdjatgwvvooyco3f2z7oqvxntcm4ijf7eh4p2gyfdi
