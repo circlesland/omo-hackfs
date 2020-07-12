@@ -6,33 +6,33 @@
   export let data = [
     {
       title: "Odentity",
-      level: 2,
+      level: 1,
       steps: [
         {
-          title: "Add first 9",
-          locked: false,
-          step: 9
-        },
-        {
-          title: "Add last 4",
-          locked: false,
-          step: 4
-        },
-        {
-          title: "Add last 1",
+          title: "welcome",
           locked: false,
           step: 1
         },
         {
-          title: "Add last 2",
+          title: "add name",
           locked: false,
           step: 2
+        },
+        {
+          title: "add last name",
+          locked: true,
+          step: 3
+        },
+        {
+          title: "add profile image",
+          locked: true,
+          step: 4
         }
       ]
     },
     {
       title: "Omo Auth",
-      level: 1,
+      level: 2,
       steps: [
         {
           title: "OmoEarthAuth Email",

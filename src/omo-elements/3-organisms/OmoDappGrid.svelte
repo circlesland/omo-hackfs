@@ -2,7 +2,7 @@
   import OmoImageGrid from "./../2-molecules/OmoImageGrid";
   import OmoHero from "./../2-molecules/OmoHero";
 
-  let omo = { _id: "adgadf" };
+  let omo = { _id: "Omo" };
 
   o.store.odentity.currentOmo().then(o => {
     omo = o;
@@ -10,7 +10,7 @@
 
   $: hero = {
     uptitle: "My Omo Sapiens Universe",
-    title: `Welcome Omo ${omo.firstname ? omo.firstname : omo._id}`
+    title: `Welcome Omo `
   };
 
   export let logos = [
@@ -30,20 +30,27 @@
     },
     {
       id: "3",
-      name: "Contacts",
+      name: "Omo Funding",
       image: "/logos/chat.svg",
-      link: "javascript:navigate('omosapiens')",
+      link: "javascript:navigate('omofunding')",
       locked: true
     },
     {
       id: "4",
+      name: "Dreams",
+      image: "/logos/chat.svg",
+      link: "?page=omosapiens",
+      locked: true
+    },
+    {
+      id: "5",
       name: "Omo Pay",
       image: "/logos/chat.svg",
       link: "javascript:navigate('omopay')",
       locked: true
     },
     {
-      id: "5",
+      id: "6",
       name: "Handbook",
       image: "/logos/chat.svg",
       link: "javascript:navigate('docs')",
