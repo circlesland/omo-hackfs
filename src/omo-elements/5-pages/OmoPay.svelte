@@ -1,6 +1,6 @@
 <script>
-  import OmoHero from "./../2-molecules/OmoHero";
-  import OmoLayoutOverflowY from "./../4-layouts/OmoLayoutOverflowY";
+  import OmoHero from "../2-molecules/OmoHero";
+  import OmoLayoutOverflowY from "../4-layouts/OmoLayoutOverflowY";
 
   export let hero = {
     uptitle: "my balance",

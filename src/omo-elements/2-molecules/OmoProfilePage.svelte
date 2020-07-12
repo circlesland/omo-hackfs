@@ -1,6 +1,6 @@
 <script>
-  import OmoAvatarsGrouped from "./../2-molecules/OmoAvatarsGrouped";
-  import OmoProgressBar from "./../2-molecules/OmoProgressBar";
+  import OmoAvatarsGrouped from "../2-molecules/OmoAvatarsGrouped";
+  import OmoProgressBar from "../2-molecules/OmoProgressBar";
 
   export let progressbar = {
     height: "h-6"

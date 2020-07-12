@@ -1,5 +1,5 @@
 <script>
-  import { ChatRoom } from "./../../Core/Chat.ts";
+  import { ChatRoom } from "../../Core/Chat.ts";
 
   export let users = [];
 

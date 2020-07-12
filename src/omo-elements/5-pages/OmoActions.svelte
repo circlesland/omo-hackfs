@@ -1,5 +1,5 @@
 <script>
-  import OmoHero from "./../2-molecules/OmoHero";
+  import OmoHero from "../2-molecules/OmoHero";
 
   export let actions = [
     {

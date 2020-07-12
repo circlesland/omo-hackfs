@@ -1,7 +1,7 @@
 <script>
-  import { curRoute } from "./../../router.ts";
-  import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
-  import OmoButton from "./../1-atoms/OmoButton.svelte";
+  import { curRoute } from "../../router.ts";
+  import OmoIconsFA from "../1-atoms/OmoIconsFA.svelte";
+  import OmoButton from "../1-atoms/OmoButton.svelte";
 </script>
 
 <style>

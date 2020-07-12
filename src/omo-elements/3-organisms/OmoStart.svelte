@@ -1,6 +1,6 @@
 <script>
-  import OmoButton from "./../1-atoms/OmoButton";
-  import OmoBanner from "./../2-molecules/OmoBanner";
+  import OmoButton from "../1-atoms/OmoButton";
+  import OmoBanner from "../2-molecules/OmoBanner";
 
   const vision = {
     title: "seed your dreams",

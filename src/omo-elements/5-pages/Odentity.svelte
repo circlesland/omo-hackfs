@@ -1,7 +1,7 @@
 <script>
-  import OmoHero from "./../2-molecules/Omohero";
-  import OmoProgressBar from "./../2-molecules/OmoProgressBar";
-  import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
+  import OmoHero from "../2-molecules/Omohero";
+  import OmoProgressBar from "../2-molecules/OmoProgressBar";
+  import OmoIconsFA from "../1-atoms/OmoIconsFA.svelte";
 
   export let data = [
     {

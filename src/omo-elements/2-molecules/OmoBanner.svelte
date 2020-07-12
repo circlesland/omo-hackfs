@@ -1,6 +1,6 @@
 <script>
-  import OmoFonts from "./../1-atoms/OmoFonts";
-  import OmoTitle from "./../1-atoms/OmoTitle";
+  import OmoFonts from "../1-atoms/OmoFonts";
+  import OmoTitle from "../1-atoms/OmoTitle";
 
   export let quant = {
     title: "one quantum leap a time",
