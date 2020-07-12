@@ -1,5 +1,4 @@
 <script>
-  import OmoHero from "./../2-molecules/Omohero";
   import OmoVideo from "./../2-molecules/OmoVideo";
   import OmoProfilePage from "./../2-molecules/OmoProfilePage";
 
@@ -470,8 +469,7 @@
 <style>
   .omo-layout {
     display: grid;
-    grid-template-areas:
-      "aside content-center";
+    grid-template-areas: "aside content-center";
     grid-template-columns: 24rem 1fr;
     grid-template-rows: 1fr;
     overflow: hidden;

@@ -1,5 +1,4 @@
 <script>
-  import { curRoute } from "./../../router.ts";
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
 
   export let navitems = [

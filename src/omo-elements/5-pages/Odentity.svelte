@@ -1,5 +1,5 @@
 <script>
-  import OmoHero from "./../2-molecules/Omohero";
+  import OmoHero from "./../2-molecules/OmoHero.svelte";
   import OmoProgressBar from "./../2-molecules/OmoProgressBar";
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
 
