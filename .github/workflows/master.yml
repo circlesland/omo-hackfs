@@ -2,10 +2,10 @@ name: "Textile Bucket - Deploy"
 on:
   push:
     branches:
-      - master
+      - master2
   pull_request:
     branches:
-      - master
+      - master2
 
 jobs:
   bucket_push:
