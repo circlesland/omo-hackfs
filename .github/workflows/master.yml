@@ -21,7 +21,14 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
+       
       - run: npm run build
+        env:
+          USER_API_KEY: ${{ secrets.TEXTILE_ACCOUNT_KEY }}
+          USER_API_SECRET: ${{ secrets.TEXTILE_ACCOUNT_SECRET }}
+          SMTPHOST: ${{ secrets.SMTP_HOST }}
+          SMTPUSER: ${{ secrets.SMTP_USER }}
+          SMTPPASSWORD: ${{ secrets.SMTP_PASSWORD }}
       - name: push # push to a known bucket
         id: bucket
         uses: textileio/github-action-buckets@v14
