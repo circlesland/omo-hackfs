@@ -18,7 +18,7 @@ jobs:
       with:
         key: ${{ secrets.TEXTILE_ACCOUNT_KEY }}
         secret: ${{ secrets.TEXTILE_ACCOUNT_SECRET }}
-        bucket: ${{ secrets.BUCKET_NAME }}
+        bucket: ${{ secrets.BUCKET }}
         thread: ${{ secrets.THREAD }}
     # Use the output from the `hello` step
     - run: echo "bucket - ${{ steps.bucket.outputs.bucket }}"
