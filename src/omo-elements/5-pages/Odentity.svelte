@@ -60,7 +60,7 @@
   async function saveFirstname() {
     var omo = await store.odentity.currentOmo();
     omo.firstname = firstname;
-    await store.odentity.updateOmo(omo);
+    await o.store.odentity.updateOmo(omo);
   }
 </script>
 

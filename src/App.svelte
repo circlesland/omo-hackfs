@@ -20,7 +20,7 @@
   export let login = {
     text: "Login (alpha test)",
     design: "o-btn-secondary w-full h-16 o-btn-2xl uppercase w-1/2 text-center",
-    link: "/?page=omoauth"
+    link: "javascript:navigate('omoauth');"
   };
 
   var router = [
@@ -50,6 +50,15 @@
       );
     }
   });
+
+  window["navigate"] = function(page) {
+    window.history.pushState(
+      { page: "another" },
+      "another page",
+      `?page=${page}`
+    );
+    curRoute.set(`?page=${page}`);
+  };
 
   function handlerBackNavigation(event) {
     curRoute.set(event.state.path);

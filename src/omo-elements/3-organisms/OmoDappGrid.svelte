@@ -4,7 +4,7 @@
 
   let omo = { _id: "adgadf" };
 
-  store.odentity.currentOmo().then(o => {
+  o.store.odentity.currentOmo().then(o => {
     omo = o;
   });
 
@@ -18,35 +18,35 @@
       id: "1",
       name: "Odentity",
       image: "/logos/identity.svg",
-      link: "?page=odentity",
+      link: "javascript:navigate('odentity')",
       locked: false
     },
     {
       id: "2",
       name: "Omo Chat",
       image: "/logos/chat.svg",
-      link: "?page=omochat",
+      link: "javascript:navigate('omochat')",
       locked: true
     },
     {
       id: "3",
       name: "Contacts",
       image: "/logos/chat.svg",
-      link: "?page=omosapiens",
+      link: "javascript:navigate('omosapiens')",
       locked: true
     },
     {
       id: "4",
       name: "Omo Pay",
       image: "/logos/chat.svg",
-      link: "?page=omopay",
+      link: "javascript:navigate('omopay')",
       locked: true
     },
     {
       id: "5",
       name: "Handbook",
       image: "/logos/chat.svg",
-      link: "?page=docs",
+      link: "javascript:navigate('docs')",
       locked: true
     }
   ];

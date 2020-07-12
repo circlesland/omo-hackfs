@@ -6,31 +6,31 @@
     {
       icon: "fa-user-circle",
       text: "omo pay",
-      link: "/?page=omopay",
+      link: "javascript:navigate('omopay')",
       design: "text-blue-400 hover:text-secondary"
     },
     {
       icon: "fa-users",
       text: "contacts",
-      link: "/?page=omosapiens",
+      link: "javascript:navigate('omosapiens')",
       design: "text-blue-400 hover:text-secondary"
     },
     {
       icon: "fa-plus",
       text: "actions",
-      link: "javascript:store.odentity.logout()",
+      link: "javascript:o.store.odentity.logout()",
       design: "bg-secondary text-white"
     },
     {
       icon: "fa-comments",
       text: "messages",
-      link: "/?page=omochat",
+      link: "javascript:navigate('omochat')",
       design: "text-blue-400 hover:text-secondary"
     },
     {
       icon: "fa-home",
       text: "dapps",
-      link: "/?page=omodapps",
+      link: "javascript:navigate('omodapps')",
       design: "text-blue-400 hover:text-secondary"
     }
   ];

@@ -7,9 +7,9 @@
   export let mail;
   function login() {
     loading = true;
-    store.odentity.login(mail, "email", async it => {
-      var omo = await store.odentity.currentOmo();
-      if (omo != null) window.location = "/?page=odentity";
+    o.store.odentity.login(mail, "email", async it => {
+      var omo = await o.store.odentity.currentOmo();
+      if (omo != null) navigate("odentity");
       else alert("something went wrong");
       loading = false;
     });
