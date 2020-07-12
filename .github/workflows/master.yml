@@ -20,6 +20,7 @@ jobs:
         secret: ${{ secrets.TEXTILE_ACCOUNT_SECRET }}
         bucket: ${{ secrets.BUCKET }}
         thread: ${{ secrets.THREAD }}
+        remove: true
     # Use the output from the `hello` step
     - run: echo "bucket - ${{ steps.bucket.outputs.bucket }}"
     - run: echo "ipfs - ${{ steps.bucket.outputs.ipfs }}"
