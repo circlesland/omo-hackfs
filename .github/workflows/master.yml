@@ -37,7 +37,7 @@ jobs:
           key: ${{ secrets.TEXTILE_ACCOUNT_KEY }}
           secret: ${{ secrets.TEXTILE_ACCOUNT_SECRET }}
           bucket: "showcase"
-          path: 'dist'
+          path: 'public'
           thread: ${{ secrets.THREAD }}
       - run: echo "bucket - ${{ steps.bucket.outputs.key }}"
       - run: echo "ipfs - ${{ steps.bucket.outputs.ipfs }}"
