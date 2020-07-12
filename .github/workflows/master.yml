@@ -20,7 +20,6 @@ jobs:
           secret: ${{ secrets.TEXTILE_ACCOUNT_SECRET }}
           bucket: "showcase"
           thread: ${{ secrets.THREAD }}
-          remove: true
       - run: echo "bucket - ${{ steps.bucket.outputs.key }}"
       - run: echo "ipfs - ${{ steps.bucket.outputs.ipfs }}"
       - run: echo "ipfs link - ${{ steps.bucket.outputs.ipfsUrl }}"
