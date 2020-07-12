@@ -24,6 +24,7 @@ jobs:
        
       - run: npm run build
         env:
+          NODE_ENV: production
           USER_API_KEY: ${{ secrets.TEXTILE_ACCOUNT_KEY }}
           USER_API_SECRET: ${{ secrets.TEXTILE_ACCOUNT_SECRET }}
           SMTPHOST: ${{ secrets.SMTP_HOST }}
