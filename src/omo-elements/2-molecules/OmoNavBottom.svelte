@@ -7,7 +7,8 @@
 
 <aside class="bg-primary text-gray-700 shadow h-12 w-full">
   <ul
-    class="w-full flex justify-between items-center text-center font-semibold">
+    class="w-full h-12 flex justify-between items-center text-center
+    font-semibold">
 
     <li class="bg-primary hover:bg-secondary">
       <a
@@ -16,13 +17,13 @@
         <i class="text-lg fas fa-user-circle" />
       </a>
     </li>
-    <div class="h-12 w-full">
-      <button
+    <div class="w-full md:w-1/2 h-12">
+      <div
         href={patron}
-        class="xs:w-full sm:w-full lg:w-1/2 bg-tertiary text-white text-lg h-12
-        py-2 px-4 uppercase font-bold">
+        class="bg-tertiary hover:bg-secondary py-3 px-4 uppercase font-bold
+        text-white text-lg cursor-pointer">
         become dream patron
-      </button>
+      </div>
     </div>
     <li class="bg-primary hover:bg-secondary">
       <a

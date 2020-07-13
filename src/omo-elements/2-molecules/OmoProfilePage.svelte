@@ -22,14 +22,6 @@
 </script>
 
 <section class="bg-white py-4 font-sans">
-  <!-- <div class="relative border-t-2 border-b-2 border-white">
-    <div class="overflow-hidden h-8 text-xs flex bg-gray-200">
-      <div
-        style="width: {data.follower * 7.69}%"
-        class="shadow-none flex flex-col text-center whitespace-nowrap
-        text-white justify-center bg-secondary" />
-    </div>
-  </div> -->
   <section class="relative py-16">
     <div class="container mx-auto px-20">
       <div
@@ -51,10 +43,10 @@
               <span
                 class="text-3xl font-bold block uppercase tracking-wide
                 text-white">
-                18
+                {data.follower * 7.69} %
               </span>
               <span class="text-xs uppercase text-blue-400 font-bold">
-                of 28 campaign days
+                of 100% reached
               </span>
             </div>
             <div class="lg:mr-4 p-3 text-center">
@@ -69,7 +61,16 @@
             </div>
           </div>
         </div>
-
+        <div class="relative border-4 border-secondary">
+          <div class="overflow-hidden h-8 text-xs flex bg-primary">
+            <div
+              style="width: {data.follower * 7.69}%"
+              class="shadow-none flex flex-col text-center whitespace-nowrap
+              text-blue-300 justify-center bg-secondary">
+              {data.follower} of 13 dreamers
+            </div>
+          </div>
+        </div>
         <!-- <OmoAvatarsGrouped data={dreamers} /> -->
         <div class="text-center mt-4">
           <h3 class="text-4xl font-semibold leading-normal mb-2 text-gray-800">
