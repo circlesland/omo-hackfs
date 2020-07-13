@@ -115,7 +115,79 @@ export const AddressSchema: JSONSchema7 = {
     },
 };
 
-
+export const ProcessSchema: JSONSchema7 = {
+    $id: "https://example.com/address.schema.json",
+    $schema: "http://json-schema.org/draft-07/schema#",
+    title: "Process",
+    type: "object",
+    required: ["_id"],
+    definitions: ModelQuant.definitons,
+    properties: {
+        _id: {
+            type: "string",
+        },
+        name: {
+            type: "string",
+        },
+        steps: {
+            $ref: "#/definitions/oneToMany",
+            description: "Step"
+        }
+    },
+};
+export const StepSchema: JSONSchema7 = {
+    $id: "https://example.com/address.schema.json",
+    $schema: "http://json-schema.org/draft-07/schema#",
+    title: "Step",
+    type: "object",
+    required: ["_id"],
+    definitions: ModelQuant.definitons,
+    properties: {
+        _id: {
+            type: "string",
+        },
+        name: {
+            type: "string",
+        }
+    },
+};
+export const DreamSchema: JSONSchema7 = {
+    $id: "https://example.com/address.schema.json",
+    $schema: "http://json-schema.org/draft-07/schema#",
+    title: "Dream",
+    type: "object",
+    required: ["_id"],
+    definitions: ModelQuant.definitons,
+    properties: {
+        _id: {
+            type: "string",
+        },
+        first: {
+            type: "string",
+        },
+        last: {
+            type: "string",
+        },
+        city: {
+            type: "string",
+        },
+        image: {
+            type: "string",
+        },
+        profile: {
+            type: "string",
+        },
+        dream: {
+            type: "string",
+        },
+        link: {
+            type: "string",
+        },
+        follower: {
+            type: "string",
+        },
+    },
+};
 export const OmoSchema: JSONSchema7 = {
     $id: "https://example.com/omo.schema.json",
     $schema: "http://json-schema.org/draft-07/schema#",

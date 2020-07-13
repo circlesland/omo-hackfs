@@ -55,11 +55,11 @@
     }
   });
 
-  window["navigate"] = function(page) {
+  window["navigate"] = function(page, data) {
     window.history.pushState(
       { page: "another" },
       "another page",
-      `?page=${page}`
+      `?page=${page}&data=${data}`
     );
     curRoute.set(`?page=${page}`);
   };
@@ -99,7 +99,7 @@
   <main>
 
     <svelte:component
-      this={router.find(x => x.route == $curRoute).quant}
+      this={router.find(x => x.route == $curRoute.split('&')[0]).quant}
       {router} />
 
   </main>

@@ -26,7 +26,7 @@
     <p
       class="w-full h-full bg-primary opacity-50 text-center pt-8 font-bold
       text-3xl text-white absolute z-20 pointer-events-none uppercase">
-      {data.location.city}
+      {data.city}
     </p>
   </div>
   <div class="flex justify-center z-30">
@@ -65,7 +65,7 @@
   <div class="h-10 flex items-center justify-between bg-gray-100">
     <div class="text-gray-500 font-bold text-lg px-4 py-1">Ø 7 / week</div>
     <a
-      href="/"
+      href="javascript:navigate('omofunding','{data._id}')"
       class="text-white bg-secondary font-bold text-lg px-4 py-2 uppercase">
       join dream
     </a>

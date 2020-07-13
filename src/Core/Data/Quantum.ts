@@ -1,5 +1,5 @@
 import { OmoCollection } from "./OmoCollection";
-import { QuantSchema, LibrarySchema, AuthorSchema, BookSchema, AddressSchema } from "../../Helper/JsonSchema";
+import { QuantSchema, LibrarySchema, AuthorSchema, BookSchema, AddressSchema, ProcessSchema, StepSchema, DreamSchema } from "../../Helper/JsonSchema";
 import { TextileHub } from "../TextileHub";
 import { ThreadID, Client } from "@textile/hub";
 import { Quant } from "../Entities/Quant";
@@ -72,7 +72,29 @@ export class Quantum {
             icon: "fa-book",
             jsonSchema: JSON.stringify(AddressSchema),
             collectionName: 'Address',
-        }];
+        },
+        {
+            _id: "01ed151phxfx5gq9a2za77vd4q",
+            name: "Process",
+            icon: "fa-book",
+            jsonSchema: JSON.stringify(ProcessSchema),
+            collectionName: 'Process',
+        },
+        {
+            _id: "01ed151phxfx5gq9a2za78vd4q",
+            name: "Step",
+            icon: "fa-book",
+            jsonSchema: JSON.stringify(StepSchema),
+            collectionName: 'Step',
+        },
+        {
+            _id: "02ed151phxfx5gq9a2za78vd4q",
+            name: "Dream",
+            icon: "fa-book",
+            jsonSchema: JSON.stringify(DreamSchema),
+            collectionName: 'Dream',
+        }
+        ];
         var modelHelper = new ModelHelper(seed);
 
         modelHelper.modelQuanta.forEach(async quant => {
