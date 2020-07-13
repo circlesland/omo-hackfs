@@ -22,37 +22,37 @@
       locked: false
     },
     {
-      id: "2",
-      name: "Omo Chat",
-      image: "/logos/identity.svg",
-      link: "javascript:navigate('omochat')",
-      locked: false
-    },
-    {
-      id: "3",
-      name: "Omo Funding",
-      image: "/logos/identity.svg",
-      link: "javascript:navigate('omofunding')",
-      locked: false
-    },
-    {
       id: "4",
       name: "Omo Dreams",
-      image: "/logos/identity.svg",
+      image: "/logos/dream.svg",
       link: "javascript:navigate('omosapiens')",
       locked: false
     },
     {
       id: "5",
       name: "Omo Pay",
-      image: "/logos/identity.svg",
+      image: "/logos/pay.svg",
       link: "javascript:navigate('omopay')",
+      locked: false
+    },
+    {
+      id: "3",
+      name: "Omo Funding",
+      image: "/logos/funding.svg",
+      link: "javascript:navigate('omofunding')",
+      locked: false
+    },
+    {
+      id: "2",
+      name: "Omo Chat",
+      image: "/logos/chat.svg",
+      link: "javascript:navigate('omochat')",
       locked: false
     },
     {
       id: "6",
       name: "Handbook",
-      image: "/logos/identity.svg",
+      image: "/logos/learn.svg",
       link: "javascript:navigate('docs')",
       locked: false
     }
