@@ -21,7 +21,7 @@
 
   export let login = {
     text: "Login (alpha test)",
-    design: "o-btn-secondary w-full h-16 o-btn-2xl uppercase w-1/2 text-center",
+    design: "o-btn-secondary h-8 o-btn-xl uppercase w-1/2 text-center",
     link: "javascript:navigate('omoauth');"
   };
 
@@ -70,6 +70,10 @@
   export let omo;
 
   if (omo == null) curRoute.set("?page=home");
+
+  o.store.odentity.currentOmo().then(o => {
+    omo = o;
+  });
 </script>
 
 <style>
@@ -81,6 +85,7 @@
     grid-template-rows: 2rem 1fr 4rem;
   }
   main {
+    height: 100%;
     display: grid;
     grid-template-columns: 1fr;
     overflow: hidden;
@@ -92,16 +97,20 @@
     <OmoNavTop />
   </header>
   <main>
+
     <svelte:component
       this={router.find(x => x.route == $curRoute).quant}
       {router} />
+
   </main>
   <footer>
     {#if omo != null}
       <OmoNavBottom />
     {:else}
-      <div class="flex justify-content bg-primary mx-auto">
-        <OmoButton data={login} />
+      <div class="flex flex-col justify-center bg-gray-200 h-16">
+        <div class="p-4 text-center">
+          <OmoButton data={login} />
+        </div>
       </div>
     {/if}
   </footer>

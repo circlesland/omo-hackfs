@@ -10,7 +10,7 @@
     },
     {
       icon: "fa-users",
-      text: "contacts",
+      text: "dreams",
       link: "javascript:navigate('omosapiens')",
       design: "text-blue-600 hover:text-secondary"
     },

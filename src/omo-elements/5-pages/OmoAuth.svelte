@@ -9,7 +9,7 @@
     loading = true;
     o.store.odentity.login(mail, "email", async it => {
       var omo = await o.store.odentity.currentOmo();
-      if (omo != null) navigate("odentity");
+      if (omo != null) navigate("omodapps");
       else alert("something went wrong");
       loading = false;
     });
@@ -43,10 +43,12 @@
         </button>
       </div>
       <p class="text-gray-400 hover:text-secondary text-center mt-2">
-        change auth provider
+        add or change auth provider
       </p>
     {:else}
-      <p>loading...</p>
+      <p class="text-center">
+        ... magic login link has been send to your mail account
+      </p>
     {/if}
   </div>
 </div>
