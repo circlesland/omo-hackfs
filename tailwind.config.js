@@ -16,7 +16,13 @@ module.exports = {
         extend: {
             colors: {
                 primary: '#0F1758',
-                secondary: '#2AD78B',
+                secondary: '#3182ce',
+                tertiary: '#2AD78B',
+                leap1: '#3182ce',
+                leap2: '#63b3ed',
+                leap3: '#4fd1c5',
+                leap4: '#9ae6b4',
+                leap5: '#fbd38d'
             },
         }
     },

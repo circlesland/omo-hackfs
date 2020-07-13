@@ -2,14 +2,10 @@
   import OmoButton from "./../1-atoms/OmoButton";
   export let logout = "javascript: ;//o.store.odentity.logout()";
   export let home = "javascript:navigate('omodapps')";
-  export let button = {
-    text: "become dream patron for Ø 7 / week",
-    design: "o-btn-secondary text-white",
-    link: "/"
-  };
+  export let patron = "javascript:navigate('omosapiens')";
 </script>
 
-<aside class="bg-gray-200 text-gray-700 shadow h-12 w-full">
+<aside class="bg-primary text-gray-700 shadow h-12 w-full">
   <ul
     class="w-full flex justify-between items-center text-center font-semibold">
 
@@ -20,10 +16,15 @@
         <i class="text-lg fas fa-user-circle" />
       </a>
     </li>
-    <div class="px-4">
-      <OmoButton data={button} />
+    <div class="h-12 w-full">
+      <button
+        href={patron}
+        class="xs:w-full sm:w-full lg:w-1/2 bg-tertiary text-white text-lg h-12
+        py-2 px-4 uppercase font-bold">
+        become dream patron
+      </button>
     </div>
-    <li class="bg-secondary hover:bg-primary">
+    <li class="bg-primary hover:bg-secondary">
       <a
         href={logout}
         class="text-white h-12 w-12 px-6 flex flex justify-center items-center">

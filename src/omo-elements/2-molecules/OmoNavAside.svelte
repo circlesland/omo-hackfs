@@ -4,7 +4,7 @@
       icon: "fa-bullseye",
       text: "dapps",
       link: "javascript:navigate('omofunding')",
-      design: "bg-primary text-white"
+      design: "text-white bg-primary"
     },
     {
       icon: "fa-users",

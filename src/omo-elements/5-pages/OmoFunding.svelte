@@ -25,7 +25,7 @@
     {
       type: "leap",
       title: "Seeding the dream",
-      color: "bg-blue-600",
+      color: "bg-leap1",
       state: "active",
       order: 1,
       levels: [
@@ -72,7 +72,7 @@
     {
       type: "leap",
       title: "Validating the idea",
-      color: "bg-blue-300",
+      color: "bg-leap2",
       state: "locked",
       order: 2,
       levels: [
@@ -119,7 +119,7 @@
     {
       type: "leap",
       title: "developing the prototype",
-      color: "bg-teal-400",
+      color: "bg-leap3",
       order: 3,
       levels: [
         {
@@ -165,7 +165,7 @@
     {
       type: "leap",
       title: "building the product",
-      color: "bg-green-400",
+      color: "bg-leap4",
       state: "locked",
       order: 4,
       levels: [
@@ -212,7 +212,7 @@
     {
       type: "leap",
       title: "scaling the service",
-      color: "bg-secondary",
+      color: "bg-leap5",
       state: "locked",
       order: 5,
       levels: [
