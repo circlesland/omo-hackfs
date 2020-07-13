@@ -85,7 +85,6 @@
     grid-template-rows: 2rem 1fr 4rem;
   }
   main {
-    height: 100%;
     display: grid;
     grid-template-columns: 1fr;
     overflow: hidden;
