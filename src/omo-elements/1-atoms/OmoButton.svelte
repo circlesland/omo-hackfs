@@ -15,6 +15,10 @@
     @apply bg-secondary text-white font-bold py-2 px-4;
   }
 
+  .o-btn-indigo {
+    @apply bg-blue-600 text-white font-bold h-full py-2 px-4;
+  }
+
   .o-btn-xl {
     @apply text-xl;
   }

@@ -2,7 +2,7 @@
   import OmoImageGrid from "./../2-molecules/OmoImageGrid";
   import OmoHero from "./../2-molecules/OmoHero";
 
-  let omo = { _id: "Omo" };
+  let omo = {};
 
   o.store.odentity.currentOmo().then(o => {
     omo = o;
@@ -10,7 +10,7 @@
 
   $: hero = {
     uptitle: "My Omo Dapps",
-    title: `Welcome, Omo Sapiens`
+    title: `Welcome, ${omo.name != null ? omo.name : omo._id}`
   };
 
   export let logos = [
@@ -22,39 +22,39 @@
       locked: false
     },
     {
-      id: "2",
-      name: "Omo Chat",
-      image: "/logos/chat.svg",
-      link: "javascript:navigate('omochat')",
-      locked: true
-    },
-    {
-      id: "3",
-      name: "Omo Funding",
-      image: "/logos/chat.svg",
-      link: "javascript:navigate('omofunding')",
-      locked: true
-    },
-    {
       id: "4",
-      name: "Dreams",
-      image: "/logos/chat.svg",
-      link: "?page=omosapiens",
-      locked: true
+      name: "Omo Dreams",
+      image: "/logos/dream.svg",
+      link: "javascript:navigate('omosapiens')",
+      locked: false
     },
     {
       id: "5",
       name: "Omo Pay",
-      image: "/logos/chat.svg",
+      image: "/logos/pay.svg",
       link: "javascript:navigate('omopay')",
-      locked: true
+      locked: false
+    },
+    {
+      id: "3",
+      name: "Omo Funding",
+      image: "/logos/funding.svg",
+      link: "javascript:navigate('omofunding')",
+      locked: false
+    },
+    {
+      id: "2",
+      name: "Omo Chat",
+      image: "/logos/chat.svg",
+      link: "javascript:navigate('omochat')",
+      locked: false
     },
     {
       id: "6",
       name: "Handbook",
-      image: "/logos/chat.svg",
+      image: "/logos/learn.svg",
       link: "javascript:navigate('docs')",
-      locked: true
+      locked: false
     }
   ];
 </script>

@@ -16,7 +16,7 @@
       <div
         style="width: {data.follower * 7.69}%"
         class="shadow-none flex flex-col text-center whitespace-nowrap
-        text-white justify-center bg-secondary" />
+        text-white justify-center bg-blue-600" />
     </div>
   </div>
   <div class="z-0 relative group h-48 w-full flex justify-center items-center">
@@ -41,14 +41,14 @@
       <div>
         <span
           class="text-xs font-semibold inline-block py-1 px-2 uppercase
-          text-white bg-primary">
+          text-white bg-blue-600">
           {data.follower} / 13
         </span>
       </div>
       <div class="text-right">
         <span
           class="text-xs font-semibold inline-block py-1 px-2 uppercase
-          text-white bg-primary ">
+          text-white bg-blue-600 ">
           DREAMERS
         </span>
       </div>
@@ -66,8 +66,8 @@
     <div class="text-gray-500 font-bold text-lg px-4 py-1">Ø 7 / week</div>
     <a
       href="javascript:navigate('omofunding','{data._id}')"
-      class="text-white bg-secondary font-bold text-lg px-4 py-2 uppercase">
-      join dream
+      class="text-white bg-blue-600 font-bold text-lg px-4 py-2 uppercase">
+      unlock dream
     </a>
   </div>
 

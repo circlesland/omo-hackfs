@@ -21,7 +21,7 @@
 
   export let login = {
     text: "Login (alpha test)",
-    design: "o-btn-secondary w-full h-16 o-btn-2xl uppercase w-1/2 text-center",
+    design: "o-btn-secondary h-8 o-btn-xl uppercase w-1/2 text-center",
     link: "javascript:navigate('omoauth');"
   };
 
@@ -53,21 +53,32 @@
         window.location.href
       );
     }
+    o.store.odentity.currentOmo().then(o => {
+      omo = o;
+    });
   });
 
-  window["navigate"] = function(page, data) {
-    window.history.pushState(
-      { page: "another" },
-      "another page",
-      `?page=${page}&data=${data}`
-    );
+  window["navigate"] = function(page, data = "") {
+    if (data != "")
+      window.history.pushState(
+        { page: "another" },
+        "another page",
+        `?page=${page}&data=${data}`
+      );
+    else
+      window.history.pushState(
+        { page: "another" },
+        "another page",
+        `?page=${page}`
+      );
     curRoute.set(`?page=${page}`);
   };
 
   function handlerBackNavigation(event) {
     curRoute.set(event.state.path);
   }
-  export let omo;
+
+  let omo;
 
   if (omo == null) curRoute.set("?page=home");
 </script>
@@ -78,7 +89,7 @@
     width: 100vw;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 2rem 1fr 4rem;
+    grid-template-rows: 2rem 1fr 3rem;
   }
   main {
     display: grid;
@@ -92,16 +103,20 @@
     <OmoNavTop />
   </header>
   <main>
+
     <svelte:component
       this={router.find(x => x.route == $curRoute.split('&')[0]).quant}
       {router} />
+
   </main>
   <footer>
     {#if omo != null}
       <OmoNavBottom />
     {:else}
-      <div class="flex justify-content bg-primary mx-auto">
-        <OmoButton data={login} />
+      <div class="flex flex-col justify-center bg-gray-200 h-12">
+        <div class="p-4 text-center">
+          <OmoButton data={login} />
+        </div>
       </div>
     {/if}
   </footer>

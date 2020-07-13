@@ -12,10 +12,12 @@
   import GraphQLEditor from "./../../omo-docs/GraphQLEditor.svx";
   import DataStore from "./../../omo-docs/DataStore.svx";
   import Circles from "./../../omo-docs/Circles.svx";
+  import OmoActions from "./../../omo-docs/OmoActions.svx";
 
   const blogs = [
     { text: "Overview", component: Overview },
     { text: "Introduction", component: Introduction },
+    { text: "OmoActions", component: OmoActions },
     { text: "Odentity", component: OmoIdentity },
     { text: "OmoEarthPOC", component: OmoEarthPOC },
     { text: "Design System", component: DesignSystem },
