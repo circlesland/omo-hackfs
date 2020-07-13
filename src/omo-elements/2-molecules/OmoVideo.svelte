@@ -1,3 +1,9 @@
+<script>
+  export let data = {
+    image: ""
+  };
+</script>
+
 <style>
   section {
     height: 30rem;

@@ -15,7 +15,7 @@
     });
 
   function seed() {
-    fetch("https://www.randomtext.me/api/p-20/10-20")
+    fetch("https://www.randomtext.me/api/p-20/10-15")
       .then(response => response.json())
       .then(data => {
         var texts = data.text_out.split("<p>");

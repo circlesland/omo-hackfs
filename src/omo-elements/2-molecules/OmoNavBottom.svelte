@@ -1,4 +1,40 @@
 <script>
+  import OmoButton from "./../1-atoms/OmoButton";
+  export let logout = "javascript:o.store.odentity.logout()";
+  export let home = "javascript:navigate('omodapps')";
+  export let button = {
+    text: "become dream patron for Ø 7 / week",
+    design: "o-btn-indigo text-white",
+    link: "/"
+  };
+</script>
+
+<aside class="bg-gray-200 text-gray-700 shadow h-12 w-full">
+  <ul
+    class="w-full flex justify-between items-center text-center font-semibold">
+
+    <li class="bg-primary hover:bg-secondary">
+      <a
+        href={home}
+        class="text-white h-12 w-12 px-6 flex flex justify-center items-center ">
+        <i class="text-lg fas fa-user-circle" />
+      </a>
+    </li>
+    <div class="px-4">
+      <OmoButton data={button} />
+    </div>
+    <li class="bg-secondary hover:bg-primary">
+      <a
+        href={logout}
+        class="text-white h-12 w-12 px-6 flex flex justify-center items-center">
+        <i class="text-lg fas fa-plus" />
+      </a>
+    </li>
+  </ul>
+
+</aside>
+
+<!-- <script>
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
 
   export let navitems = [
@@ -33,15 +69,11 @@
       design: "text-blue-600 hover:text-secondary"
     }
   ];
-</script>
-
-<style>
+</script><style>
   li {
     @apply p-2;
   }
-</style>
-
-<OmoIconsFA />
+</style><OmoIconsFA />
 <div class="bottomNav fixed bottom-0 w-full">
   <nav class="bottom-0 w-full bg-primary">
     <ul
@@ -60,4 +92,4 @@
       {/each}
     </ul>
   </nav>
-</div>
+</div> -->

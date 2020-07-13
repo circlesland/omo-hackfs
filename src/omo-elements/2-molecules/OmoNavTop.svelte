@@ -12,13 +12,14 @@
 </style>
 
 <OmoIconsFA />
-<header class="bg-secondary">
-  <nav class="flex justify-between w-full bg-gray-200 text-primary">
+<header>
+  <nav class="flex justify-between w-full bg-primary text-blue-500">
     <i class="fas fa-arrow-left p-2 hover:bg-secondary" />
-    <div class="pt-1 justify-center">
-      <a href={home}>
+    <div class="py-2 uppercase text-xs font-bold justify-center">
+      context title
+      <!-- <a href={home}>
         <img class="h-6" src="/logos/omo.svg" alt="logo" />
-      </a>
+      </a> -->
     </div>
     <i class="fas fa-arrow-right p-2 hover:bg-secondary" />
   </nav>

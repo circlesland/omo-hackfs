@@ -6,93 +6,86 @@
     height: "h-6"
   };
 
-  export let city = {};
+  export let data = {};
 
-  fetch("https://randomuser.me/api")
-    .then(response => response.json())
-    .then(data => (city = data.results[0].location.city));
+  // export let dreamers = [];
+
+  // fetch("https://randomuser.me/api?results=10")
+  //   .then(response => response.json())
+  //   .then(
+  //     data =>
+  //       (data = data.results.map((item, i) => {
+  //         item.profile = item.picture.large;
+  //         return item;
+  //       }))
+  //   );
 </script>
 
 <section class="bg-white py-4 font-sans">
+  <!-- <div class="relative border-t-2 border-b-2 border-white">
+    <div class="overflow-hidden h-8 text-xs flex bg-gray-200">
+      <div
+        style="width: {data.follower * 7.69}%"
+        class="shadow-none flex flex-col text-center whitespace-nowrap
+        text-white justify-center bg-secondary" />
+    </div>
+  </div> -->
   <section class="relative py-16">
-    <div class="container mx-auto px-12">
+    <div class="container mx-auto px-20">
       <div
         class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6
         shadow-xl rounded-lg -mt-40">
-        <div class="w-full px-6 bg-primary text-secondary">
+        <div class="w-full px-6 bg-blue-600 text-white">
           <div class="flex py-4 flex-wrap justify-center lg:pt-4 pt-8">
             <div class="mr-4 p-3 text-center">
               <span
-                class="text-2xl font-bold block uppercase tracking-wide
+                class="text-3xl font-bold block uppercase tracking-wide
                 text-white">
-                10
-                <span class="text-blue-500">
-                  /
-                  <span class="text-md">13</span>
-                </span>
+                {data.follower}
               </span>
-              <span class="text-sm uppercase text-blue-500 font-bold">
-                Omo Dreamers
+              <span class="text-xs uppercase text-blue-400 font-bold">
+                of 13 dreamers
               </span>
             </div>
             <div class="mr-4 p-3 text-center">
               <span
-                class="text-2xl font-bold block uppercase tracking-wide
+                class="text-3xl font-bold block uppercase tracking-wide
                 text-white">
-                4
-                <span class="text-blue-500">
-                  /
-                  <span class="text-md">28</span>
-                </span>
+                18
               </span>
-              <span class="text-sm uppercase text-blue-500 font-bold">
-                Campaign Days
+              <span class="text-xs uppercase text-blue-400 font-bold">
+                of 28 campaign days
               </span>
             </div>
             <div class="lg:mr-4 p-3 text-center">
               <span
-                class="text-2xl font-bold block uppercase tracking-wide
+                class="text-3xl font-bold block uppercase tracking-wide
                 text-white">
-                Ø 28
-                <span class="text-blue-500">
-                  /
-                  <span class="text-md">Ø 91</span>
-                </span>
+                Ø {data.follower * 7}
               </span>
-              <span class="text-sm uppercase text-blue-600 font-bold">
-                Funding Goal
+              <span class="text-xs uppercase text-blue-400 font-bold">
+                of Ø 91 / week goal
               </span>
             </div>
           </div>
         </div>
-        <div class="relative border-t-2 border-b-2 border-white">
-          <div class="overflow-hidden h-8 text-xs flex bg-gray-200">
-            <div
-              style="width: {8 * 7.69}%"
-              class="shadow-none flex flex-col text-center whitespace-nowrap
-              text-white justify-center bg-secondary" />
-          </div>
-        </div>
-        <OmoAvatarsGrouped />
+
+        <!-- <OmoAvatarsGrouped data={dreamers} /> -->
         <div class="text-center mt-4">
           <h3 class="text-4xl font-semibold leading-normal mb-2 text-gray-800">
-            Quantum Leap Earth Summit
+            {data.first} {data.last}
           </h3>
           <div
             class="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold
             uppercase">
             <i class="fas fa-map-marker-alt mr-2 text-lg text-gray-500" />
-            {city}
+            {data.city}
           </div>
         </div>
         <div class="mt-10 py-10 border-t border-gray-300 text-center">
           <div class="flex flex-wrap justify-center">
             <div class="w-full lg:w-9/12 px-4">
-              <p class="text-lg leading-relaxed text-gray-800">
-                Lorem ipsum morbi congue quisque imperdiet nam vel nunc donec
-                mi, aliquet tempus per quisque eget sagittis faucibus velit
-                pellentesque.
-              </p>
+              <p class="text-lg leading-relaxed text-gray-800">{data.dream}</p>
             </div>
           </div>
         </div>

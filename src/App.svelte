@@ -53,6 +53,9 @@
         window.location.href
       );
     }
+    o.store.odentity.currentOmo().then(o => {
+      omo = o;
+    });
   });
 
   window["navigate"] = function(page, data) {
@@ -67,13 +70,10 @@
   function handlerBackNavigation(event) {
     curRoute.set(event.state.path);
   }
-  export let omo;
+
+  let omo;
 
   if (omo == null) curRoute.set("?page=home");
-
-  o.store.odentity.currentOmo().then(o => {
-    omo = o;
-  });
 </script>
 
 <style>
@@ -82,7 +82,7 @@
     width: 100vw;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 2rem 1fr 4rem;
+    grid-template-rows: 2rem 1fr 3rem;
   }
   main {
     display: grid;
@@ -106,7 +106,7 @@
     {#if omo != null}
       <OmoNavBottom />
     {:else}
-      <div class="flex flex-col justify-center bg-gray-200 h-16">
+      <div class="flex flex-col justify-center bg-gray-200 h-12">
         <div class="p-4 text-center">
           <OmoButton data={login} />
         </div>
