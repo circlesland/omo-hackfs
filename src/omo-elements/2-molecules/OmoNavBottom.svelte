@@ -1,10 +1,10 @@
 <script>
   import OmoButton from "./../1-atoms/OmoButton";
-  export let logout = "javascript:o.store.odentity.logout()";
+  export let logout = "javascript: ;//o.store.odentity.logout()";
   export let home = "javascript:navigate('omodapps')";
   export let button = {
     text: "become dream patron for Ø 7 / week",
-    design: "o-btn-indigo text-white",
+    design: "o-btn-secondary text-white",
     link: "/"
   };
 </script>

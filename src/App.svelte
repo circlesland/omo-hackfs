@@ -58,12 +58,19 @@
     });
   });
 
-  window["navigate"] = function(page, data) {
-    window.history.pushState(
-      { page: "another" },
-      "another page",
-      `?page=${page}&data=${data}`
-    );
+  window["navigate"] = function(page, data = "") {
+    if (data != "")
+      window.history.pushState(
+        { page: "another" },
+        "another page",
+        `?page=${page}&data=${data}`
+      );
+    else
+      window.history.pushState(
+        { page: "another" },
+        "another page",
+        `?page=${page}`
+      );
     curRoute.set(`?page=${page}`);
   };
 

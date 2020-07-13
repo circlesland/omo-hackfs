@@ -10,13 +10,15 @@
 
   if (urlParams.has("data")) {
     var id = urlParams.get("data");
-    o.graphql
-      .query(
-        `DreamById(_id:"${id}") {_id first last profile image follower city dream}`
-      )
-      .then(result => {
-        dream = result.data.DreamById;
-      });
+    if (id != undefined) {
+      o.graphql
+        .query(
+          `DreamById(_id:"${id}") {_id first last profile image follower city dream}`
+        )
+        .then(result => {
+          dream = result.data.DreamById;
+        });
+    }
   }
 
   export let data = [
