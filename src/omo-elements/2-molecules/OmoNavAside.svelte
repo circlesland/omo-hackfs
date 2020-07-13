@@ -4,25 +4,25 @@
       icon: "fa-bullseye",
       text: "dapps",
       link: "javascript:navigate('omofunding')",
-      design: "bg-blue-600 text-white"
+      design: "bg-primary text-white"
     },
     {
       icon: "fa-users",
       text: "messages",
       link: "javascript:navigate('omochat')",
-      design: "text-blue-600 bg-gray-200"
+      design: "text-white bg-blue-600"
     },
     {
       icon: "fa-comments",
       text: "messages",
       link: "javascript:navigate('omochat')",
-      design: "text-blue-600 bg-gray-200"
+      design: "text-white bg-blue-600"
     },
     {
       icon: "fa-bell",
       text: "messages",
       link: "javascript:navigate('docs')",
-      design: "text-blue-600 bg-gray-200"
+      design: "text-white bg-blue-600"
     }
   ];
 </script>
@@ -36,7 +36,7 @@
         <a
           href={item.link}
           class="{item.design} h-12 px-6 flex flex justify-center items-center
-          w-full hover:bg-blue-600 hover:text-white">
+          w-full hover:bg-primary hover:text-white">
           <i class="text-lg fas {item.icon}" />
         </a>
       </li>

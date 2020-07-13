@@ -70,7 +70,7 @@
     {
       type: "leap",
       title: "Validating the idea",
-      color: "bg-blue-400",
+      color: "bg-blue-300",
       state: "locked",
       order: 2,
       levels: [
@@ -163,7 +163,7 @@
     {
       type: "leap",
       title: "building the product",
-      color: "bg-green-300",
+      color: "bg-green-400",
       state: "locked",
       order: 4,
       levels: [
