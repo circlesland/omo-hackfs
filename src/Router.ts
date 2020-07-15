@@ -1,4 +1,38 @@
-import { writable } from "svelte/store";
+// https://medium.com/swlh/simple-svelte-3-app-with-router-44fe83c833b6
 
+import { writable } from "svelte/store";
 export var curRoute = writable("?page=home");
-export const curId = writable(0);
+
+export function getRoute() {
+    let route: string[] = [];
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("page")) route.push(`page=${urlParams.get("page")}`);
+    if (urlParams.has("data")) route.push(`data=${urlParams.get("data")}`);
+    if (urlParams.has("redirect"))
+        route.push(`page=${urlParams.get("redirect")}`);
+    if (route.length == 0) return "";
+    return `?${route.join("&")}`;
+}
+
+export function getComponent(route, routes) {
+    var page = route.split('&')[0];
+    var component = routes.find(r => r.route == page);
+    if (component.authenticate && window.o.odentity.current == null) {
+        var urlParams = new URLSearchParams(window.location.search);
+        navigate("omoauth", urlParams.get("data"), page)
+        return;
+    }
+    return component.quant;
+}
+
+export function navigate(page: string, data: string | null, redirect: string) {
+    var route = `?page=${page}`;
+    if (data !== null && data !== undefined && data !== "") {
+        route += `&data=${data}`
+    }
+    if (redirect !== null && redirect !== undefined && redirect !== "") {
+        route += `&redirect=${redirect}`
+    }
+    window.history.pushState({ page: "another" }, page, route);
+    curRoute.set(route);
+}

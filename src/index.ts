@@ -1,26 +1,27 @@
 import App from "./App.svelte";
-import { ChatRoom } from "./Core/Chat";
 import { OmoCore } from "./Core/OmoCore";
-import { subscribe, parse, ExecutionResult } from "graphql";
+
+declare global {
+  interface Window { o: OmoCore; }
+  interface Window { omo: OmoCore; }
+}
 
 var app;
 
-// window["ChatRoom"] = new ChatRoom();
-// OmoCore.load().then(async (o) => {
-//   window['omo'] = o;
-//   window['o'] = o;
-window["restore"] = function (key) {
-  return JSON.parse(localStorage.getItem(key) || "{}");
-};
-window["store"] = function (key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
-};
+OmoCore.start().then(async (o) => {
+  window.o = o;
+  window.omo = o;
 
-app = new App({
-  target: document.body,
-  props: {
-    // omo: await o.store.odentity.currentOmo()
-  },
+  window["restore"] = function (key) {
+    return JSON.parse(localStorage.getItem(key) || "{}");
+  };
+  window["store"] = function (key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+  };
+
+  app = new App({
+    target: document.body
+  });
 });
 // });
 

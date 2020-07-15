@@ -1,8 +1,10 @@
 import { Instance } from "@textile/threads-store";
 
 export class LoginRequest implements Instance {
+    static CollectionName: string = "LoginRequest";
+
     _id: string;
-    omoProviderId?: string;
+    odentityProviderId?: string;
     timestamp?: string;
     verified: boolean;
 

@@ -7,11 +7,18 @@
   export let mail;
   function login() {
     loading = true;
-    o.store.odentity.login(mail, "email", async it => {
-      var omo = await o.store.odentity.currentOmo();
-      if (omo != null) navigate("omodapps");
-      else alert("something went wrong");
-      loading = false;
+    o.odentity.login(mail, "email", async it => {
+      if (o.odentity.current == null) {
+        loading = false;
+        alert("something went wrong.");
+      }
+      console.log(it);
+      var urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has("redirect")) {
+        window.navigate(urlParams.get("redirect"), urlParams.get("data"));
+        return;
+      }
+      navigate("omodapps");
     });
   }
   export let loading = false;

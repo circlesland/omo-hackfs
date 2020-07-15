@@ -38,7 +38,7 @@ export const LibrarySchema: JSONSchema7 = {
     title: "Library",
     type: "object",
     required: ["_id"],
-    definitions: ModelQuant.definitons,
+    // definitions: ModelQuant.definitons,
     properties: {
         _id: {
             type: "string",
@@ -57,7 +57,7 @@ export const BookSchema = {
     title: "Book",
     type: "object",
     required: ["_id"],
-    definitions: ModelQuant.definitons,
+    // definitions: ModelQuant.definitons,
     properties: {
         _id: {
             type: "string",
@@ -76,7 +76,7 @@ export const AuthorSchema = {
     title: "Author",
     type: "object",
     required: ["_id"],
-    definitions: ModelQuant.definitons,
+    // definitions: ModelQuant.definitons,
     properties: {
         _id: {
             type: "string",
@@ -98,7 +98,7 @@ export const AddressSchema: JSONSchema7 = {
     title: "Address",
     type: "object",
     required: ["_id"],
-    definitions: ModelQuant.definitons,
+    // definitions: ModelQuant.definitons,
     properties: {
         _id: {
             type: "string",
@@ -121,7 +121,7 @@ export const ProcessSchema: JSONSchema7 = {
     title: "Process",
     type: "object",
     required: ["_id"],
-    definitions: ModelQuant.definitons,
+    // definitions: ModelQuant.definitons,
     properties: {
         _id: {
             type: "string",
@@ -141,7 +141,7 @@ export const StepSchema: JSONSchema7 = {
     title: "Step",
     type: "object",
     required: ["_id"],
-    definitions: ModelQuant.definitons,
+    // definitions: ModelQuant.definitons,
     properties: {
         _id: {
             type: "string",
@@ -157,7 +157,7 @@ export const DreamSchema: JSONSchema7 = {
     title: "Dream",
     type: "object",
     required: ["_id"],
-    definitions: ModelQuant.definitons,
+    // definitions: ModelQuant.definitons,
     properties: {
         _id: {
             type: "string",
@@ -188,35 +188,44 @@ export const DreamSchema: JSONSchema7 = {
         },
     },
 };
-export const OmoSchema: JSONSchema7 = {
+export const OdentitySchema: JSONSchema7 = {
     $id: "https://example.com/omo.schema.json",
     $schema: "http://json-schema.org/draft-07/schema#",
-    title: "Omo",
+    title: "Odentity",
     type: "object",
     required: ["_id"],
     properties: {
         _id: {
             type: "string",
         },
-        name: {
+        firstName: {
+            type: "string",
+        },
+        lastName: {
+            type: "string",
+        },
+        threadId: {
             type: "string",
         },
         profileImage: {
             type: "string"
+        },
+        cryptoIdentity: {
+            type: "string"
         }
     },
 };
-export const IdentityProviderSchema: JSONSchema7 = {
+export const OdentityProviderSchema: JSONSchema7 = {
     $id: "https://example.com/identityprovider.schema.json",
     $schema: "http://json-schema.org/draft-07/schema#",
-    title: "IdentityProvider",
+    title: "OdentityProvider",
     type: "object",
     required: ["_id"],
     properties: {
         _id: {
             type: "string",
         },
-        omoid: {
+        odentityId: {
             type: "string",
         },
         type: {
@@ -238,7 +247,7 @@ export const LoginRequestSchema: JSONSchema7 = {
         _id: {
             type: "string",
         },
-        omoProviderId: {
+        odentityProviderId: {
             type: "string",
         },
         timestamp: {

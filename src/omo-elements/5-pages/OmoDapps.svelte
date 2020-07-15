@@ -8,11 +8,7 @@
     title: "Please login in"
   };
 
-  export let omo;
-
-  o.store.odentity.currentOmo().then(o => {
-    omo = o;
-  });
+  export let omo = o.odentity.current;
 </script>
 
 {#if omo != null}
