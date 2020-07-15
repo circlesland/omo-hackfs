@@ -118,6 +118,7 @@
 </style>
 
 <ComponentRegistrar />
+
 <div class="app">
   <svelte:component
     this={router.find(x => x.route == $curRoute.split('&')[0]).quant}

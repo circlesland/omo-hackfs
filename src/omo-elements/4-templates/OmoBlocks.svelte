@@ -1,5 +1,5 @@
 <script>
-  import OmoBlock from "./OmoBlock";
+  import OmoOrganism from "./OmoOrganism";
   import OmoMolecule from "./OmoMolecule";
   export let dapp = {
     layout: {
@@ -43,7 +43,7 @@
     {#if block.type == 'molecule'}
       <OmoMolecule transfer={JSON.stringify(block)} />
     {:else}
-      <OmoBlock transfer={JSON.stringify(block)} />
+      <OmoOrganism transfer={JSON.stringify(block)} />
     {/if}
   {/each}
 </section>
