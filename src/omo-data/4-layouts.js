@@ -21,3 +21,31 @@ export const OmoLeftContent = {
   columns: "12rem 1fr",
   rows: "1fr",
 };
+
+export const OmoLayoutTopMainBottom = {
+  name: "OmoLayoutTopMainBottom",
+  areas: "'top' 'main' 'bottom'",
+  columns: "1fr",
+  rows: "2rem 1fr 3rem",
+};
+
+export const OmoLayoutLeftMainRight = {
+  name: "OmoLayoutLeftMainRight",
+  areas: "'left main right'",
+  columns: "12rem 1fr 12rem",
+  rows: "1fr",
+};
+
+export const OmoLayoutLeftMain = {
+  name: "OmoLayoutLeftMain",
+  areas: "'left main'",
+  columns: "12rem 1fr",
+  rows: "1fr",
+};
+
+export const OmoLayoutMainRight = {
+  name: "OmoLayoutMainRight",
+  areas: "'main right'",
+  columns: "1fr 12rem",
+  rows: "1fr",
+};

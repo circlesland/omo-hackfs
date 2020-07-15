@@ -1,22 +1,22 @@
 <script>
   import { onMount } from "svelte";
   // Import the generic and dynamic css grid layout builder
-  import OmoBlocks from "./../4-templates/OmoBlocks";
-  import OmoMolecule1 from "./../2-molecules/OmoMolecule1";
-  import OmoMolecule2 from "./../2-molecules/OmoMolecule2";
-  import OmoMolecule3 from "./../2-molecules/OmoMolecule3";
-  import OmoMolecule4 from "./../2-molecules/OmoMolecule4";
+  import OmoDapp from "./../4-templates/OmoDapp";
+  // Import your graphql queries here
+  // Currently work around with browser localstore until local threads DB is implemented
 
-  // Import all your data and blocks you want to display in your DAPP
-  //   import { OmoLeftContent } from "./../../omo-data/4-layouts";
-  //   import { OmoCenterLeft } from "./../../omo-data/3-organisms";
+  let blocks = window.data.blocks;
+  let layouts = window.data.layouts;
 
-  $: layout = window.data.layout;
-  $: blocks = window.data.blocks;
+  const OmoLayoutTopMainBottom = layouts.find(
+    l => l.name === "OmoLayoutTopMainBottom"
+  );
+  const OmoDappOmoMe = blocks.find(b => b.name === "OmoDappOmoMe").blocks;
+
   $: dapp = {
-    layout,
-    blocks
+    layout: OmoLayoutTopMainBottom,
+    blocks: OmoDappOmoMe
   };
 </script>
 
-<OmoBlocks {dapp} />
+<OmoDapp {dapp} />

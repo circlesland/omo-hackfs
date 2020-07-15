@@ -1,64 +1,52 @@
+import {
+  OmoLayoutLeftMainRight,
+  OmoLayoutTopMainBottom,
+  OmoLayoutMainRight,
+} from "./omo-data/4-layouts";
+
 export function seed() {
   var seed: any = {};
-  seed.example = "hello omo seeder";
-  let layout = {
-    areas: "'left content'",
-    columns: "12rem 1fr",
-    rows: "1fr",
+
+  let OmoDappOmoMe = {
+    name: "OmoDappOmoMe",
+    blocks: [
+      {
+        type: "molecule",
+        slot: "top",
+        quant: "OmoTitleBar",
+        data: { name: "I am level 1 molecule 1 blue" },
+      },
+      {
+        type: "molecule",
+        slot: "bottom",
+        quant: "OmoNavBar",
+        data: { name: "I am level 1 molecule 2 green" },
+      },
+      {
+        type: "organism",
+        slot: "main",
+        layout: OmoLayoutMainRight,
+        blocks: [
+          {
+            type: "molecule",
+            slot: "right",
+            quant: "OmoMolecule3",
+            data: { name: "filter" },
+          },
+          {
+            type: "molecule",
+            slot: "main",
+            quant: "OmoDapps",
+            data: { name: "I am level 2 molecule 4 pink" },
+          },
+        ],
+      },
+    ],
   };
-  seed.layout = layout;
-  seed.blocks = [
-    {
-      type: "molecule",
-      slot: "left",
-      quant: "OmoMolecule1",
-      data: { name: "I am level 1 molecule" },
-    },
-    {
-      type: "organisms",
-      slot: "content",
-      layout: layout,
-      blocks: [
-        {
-          type: "molecule",
-          slot: "left",
-          quant: "OmoMolecule2",
-          data: { name: "I am level 2 molecule 2" },
-        },
-        {
-          type: "organisms",
-          slot: "content",
-          layout: layout,
-          blocks: [
-            {
-              type: "molecule",
-              slot: "left",
-              quant: "OmoMolecule3",
-              data: { name: "I am level 3 molecule" },
-            },
-            {
-              type: "organisms",
-              slot: "content",
-              layout: layout,
-              blocks: [
-                {
-                  type: "molecule",
-                  slot: "left",
-                  quant: "OmoMolecule4",
-                  data: { name: "I am the level 4 left molecule" },
-                },
-                {
-                  type: "molecule",
-                  slot: "content",
-                  quant: "OmoMolecule4",
-                  data: { name: "I am the level 4 content molecule" },
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ];
+
+  seed.layouts = [OmoLayoutTopMainBottom, OmoLayoutLeftMainRight];
+
+  seed.blocks = [OmoDappOmoMe];
+
   return seed;
 }

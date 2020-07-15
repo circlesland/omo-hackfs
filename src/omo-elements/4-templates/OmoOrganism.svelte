@@ -1,7 +1,7 @@
 <script>
   export var transfer;
   var block = JSON.parse(transfer);
-  import OmoBlocks from "./OmoBlocks";
+  import OmoDapp from "./OmoDapp";
   var dapp = { layout: block.layout, blocks: block.blocks };
 </script>
 
@@ -9,5 +9,5 @@
   class="blocks"
   style="--areas: {block.layout.areas}; --columns: {block.layout.columns};
   --rows: {block.layout.rows}; ">
-  <OmoBlocks {dapp} />
+  <OmoDapp {dapp} />
 </section>

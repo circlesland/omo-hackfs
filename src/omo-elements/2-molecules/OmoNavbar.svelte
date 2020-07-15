@@ -1,6 +1,6 @@
 <nav class="bg-gray-800">
-  <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-    <div class="relative flex items-center justify-between h-16">
+  <div class="max-w-7xl mx-auto px-1 sm:px-3 lg:px-4">
+    <div class="relative flex items-center justify-between h-12">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
         <!-- Mobile menu button-->
         <button
@@ -38,17 +38,17 @@
       <div
         class="flex-1 flex items-center justify-center sm:items-stretch
         sm:justify-start">
-        <div class="flex-shrink-0">
+        <!-- <div class="flex-shrink-0">
           <img
             class="block lg:hidden h-8 w-auto"
-            src="/img/logos/workflow-mark-on-dark.svg"
-            alt="Workflow logo" />
+            src="/logos/omo.svg"
+            alt="logo" />
           <img
             class="hidden lg:block h-8 w-auto"
-            src="/img/logos/workflow-logo-on-dark.svg"
-            alt="Workflow logo" />
-        </div>
-        <div class="hidden sm:block sm:ml-6">
+            src="/logos/omo.svg"
+            alt="logo" />
+        </div> -->
+        <div class="hidden sm:block">
           <div class="flex">
             <a
               href="#"
@@ -123,60 +123,11 @@
                 alt="" />
             </button>
           </div>
-          <!--
-            Profile dropdown panel, show/hide based on dropdown state.
-
-            Entering: "transition ease-out duration-100"
-              From: "transform opacity-0 scale-95"
-              To: "transform opacity-100 scale-100"
-            Leaving: "transition ease-in duration-75"
-              From: "transform opacity-100 scale-100"
-              To: "transform opacity-0 scale-95"
-          -->
-          <div
-            class="origin-top-right absolute right-0 mt-2 w-48 rounded-md
-            shadow-lg">
-            <div
-              class="py-1 rounded-md bg-white shadow-xs"
-              role="menu"
-              aria-orientation="vertical"
-              aria-labelledby="user-menu">
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm leading-5 text-gray-700
-                hover:bg-gray-100 focus:outline-none focus:bg-gray-100
-                transition duration-150 ease-in-out"
-                role="menuitem">
-                Your Profile
-              </a>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm leading-5 text-gray-700
-                hover:bg-gray-100 focus:outline-none focus:bg-gray-100
-                transition duration-150 ease-in-out"
-                role="menuitem">
-                Settings
-              </a>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm leading-5 text-gray-700
-                hover:bg-gray-100 focus:outline-none focus:bg-gray-100
-                transition duration-150 ease-in-out"
-                role="menuitem">
-                Sign out
-              </a>
-            </div>
-          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!--
-    Mobile menu, toggle classes based on menu state.
-
-    Menu open: "block", Menu closed: "hidden"
-  -->
   <div class="hidden sm:hidden">
     <div class="px-2 pt-2 pb-3">
       <a

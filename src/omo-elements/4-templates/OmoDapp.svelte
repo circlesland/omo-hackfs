@@ -25,7 +25,7 @@
 </script>
 
 <style>
-  .blocks {
+  .dapp {
     height: 100%;
     display: grid;
     grid-template-areas: var(--areas);
@@ -36,7 +36,7 @@
 </style>
 
 <section
-  class="blocks"
+  class="dapp"
   style="--areas: {dapp.layout.areas}; --columns: {dapp.layout.columns}; --rows:
   {dapp.layout.rows}; ">
   {#each dapp.blocks as block}
