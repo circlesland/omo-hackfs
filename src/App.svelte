@@ -13,7 +13,6 @@
   import OmoAuth from "./omo-elements/5-pages/OmoAuth";
   import OmoActions from "./omo-elements/5-pages/OmoActions";
   import OmoFunding from "./omo-elements/5-pages/OmoFunding";
-
   import OmoNavTop from "./omo-elements/2-molecules/OmoNavTop";
   import OmoNavBottom from "./omo-elements/2-molecules/OmoNavBottom";
   import OmoButton from "./omo-elements/1-atoms/OmoButton";
@@ -29,13 +28,13 @@
   onMount(() => {
     let route = getRoute();
     if (route.startsWith("?page")) curRoute.set(route);
-    if (!history.state) {
-      window.history.replaceState(
-        { path: window.location.pathname },
-        "",
-        window.location.href
-      );
-    }
+    // if (!history.state) {
+    //   window.history.replaceState(
+    //     { path: window.location.pathname },
+    //     "",
+    //     window.location.href
+    //   );
+    // }
     // o.store.odentity.currentOmo().then(o => {
     //   omo = o;
     // });
@@ -43,22 +42,22 @@
     var jsonString = localStorage.getItem("data");
     var data = jsonString == null ? seed() : JSON.parse(jsonString);
     window.data = data;
+    window.navigate = navigate;
   });
 
   function handlerBackNavigation(event) {
     debugger;
-    curRoute.set(event.state.path);
+    curRoute.set(event.state.route);
   }
 
   export let omo = window.o.odentity.current;
   //@todo listen to changes
 
-  window.navigate = navigate;
-
   // ROUTING
   import MagicLogin from "./omo-elements/5-pages/MagicLogin.svelte";
   var routes = [
     { route: "?page=home", quant: OmoHome, authenticate: false },
+    { route: "?page=omohome", quant: OmoHome, authenticate: false },
     { route: "?page=omoauth", quant: OmoAuth, authenticate: false },
     { route: "?page=magicLogin", quant: MagicLogin, authenticate: false },
     { route: "?page=odentity", quant: Odentity, authenticate: true },
@@ -67,7 +66,10 @@
     { route: "?page=omochat", quant: OmoChat, authenticate: true },
     { route: "?page=omoactions", quant: OmoActions, authenticate: true },
     { route: "?page=odentity", quant: Odentity, authenticate: true },
-    { route: "?page=omofunding", quant: OmoFunding, authenticate: true }
+    { route: "?page=omofunding", quant: OmoFunding, authenticate: true },
+    { route: "?page=omoorgas", quant: OmoOrgas, authenticate: true },
+    { route: "?page=omosafe", quant: OmoSafe, authenticate: true },
+    { route: "?page=omodreams", quant: OmoDreams, authenticate: true }
   ];
 </script>
 

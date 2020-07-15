@@ -17,6 +17,7 @@ export function getRoute() {
 export function getComponent(route, routes) {
     var page = route.split('&')[0];
     var component = routes.find(r => r.route == page);
+    if (component == undefined) { alert(`route "${route}" not defined`); return; }
     if (component.authenticate && window.o.odentity.current == null) {
         var urlParams = new URLSearchParams(window.location.search);
         navigate("omoauth", urlParams.get("data"), page)
@@ -33,6 +34,7 @@ export function navigate(page: string, data: string | null, redirect: string) {
     if (redirect !== null && redirect !== undefined && redirect !== "") {
         route += `&redirect=${redirect}`
     }
-    window.history.pushState({ page: "another" }, page, route);
+    debugger;
+    window.history.pushState({ route: route }, page, route);
     curRoute.set(route);
 }
