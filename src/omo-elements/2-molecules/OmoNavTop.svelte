@@ -13,7 +13,7 @@
 
 <OmoIconsFA />
 <header>
-  <nav class="flex justify-between w-full bg-primary text-blue-500">
+  <nav class="flex justify-between w-full bg-gray-200 text-primary">
     <i class="fas fa-arrow-left p-2 hover:bg-secondary" />
     <div class="py-2 uppercase text-xs font-bold justify-center">
       context title

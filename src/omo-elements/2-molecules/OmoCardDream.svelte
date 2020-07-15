@@ -16,7 +16,7 @@
       <div
         style="width: {data.follower * 7.69}%"
         class="shadow-none flex flex-col text-center whitespace-nowrap
-        text-white justify-center bg-blue-600" />
+        text-white justify-center bg-secondary" />
     </div>
   </div>
   <div class="z-0 relative group h-48 w-full flex justify-center items-center">

@@ -15,8 +15,8 @@
     @apply bg-secondary text-white font-bold py-2 px-4;
   }
 
-  .o-btn-indigo {
-    @apply bg-blue-600 text-white font-bold h-full py-2 px-4;
+  .o-btn-tertiary {
+    @apply bg-tertiary text-white font-bold h-full py-2 px-4;
   }
 
   .o-btn-xl {
@@ -24,7 +24,7 @@
   }
 
   .o-btn-2xl {
-    @apply text-2xl py-3;
+    @apply text-lg py-4;
   }
   .o-btn-sm {
     @apply py-1 px-3;
@@ -39,4 +39,4 @@
   }
 </style>
 
-<a class="{data.design} text-center" href={data.link}>{data.text}</a>
+<a class="{data.design} text-center w-full" href={data.link}>{data.text}</a>

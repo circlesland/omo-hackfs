@@ -12,11 +12,17 @@ OmoCore.start().then(async (o) => {
   window.o = o;
   window.omo = o;
 
+  window["restore"] = function (key) {
+    return JSON.parse(localStorage.getItem(key) || "{}");
+  };
+  window["store"] = function (key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+  };
+
   app = new App({
     target: document.body
   });
 });
-
-
+// });
 
 export default app;
