@@ -2,7 +2,7 @@
   import MagicLogin from "./omo-elements/5-pages/MagicLogin.svelte";
   import { curId, curRoute } from "./Router.ts";
   import { onMount } from "svelte";
-
+  import { seed } from "./Seed.ts";
   import OmoHome from "./omo-elements/5-pages/OmoHome";
   import OmoDocs from "./omo-elements/5-pages/OmoDocs";
   import OmoDapps from "./omo-elements/5-pages/OmoDapps";
@@ -20,7 +20,8 @@
 
   import OmoButton from "./omo-elements/1-atoms/OmoButton";
   import OmoMe from "./omo-elements/5-dapps/OmoMe";
-
+  import { onDestroy } from "svelte";
+  import ComponentRegistrar from "./ComponentRegistrar";
   // export let login = {
   //   text: "Login (alpha test)",
   //   design: "o-btn-secondary h-8 o-btn-xl uppercase w-1/2 text-center",
@@ -62,9 +63,14 @@
     // o.store.odentity.currentOmo().then(o => {
     //   omo = o;
     // });
+
+    var jsonString = localStorage.getItem("data");
+    var data = jsonString == null ? seed() : JSON.parse(jsonString);
+    window.data = data;
   });
 
   window["navigate"] = function(page, data = "") {
+    localStorage.setItem("data", JSON.stringify(window.data));
     if (data != "")
       window.history.pushState(
         { page: "another" },
@@ -111,6 +117,7 @@
   }
 </style>
 
+<ComponentRegistrar />
 <div class="app">
   <svelte:component
     this={router.find(x => x.route == $curRoute.split('&')[0]).quant}
