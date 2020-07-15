@@ -9,6 +9,12 @@ var app;
 // OmoCore.load().then(async (o) => {
 //   window['omo'] = o;
 //   window['o'] = o;
+window["restore"] = function (key) {
+  return JSON.parse(localStorage.getItem(key) || "{}");
+};
+window["store"] = function (key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+};
 
 app = new App({
   target: document.body,

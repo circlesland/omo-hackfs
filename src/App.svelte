@@ -19,12 +19,13 @@
   import OmoNavBottom from "./omo-elements/2-molecules/OmoNavBottom";
 
   import OmoButton from "./omo-elements/1-atoms/OmoButton";
+  import OmoMe from "./omo-elements/5-dapps/OmoMe";
 
-  export let login = {
-    text: "Login (alpha test)",
-    design: "o-btn-secondary h-8 o-btn-xl uppercase w-1/2 text-center",
-    link: "javascript:navigate('omoauth');"
-  };
+  // export let login = {
+  //   text: "Login (alpha test)",
+  //   design: "o-btn-secondary h-8 o-btn-xl uppercase w-1/2 text-center",
+  //   link: "javascript:navigate('omoauth');"
+  // };
 
   var router = [
     { route: "?page=home", quant: OmoHome, name: null },
@@ -35,6 +36,8 @@
     { route: "?page=omoactions", quant: OmoActions, name: null },
     { route: "?page=omosafe", quant: OmoSafe, name: null },
     { route: "?page=omoorgas", quant: OmoOrgas, name: null },
+
+    { route: "?page=omome", quant: OmoMe, name: null },
 
     { route: "?page=odentity", quant: Odentity, name: null },
     { route: "?page=omoauth", quant: OmoAuth, name: null },
@@ -85,45 +88,35 @@
 
   // if (omo == null) curRoute.set("?page=home");
 
-  import ApolloClient from "apollo-boost";
-  import { setClient } from "svelte-apollo";
+  // import ApolloClient from "apollo-boost";
+  // import { setClient } from "svelte-apollo";
 
-  // 1. Create an Apollo client and pass it to all child components
-  //    (uses svelte's built-in context)
-  const client = new ApolloClient({
-    uri:
-      "https://graph.circles.garden/subgraphs/name/CirclesUBI/circles-subgraph"
-  });
-  setClient(client);
+  // // 1. Create an Apollo client and pass it to all child components
+  // //    (uses svelte's built-in context)
+  // const client = new ApolloClient({
+  //   uri:
+  //     "https://graph.circles.garden/subgraphs/name/CirclesUBI/circles-subgraph"
+  // });
+  // setClient(client);
 </script>
 
 <style>
+  html,
+  body,
   .app {
     height: 100vh;
     width: 100vw;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 2rem 1fr 3rem;
-  }
-  main {
-    display: grid;
-    grid-template-columns: 1fr;
-    overflow: hidden;
+    padding: 0;
+    margin: 0;
   }
 </style>
 
 <div class="app">
-  <header>
-    <OmoNavTop />
-  </header>
-  <main>
+  <svelte:component
+    this={router.find(x => x.route == $curRoute.split('&')[0]).quant}
+    {router} />
 
-    <svelte:component
-      this={router.find(x => x.route == $curRoute.split('&')[0]).quant}
-      {router} />
-
-  </main>
-  <footer>
+  <!-- <footer>
     {#if omo != null}
       <OmoNavBottom />
     {:else}
@@ -133,5 +126,5 @@
         </div>
       </div>
     {/if}
-  </footer>
+  </footer> -->
 </div>

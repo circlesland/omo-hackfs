@@ -1,12 +1,24 @@
 <script>
   import OmoHero from "./../2-molecules/OmoHero";
   import OmoLayoutOverflowY from "./../4-layouts/OmoLayoutOverflowY";
+
+  var user = window.restore("user");
+
+  function saveUser(data) {
+    user = data;
+    window.store("user", user);
+  }
+
+  const data = {
+    name: "sam"
+  };
 </script>
 
-<OmoHero data={hero} />
-
-<OmoLayoutOverflowY>
-
+<!-- <OmoHero data={hero} /> -->
+{user.name}
+<button class="p-2 bg-blue-300" on:click={() => saveUser(data)}>test</button>
+<!-- <OmoLayoutOverflowY> -->
+<!-- 
   <div class="py-6 px-8 text-md">
     {#each transactions as item}
       <div class="flex h-12 mb-4 w-full bg-gray-100">
@@ -23,5 +35,5 @@
 
       </div>
     {/each}
-  </div>
-</OmoLayoutOverflowY>
+  </div> -->
+<!-- </OmoLayoutOverflowY> -->
