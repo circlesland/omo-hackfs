@@ -1,7 +1,7 @@
-import { Omo } from "../Core/Entities/Omo";
+import { OdentityEntity } from "../Core/Entities/OdentityEntity";
 import { LoginRequest } from "../Core/Entities/LoginRequest";
-import { IdentityProvider } from "../Core/Entities/IdentityProvider";
+import { OdentityProvider } from "../Core/Entities/OdentityProvider";
 
 export interface IdentityProviderInterface {
-    loginOmo(iloginRequest: LoginRequest, providerIdentity: IdentityProvider): Promise<Omo | null>;
+    login(loginRequest: LoginRequest, providerIdentity: OdentityProvider): Promise<OdentityEntity | null>;
 }

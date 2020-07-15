@@ -2,11 +2,7 @@
   import OmoImageGrid from "./../2-molecules/OmoImageGrid";
   import OmoHero from "./../2-molecules/OmoHero";
 
-  let omo = {};
-
-  o.store.odentity.currentOmo().then(o => {
-    omo = o;
-  });
+  let omo = o.odentity.current;
 
   $: hero = {
     uptitle: "My Omo Dapps",

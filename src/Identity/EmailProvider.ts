@@ -1,14 +1,10 @@
 import { IdentityProviderInterface } from "./IdentityProviderInterface";
-import { Omo } from "../Core/Entities/Omo";
-import { OmoStore } from "../Core/Store/OmoStore";
+import { OdentityEntity } from "../Core/Entities/OdentityEntity";
 import { LoginRequest } from "../Core/Entities/LoginRequest";
-import { IdentityProvider } from "../Core/Entities/IdentityProvider";
+import { OdentityProvider } from "../Core/Entities/OdentityProvider";
 
 export class EmailProvider implements IdentityProviderInterface {
-    store = OmoStore.getInstance();
-
-    async loginOmo(loginRequest: LoginRequest, providerIdentity: IdentityProvider): Promise<Omo | null> {
-        console.log("provider", providerIdentity)
+    async    login(loginRequest: LoginRequest, providerIdentity: OdentityProvider): Promise<OdentityEntity | null> {
         window['Email'].send({
             Host: process.env.SMTPHOST,
             Username: process.env.SMTPUSER,
@@ -20,6 +16,7 @@ export class EmailProvider implements IdentityProviderInterface {
         }).then(
             message => console.log("MAIL", message)
         )
+        // Email cannot login directly so this has to be handled by Listenig to Request Changes
         return null;
     }
 

@@ -1,26 +1,27 @@
-import { OmoStore } from "./Store/OmoStore";
-import { Quantum } from "./Data/Quantum";
-import { GraphQL } from "./Data/GraphQL";
-import { Omo } from "./Entities/Omo";
-import { TextileHub } from "./TextileHub";
+import { Odentity } from "./Odentity";
+import { TextileHub } from "./TextileHub/TextileHub";
 
 export class OmoCore {
-    store: OmoStore;
-    quantum: Quantum;
-    graphql: GraphQL;
+    // store: OmoStore;
+    // quantum: Quantum;
+    // graphql: GraphQL;
     hub: TextileHub;
+    odentity: Odentity;
 
-    private constructor(store, quantum, graphql) {
-        this.store = store;
-        this.quantum = quantum;
-        this.graphql = graphql;
-        this.hub = TextileHub.getInstance();
+    private constructor(odentity: Odentity, hub: TextileHub) {
+        this.odentity = odentity;
+        this.hub = hub;
+        // this.store = store;
+        // this.quantum = quantum;
+        // this.graphql = graphql;
     }
 
-    static async load(): Promise<OmoCore> {
-        var store = await OmoStore.getInstance();
-        var quantum = await Quantum.initQuantum();
-        var graphQL = await GraphQL.init(quantum);
-        return new OmoCore(store, quantum, graphQL);
+    static async start(): Promise<OmoCore> {
+        var hub = await TextileHub.init();
+        var odentity = await Odentity.init(hub);
+        // var store = await OmoStore.getInstance();
+        // var quantum = await Quantum.initQuantum();
+        // var graphQL = await GraphQL.init(quantum);
+        return new OmoCore(odentity, hub);
     }
 }

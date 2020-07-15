@@ -1,8 +1,40 @@
 <script>
-  import MagicLogin from "./omo-elements/5-pages/MagicLogin.svelte";
-  import { curId, curRoute } from "./Router.ts";
+  import { getRoute, curRoute, navigate, getComponent } from "./Router.ts";
   import { onMount } from "svelte";
+  import OmoNavTop from "./omo-elements/2-molecules/OmoNavTop";
+  import OmoNavBottom from "./omo-elements/2-molecules/OmoNavBottom";
+  import OmoButton from "./omo-elements/1-atoms/OmoButton";
 
+  export let login = {
+    text: "Login (alpha test)",
+    design: "o-btn-secondary h-8 o-btn-xl uppercase w-1/2 text-center",
+    link: "javascript:navigate('omoauth');"
+  };
+
+  onMount(() => {
+    let route = getRoute();
+    if (route.startsWith("?page")) curRoute.set(route);
+    if (!history.state) {
+      window.history.replaceState(
+        { path: window.location.pathname },
+        "",
+        window.location.href
+      );
+    }
+  });
+
+  function handlerBackNavigation(event) {
+    debugger;
+    curRoute.set(event.state.path);
+  }
+
+  export let omo = window.o.odentity.current;
+  //@todo listen to changes
+
+  window.navigate = navigate;
+
+  // ROUTING
+  import MagicLogin from "./omo-elements/5-pages/MagicLogin.svelte";
   import OmoHome from "./omo-elements/5-pages/OmoHome";
   import OmoDocs from "./omo-elements/5-pages/OmoDocs";
   import OmoDapps from "./omo-elements/5-pages/OmoDapps";
@@ -13,74 +45,20 @@
   import OmoAuth from "./omo-elements/5-pages/OmoAuth";
   import OmoActions from "./omo-elements/5-pages/OmoActions";
   import OmoFunding from "./omo-elements/5-pages/OmoFunding";
-
-  import OmoNavTop from "./omo-elements/2-molecules/OmoNavTop";
-  import OmoNavBottom from "./omo-elements/2-molecules/OmoNavBottom";
-
-  import OmoButton from "./omo-elements/1-atoms/OmoButton";
-
-  export let login = {
-    text: "Login (alpha test)",
-    design: "o-btn-secondary h-8 o-btn-xl uppercase w-1/2 text-center",
-    link: "javascript:navigate('omoauth');"
-  };
-
-  var router = [
-    { route: "?page=home", quant: OmoHome, name: null },
-    { route: "?page=docs", quant: OmoDocs, name: null },
-    { route: "?page=omodapps", quant: OmoDapps, name: null },
-    { route: "?page=omosapiens", quant: OmoSapiens, name: null },
-    { route: "?page=omochat", quant: OmoChat, name: null },
-    { route: "?page=omoactions", quant: OmoActions, name: null },
-    { route: "?page=omopay", quant: OmoPay, name: null },
-    { route: "?page=odentity", quant: Odentity, name: null },
-    { route: "?page=omoauth", quant: OmoAuth, name: null },
-    { route: "?page=odentity", quant: Odentity, name: null },
-    { route: "?page=omofunding", quant: OmoFunding, name: null },
-
-    { route: "?page=magicLogin", quant: MagicLogin, name: null }
+  var routes = [
+    { route: "?page=home", quant: OmoHome, authenticate: false },
+    { route: "?page=omoauth", quant: OmoAuth, authenticate: false },
+    { route: "?page=magicLogin", quant: MagicLogin, authenticate: false },
+    { route: "?page=odentity", quant: Odentity, authenticate: true },
+    { route: "?page=docs", quant: OmoDocs, authenticate: true },
+    { route: "?page=omodapps", quant: OmoDapps, authenticate: true },
+    { route: "?page=omosapiens", quant: OmoSapiens, authenticate: true },
+    { route: "?page=omochat", quant: OmoChat, authenticate: true },
+    { route: "?page=omoactions", quant: OmoActions, authenticate: true },
+    { route: "?page=omopay", quant: OmoPay, authenticate: true },
+    { route: "?page=odentity", quant: Odentity, authenticate: true },
+    { route: "?page=omofunding", quant: OmoFunding, authenticate: true }
   ];
-
-  onMount(() => {
-    var urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has("page")) {
-      curRoute.set("?page=" + urlParams.get("page"));
-    }
-    if (!history.state) {
-      window.history.replaceState(
-        { path: window.location.pathname },
-        "",
-        window.location.href
-      );
-    }
-    o.store.odentity.currentOmo().then(o => {
-      omo = o;
-    });
-  });
-
-  window["navigate"] = function(page, data = "") {
-    if (data != "")
-      window.history.pushState(
-        { page: "another" },
-        "another page",
-        `?page=${page}&data=${data}`
-      );
-    else
-      window.history.pushState(
-        { page: "another" },
-        "another page",
-        `?page=${page}`
-      );
-    curRoute.set(`?page=${page}`);
-  };
-
-  function handlerBackNavigation(event) {
-    curRoute.set(event.state.path);
-  }
-
-  let omo;
-
-  if (omo == null) curRoute.set("?page=home");
 </script>
 
 <style>
@@ -98,21 +76,18 @@
   }
 </style>
 
+<svelte:window on:popstate={handlerBackNavigation} />
 <div class="app">
   <header>
     <OmoNavTop />
   </header>
   <main>
-
-    <svelte:component
-      this={router.find(x => x.route == $curRoute.split('&')[0]).quant}
-      {router} />
-
+    <svelte:component this={getComponent($curRoute, routes)} {routes} />
   </main>
   <footer>
     {#if omo != null}
       <OmoNavBottom />
-    {:else}
+    {:else if !$curRoute.startsWith('?page=omoauth')}
       <div class="flex flex-col justify-center bg-gray-200 h-12">
         <div class="p-4 text-center">
           <OmoButton data={login} />
