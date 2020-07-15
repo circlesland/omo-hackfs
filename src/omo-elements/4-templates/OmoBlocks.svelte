@@ -1,4 +1,6 @@
 <script>
+  import OmoBlock from "./OmoBlock";
+  import OmoMolecule from "./OmoMolecule";
   export let dapp = {
     layout: {
       areas: "'full'",
@@ -39,27 +41,9 @@
   {dapp.layout.rows}; ">
   {#each dapp.blocks as block}
     {#if block.type == 'molecule'}
-      <div
-        style="grid-area: {block.slot}; display: grid; grid-template-columns:
-        'minmax(1fr)'; grid-template-rows: 'minmax(1fr)'; overflow: hidden;">
-        <svelte:component this={block.quant} data={block.data} />
-      </div>
+      <OmoMolecule transfer={JSON.stringify(block)} />
     {:else}
-      <section
-        class="blocks"
-        style="--areas: {block.layout.areas}; --columns: {block.layout.columns};
-        --rows: {block.layout.rows}; ">
-        {#each block.blocks as block}
-          {#if block.type == 'molecule'}
-            <div
-              style="grid-area: {block.slot}; display: grid;
-              grid-template-columns: 'minmax(1fr)'; grid-template-rows:
-              'minmax(1fr)'; overflow: hidden;">
-              <svelte:component this={block.quant} data={block.data} />
-            </div>
-          {:else}i am an organisms please repeat me{/if}
-        {/each}
-      </section>
+      <OmoBlock transfer={JSON.stringify(block)} />
     {/if}
   {/each}
 </section>
