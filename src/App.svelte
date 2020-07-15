@@ -8,8 +8,9 @@
   import OmoDapps from "./omo-elements/5-pages/OmoDapps";
   import OmoChat from "./omo-elements/5-pages/OmoChat";
   import Odentity from "./omo-elements/5-pages/Odentity";
-  import OmoSapiens from "./omo-elements/5-pages/OmoSapiens";
-  import OmoPay from "./omo-elements/5-pages/OmoPay";
+  import OmoDreams from "./omo-elements/5-pages/OmoDreams";
+  import OmoOrgas from "./omo-elements/5-pages/OmoOrgas";
+  import OmoSafe from "./omo-elements/5-pages/OmoSafe";
   import OmoAuth from "./omo-elements/5-pages/OmoAuth";
   import OmoActions from "./omo-elements/5-pages/OmoActions";
   import OmoFunding from "./omo-elements/5-pages/OmoFunding";
@@ -29,10 +30,12 @@
     { route: "?page=home", quant: OmoHome, name: null },
     { route: "?page=docs", quant: OmoDocs, name: null },
     { route: "?page=omodapps", quant: OmoDapps, name: null },
-    { route: "?page=omosapiens", quant: OmoSapiens, name: null },
+    { route: "?page=omodreams", quant: OmoDreams, name: null },
     { route: "?page=omochat", quant: OmoChat, name: null },
     { route: "?page=omoactions", quant: OmoActions, name: null },
-    { route: "?page=omopay", quant: OmoPay, name: null },
+    { route: "?page=omosafe", quant: OmoSafe, name: null },
+    { route: "?page=omoorgas", quant: OmoOrgas, name: null },
+
     { route: "?page=odentity", quant: Odentity, name: null },
     { route: "?page=omoauth", quant: OmoAuth, name: null },
     { route: "?page=odentity", quant: Odentity, name: null },
@@ -53,9 +56,9 @@
         window.location.href
       );
     }
-    o.store.odentity.currentOmo().then(o => {
-      omo = o;
-    });
+    // o.store.odentity.currentOmo().then(o => {
+    //   omo = o;
+    // });
   });
 
   window["navigate"] = function(page, data = "") {
@@ -80,7 +83,18 @@
 
   let omo;
 
-  if (omo == null) curRoute.set("?page=home");
+  // if (omo == null) curRoute.set("?page=home");
+
+  import ApolloClient from "apollo-boost";
+  import { setClient } from "svelte-apollo";
+
+  // 1. Create an Apollo client and pass it to all child components
+  //    (uses svelte's built-in context)
+  const client = new ApolloClient({
+    uri:
+      "https://graph.circles.garden/subgraphs/name/CirclesUBI/circles-subgraph"
+  });
+  setClient(client);
 </script>
 
 <style>

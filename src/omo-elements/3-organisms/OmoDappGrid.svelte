@@ -22,19 +22,27 @@
       locked: false
     },
     {
-      id: "4",
-      name: "Omo Dreams",
-      image: "/logos/dream.svg",
-      link: "javascript:navigate('omosapiens')",
+      id: "5",
+      name: "Omo Wallet",
+      image: "/logos/pay.svg",
+      link: "javascript:navigate('omosafe')",
       locked: false
     },
     {
       id: "5",
-      name: "Omo Pay",
-      image: "/logos/pay.svg",
-      link: "javascript:navigate('omopay')",
+      name: "Omo Orgas",
+      image: "/logos/dream.svg",
+      link: "javascript:navigate('omoorgas')",
       locked: false
     },
+    {
+      id: "4",
+      name: "Omo Dreams",
+      image: "/logos/dream.svg",
+      link: "javascript:navigate('omodreams')",
+      locked: false
+    },
+
     {
       id: "3",
       name: "Omo Funding",

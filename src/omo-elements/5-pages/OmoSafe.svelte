@@ -1,23 +1,6 @@
 <script>
   import OmoHero from "./../2-molecules/OmoHero";
   import OmoLayoutOverflowY from "./../4-layouts/OmoLayoutOverflowY";
-
-  export let hero = {
-    uptitle: "my balance",
-    title: "624 Ø",
-    bg: "bg-gray-200"
-  };
-  export let transactions = [];
-
-  fetch("https://randomuser.me/api?results=10")
-    .then(response => response.json())
-    .then(
-      data =>
-        (transactions = data.results.map(item => {
-          item.amount = Math.floor(Math.random() * 200) - 100;
-          return item;
-        }))
-    );
 </script>
 
 <OmoHero data={hero} />
