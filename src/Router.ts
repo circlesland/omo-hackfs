@@ -34,7 +34,6 @@ export function navigate(page: string, data: string | null, redirect: string) {
     if (redirect !== null && redirect !== undefined && redirect !== "") {
         route += `&redirect=${redirect}`
     }
-    debugger;
     window.history.pushState({ route: route }, page, route);
     curRoute.set(route);
 }
