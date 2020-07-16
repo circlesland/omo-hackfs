@@ -73,8 +73,6 @@
   }
 </style>
 
-<!-- <OmoHero data={hero} /> -->
-
 <div class="wrap">
   <OmoImageGrid {logos} />
 </div>
