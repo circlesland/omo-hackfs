@@ -4,11 +4,11 @@
   let MamaOmo = {
     name: "MamaOmo",
     type: "organisms",
-    layout: { areas: "'left main'", columns: "20rem 1fr", rows: "1fr" },
+    layout: { areas: "'full'", columns: "1fr", rows: "1fr" },
     blocks: [
       {
         type: "molecule",
-        slot: "main",
+        slot: "full",
         quant: "OmoChat",
         data: {}
       }
