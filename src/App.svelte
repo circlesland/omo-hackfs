@@ -1,8 +1,11 @@
 <script>
   import { getRoute, curRoute, navigate, getComponent } from "./Router.ts";
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import { seed } from "./Seed.ts";
-  import OmoHome from "./omo-elements/5-pages/OmoHome";
+
+  import OmoHome from "./omo-elements/5-dapps/OmoHome";
+  import MamaOmo from "./omo-elements/5-dapps/MamaOmo";
+
   import OmoDocs from "./omo-elements/5-pages/OmoDocs";
   import OmoDapps from "./omo-elements/5-pages/OmoDapps";
   import OmoChat from "./omo-elements/5-pages/OmoChat";
@@ -10,20 +13,14 @@
   import OmoDreams from "./omo-elements/5-pages/OmoDreams";
   import OmoOrgas from "./omo-elements/5-pages/OmoOrgas";
   import OmoSafe from "./omo-elements/5-pages/OmoSafe";
-  import OmoAuth from "./omo-elements/5-pages/OmoAuth";
+  import OmoAuth from "./omo-elements/5-dapps/OmoAuth";
   import OmoActions from "./omo-elements/5-pages/OmoActions";
   import OmoFunding from "./omo-elements/5-pages/OmoFunding";
   import OmoNavTop from "./omo-elements/2-molecules/OmoNavTop";
   import OmoNavBottom from "./omo-elements/2-molecules/OmoNavBottom";
   import OmoButton from "./omo-elements/1-atoms/OmoButton";
-  import OmoMe from "./omo-elements/5-dapps/OmoMe";
-  import { onDestroy } from "svelte";
+
   import ComponentRegistrar from "./ComponentRegistrar";
-  export let login = {
-    text: "Login (alpha test)",
-    design: "o-btn-secondary h-8 o-btn-xl uppercase w-1/2 text-center",
-    link: "javascript:navigate('omoauth');"
-  };
 
   onMount(() => {
     let route = getRoute();
@@ -56,8 +53,9 @@
   // ROUTING
   import MagicLogin from "./omo-elements/5-pages/MagicLogin.svelte";
   var routes = [
+    { route: "/", quant: OmoHome, authenticate: false },
     { route: "?page=home", quant: OmoHome, authenticate: false },
-    { route: "?page=omohome", quant: OmoHome, authenticate: false },
+    { route: "?page=mamaomo", quant: MamaOmo, authenticate: true },
     { route: "?page=omoauth", quant: OmoAuth, authenticate: false },
     { route: "?page=magicLogin", quant: MagicLogin, authenticate: false },
     { route: "?page=odentity", quant: Odentity, authenticate: true },
@@ -65,7 +63,6 @@
     { route: "?page=omodapps", quant: OmoDapps, authenticate: true },
     { route: "?page=omochat", quant: OmoChat, authenticate: true },
     { route: "?page=omoactions", quant: OmoActions, authenticate: true },
-    { route: "?page=odentity", quant: Odentity, authenticate: true },
     { route: "?page=omofunding", quant: OmoFunding, authenticate: true },
     { route: "?page=omoorgas", quant: OmoOrgas, authenticate: true },
     { route: "?page=omosafe", quant: OmoSafe, authenticate: true },
@@ -86,14 +83,10 @@
 
 <svelte:window on:popstate={handlerBackNavigation} />
 <ComponentRegistrar />
+
 <div class="app">
-  <header>
-    <OmoNavTop />
-  </header>
-  <main>
-    <svelte:component this={getComponent($curRoute, routes)} {routes} />
-  </main>
-  <footer>
+  <svelte:component this={getComponent($curRoute, routes)} {routes} />
+  <!-- <footer>
     {#if omo != null}
       <OmoNavBottom />
     {:else if !$curRoute.startsWith('?page=omoauth')}
@@ -103,5 +96,5 @@
         </div>
       </div>
     {/if}
-  </footer>
+  </footer> -->
 </div>

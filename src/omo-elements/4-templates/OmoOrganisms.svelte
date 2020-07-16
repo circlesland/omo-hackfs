@@ -1,7 +1,9 @@
 <script>
   import OmoOrganism from "./OmoOrganism";
   import OmoMolecule from "./OmoMolecule";
-  export let dapp = {
+  export let organisms = {
+    name: "Organisms",
+    type: "organisms",
     layout: {
       areas: "'full'",
       columns: "1fr",
@@ -16,7 +18,7 @@
       },
       {
         type: "organism",
-        slot: "organims",
+        slot: "organim",
         layout: layout,
         blocks: []
       }
@@ -25,7 +27,7 @@
 </script>
 
 <style>
-  .dapp {
+  .organisms {
     height: 100%;
     display: grid;
     grid-template-areas: var(--areas);
@@ -36,10 +38,10 @@
 </style>
 
 <section
-  class="dapp"
-  style="--areas: {dapp.layout.areas}; --columns: {dapp.layout.columns}; --rows:
-  {dapp.layout.rows}; ">
-  {#each dapp.blocks as block}
+  class="organisms"
+  style="--areas: {organisms.layout.areas}; --columns: {organisms.layout.columns};
+  --rows: {organisms.layout.rows}; ">
+  {#each organisms.blocks as block}
     {#if block.type == 'molecule'}
       <OmoMolecule transfer={JSON.stringify(block)} />
     {:else}

@@ -1,13 +1,13 @@
 <script>
   export var transfer;
   var block = JSON.parse(transfer);
-  import OmoDapp from "./OmoDapp";
-  var dapp = { layout: block.layout, blocks: block.blocks };
+  import OmoOrganisms from "./OmoOrganisms";
+  var organisms = { layout: block.layout, blocks: block.blocks };
 </script>
 
 <section
-  class="blocks"
+  class="organisms"
   style="--areas: {block.layout.areas}; --columns: {block.layout.columns};
   --rows: {block.layout.rows}; ">
-  <OmoDapp {dapp} />
+  <OmoOrganisms {organisms} />
 </section>

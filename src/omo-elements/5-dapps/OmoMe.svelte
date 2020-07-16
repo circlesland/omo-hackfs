@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   // Import the generic and dynamic css grid layout builder
-  import OmoDapp from "./../4-templates/OmoDapp";
+  import OmoOrganisms from "./../4-templates/OmoOrganisms";
   // Import your graphql queries here
   // Currently work around with browser localstore until local threads DB is implemented
 
@@ -14,9 +14,11 @@
   const OmoDappOmoMe = blocks.find(b => b.name === "OmoDappOmoMe").blocks;
 
   $: dapp = {
+    name: "OmoMe",
+    type: "organism",
     layout: OmoLayoutTopMainBottom,
     blocks: OmoDappOmoMe
   };
 </script>
 
-<OmoDapp {dapp} />
+<OmoOrganisms {dapp} />
