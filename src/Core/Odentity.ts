@@ -1,14 +1,16 @@
-import { OdentityEntity } from "./Entities/OdentityEntity";
+import { OdentityEntity } from "./Data/Entities/OdentityEntity";
 import { ThreadID } from "@textile/hub";
 import { TextileHub } from "./TextileHub/TextileHub";
-import { OdentityProvider } from "./Entities/OdentityProvider";
-import { LoginRequest } from "./Entities/LoginRequest";
-import { LoginRequestSchema, OdentitySchema, OdentityProviderSchema } from "../Helper/JsonSchema";
+import { OdentityProvider } from "./Data/Entities/OdentityProvider";
+import { LoginRequest } from "./Data/Entities/LoginRequest";
 import { QueryJSON } from "@textile/threads-client";
 import { EmailProvider } from "../Identity/EmailProvider";
 import { Libp2pCryptoIdentity } from "@textile/threads-core";
 import { IdentityProviderInterface } from "../Identity/IdentityProviderInterface";
 import { navigate } from "../Router";
+import { OdentitySchema } from "./Data/JsonSchemas/OdentitySchema";
+import { OdentityProviderSchema } from "./Data/JsonSchemas/OdentityProviderSchema";
+import { LoginRequestSchema } from "./Data/JsonSchemas/LoginRequestSchema";
 
 export class Odentity {
     private static THREADNAME = "ODENTITY3";

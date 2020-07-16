@@ -1,15 +1,14 @@
 <script>
-  import { OmoCollection } from "./../../Core/Data/OmoCollection.ts";
   import OmoLayoutOverflowY from "./../4-layouts/OmoLayoutOverflowY";
   import OmoGridDreams from "./../2-molecules/OmoGridDreams";
   import OmoHero from "./../2-molecules/OmoHero";
   import mocker from "mocker-data-generator";
 
-  export let hero = {
-    uptitle: "Organisations",
-    title: "organisations",
-    bg: "bg-gray-200"
-  };
+  // export let hero = {
+  //   uptitle: "Organisations",
+  //   title: "organisations",
+  //   bg: "bg-gray-200"
+  // };
 
   var schemaOrga = {
     name: {

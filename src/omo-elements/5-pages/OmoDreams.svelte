@@ -1,5 +1,4 @@
 <script>
-  import { OmoCollection } from "./../../Core/Data/OmoCollection.ts";
   import OmoDappGrid from "./../3-organisms/OmoDappGrid.svelte";
   import OmoLayoutOverflowY from "./../4-layouts/OmoLayoutOverflowY";
   import OmoGridDreams from "./../2-molecules/OmoGridDreams";

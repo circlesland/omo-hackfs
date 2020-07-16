@@ -39,11 +39,11 @@
         class="flex-1 flex items-center justify-center sm:items-stretch
         sm:justify-start">
         <!-- <div class="flex-shrink-0">
-          <img
+          <img alt=""
             class="block lg:hidden h-8 w-auto"
             src="/logos/omo.svg"
             alt="logo" />
-          <img
+          <img alt=""
             class="hidden lg:block h-8 w-auto"
             src="/logos/omo.svg"
             alt="logo" />
@@ -51,14 +51,14 @@
         <div class="hidden sm:block">
           <div class="flex">
             <a
-              href="#"
+              href="javascript;"
               class="px-3 py-2 rounded-md text-sm font-medium leading-5
               text-white bg-gray-900 focus:outline-none focus:text-white
               focus:bg-gray-700 transition duration-150 ease-in-out">
               Dashboard
             </a>
             <a
-              href="#"
+              href="javascript;"
               class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5
               text-gray-300 hover:text-white hover:bg-gray-700
               focus:outline-none focus:text-white focus:bg-gray-700 transition
@@ -66,7 +66,7 @@
               Team
             </a>
             <a
-              href="#"
+              href="javascript;"
               class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5
               text-gray-300 hover:text-white hover:bg-gray-700
               focus:outline-none focus:text-white focus:bg-gray-700 transition
@@ -74,7 +74,7 @@
               Projects
             </a>
             <a
-              href="#"
+              href="javascript;"
               class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5
               text-gray-300 hover:text-white hover:bg-gray-700
               focus:outline-none focus:text-white focus:bg-gray-700 transition
@@ -131,28 +131,28 @@
   <div class="hidden sm:hidden">
     <div class="px-2 pt-2 pb-3">
       <a
-        href="#"
+        href="javascript;"
         class="block px-3 py-2 rounded-md text-base font-medium text-white
         bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700
         transition duration-150 ease-in-out">
         Dashboard
       </a>
       <a
-        href="#"
+        href="javascript;"
         class="mt-1 block px-3 py-2 rounded-md text-base font-medium
         text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none
         focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">
         Team
       </a>
       <a
-        href="#"
+        href="javascript;"
         class="mt-1 block px-3 py-2 rounded-md text-base font-medium
         text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none
         focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">
         Projects
       </a>
       <a
-        href="#"
+        href="javascript;"
         class="mt-1 block px-3 py-2 rounded-md text-base font-medium
         text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none
         focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">

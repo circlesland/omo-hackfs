@@ -1,7 +1,7 @@
-import { Quant } from "../Entities/Quant";
+import { Quant } from "../Data/Entities/Quant";
 import { JSONSchema } from "@textile/threads-database";
 import { PubSub } from "graphql-subscriptions";
-import { Quantum } from "./Quantum";
+import { Quantum } from "./QuantumBackup";
 let pluralize = require('pluralize');
 
 

@@ -6,9 +6,9 @@
 </script>
 
 <style>
-  a {
+  /* a {
     @apply text-primary;
-  }
+  } */
 </style>
 
 <OmoIconsFA />
@@ -18,7 +18,7 @@
     <div class="py-2 uppercase text-xs font-bold justify-center">
       context title
       <!-- <a href={home}>
-        <img class="h-6" src="/logos/omo.svg" alt="logo" />
+        <img alt="" class="h-6" src="/logos/omo.svg" alt="logo" />
       </a> -->
     </div>
     <i class="fas fa-arrow-right p-2 hover:bg-secondary" />

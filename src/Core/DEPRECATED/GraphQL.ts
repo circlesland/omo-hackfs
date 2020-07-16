@@ -1,5 +1,5 @@
-import { Quant } from "../Entities/Quant";
-import { Quantum } from "./Quantum";
+import { Quant } from "../Data/Entities/Quant";
+import { Quantum } from "./QuantumBackup";
 import { GraphQLSchema, printSchema, graphql, subscribe, parse, ExecutionResult } from "graphql";
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { ModelHelper } from "./ModelHelper";

@@ -1,10 +1,3 @@
-import { TextileHub } from "./TextileHub/TextileHub";
-import { ThreadID, Client } from "@textile/hub";
-import { QuantSchema, AuthorSchema, BookSchema, LibrarySchema } from "../Helper/JsonSchema";
-import * as uuid from "uuid";
-import { Quant } from "./Entities/Quant";
-import { Database } from "@textile/threads-database";
-
 export class Quanta {
     // private textileHub: TextileHub;
     // private threadId: ThreadID;

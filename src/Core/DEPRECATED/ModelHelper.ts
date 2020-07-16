@@ -1,3 +1,8 @@
+import { Quant } from "../Data/Entities/Quant";
+import { ModelQuant } from "./ModelQuant";
+import { Quantum } from "./QuantumBackup";
+import { PubSub } from "graphql-subscriptions";
+
 export class ModelHelper {
     // getGraphQLResolvers(quantum: Quantum): any {
     //     var query: any = {};

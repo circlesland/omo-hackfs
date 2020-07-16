@@ -2,11 +2,11 @@ import { Client, KeyInfo, ThreadID } from "@textile/hub";
 import { Database, JSONSchema } from "@textile/threads-database";
 import { Instance } from "@textile/threads-store";
 import { QueryJSON } from "@textile/threads-client";
-import { OdentityEntity } from "../Entities/OdentityEntity";
+import { OdentityEntity } from "../Data/Entities/OdentityEntity";
 import { threadId } from "worker_threads";
 import { Libp2pCryptoIdentity } from "@textile/threads-core";
 import { debug } from "svelte/internal";
-import { QuantSchema } from "../../Helper/JsonSchema";
+import { QuantSchema } from "../Data/JsonSchemas/QuantSchema";
 
 export class ThreadDB {
     private localDb: Database;

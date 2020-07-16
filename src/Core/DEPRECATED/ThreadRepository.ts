@@ -1,4 +1,4 @@
-import { TextileHub } from "./TextileHub/TextileHub";
+import { TextileHub } from "../TextileHub/TextileHub";
 import { Client } from "@textile/hub";
 
 export class ThreadRepository {

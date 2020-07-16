@@ -18,8 +18,8 @@
           lg:justify-start">
           <div class="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
             <div class="flex items-center justify-between w-full md:w-auto">
-              <a href="#" aria-label="Home">
-                <img
+              <a href="javascript;" aria-label="Home">
+                <img alt=""
                   class="h-8 w-auto sm:h-10"
                   src="/img/logos/workflow-mark-on-white.svg"
                   alt="Logo" />
@@ -51,31 +51,31 @@
           </div>
           <div class="hidden md:block md:ml-10 md:pr-4">
             <a
-              href="#"
+              href="javascript;"
               class="font-medium text-gray-500 hover:text-gray-900 transition
               duration-150 ease-in-out">
               Product
             </a>
             <a
-              href="#"
+              href="javascript;"
               class="ml-8 font-medium text-gray-500 hover:text-gray-900
               transition duration-150 ease-in-out">
               Features
             </a>
             <a
-              href="#"
+              href="javascript;"
               class="ml-8 font-medium text-gray-500 hover:text-gray-900
               transition duration-150 ease-in-out">
               Marketplace
             </a>
             <a
-              href="#"
+              href="javascript;"
               class="ml-8 font-medium text-gray-500 hover:text-gray-900
               transition duration-150 ease-in-out">
               Company
             </a>
             <a
-              href="#"
+              href="javascript;"
               class="ml-8 font-medium text-indigo-600 hover:text-indigo-900
               transition duration-150 ease-in-out">
               Log in
@@ -105,7 +105,7 @@
             aria-labelledby="main-menu">
             <div class="px-5 pt-4 flex items-center justify-between">
               <div>
-                <img
+                <img alt=""
                   class="h-8 w-auto"
                   src="/img/logos/workflow-mark-on-white.svg"
                   alt="" />
@@ -134,7 +134,7 @@
             </div>
             <div class="px-2 pt-2 pb-3">
               <a
-                href="#"
+                href="javascript;"
                 class="block px-3 py-2 rounded-md text-base font-medium
                 text-gray-700 hover:text-gray-900 hover:bg-gray-50
                 focus:outline-none focus:text-gray-900 focus:bg-gray-50
@@ -143,7 +143,7 @@
                 Product
               </a>
               <a
-                href="#"
+                href="javascript;"
                 class="mt-1 block px-3 py-2 rounded-md text-base font-medium
                 text-gray-700 hover:text-gray-900 hover:bg-gray-50
                 focus:outline-none focus:text-gray-900 focus:bg-gray-50
@@ -152,7 +152,7 @@
                 Features
               </a>
               <a
-                href="#"
+                href="javascript;"
                 class="mt-1 block px-3 py-2 rounded-md text-base font-medium
                 text-gray-700 hover:text-gray-900 hover:bg-gray-50
                 focus:outline-none focus:text-gray-900 focus:bg-gray-50
@@ -161,7 +161,7 @@
                 Marketplace
               </a>
               <a
-                href="#"
+                href="javascript;"
                 class="mt-1 block px-3 py-2 rounded-md text-base font-medium
                 text-gray-700 hover:text-gray-900 hover:bg-gray-50
                 focus:outline-none focus:text-gray-900 focus:bg-gray-50
@@ -172,7 +172,7 @@
             </div>
             <div>
               <a
-                href="#"
+                href="javascript;"
                 class="block w-full px-5 py-3 text-center font-medium
                 text-indigo-600 bg-gray-50 hover:bg-gray-100
                 hover:text-indigo-700 focus:outline-none focus:bg-gray-100
@@ -206,7 +206,7 @@
           <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
             <div class="rounded-md shadow">
               <a
-                href="#"
+                href="javascript;"
                 class="w-full flex items-center justify-center px-8 py-3 border
                 border-transparent text-base leading-6 font-medium rounded-md
                 text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none
@@ -217,7 +217,7 @@
             </div>
             <div class="mt-3 sm:mt-0 sm:ml-3">
               <a
-                href="#"
+                href="javascript;"
                 class="w-full flex items-center justify-center px-8 py-3 border
                 border-transparent text-base leading-6 font-medium rounded-md
                 text-indigo-700 bg-indigo-100 hover:text-indigo-600
@@ -233,7 +233,7 @@
     </div>
   </div>
   <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-    <img
+    <img alt=""
       class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
       src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80"
       alt="" />

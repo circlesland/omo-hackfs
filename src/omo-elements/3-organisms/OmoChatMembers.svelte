@@ -19,7 +19,7 @@
 <div class="py-6 px-8 text-md">
   {#each users as user}
     <div class="flex h-12 mb-4 w-full bg-gray-100">
-      <img src={user.picture.medium} class="h-full w-auto" />
+      <img alt="" src={user.picture.medium} class="h-full w-auto" />
       <p class="py-3 px-4 rounded w-full">{user.email}</p>
     </div>
   {/each}

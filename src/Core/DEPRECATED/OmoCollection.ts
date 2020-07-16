@@ -7,7 +7,7 @@ import { TextileHub } from "../TextileHub/TextileHub";
 
 import Client, { QueryJSON } from "@textile/threads-client";
 
-import { Quant } from "../Entities/Quant";
+import { Quant } from "../Data/Entities/Quant";
 import { Instance } from "@textile/threads-store";
 
 export class OmoCollection<T extends Instance> {
