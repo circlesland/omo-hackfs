@@ -2,11 +2,11 @@
   import OmoAvatarsGrouped from "./../2-molecules/OmoAvatarsGrouped";
   import OmoProgressBar from "./../2-molecules/OmoProgressBar";
 
-  export let progressbar = {
+  export const progressbar = {
     height: "h-6"
   };
 
-  export let data = {};
+  export const data = {};
 
   // export let dreamers = [];
 

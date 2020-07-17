@@ -34,7 +34,7 @@
       src={data.profile}
       class="z-30 rounded-full -mt-20 border-8 object-center object-cover
       border-white mr-2 h-36 w-36"
-      alt="image" />
+      alt="" />
   </div>
   <div class="">
     <div class="flex -mt-16 items-center justify-between">

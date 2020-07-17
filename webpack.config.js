@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 const dotenv = require('dotenv').config({ path: __dirname + '/.env' });
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const path = require('path');
 
 const mode = process.env.NODE_ENV || 'development';
@@ -41,8 +42,13 @@ module.exports = {
 			},
 			{
 				test: /\.css$/,
-
-				use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+				use: ExtractTextPlugin.extract({
+					fallback: 'style-loader',
+					use: [
+						{ loader: 'css-loader', options: { importLoaders: 1 } },
+						'postcss-loader',
+					],
+				}),
 			},
 			{
 				test: /\.tsx?$/,
@@ -53,7 +59,7 @@ module.exports = {
 	},
 	mode: process.env.NODE_ENV,
 	plugins: [
-		new MiniCssExtractPlugin('styles.css', {
+		new ExtractTextPlugin('styles.css', {
 			disable: process.env.NODE_ENV === 'development',
 		}),
 		new webpack.DefinePlugin({

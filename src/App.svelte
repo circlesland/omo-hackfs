@@ -47,7 +47,7 @@
     curRoute.set(event.state.route);
   }
 
-  export let omo = window.o.odentity.current;
+  export const omo = window.o.odentity.current;
   //@todo listen to changes
 
   // ROUTING
@@ -71,11 +71,9 @@
 </script>
 
 <style>
-  html,
-  body,
   .app {
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     padding: 0;
     margin: 0;
   }

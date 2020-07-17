@@ -2,7 +2,7 @@
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
   import OmoButton from "./../1-atoms/OmoButton.svelte";
 
-  export let home = "javascript:navigate('home')";
+  // export let home = "javascript:navigate('home')";
 </script>
 
 <style>

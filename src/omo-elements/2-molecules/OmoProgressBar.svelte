@@ -1,5 +1,5 @@
 <script>
-  export let progress = [
+  export const progress = [
     {
       style: "w-1/6 bg-green-500"
     },
@@ -16,7 +16,7 @@
       style: "w-1/6"
     }
   ];
-  export let style = {
+  export const style = {
     height: "h-2"
   };
 </script>

@@ -6,9 +6,9 @@
 </script>
 
 <style>
-  a {
+  /* a {
     @apply text-primary;
-  }
+  } */
 </style>
 
 <OmoIconsFA />
