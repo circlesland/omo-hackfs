@@ -2,16 +2,16 @@
   "name": "omo-earth",
   "version": "0.6.0",
   "devDependencies": {
-    "cross-env": "^7.0.2",
-    "css-loader": "^3.6.0",
+    "cross-env": "^5.2.0",
+    "css-loader": "^2.1.1",
     "dotenv": "^8.2.0",
-    "extract-text-webpack-plugin": "^3.0.2",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "mdsvex": "^0.8.2",
-    "postcss-loader": "^3.0.0",
-    "style-loader": "^1.2.1",
-    "svelte-loader": "^2.13.6",
+    "postcss-loader": "^2.1.1",
+    "style-loader": "^0.23.1",
+    "svelte-loader": "2.13.3",
     "tailwindcss": "^1",
-    "ts-loader": "^8.0.1",
+    "ts-loader": "^7.0.5",
     "typescript": "^3.9.6",
     "webpack": "^4.30.0",
     "webpack-dev-server": "^3.3.1",
@@ -30,6 +30,7 @@
     "@types/nodemailer": "^6.4.0",
     "@types/uuid": "^8.0.0",
     "autoprefixer": "^9.8.5",
+    "mocker-data-generator": "^2.8.0",
     "svelte": "^3.24.0"
   }
 }
