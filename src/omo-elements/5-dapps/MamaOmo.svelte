@@ -9,7 +9,7 @@
       {
         type: "molecule",
         slot: "full",
-        quant: "OmoChat",
+        quant: "OmoIntro",
         data: {}
       }
     ]

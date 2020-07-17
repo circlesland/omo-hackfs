@@ -7,6 +7,10 @@
     text: "",
     bg: ""
   };
+  export let design = {
+    bg: "",
+    titleSize: ""
+  };
 </script>
 
 <style>
@@ -27,10 +31,12 @@
   }
 </style>
 
-<div class="wrap w-full {data.bg} rounded;">
+<div class="wrap w-full {design.bg} rounded;">
   <div class="inside">
-    <p class="uptitle">{data.uptitle}</p>
-    <OmoTitle {data} />
+    {#if data.uptitle}
+      <p class="uptitle">{data.uptitle}</p>
+    {/if}
+    <h1 class="text-primary text-2xl md:text-3xl lg:text-4xl">{data.title}</h1>
     {#if data.subline}
       <div class="subline">{data.subline}</div>
     {/if}

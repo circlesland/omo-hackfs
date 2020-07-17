@@ -16,7 +16,6 @@ async function start() {
 start();
 export default app;
 
-
 window["restore"] = function (key) {
   return JSON.parse(localStorage.getItem(key) || "{}");
 };
