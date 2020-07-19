@@ -5,10 +5,10 @@
 
   import OmoHome from "./omo-elements/5-dapps/OmoHome";
   import MamaOmo from "./omo-elements/5-dapps/MamaOmo";
+  import OmoMessages from "./omo-elements/5-dapps/OmoMessages";
 
   import OmoDocs from "./omo-elements/5-pages/OmoDocs";
   import OmoDapps from "./omo-elements/5-pages/OmoDapps";
-  import OmoChat from "./omo-elements/5-pages/OmoChat";
   import Odentity from "./omo-elements/5-pages/Odentity";
   import OmoDreams from "./omo-elements/5-pages/OmoDreams";
   import OmoOrgas from "./omo-elements/5-pages/OmoOrgas";
@@ -61,7 +61,7 @@
     { route: "?page=odentity", quant: Odentity, authenticate: true },
     { route: "?page=docs", quant: OmoDocs, authenticate: true },
     { route: "?page=omodapps", quant: OmoDapps, authenticate: true },
-    { route: "?page=omochat", quant: OmoChat, authenticate: true },
+    { route: "?page=omomessages", quant: OmoMessages, authenticate: true },
     { route: "?page=omoactions", quant: OmoActions, authenticate: true },
     { route: "?page=omofunding", quant: OmoFunding, authenticate: true },
     { route: "?page=omoorgas", quant: OmoOrgas, authenticate: true },
