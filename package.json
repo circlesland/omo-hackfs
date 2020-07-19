@@ -13,12 +13,13 @@
     "@textile/threads-store": "^0.1.19",
     "@types/nodemailer": "^6.4.0",
     "@types/uuid": "^8.0.0",
-    "autoprefixer": "^9.8.5",
-    "svelte": "^3.24.0",
-    "svelte-apollo": "^0.3.0",
     "apollo-boost": "^0.4.9",
+    "autoprefixer": "^9.8.5",
+    "graphql-playground-html": "^1.6.25",
     "graphql-yoga": "^1.18.3",
-    "mocker-data-generator": "^2.8.0"
+    "mocker-data-generator": "^2.8.0",
+    "svelte": "^3.24.0",
+    "svelte-apollo": "^0.3.0"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",

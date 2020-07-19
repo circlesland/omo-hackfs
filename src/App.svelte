@@ -12,7 +12,7 @@
   import Odentity from "./omo-elements/5-pages/Odentity";
   import OmoDreams from "./omo-elements/5-pages/OmoDreams";
   import OmoOrgas from "./omo-elements/5-pages/OmoOrgas";
-  import OmoSafe from "./omo-elements/5-pages/OmoSafe";
+  import OmoSafe from "./omo-elements/5-dapps/OmoSafe";
   import OmoAuth from "./omo-elements/5-dapps/OmoAuth";
   import OmoActions from "./omo-elements/5-pages/OmoActions";
   import OmoFunding from "./omo-elements/5-pages/OmoFunding";
