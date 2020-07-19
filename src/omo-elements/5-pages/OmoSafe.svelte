@@ -1,4 +1,39 @@
 <script>
+  import ApolloClient, { gql } from "apollo-boost";
+  import { query } from "svelte-apollo";
+
+  const client = new ApolloClient({
+    uri:
+      "https://graph.circles.garden/subgraphs/name/CirclesUBI/circles-subgraph"
+  });
+
+  let result;
+  let balances = gql`
+    query {
+      balances {
+        amount
+        token {
+          id
+        }
+        id
+      }
+    }
+  `;
+  result = query(client, {
+    query: balances
+  });
+</script>
+
+<main>
+  hallo safe
+  {#await $result}
+    <p>loading</p>
+  {:then x}
+    <p>RESULT: {JSON.stringify(x)}</p>
+  {/await}
+</main>
+
+<!-- <script>
   import OmoHero from "./../2-molecules/OmoHero";
   import OmoLayoutOverflowY from "./../4-layouts/OmoLayoutOverflowY";
 
@@ -12,11 +47,10 @@
   const data = {
     name: "sam"
   };
-</script>
+</script> -->
 
 <!-- <OmoHero data={hero} /> -->
-{user.name}
-<button class="p-2 bg-blue-300" on:click={() => saveUser(data)}>test</button>
+
 <!-- <OmoLayoutOverflowY> -->
 <!-- 
   <div class="py-6 px-8 text-md">
