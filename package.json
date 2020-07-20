@@ -1,6 +1,30 @@
 {
   "name": "omo-earth",
   "version": "0.6.0",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack",
+    "dev": "webpack-dev-server --content-base public"
+  },
+  "dependencies": {
+    "@graphql-tools/schema": "^6.0.14",
+    "@textile/hub": "^0.4.0",
+    "@textile/threads-client": "^0.8.3",
+    "@textile/threads-core": "^0.1.32",
+    "@textile/threads-database": "^0.6.4",
+    "@textile/threads-store": "^0.1.19",
+    "@types/nodemailer": "^6.4.0",
+    "@types/uuid": "^8.0.0",
+    "apollo-boost": "^0.4.9",
+    "autoprefixer": "^9.8.5",
+    "graphql": "^15.3.0",
+    "graphql-subscriptions": "^1.1.0",
+    "graphql-playground-html": "^1.6.25",
+    "graphql-yoga": "^1.18.3",
+    "mocker-data-generator": "^2.8.0",
+    "pluralize": "^8.0.0",
+    "svelte": "^3.24.0",
+    "svelte-apollo": "^0.3.0"
+  },
   "devDependencies": {
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.1",
@@ -16,25 +40,5 @@
     "webpack": "^4.30.0",
     "webpack-dev-server": "^3.3.1",
     "webpack-cli": "^3.3.12"
-  },
-  "scripts": {
-    "build": "cross-env NODE_ENV=production webpack",
-    "dev": "webpack-dev-server --content-base public"
-  },
-  "dependencies": {
-    "@graphql-tools/schema": "^6.0.14",
-    "@textile/hub": "^0.4.0",
-    "@textile/threads-client": "^0.8.3",
-    "@textile/threads-core": "^0.1.32",
-    "@textile/threads-database": "^0.6.4",
-    "@textile/threads-store": "^0.1.19",
-    "@types/nodemailer": "^6.4.0",
-    "@types/uuid": "^8.0.0",
-    "autoprefixer": "^9.8.5",
-    "graphql": "^15.3.0",
-    "graphql-subscriptions": "^1.1.0",
-    "mocker-data-generator": "^2.8.0",
-    "pluralize": "^8.0.0",
-    "svelte": "^3.24.0"
   }
 }

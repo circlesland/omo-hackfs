@@ -14,9 +14,9 @@
   <div class="relative">
     <div class="overflow-hidden h-3 text-xs flex bg-gray-200">
       <div
-        style="width: {data.follower * 7.69}%"
+        style="width: {data.follower * 8.33}%"
         class="shadow-none flex flex-col text-center whitespace-nowrap
-        text-white justify-center bg-secondary" />
+        text-white justify-center bg-leap1" />
     </div>
   </div>
   <div class="z-0 relative group h-48 w-full flex justify-center items-center">
@@ -41,14 +41,14 @@
       <div>
         <span
           class="text-xs font-semibold inline-block py-1 px-2 uppercase
-          text-white bg-blue-600">
-          {data.follower} / 13
+          text-white bg-leap1 ">
+          {data.follower} / 12
         </span>
       </div>
       <div class="text-right">
         <span
           class="text-xs font-semibold inline-block py-1 px-2 uppercase
-          text-white bg-blue-600 ">
+          text-white bg-leap1 ">
           DREAMERS
         </span>
       </div>
@@ -63,11 +63,11 @@
   </div>
 
   <div class="h-10 flex items-center justify-between bg-gray-100">
-    <div class="text-gray-500 font-bold text-lg px-4 py-1">Ø 7 / week</div>
     <a
-      href="javascript:navigate('omofunding','{data._id}')"
-      class="text-white bg-blue-600 font-bold text-lg px-4 py-2 uppercase">
-      unlock dream
+      href="javascript:navigate('omodream')"
+      class="w-full text-center text-white bg-tertiary font-bold text-lg px-4
+      py-2 uppercase hover:bg-secondary">
+      join dream
     </a>
   </div>
 

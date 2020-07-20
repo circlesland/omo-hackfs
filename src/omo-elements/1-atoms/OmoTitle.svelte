@@ -1,5 +1,6 @@
 <script>
   export let data = { title: "title" };
+  export let design = { textsize: "" };
 </script>
 
 <style>
@@ -7,8 +8,8 @@
   .omo-font-title {
     font-family: "Montserrat", sans-serif;
     font-weight: 900;
-    @apply uppercase text-primary;
+    @apply text-primary;
   }
 </style>
 
-<h1 class="omo-font-title">{data.title}</h1>
+<h1 class="omo-font-title {design.textsize}">{data.title}</h1>
