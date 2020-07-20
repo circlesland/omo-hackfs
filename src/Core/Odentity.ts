@@ -1,6 +1,5 @@
 import { OdentityEntity } from "./Data/Entities/OdentityEntity";
-import { ThreadID } from "@textile/hub";
-import { TextileHub } from "./TextileHub/TextileHub";
+import { Threads } from "./Textile/Threads";
 import { OdentityProvider } from "./Data/Entities/OdentityProvider";
 import { LoginRequest } from "./Data/Entities/LoginRequest";
 import { QueryJSON } from "@textile/threads-client";
@@ -11,14 +10,18 @@ import { navigate } from "../Router";
 import { OdentitySchema } from "./Data/JsonSchemas/OdentitySchema";
 import { OdentityProviderSchema } from "./Data/JsonSchemas/OdentityProviderSchema";
 import { LoginRequestSchema } from "./Data/JsonSchemas/LoginRequestSchema";
+import { SyncedCollection } from "./Textile/SyncedCollection";
 
 export class Odentity {
     private static THREADNAME = "ODENTITY3";
     private static STORAGE = "ODENTITY";
     private static _instance: Odentity;
+
+    private odentityCollection: SyncedCollection<OdentityEntity>;
+    private odentityProviderCollection: SyncedCollection<OdentityProvider>;
+    private loginRequestCollection: SyncedCollection<LoginRequest>;
+
     private _current: OdentityEntity | null;
-    private odentityThread: ThreadID;
-    private hub: TextileHub;
     private provider = {
         email: EmailProvider
     }
@@ -32,38 +35,23 @@ export class Odentity {
         return null;
     }
 
-    static async init(hub: TextileHub): Promise<Odentity> {
+    static async init(threads: Threads): Promise<Odentity> {
         if (this._instance == undefined) {
             var restored = await this.restoreOdentity();
-            var thread = await hub.threadDB.getRemoteThread(Odentity.THREADNAME);
-            this._instance = new Odentity(restored, thread.thread, hub);
-            if (thread.isNew) await this._instance.createOdentityCollections();
+            let odentityThread = await threads.getOrCreateThread(Odentity.THREADNAME);
+            let odentityCollection = await odentityThread.getOrCreateCollection<OdentityEntity>("odentity", OdentitySchema);
+            let providerCollection = await odentityThread.getOrCreateCollection<OdentityProvider>("odentityProvider", OdentityProviderSchema);
+            let loginReqCollection = await odentityThread.getOrCreateCollection<LoginRequest>("loginRequest", LoginRequestSchema);
+            this._instance = new Odentity(restored, odentityCollection, providerCollection, loginReqCollection);
         }
         return this._instance;
     }
 
-    async createOdentityCollections() {
-        await this.hub.threadDB.newRemoteCollection(this.odentityThread, OdentityEntity.CollectionName, OdentitySchema);
-        await this.hub.threadDB.newRemoteCollection(this.odentityThread, OdentityProvider.CollectionName, OdentityProviderSchema);
-        await this.hub.threadDB.newRemoteCollection(this.odentityThread, LoginRequest.CollectionName, LoginRequestSchema);
-    }
-
-    async resetOdentityToDefault() {
-        await this.hub.threadDB.truncateRemoteCollection(this.odentityThread, OdentityEntity.CollectionName);
-        await this.hub.threadDB.truncateRemoteCollection(this.odentityThread, OdentityProvider.CollectionName);
-        await this.hub.threadDB.truncateRemoteCollection(this.odentityThread, LoginRequest.CollectionName);
-        await this.hub.threadDB.deleteRemoteCollection(this.odentityThread, OdentityEntity.CollectionName);
-        await this.hub.threadDB.deleteRemoteCollection(this.odentityThread, OdentityProvider.CollectionName);
-        await this.hub.threadDB.deleteRemoteCollection(this.odentityThread, LoginRequest.CollectionName);
-        await this.hub.threadDB.newRemoteCollection(this.odentityThread, OdentityEntity.CollectionName, OdentitySchema);
-        await this.hub.threadDB.newRemoteCollection(this.odentityThread, OdentityProvider.CollectionName, OdentityProviderSchema);
-        await this.hub.threadDB.newRemoteCollection(this.odentityThread, LoginRequest.CollectionName, LoginRequestSchema);
-    }
-
-    private constructor(odentity: OdentityEntity | null, thread: ThreadID, hub: TextileHub) {
+    private constructor(odentity: OdentityEntity | null, odentityCollection: SyncedCollection<OdentityEntity>, providerCollection: SyncedCollection<OdentityProvider>, loginReqCollection: SyncedCollection<LoginRequest>) {
         this._current = odentity;
-        this.odentityThread = thread;
-        this.hub = hub;
+        this.odentityCollection = odentityCollection;
+        this.odentityProviderCollection = providerCollection;
+        this.loginRequestCollection = loginReqCollection;
     }
 
     get current(): OdentityEntity | null {
@@ -82,9 +70,9 @@ export class Odentity {
             callback(request);
         }
         else {
-            this.hub.threadDB.observeUpdate(this.odentityThread, LoginRequest.CollectionName, request._id, async (request: LoginRequest) => {
+            this.loginRequestCollection.observeUpdate(["SAVE"], request._id, async (request: LoginRequest) => {
                 if (odentityProvider.odentityId) {
-                    var odentity = await this.hub.threadDB.findByIdRemote<OdentityEntity>(this.odentityThread, OdentityEntity.CollectionName, odentityProvider.odentityId);
+                    var odentity = await this.odentityCollection.findById(odentityProvider.odentityId);
                     localStorage.setItem(Odentity.STORAGE, JSON.stringify(odentity));
                     this._current = odentity;
                     callback(request);
@@ -100,16 +88,16 @@ export class Odentity {
     }
 
     async acceptLoginRequest(id: string) {
-        var request = await this.hub.threadDB.findByIdRemote<LoginRequest>(this.odentityThread, LoginRequest.CollectionName, id);
+        var request = await this.loginRequestCollection.findById(id);
         request.verified = true;
-        await this.hub.threadDB.saveRemote<LoginRequest>(this.odentityThread, LoginRequest.CollectionName, request);
+        await this.loginRequestCollection.save(request);
     }
 
     private async createLoginRequest(odentityProvider: OdentityProvider) {
         var request = new LoginRequest();
         request.odentityProviderId = odentityProvider._id;
         request.timestamp = Math.round(+new Date() / 1000).toString();
-        return await this.hub.threadDB.createRemote<LoginRequest>(this.odentityThread, LoginRequest.CollectionName, request);
+        return await this.loginRequestCollection.create(request);
     }
 
     private async createOdentityProvider(odentity: OdentityEntity, identityReference: string, type: string): Promise<OdentityProvider> {
@@ -117,14 +105,13 @@ export class Odentity {
         provider.externalReference = identityReference;
         provider.type = type;
         provider.odentityId = odentity._id;
-        return await this.hub.threadDB.createRemote<OdentityProvider>(this.odentityThread, OdentityProvider.CollectionName, provider);
+        return await this.odentityProviderCollection.create(provider);
     }
 
     private async createOdentity(): Promise<OdentityEntity> {
         var odentity = new OdentityEntity();
         odentity.cryptoIdentity = (await Libp2pCryptoIdentity.fromRandom()).toString();
-        odentity = await this.hub.threadDB.createRemote<OdentityEntity>(this.odentityThread, OdentityEntity.CollectionName, odentity);
-        await this.hub.threadDB.createUserDb(odentity);
+        odentity = await this.odentityCollection.create(odentity);
         return odentity;
     }
 
@@ -136,7 +123,7 @@ export class Odentity {
             ]
         };
 
-        var instances = await this.hub.threadDB.findRemote<OdentityProvider>(this.odentityThread, OdentityProvider.CollectionName, query);
+        var instances = await this.odentityProviderCollection.find(query);
         if (instances.length == 0) {
             var odentity = await this.createOdentity();
             return await this.createOdentityProvider(odentity, identityReference, type);

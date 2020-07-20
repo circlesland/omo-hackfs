@@ -1,5 +1,6 @@
 import App from "./App.svelte";
 import { Quantum } from "./Core/Quantum";
+import { Threads } from "./Core/Textile/Threads";
 
 declare global {
   interface Window { o: Quantum; }
@@ -8,6 +9,7 @@ declare global {
 var app;
 
 async function start() {
+  window["threads"] = new Threads();
   window.o = await Quantum.leap();
   app = new App({
     target: document.body

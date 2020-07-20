@@ -1,18 +1,30 @@
 import { Odentity } from "./Odentity";
-import { TextileHub } from "./TextileHub/TextileHub";
+import { Threads } from "./Textile/Threads";
+import { QuantRegistry } from "./Quant/QuantRegistry";
+import { GraphQL } from "./Data/GraphQL";
+import { Seeder } from "./Data/Seeder";
 
 export class Quantum {
-    hub: TextileHub;
     odentity: Odentity;
+    graphQL: GraphQL;
+    quantRegistry: QuantRegistry;
+    threads: Threads;
 
-    private constructor(odentity: Odentity, hub: TextileHub) {
+    private constructor(threads: Threads, odentity: Odentity, quantRegistry: QuantRegistry, graphQL: GraphQL) {
         this.odentity = odentity;
-        this.hub = hub;
+        this.threads = threads;
+        this.quantRegistry = quantRegistry;
+        this.graphQL = graphQL;
     }
 
     static async leap(): Promise<Quantum> {
-        var hub = await TextileHub.init();
-        var odentity = await Odentity.init(hub);
-        return new Quantum(odentity, hub);
+        var threads = new Threads();
+        var odentity = await Odentity.init(threads);
+        var quantRegistry = await QuantRegistry.init(threads);
+        var seeder = new Seeder();
+        await seeder.createCollections(quantRegistry);
+        debugger;
+        var graphQL = await GraphQL.init(quantRegistry);
+        return new Quantum(threads, odentity, quantRegistry, graphQL);
     }
 }

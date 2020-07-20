@@ -22,6 +22,7 @@
     "dev": "webpack-dev-server --content-base public"
   },
   "dependencies": {
+    "@graphql-tools/schema": "^6.0.14",
     "@textile/hub": "^0.4.0",
     "@textile/threads-client": "^0.8.3",
     "@textile/threads-core": "^0.1.32",
@@ -30,7 +31,10 @@
     "@types/nodemailer": "^6.4.0",
     "@types/uuid": "^8.0.0",
     "autoprefixer": "^9.8.5",
+    "graphql": "^15.3.0",
+    "graphql-subscriptions": "^1.1.0",
     "mocker-data-generator": "^2.8.0",
+    "pluralize": "^8.0.0",
     "svelte": "^3.24.0"
   }
 }

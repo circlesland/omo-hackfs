@@ -1,0 +1,103 @@
+import { Instance } from "@textile/threads-store";
+import { ThreadID, KeyInfo, JSONSchema } from "@textile/hub";
+import Client, { QueryJSON } from "@textile/threads-client";
+import { ICollection } from "./ICollection";
+
+export class RemoteCollection<T extends Instance> implements ICollection<T> {
+
+    private threadId: ThreadID;
+    collectionName: string;
+
+    constructor(threadId: ThreadID, collectionName: string) {
+        this.threadId = threadId;
+        this.collectionName = collectionName;
+    }
+
+    private async getClient() {
+        let remoteAuth: KeyInfo = {
+            key: process.env.USER_API_KEY || '',
+            secret: process.env.USER_API_SECRET || ''
+        };
+        return await Client.withKeyInfo(remoteAuth);
+    }
+
+    async all(): Promise<T[]> {
+        var client = await this.getClient();
+        var response = await client.find<T>(this.threadId, this.collectionName, {});
+        return response.instancesList;
+    }
+
+    async find(query: QueryJSON): Promise<T[]> {
+        var client = await this.getClient();
+        var response = await client.find<T>(this.threadId, this.collectionName, query);
+        return response.instancesList;
+    }
+
+    async findById(id: string): Promise<T> {
+        var client = await this.getClient();
+        var response = await client.findByID<T>(this.threadId, this.collectionName, id);
+        return response.instance;
+    }
+
+    async deleteCollection() {
+        let client = await this.getClient();
+        await client.deleteCollection(this.threadId, this.collectionName);
+    }
+
+    async truncate() {
+        let client = await this.getClient();
+        var entities = await client.find<Instance>(this.threadId, this.collectionName, {});
+        await client.delete(this.threadId, this.collectionName, entities.instancesList.map(e => e._id));
+    }
+
+    async create(value: T) {
+        let client = await this.getClient();
+        var response = await client.create(this.threadId, this.collectionName, [value]);
+        value._id = response[0];
+        return value;
+    }
+
+    async createMany(values: T[]) {
+        let client = await this.getClient();
+        var response = await client.create(this.threadId, this.collectionName, values);
+        return values.map((item, index) => {
+            item._id = response[index];
+            return item;
+        });
+    }
+
+    async save(value: T): Promise<T> {
+        let client = await this.getClient();
+        await client.save(this.threadId, this.collectionName, [value]);
+        return value;
+    }
+
+    async saveMany(values: T[]): Promise<T[]> {
+        let client = await this.getClient();
+        await client.save(this.threadId, this.collectionName, values);
+        return values;
+    }
+
+    async delete(value: T) {
+        this.deleteManyByIds([value._id]);
+    }
+
+    async deleteMany(values: T[]) {
+        this.deleteManyByIds(values.map(x => x._id));
+    }
+
+    async deleteById(value: string) {
+        let client = await this.getClient();
+        await client.delete(this.threadId, this.collectionName, [value]);
+    }
+
+    async deleteManyByIds(values: string[]) {
+        let client = await this.getClient();
+        await client.save(this.threadId, this.collectionName, values);
+    }
+
+    async observeUpdate(actionTypes: string[], id: string, callback: any) {
+        let client = await this.getClient();
+        client.listen(this.threadId, [{ collectionName: this.collectionName, instanceID: id, actionTypes: actionTypes }], callback)
+    };
+}
