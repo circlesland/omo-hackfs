@@ -17,14 +17,9 @@
         slot: "top",
         quant: "OmoHero",
         data: {
-          content: {
-            uptitle: "OMO DREAMERS",
-            title: "omos dream small and big, local and global",
-            bg: "bg-gray-200"
-          },
-          design: {
-            bg: "bg-gray-300"
-          }
+          uptitle: "OMO DREAMERS",
+          title: "omos dream small and big, local and global",
+          bg: "bg-gray-200"
         }
       },
       {
