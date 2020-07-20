@@ -1,16 +1,10 @@
 <script>
   import OmoTitle from "./../1-atoms/OmoTitle";
   export let data = {
-    content: {
-      uptitle: "uptitle",
-      title: "title",
-      subline: "subline",
-      text: ""
-    },
-    design: {
-      bg: "",
-      titleSize: ""
-    }
+    uptitle: "uptitle",
+    title: "title",
+    subline: "subline",
+    text: ""
   };
 </script>
 
@@ -34,18 +28,18 @@
 
 <section class="bg-red-300;">
   <div class="inside">
-    {#if data.content.uptitle}
-      <p class="uptitle">{data.content.uptitle}</p>
+    {#if data.uptitle}
+      <p class="uptitle">{data.uptitle}</p>
     {/if}
     <h1
       class="bg-blue-300 py-1 px-4 text-primary text-2xl md:text-3xl lg:text-4xl">
-      {data.content.title}
+      {data.title}
     </h1>
-    {#if data.content.subline}
-      <div class="subline">{data.content.subline}</div>
+    {#if data.subline}
+      <div class="subline">{data.subline}</div>
     {/if}
-    {#if data.content.text}
-      <div class="text">{data.content.text}</div>
+    {#if data.text}
+      <div class="text">{data.text}</div>
     {/if}
   </div>
 </section>
