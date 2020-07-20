@@ -82,7 +82,7 @@
         break;
 
       default:
-        navigate("omomessages");
+        navigate("omodreams");
     }
   }
 </script>

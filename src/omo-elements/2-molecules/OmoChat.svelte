@@ -57,7 +57,7 @@
     levels: []
   };
 
-  let leap = data.leap;
+  let leap = data.leaps[0];
   let design = data.design;
   let levels = data.levels;
 
@@ -165,8 +165,7 @@
                   {:else}
                     By comitting regularly your time, knowledge and feedback to
                     the dreamers, you will unlock {step.benefit} usage of the
-                    future products or services that you are co-creating. After
-                    the {step.benefit} you will get forever 50% discount.
+                    future products or services that you are co-creating.
                   {/if}
                 </p>
               </div>
