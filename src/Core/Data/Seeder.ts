@@ -43,7 +43,7 @@ export class Seeder {
 
         for (let seed of seeds) {
             await registry.RegisterSeedQuanta(seed.thread.quanta);
-            console.log("seed");
+
         }
         console.log("end create collections");
 
