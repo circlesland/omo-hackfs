@@ -43,7 +43,6 @@
   });
 
   function handlerBackNavigation(event) {
-    debugger;
     curRoute.set(event.state.route);
   }
 

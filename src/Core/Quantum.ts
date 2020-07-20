@@ -23,7 +23,6 @@ export class Quantum {
         var quantRegistry = await QuantRegistry.init(threads);
         var seeder = new Seeder();
         await seeder.createCollections(quantRegistry);
-        debugger;
         var graphQL = await GraphQL.init(quantRegistry);
         return new Quantum(threads, odentity, quantRegistry, graphQL);
     }
