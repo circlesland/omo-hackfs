@@ -10,7 +10,11 @@ var app;
 
 async function start() {
   window["threads"] = new Threads();
+  let start = performance.now();
   window.o = await Quantum.leap();
+  let end = performance.now();
+  console.log(`quantumleap takes ${end - start}ms`);
+
   app = new App({
     target: document.body
   });

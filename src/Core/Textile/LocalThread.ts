@@ -16,7 +16,7 @@ export class LocalThread {
             key: process.env.GROUP_API_KEY || '',
             secret: process.env.GROUP_API_SECRET || ''
         };
-        let local = await Database.withKeyInfo(localAuth, threadName, undefined, undefined, process.env.NODE_ENV != 'production');
+        let local = await Database.withKeyInfo(localAuth, threadName, undefined, undefined, false);
         await local.start(await Database.randomIdentity());
         var instance = new LocalThread(local);
         return instance;
