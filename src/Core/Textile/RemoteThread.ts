@@ -38,15 +38,15 @@ export class RemoteThread {
     }
 
     async hasCollection(collectionName: string): Promise<boolean> {
-        let start = performance.now();
+        // let start = performance.now();
         var client = await this.getClient();
-        let end = performance.now();
-        console.log(`get client takes ${end - start}ms`);
+        // let end = performance.now();
+        // console.log(`get client takes ${end - start}ms`);
         try {
-            start = performance.now();
+            // start = performance.now();
             var foo = await client.has(this.threadID, collectionName, []);
-            let end = performance.now();
-            console.log(`has collection takes ${end - start}ms`);
+            // let end = performance.now();
+            // console.log(`has collection takes ${end - start}ms`);
             return foo;
         } catch (e) {
             debugger;

@@ -4,7 +4,7 @@ import { LocalCollection } from "./LocalCollection";
 
 export class LocalThread {
     private database: Database;
-    private collections: LocalCollection<Instance>[];
+    private collections: LocalCollection<any>[];
 
     private constructor(db: Database) {
         this.database = db;
@@ -31,8 +31,9 @@ export class LocalThread {
     }
 
     async getCollection<X extends Instance>(collectionName: string): Promise<LocalCollection<X>> {
-        if (this.collections.some(x => x.collectionName == collectionName))
+        if (this.collections.some(x => x.collectionName == collectionName)) {
             return this.collections.find(x => x.collectionName == collectionName) as LocalCollection<X>;
+        }
         var localCollection = new LocalCollection<X>(collectionName, this.database);
         this.collections.push(localCollection);
         return localCollection;

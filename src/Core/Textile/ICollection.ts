@@ -1,8 +1,8 @@
 import { Instance } from "@textile/threads-store";
-import { QueryJSON } from "@textile/threads-client";
+import { FilterQuery } from "@textile/hub";
 export interface ICollection<T extends Instance> {
     all(): Promise<T[]>;
-    find(query: QueryJSON): Promise<T[]>;
+    find(query: FilterQuery): Promise<T[]>;
     findById(id: string): Promise<T>;
     deleteCollection(): Promise<void>;
     truncate(): Promise<void>;

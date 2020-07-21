@@ -13,7 +13,7 @@ async function start() {
   let start = performance.now();
   window.o = await Quantum.leap();
   let end = performance.now();
-  console.log(`quantumleap takes ${end - start}ms`);
+  console.debug(`quantumleap takes ${end - start}ms`);
 
   app = new App({
     target: document.body

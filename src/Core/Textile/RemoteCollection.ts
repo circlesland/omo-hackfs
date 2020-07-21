@@ -1,5 +1,5 @@
 import { Instance } from "@textile/threads-store";
-import { ThreadID, KeyInfo, JSONSchema } from "@textile/hub";
+import { ThreadID, KeyInfo, JSONSchema, FilterQuery } from "@textile/hub";
 import Client, { QueryJSON } from "@textile/threads-client";
 import { ICollection } from "./ICollection";
 
@@ -27,9 +27,10 @@ export class RemoteCollection<T extends Instance> implements ICollection<T> {
         return response.instancesList;
     }
 
-    async find(query: QueryJSON): Promise<T[]> {
+    async find(query: FilterQuery): Promise<T[]> {
+        console.warn("FILTER NOT SUPPORTED YET ON REMOTE DB ");
         var client = await this.getClient();
-        var response = await client.find<T>(this.threadId, this.collectionName, query);
+        var response = await client.find<T>(this.threadId, this.collectionName, {});
         return response.instancesList;
     }
 

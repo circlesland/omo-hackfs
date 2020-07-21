@@ -17,11 +17,12 @@
     "apollo-boost": "^0.4.9",
     "autoprefixer": "^9.8.5",
     "graphql": "^15.3.0",
-    "graphql-subscriptions": "^1.1.0",
     "graphql-playground-html": "^1.6.25",
+    "graphql-subscriptions": "^1.1.0",
     "graphql-yoga": "^1.18.3",
     "mocker-data-generator": "^2.8.0",
     "pluralize": "^8.0.0",
+    "rxjs": "^6.6.0",
     "svelte": "^3.24.0",
     "svelte-apollo": "^0.3.0"
   },

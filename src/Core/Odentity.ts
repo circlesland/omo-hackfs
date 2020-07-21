@@ -39,12 +39,7 @@ export class Odentity {
         if (this._instance == undefined) {
             var restored = await this.restoreOdentity();
             let odentityThread = await threads.getOrCreateThread(Odentity.THREADNAME);
-            let start = performance.now();
             let odentityCollection = await odentityThread.getOrCreateCollection<OdentityEntity>("odentity", OdentitySchema);
-            let end = performance.now();
-            console.log(`create collection takes ${end - start}ms`);
-
-
             let providerCollection = await odentityThread.getOrCreateCollection<OdentityProvider>("odentityProvider", OdentityProviderSchema);
             let loginReqCollection = await odentityThread.getOrCreateCollection<LoginRequest>("loginRequest", LoginRequestSchema);
             this._instance = new Odentity(restored, odentityCollection, providerCollection, loginReqCollection);
