@@ -7,21 +7,21 @@
     name: "OmoDream",
     type: "organisms",
     layout: {
-      areas: "'top' 'main'",
+      areas: "main'",
       columns: "1fr",
-      rows: "12rem 1fr"
+      rows: "1fr"
     },
     blocks: [
-      {
-        type: "molecule",
-        slot: "top",
-        quant: "OmoHero",
-        data: {
-          uptitle: "OMO DREAMERS",
-          title: "omos dream small and big, local and global",
-          bg: "bg-gray-200"
-        }
-      },
+      // {
+      //   type: "molecule",
+      //   slot: "top",
+      //   quant: "OmoHero",
+      //   data: {
+      //     uptitle: "OMO DREAMERS",
+      //     title: "omos dream small and big, local and global",
+      //     bg: "bg-gray-200"
+      //   }
+      // },
       {
         type: "molecule",
         slot: "main",

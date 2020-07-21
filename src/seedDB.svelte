@@ -25,11 +25,10 @@
       }
     }
   };
-  export let data = { hello: "sdfg" };
 
   onMount(async () => {
     mocker()
-      .schema("user", user, 2)
+      .schema("user", user, 20)
       .build()
       .then(
         data => {

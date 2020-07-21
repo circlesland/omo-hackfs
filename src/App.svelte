@@ -20,6 +20,8 @@
   import OmoNavBottom from "./omo-elements/2-molecules/OmoNavBottom";
   import OmoButton from "./omo-elements/1-atoms/OmoButton";
 
+  import OmoNotify from "./omo-elements/2-molecules/OmoNotify";
+
   import ComponentRegistrar from "./ComponentRegistrar";
 
   onMount(() => {
@@ -82,6 +84,7 @@
 <ComponentRegistrar />
 
 <div class="app">
+  <OmoNotify />
   <svelte:component this={getComponent($curRoute, routes)} {routes} />
   <!-- <footer>
     {#if omo != null}

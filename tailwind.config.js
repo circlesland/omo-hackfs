@@ -18,11 +18,13 @@ module.exports = {
                 primary: '#233D81',
                 secondary: '#1C8FC0',
                 tertiary: '#2AD78B',
-                leap1: '#3182ce',
-                leap2: '#63b3ed',
-                leap3: '#4fd1c5',
-                leap4: '#9ae6b4',
-                leap5: '#fbd38d'
+                dark: '#03174B',
+                leap1: '#233d81',
+                leap2: '#0F81C0',
+                leap3: '#42AFED',
+                leap4: '#3BD2DC',
+                leap5: '#3BDCA2',
+                leap6: '#3BDC7B',
             },
         }
     },

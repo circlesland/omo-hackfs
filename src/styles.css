@@ -18,6 +18,11 @@ h1 {
   font-weight: 900;
 }
 
+font-title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 900;
+}
+
 h2 {
   @apply text-2xl pb-4;
 }
