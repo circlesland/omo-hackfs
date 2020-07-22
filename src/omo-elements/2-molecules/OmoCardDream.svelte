@@ -10,13 +10,20 @@
   };
 </script>
 
-<div class="bg-white relative shadow text-gray-800 hover:shadow-lg">
+<div
+  class="bg-white relative shadow text-gray-800 hover:shadow-lg rounded-lg
+  overflow-hidden">
+  <span
+    class="font-title w-full text-center text-sm font-bold inline-block p-2
+    uppercase text-white bg-leap1">
+    {data.follower} / 12
+  </span>
   <div class="relative">
-    <div class="overflow-hidden h-3 text-xs flex bg-gray-200">
+    <div class="overflow-hidden h-3 text-xs flex bg-dark">
       <div
-        style="width: {data.follower * 8.33}%"
+        style="width: {(data.follower * 100) / 12}%"
         class="shadow-none flex flex-col text-center whitespace-nowrap
-        text-white justify-center bg-leap1" />
+        text-white justify-center bg-tertiary" />
     </div>
   </div>
   <div class="z-0 relative group h-48 w-full flex justify-center items-center">
@@ -36,25 +43,7 @@
       border-white mr-2 h-36 w-36"
       alt="" />
   </div>
-  <div class="">
-    <div class="flex -mt-16 items-center justify-between">
-      <div>
-        <span
-          class="text-xs font-semibold inline-block py-1 px-2 uppercase
-          text-white bg-leap1 ">
-          {data.follower} / 12
-        </span>
-      </div>
-      <div class="text-right">
-        <span
-          class="text-xs font-semibold inline-block py-1 px-2 uppercase
-          text-white bg-leap1 ">
-          DREAMERS
-        </span>
-      </div>
-    </div>
-  </div>
-  <div class="mt-4 p-4 h-40">
+  <div class="p-4 h-40">
     <div class="font-bold font-title text-xl text-center">
       {data.first} {data.last}'s
     </div>
