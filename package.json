@@ -6,6 +6,7 @@
     "dev": "webpack-dev-server --content-base public"
   },
   "dependencies": {
+    "@circles/core": "^1.0.1",
     "@graphql-tools/schema": "^6.0.14",
     "@textile/hub": "^0.4.0",
     "@textile/threads-client": "^0.8.3",
@@ -20,11 +21,14 @@
     "graphql-playground-html": "^1.6.25",
     "graphql-subscriptions": "^1.1.0",
     "graphql-yoga": "^1.18.3",
+    "isomorphic-fetch": "^2.2.1",
     "mocker-data-generator": "^2.8.0",
     "pluralize": "^8.0.0",
     "rxjs": "^6.6.0",
     "svelte": "^3.24.0",
-    "svelte-apollo": "^0.3.0"
+    "svelte-apollo": "^0.3.0",
+    "truffle": "^5.1.35",
+    "web3": "^1.2.11"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",

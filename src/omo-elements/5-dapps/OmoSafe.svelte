@@ -1,8 +1,8 @@
 <script>
-  import OmoHero from "./../2-molecules/OmoHero";
   import ApolloClient, { gql } from "apollo-boost";
   import { query } from "svelte-apollo";
   import { onMount } from "svelte";
+  import OmoHero from "./../2-molecules/OmoHero";
   import OmoTabs from "./../2-molecules/OmoTabs.svelte";
 
   // List of tab items with labels and values.
@@ -19,8 +19,7 @@
   let currentTab;
 
   const client = new ApolloClient({
-    uri:
-      "https://graph.circles.garden/subgraphs/name/CirclesUBI/circles-subgraph"
+    uri: "https://api.thegraph.com/subgraphs/name/circlesubi/circles"
   });
 
   let publickey = "0x0e22dfe2ff3d1734b69c099dd46632fa3ec16678";
@@ -34,25 +33,23 @@
   let trustOUTResult;
 
   let queryBalances = gql`
-    {
-      users(
-        where: { safeAddress: "${publickey}" }
-      ) {
-        id
-        safe {
-          id
-          balances(orderBy: amount, orderDirection: desc) {
-            amount
+  {
+      safes(where: {id: "${publickey}"})
+        {
+        id 
+    	balances(orderBy: amount, orderDirection: desc) {
+    	  id
+        amount
             token {
               id
               owner {
                 id
               }
             }
-          }
-        }
+    	}
       }
     }
+ 
   `;
 
   let queryTransferOUT = gql`
@@ -85,35 +82,31 @@
 
   let queryTrustIN = gql`
     {
-      users(
-        where: { safeAddress: "${publickey}" }
-      ) {
-        safe {
+      safes(
+        where: { id: "${publickey}" }
+      ) {   
           incoming(orderBy: limit, orderDirection: desc) {
             limit
             limitPercentage
             user {
               id
             }
-          }
-        }
+          }     
       }
     }
   `;
 
   let queryTrustOUT = gql`
     {
-      users(
-        where: { safeAddress: "${publickey}" }
+      safes(
+        where: { id: "${publickey}" }
       ) {
-        safe {
           outgoing(orderBy: limit, orderDirection: desc) {
             limit
             limitPercentage
             canSendTo {
               id
-            }
-          }
+            }         
         }
       }
     }
@@ -148,7 +141,7 @@
   };
 
   function sumCircles(query) {
-    var b = query.data.users[0].safe.balances;
+    var b = query.data.safes[0].balances;
     return b.sum("amount") / 1000000000000000000;
   }
 </script>
@@ -170,7 +163,7 @@
       <p>loading</p>
     {:then query}
       <div class="py-6 px-8 text-md">
-        {#each query.data.users[0].safe.balances as b}
+        {#each query.data.safes[0].balances as b}
           <div class="flex h-12 mb-4 w-full bg-gray-100">
             {#if b.token.owner.id == '0x0e22dfe2ff3d1734b69c099dd46632fa3ec16678'}
               <img alt="" src="/profiles/samuel.jpg" class="h-full w-auto" />
@@ -221,6 +214,7 @@
             <div class="h-12 py-1 px-3 text-2xl text-green-400">
               {(data.amount / 1000000000000000000).toFixed(2)}
             </div>
+
           </div>
         {/each}
       </div>
@@ -234,21 +228,21 @@
       <div class="py-6 px-8 text-md">
         {#each query.data.transfers as data}
           {#if data.to != '0x812d4e73eb6b8200a62469ec3249fb02eac58c91'}
-            {#if data.to == '0x0e22dfe2ff3d1734b69c099dd46632fa3ec16678'}
-              <img alt="" src="/profiles/samuel.jpg" class="h-full w-auto" />
-              <p class="py-3 px-4 rounded w-full">Samuel Taler</p>
-            {:else if data.to == '0x206b9f90df961871c1da12c7fd6d7fd32d357d11'}
-              <img alt="" src="/profiles/philipp.jpg" class="h-full w-auto" />
-              <p class="py-3 px-4 rounded w-full">Philipp Taler</p>
-            {/if}
-
             <div class="flex h-12 mb-4 w-full bg-gray-100">
-              <img
-                alt=""
-                src="https://api.adorable.io/avatars/{data.to}"
-                class="h-full w-auto" />
-              <p class="py-3 px-4 rounded w-full">{data.to}</p>
-              <div class="h-12 py-1 px-3 text-2xl text-red-400">
+              {#if data.to == '0x0e22dfe2ff3d1734b69c099dd46632fa3ec16678'}
+                <img alt="" src="/profiles/samuel.jpg" class="h-full w-auto" />
+                <p class="py-3 px-4 rounded w-full">Samuel Taler</p>
+              {:else if data.to == '0x206b9f90df961871c1da12c7fd6d7fd32d357d11'}
+                <img alt="" src="/profiles/philipp.jpg" class="h-full w-auto" />
+                <p class="py-3 px-4 rounded w-full">Philipp Taler</p>
+              {:else}
+                <img
+                  alt=""
+                  src="https://api.adorable.io/avatars/{data.to}"
+                  class="h-full w-auto" />
+                <p class="py-3 px-4 rounded w-full">{data.to}</p>
+              {/if}
+              <div class="h-12 py-1 px-3 text-2xl text-green-400">
                 {(data.amount / 1000000000000000000).toFixed(2)}
               </div>
             </div>
@@ -263,7 +257,7 @@
       <p>loading</p>
     {:then query}
       <div class="py-6 px-8 text-md">
-        {#each query.data.users[0].safe.outgoing as data}
+        {#each query.data.safes[0].outgoing as data}
           <div class="flex h-12 mb-4 w-full bg-gray-100">
             <img
               alt=""
@@ -286,7 +280,7 @@
       <p>loading</p>
     {:then query}
       <div class="py-6 px-8 text-md">
-        {#each query.data.users[0].safe.incoming as data}
+        {#each query.data.safes[0].incoming as data}
           <div class="flex h-12 mb-4 w-full bg-gray-100">
             {#if data.user}
               <img

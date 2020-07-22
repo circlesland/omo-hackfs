@@ -21,6 +21,7 @@
   import OmoButton from "./omo-elements/1-atoms/OmoButton";
 
   import OmoNotify from "./omo-elements/2-molecules/OmoNotify";
+  import Circles from "./omo-elements/5-dapps/Circles";
 
   import ComponentRegistrar from "./ComponentRegistrar";
 
@@ -56,18 +57,19 @@
   var routes = [
     { route: "/", quant: OmoHome, authenticate: false },
     { route: "?page=home", quant: OmoHome, authenticate: false },
-    { route: "?page=mamaomo", quant: MamaOmo, authenticate: true },
+    { route: "?page=mamaomo", quant: MamaOmo, authenticate: false },
     { route: "?page=omoauth", quant: OmoAuth, authenticate: false },
     { route: "?page=magicLogin", quant: MagicLogin, authenticate: false },
     { route: "?page=odentity", quant: Odentity, authenticate: true },
     { route: "?page=docs", quant: OmoDocs, authenticate: true },
     { route: "?page=omodapps", quant: OmoDapps, authenticate: true },
-    { route: "?page=omodream", quant: OmoDream, authenticate: true },
+    { route: "?page=omodream", quant: OmoDream, authenticate: false },
     { route: "?page=omoactions", quant: OmoActions, authenticate: true },
-    { route: "?page=omofunding", quant: OmoFunding, authenticate: true },
+    { route: "?page=omofunding", quant: OmoFunding, authenticate: false },
     { route: "?page=omoorgas", quant: OmoOrgas, authenticate: true },
-    { route: "?page=omosafe", quant: OmoSafe, authenticate: true },
-    { route: "?page=omodreams", quant: OmoDreams, authenticate: true }
+    { route: "?page=omosafe", quant: OmoSafe, authenticate: false },
+    { route: "?page=omodreams", quant: OmoDreams, authenticate: false },
+    { route: "?page=circles", quant: Circles, authenticate: false }
   ];
 </script>
 
