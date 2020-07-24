@@ -10,8 +10,8 @@
     { label: "Token", value: 1 },
     { label: "Transfer IN", value: 2 },
     { label: "Transfer OUT", value: 3 },
-    { label: "Trust OUT", value: 4 },
-    { label: "Trust IN", value: 5 },
+    { label: "Trusted By", value: 4 },
+    { label: "You Trust", value: 5 },
     { label: "Notifications", value: 6 }
   ];
 
@@ -22,9 +22,14 @@
     uri: "https://api.thegraph.com/subgraphs/name/circlesubi/circles"
   });
 
-  let publickey = "0x0e22dfe2ff3d1734b69c099dd46632fa3ec16678";
+  let publickey = "0xc1251f7A72B54d025338C4808b059699baA12472";
   // Samuel: 0x0e22dfe2ff3d1734b69c099dd46632fa3ec16678
   // Phibar: 0x206b9f90df961871c1da12c7fd6d7fd32d357d11
+  // Omo1: 0xc1251f7A72B54d025338C4808b059699baA12472
+  // Omo2: 0xD4f7F5afed7e869C42648c1B8AB7C394e3B11ECD
+  // Omo3: 0xa12adCA8F70b1F3899EC4685C809f28BCE1986dC
+
+  publickey = publickey.toLowerCase();
 
   let balancesResult;
   let transferOUTResult;
@@ -37,8 +42,8 @@
       safes(where: {id: "${publickey}"})
         {
         id 
-    	balances(orderBy: amount, orderDirection: desc) {
-    	  id
+      balances(orderBy: amount, orderDirection: desc) {
+        id
         amount
             token {
               id
@@ -46,7 +51,7 @@
                 id
               }
             }
-    	}
+      }
       }
     }
  
@@ -264,7 +269,7 @@
               src="https://api.adorable.io/avatars/{data.canSendTo.id}"
               class="h-full w-auto" />
             <p class="py-3 px-4 rounded w-full">
-              {data.canSendTo.id} (max limit you can send)
+              {data.canSendTo.id} (max limit you can send to this address: {data.limitPercentage}%)
             </p>
             <div class="h-12 py-1 px-3 text-2xl text-blue-400">
               {(data.limit / 1000000000000000000).toFixed(2)}
@@ -288,7 +293,7 @@
                 src="https://api.adorable.io/avatars/{data.user.id}"
                 class="h-full w-auto" />
               <p class="py-3 px-4 rounded w-full">
-                {data.user.id} (max limit you can receive: {data.limitPercentage}%)
+                {data.user.id} (max limit you can receive from this address: {data.limitPercentage}%)
               </p>
             {:else}
               <p class="py-3 px-4 rounded w-full">User not found anymore</p>

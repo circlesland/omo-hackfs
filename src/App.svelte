@@ -49,7 +49,7 @@
     curRoute.set(event.state.route);
   }
 
-  export const omo = window.o.odentity.current;
+  // export const omo = window.o.odentity.current;
   //@todo listen to changes
 
   // ROUTING
