@@ -5,18 +5,16 @@
   export async function createNewSafe() {
     var safeOwner = await createNewPPK();
     var safe = await prepareNewSafe(safeOwner);
+    setTimeout(() => trustByOmo(safe), 5000);
+    setTimeout(() => deploySafe(safeOwner, safe), 35000);
+    setTimeout(() => deployToken(safeOwner, safe), 45000);
   }
 
   export async function trustByOmo(safe) {
-    // // Trust the Save 3 times with Omo1, Omo2 and Omo3
+    // Trust the Save 3 times with Omo1, Omo2 and Omo3
     let trust1 = await addTrustLine(omo1.safeOwner, omo1.safe, safe, 1);
     let trust2 = await addTrustLine(omo2.safeOwner, omo2.safe, safe, 1);
     let trust3 = await addTrustLine(omo3.safeOwner, omo3.safe, safe, 1);
-    if (trust1 && trust2 && trust3 != "") {
-      alert("trust success");
-    } else {
-      alert("trust failed");
-    }
   }
 
   export async function deploySafe(safeOwner, safe) {
@@ -39,9 +37,11 @@
   }
 
   export async function sendCircles(fromSafeOwner, fromSafe, toSafe, amount) {
+    let toSafeAddress = web3.utils.toChecksumAddress(toSafe.safeAddress);
+    alert(toSafeAddress);
     const payment = await core.token.transfer(fromSafeOwner, {
       from: fromSafe.safeAddress,
-      to: toSafe.safeAddress,
+      to: toSafeAddress,
       value: new web3.utils.BN(web3.utils.toWei(amount, "ether"))
     });
     alert(payment);

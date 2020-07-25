@@ -4,7 +4,11 @@
   import { onMount, beforeUpdate, afterUpdate } from "svelte";
   import OmoHero from "./../2-molecules/OmoHero";
   import OmoTabs from "./../2-molecules/OmoTabs";
-  import { getSafeFromLocalStorage } from "./../../omo-actions/Circles";
+  import {
+    getSafeFromLocalStorage,
+    getSafeOwnerFromLocalStorage,
+    sendCircles
+  } from "./../../omo-actions/Circles";
 
   // List of tab items with labels and values.
   let tabItems = [
@@ -145,6 +149,17 @@
     var b = query.data.safes[0].balances;
     return b.sum("amount") / 1000000000000000000;
   }
+
+  function handleSendButton() {
+    sendCircles(
+      getSafeOwnerFromLocalStorage(),
+      getSafeFromLocalStorage(),
+      {
+        safeAddress: "0xc1251f7a72b54d025338c4808b059699baa12472"
+      },
+      "1"
+    );
+  }
 </script>
 
 <main>
@@ -266,6 +281,11 @@
               class="h-full w-auto" />
             <p class="py-3 px-4 rounded w-full">
               {data.canSendTo.id} (max limit you can send to this address: {data.limitPercentage}%)
+              <span
+                class="p-2 bg-primary text-white"
+                on:click={() => handleSendButton()}>
+                send 1
+              </span>
             </p>
             <div class="h-12 py-1 px-3 text-2xl text-blue-400">
               {(data.limit / 1000000000000000000).toFixed(2)}
@@ -288,9 +308,9 @@
                 alt=""
                 src="https://api.adorable.io/avatars/{data.user.id}"
                 class="h-full w-auto" />
-              <p class="py-3 px-4 rounded w-full">
+              <div class="py-3 px-4 rounded w-full">
                 {data.user.id} (max limit you can receive from this address: {data.limitPercentage}%)
-              </p>
+              </div>
             {:else}
               <p class="py-3 px-4 rounded w-full">User not found anymore</p>
             {/if}
