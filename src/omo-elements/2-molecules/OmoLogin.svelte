@@ -48,7 +48,6 @@
     localStorage.setItem("safeOwner", JSON.stringify(safeOwner));
     const safeAddress = await getSafeAddressAsync(safeOwner);
     localStorage.setItem("safe", JSON.stringify({ safeAddress: safeAddress }));
-    alert(safeAddress);
     navigate("omosafe");
   }
 </script>
