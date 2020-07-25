@@ -5,9 +5,6 @@
   export async function createNewSafe() {
     var safeOwner = await createNewPPK();
     var safe = await prepareNewSafe(safeOwner);
-    setTimeout(() => trustByOmo(safe), 5000);
-    setTimeout(() => deploySafe(safeOwner, safe), 35000);
-    setTimeout(() => deployToken(safeOwner, safe), 45000);
   }
 
   export async function trustByOmo(safe) {

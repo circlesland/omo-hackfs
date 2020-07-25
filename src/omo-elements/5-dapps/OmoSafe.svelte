@@ -1,141 +1,37 @@
 <script>
-  import ApolloClient, { gql } from "apollo-boost";
-  import { query } from "svelte-apollo";
-  import { onMount, beforeUpdate, afterUpdate } from "svelte";
   import OmoHero from "./../2-molecules/OmoHero";
   import OmoTabs from "./../2-molecules/OmoTabs";
+  import moment from "moment";
+
   import {
-    getSafeFromLocalStorage,
     getSafeOwnerFromLocalStorage,
+    getSafeFromLocalStorage,
     sendCircles
   } from "./../../omo-actions/Circles";
+  import {
+    getSafeAddressAsync,
+    loggedInSafe,
+    transferResult
+  } from "./../../omo-data/queries/circles";
 
   // List of tab items with labels and values.
   let tabItems = [
-    { label: "Token", value: 1 },
-    { label: "Transfer IN", value: 2 },
-    { label: "Transfer OUT", value: 3 },
-    { label: "Trusted By", value: 4 },
-    { label: "You Trust", value: 5 },
-    { label: "Notifications", value: 6 }
+    { label: "Transactions", value: 1 },
+    { label: "Token", value: 2 },
+    { label: "Trusted By", value: 3 },
+    { label: "You Trust", value: 4 }
   ];
-
-  const client = new ApolloClient({
-    uri:
-      "https://graph.circles.garden/subgraphs/name/CirclesUBI/circles-subgraph"
-  });
 
   // Current active tab
   let currentTab;
 
-  let balancesResult;
-  let transferOUTResult;
-  let transferINResult;
-  let trustINResult;
-  let trustOUTResult;
-  let safeAddress = "";
+  let safeAddress = "0xc1251f7a72b54d025338c4808b059699baa12472";
 
-  const safe = getSafeFromLocalStorage();
-  safeAddress = safe.safeAddress.toLowerCase();
+  safeAddress = getSafeFromLocalStorage().safeAddress;
 
-  let queryBalances = gql`
-  {
-      safes(where: {id: "${safeAddress}"})
-        {
-        id 
-      balances(orderBy: amount, orderDirection: desc) {
-        id
-        amount
-            token {
-              id
-              owner {
-                id
-              }
-            }
-      }
-      }
-    }
-  `;
+  let safe = loggedInSafe(safeAddress);
 
-  let queryTransferOUT = gql`
-    {
-      transfers(
-        orderBy: id
-        orderDirection: desc
-        where: { from: "${safeAddress}" }
-      ) {
-        from
-        to
-        amount
-      }
-    }
-  `;
-
-  let queryTransferIN = gql`
-    {
-      transfers(
-        orderBy: id
-        orderDirection: desc
-        where: { to: "${safeAddress}" }
-      ) {
-        from
-        to
-        amount
-      }
-    }
-  `;
-
-  let queryTrustIN = gql`
-    {
-      safes(
-        where: { id: "${safeAddress}" }
-      ) {   
-          incoming(orderBy: limit, orderDirection: desc) {
-            limit
-            limitPercentage
-            user {
-              id
-            }
-          }     
-      }
-    }
-  `;
-
-  let queryTrustOUT = gql`
-    {
-      safes(
-        where: { id: "${safeAddress}" }
-      ) {
-          outgoing(orderBy: limit, orderDirection: desc) {
-            limit
-            limitPercentage
-            canSendTo {
-              id
-            }         
-        }
-      }
-    }
-  `;
-
-  balancesResult = query(client, {
-    query: queryBalances
-  });
-
-  transferOUTResult = query(client, {
-    query: queryTransferOUT
-  });
-
-  transferINResult = query(client, {
-    query: queryTransferIN
-  });
-
-  trustINResult = query(client, {
-    query: queryTrustIN
-  });
-
-  trustOUTResult = query(client, {
-    query: queryTrustOUT
-  });
+  let transfers = transferResult(safeAddress);
 
   Array.prototype.sum = function(prop) {
     var total = 0;
@@ -163,115 +59,94 @@
 </script>
 
 <main>
-  {#await $balancesResult}
+  {#await safe}
     <p>loading</p>
   {:then query}
-    <h1
-      class="bg-gray-200 py-20 w-100 text-green-400 text-6xl flex justify-center
-      text-center">
-      {sumCircles(query).toFixed(2)}
-    </h1>
+    <div class="flex justify-center text-center bg-gray-200 py-20 w-100">
+      <div class="">
+        <h1 class=" text-green-400 text-6xl ">
+          {sumCircles(query).toFixed(2)}
+        </h1>
+        <span class="text-center">{query.data.safes[0].id}</span>
+      </div>
+    </div>
+
   {/await}
   <OmoTabs bind:activeTabValue={currentTab} items={tabItems} />
 
-  {#if 1 === currentTab}
-    {#await $balancesResult}
-      <p>loading</p>
-    {:then query}
-      <div class="py-6 px-8 text-md">
-        {#each query.data.safes[0].balances as b}
-          <div class="flex h-12 mb-4 w-full bg-gray-100">
-            {#if b.token.owner.id == '0x0e22dfe2ff3d1734b69c099dd46632fa3ec16678'}
-              <img alt="" src="/profiles/samuel.jpg" class="h-full w-auto" />
-              <p class="py-3 px-4 rounded w-full">Samuel Taler</p>
-            {:else if b.token.owner.id == '0x206b9f90df961871c1da12c7fd6d7fd32d357d11'}
-              <img alt="" src="/profiles/philipp.jpg" class="h-full w-auto" />
-              <p class="py-3 px-4 rounded w-full">Philipp Taler</p>
-            {:else}
-              <img
-                alt=""
-                src="https://api.adorable.io/avatars/{b.token.owner.id}"
-                class="h-full w-auto" />
-              <p class="py-3 px-4 rounded w-full">{b.token.owner.id}</p>
+  {#await safe}
+    <p>loading</p>
+  {:then query}
+    {#if 1 === currentTab}
+      {#await transfers}
+        <p>loading</p>
+      {:then query}
+        <div class="py-6 px-8 text-md">
+          {#each query.data.notifications as data}
+            {#if data.transfer.to != '0x812d4e73eb6b8200a62469ec3249fb02eac58c91' && data.transfer.from != '0x0000000000000000000000000000000000000000'}
+              <div class="flex h-12 mb-4 w-full bg-gray-100">
+                <!-- {JSON.stringify(data)} -->
+                {#if data.transfer.from == safeAddress}
+                  <img
+                    alt=""
+                    src="https://api.adorable.io/avatars/{data.transfer.to}"
+                    class="h-full w-auto" />
+                  <p class="py-3 px-4 rounded w-full">
+                    {data.transfer.to} ({moment
+                      .unix(data.time)
+                      .locale('en')
+                      .fromNow()})
+                  </p>
+                  <div class="h-12 py-1 px-3 text-2xl text-red-400">
+                    {(data.transfer.amount / 1000000000000000000).toFixed(4)}
+                  </div>
+                {:else}
+                  <img
+                    alt=""
+                    src="https://api.adorable.io/avatars/{data.transfer.from}"
+                    class="h-full w-auto" />
+                  <p class="py-3 px-4 rounded w-full">
+                    {data.transfer.from} ({moment
+                      .unix(data.time)
+                      .locale('en')
+                      .fromNow()})
+                  </p>
+                  <div class="h-12 py-1 px-3 text-2xl text-green-400">
+                    {(data.transfer.amount / 1000000000000000000).toFixed(4)}
+                  </div>
+                {/if}
+              </div>
             {/if}
-            <div class="h-12 py-1 px-3 text-2xl text-green-400">
-              {(b.amount / 1000000000000000000).toFixed(2)}
-            </div>
-          </div>
-        {/each}
-      </div>
-    {/await}
-  {/if}
-
-  {#if 2 === currentTab}
-    {#await $transferINResult}
-      <p>loading</p>
-    {:then query}
+          {/each}
+        </div>
+      {/await}
+    {/if}
+    {#if 2 === currentTab}
       <div class="py-6 px-8 text-md">
-        {#each query.data.transfers as data}
+        {#each query.data.safes[0].balances as data}
           <div class="flex h-12 mb-4 w-full bg-gray-100">
-
-            {#if data.from == '0x0000000000000000000000000000000000000000'}
-              <img alt="" src="/logos/omo.png" class="h-full w-auto" />
-              <p class="py-3 px-4 rounded w-full">Universal basic income</p>
-            {:else if data.from == '0x0e22dfe2ff3d1734b69c099dd46632fa3ec16678'}
+            {#if data.token.owner.id == '0x0e22dfe2ff3d1734b69c099dd46632fa3ec16678'}
               <img alt="" src="/profiles/samuel.jpg" class="h-full w-auto" />
               <p class="py-3 px-4 rounded w-full">Samuel Taler</p>
-            {:else if data.from == '0x206b9f90df961871c1da12c7fd6d7fd32d357d11'}
+            {:else if data.token.owner.id == '0x206b9f90df961871c1da12c7fd6d7fd32d357d11'}
               <img alt="" src="/profiles/philipp.jpg" class="h-full w-auto" />
               <p class="py-3 px-4 rounded w-full">Philipp Taler</p>
             {:else}
               <img
                 alt=""
-                src="https://api.adorable.io/avatars/{data.from}"
+                src="https://api.adorable.io/avatars/{data.token.owner.id}"
                 class="h-full w-auto" />
-              <p class="py-3 px-4 rounded w-full">{data.from}</p>
+              <p class="py-3 px-4 rounded w-full">{data.token.owner.id}</p>
             {/if}
             <div class="h-12 py-1 px-3 text-2xl text-green-400">
               {(data.amount / 1000000000000000000).toFixed(2)}
             </div>
-
           </div>
         {/each}
       </div>
-    {/await}
-  {/if}
+    {/if}
 
-  {#if 3 === currentTab}
-    {#await $transferOUTResult}
-      <p>loading</p>
-    {:then query}
-      <div class="py-6 px-8 text-md">
-        {#each query.data.transfers as data}
-          {#if data.to != '0x812d4e73eb6b8200a62469ec3249fb02eac58c91'}
-            <div class="flex h-12 mb-4 w-full bg-gray-100">
-              {#if data.to == '0x0e22dfe2ff3d1734b69c099dd46632fa3ec16678'}
-                <img alt="" src="/profiles/samuel.jpg" class="h-full w-auto" />
-                <p class="py-3 px-4 rounded w-full">Samuel Taler</p>
-              {:else if data.to == '0x206b9f90df961871c1da12c7fd6d7fd32d357d11'}
-                <img alt="" src="/profiles/philipp.jpg" class="h-full w-auto" />
-                <p class="py-3 px-4 rounded w-full">Philipp Taler</p>
-              {:else}
-                <img
-                  alt=""
-                  src="https://api.adorable.io/avatars/{data.to}"
-                  class="h-full w-auto" />
-                <p class="py-3 px-4 rounded w-full">{data.to}</p>
-              {/if}
-              <div class="h-12 py-1 px-3 text-2xl text-green-400">
-                {(data.amount / 1000000000000000000).toFixed(2)}
-              </div>
-            </div>
-          {/if}
-        {/each}
-      </div>
-    {/await}
-  {/if}
-
-  {#if 4 === currentTab}
-    {#await $trustOUTResult}
-      <p>loading</p>
-    {:then query}
+    {#if 3 === currentTab}
       <div class="py-6 px-8 text-md">
         {#each query.data.safes[0].outgoing as data}
           <div class="flex h-12 mb-4 w-full bg-gray-100">
@@ -293,13 +168,9 @@
           </div>
         {/each}
       </div>
-    {/await}
-  {/if}
+    {/if}
 
-  {#if 5 === currentTab}
-    {#await $trustINResult}
-      <p>loading</p>
-    {:then query}
+    {#if 4 === currentTab}
       <div class="py-6 px-8 text-md">
         {#each query.data.safes[0].incoming as data}
           <div class="flex h-12 mb-4 w-full bg-gray-100">
@@ -312,7 +183,7 @@
                 {data.user.id} (max limit you can receive from this address: {data.limitPercentage}%)
               </div>
             {:else}
-              <p class="py-3 px-4 rounded w-full">User not found anymore</p>
+              <p class="py-3 px-4 rounded w-full">User not activated</p>
             {/if}
             <div class="h-12 py-1 px-3 text-2xl text-blue-400">
               {(data.limit / 1000000000000000000).toFixed(2)}
@@ -320,24 +191,6 @@
           </div>
         {/each}
       </div>
-    {/await}
-  {/if}
-
+    {/if}
+  {/await}
 </main>
-
-<!-- <OmoHero data={hero} /> -->
-
-<!-- <div class="py-6 px-8 text-md">
-    {#each balances as b}
-      <div class="flex h-12 mb-4 w-full bg-gray-100">
-        <img alt="" src={b.picture.medium} class="h-full w-auto" />
-        <p class="py-3 px-4 rounded w-full">{b.name.first}</p>
-        {#if b.amount >= 0}
-          <div class="h-12 py-1 px-3 text-2xl text-green-400">{b.amount}</div>
-        {/if}
-        {#if b.amount < 0}
-          <div class="h-12 py-1 px-3 text-2xl text-red-400">{b.amount}</div>
-        {/if}
-      </div>
-    {/each}
-  </div> -->

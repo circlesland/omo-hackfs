@@ -1,9 +1,22 @@
 <script>
+  import { mnemonicToEntropy } from "bip39";
+  import Web3 from "web3";
+  import ApolloClient, { gql } from "apollo-boost";
+  import { query } from "svelte-apollo";
+  import { getSafeAddressAsync } from "./../../omo-data/queries/circles";
+
+  const web3 = new Web3();
+
+  const client = new ApolloClient({
+    uri:
+      "https://graph.circles.garden/subgraphs/name/CirclesUBI/circles-subgraph"
+  });
+
   export let data = {
     welcome: "Welcome. Omo Sapiens.",
     image: "https://source.unsplash.com/random",
     magiclink: "magic login link has been send to your mail account",
-    button: "send login link"
+    button: "Login with Email Link"
   };
 
   export let mail;
@@ -25,6 +38,19 @@
     });
   }
   export let loading = false;
+
+  $: seedPhrase = "";
+
+  async function restoreFromSeed() {
+    const restoredKey = mnemonicToEntropy(seedPhrase);
+    const privateKey = `0x${restoredKey}`;
+    const safeOwner = web3.eth.accounts.privateKeyToAccount(privateKey);
+    localStorage.setItem("safeOwner", JSON.stringify(safeOwner));
+    const safeAddress = await getSafeAddressAsync(safeOwner);
+    localStorage.setItem("safe", JSON.stringify({ safeAddress: safeAddress }));
+    alert(safeAddress);
+    navigate("omosafe");
+  }
 </script>
 
 <div class="w-full flex flex-wrap">
@@ -60,8 +86,32 @@
             type="submit"
             value="Log In"
             class="bg-primary rounded text-white font-bold text-lg
-            hover:bg-secondary p-2 mt-8">
+            hover:bg-secondary p-2">
             {data.button}
+          </button>
+        </form>
+
+        <form
+          class="flex flex-col pt-3 md:pt-8"
+          onsubmit="event.preventDefault();">
+          <div class="flex flex-col pt-6">
+            <input
+              type="text"
+              id="text"
+              bind:value={seedPhrase}
+              placeholder="mnenomic seed phrase"
+              class="appearance-none border rounded w-full py-4 px-6
+              text-gray-700 text-xl mt-1 leading-tight focus:outline-none
+              focus:shadow-outline" />
+          </div>
+
+          <button
+            on:click={restoreFromSeed}
+            type="submit"
+            value="Log In"
+            class="bg-pink-700 rounded text-white font-bold text-lg
+            hover:bg-secondary p-2">
+            Login with Circles Seedphrase
           </button>
         </form>
       {:else}

@@ -1,7 +1,6 @@
-<script>
+<!-- <script>
   import CirclesCore from "@circles/core";
   import Web3 from "web3";
-  
 
   const provider = new Web3.providers.WebsocketProvider(
     process.env.ETHEREUM_NODE_WS,
@@ -142,9 +141,7 @@
     });
     alert(JSON.stringify(trusted));
   };
-</script>
-
-<section class="mb-1 p-20">
+</script><section class="mb-1 p-20">
   OMO1: {omo1.safe.safeAddress}
   <br />
   OMO2: {omo2.safe.safeAddress}
@@ -216,4 +213,4 @@
       Pay Now
     </button>
   </div>
-</section>
+</section> -->
