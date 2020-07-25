@@ -1,9 +1,10 @@
 <script>
   import ApolloClient, { gql } from "apollo-boost";
   import { query } from "svelte-apollo";
-  import { onMount } from "svelte";
+  import { onMount, beforeUpdate, afterUpdate } from "svelte";
   import OmoHero from "./../2-molecules/OmoHero";
-  import OmoTabs from "./../2-molecules/OmoTabs.svelte";
+  import OmoTabs from "./../2-molecules/OmoTabs";
+  import { getSafeFromLocalStorage } from "./../../omo-actions/Circles";
 
   // List of tab items with labels and values.
   let tabItems = [
@@ -15,31 +16,27 @@
     { label: "Notifications", value: 6 }
   ];
 
-  // Current active tab
-  let currentTab;
-
   const client = new ApolloClient({
-    uri: "https://api.thegraph.com/subgraphs/name/circlesubi/circles"
+    uri:
+      "https://graph.circles.garden/subgraphs/name/CirclesUBI/circles-subgraph"
   });
 
-  let publickey = "0xc1251f7A72B54d025338C4808b059699baA12472";
-  // Samuel: 0x0e22dfe2ff3d1734b69c099dd46632fa3ec16678
-  // Phibar: 0x206b9f90df961871c1da12c7fd6d7fd32d357d11
-  // Omo1: 0xc1251f7A72B54d025338C4808b059699baA12472
-  // Omo2: 0xD4f7F5afed7e869C42648c1B8AB7C394e3B11ECD
-  // Omo3: 0xa12adCA8F70b1F3899EC4685C809f28BCE1986dC
-
-  publickey = publickey.toLowerCase();
+  // Current active tab
+  let currentTab;
 
   let balancesResult;
   let transferOUTResult;
   let transferINResult;
   let trustINResult;
   let trustOUTResult;
+  let safeAddress = "";
+
+  const safe = getSafeFromLocalStorage();
+  safeAddress = safe.safeAddress.toLowerCase();
 
   let queryBalances = gql`
   {
-      safes(where: {id: "${publickey}"})
+      safes(where: {id: "${safeAddress}"})
         {
         id 
       balances(orderBy: amount, orderDirection: desc) {
@@ -54,7 +51,6 @@
       }
       }
     }
- 
   `;
 
   let queryTransferOUT = gql`
@@ -62,7 +58,7 @@
       transfers(
         orderBy: id
         orderDirection: desc
-        where: { from: "${publickey}" }
+        where: { from: "${safeAddress}" }
       ) {
         from
         to
@@ -76,7 +72,7 @@
       transfers(
         orderBy: id
         orderDirection: desc
-        where: { to: "${publickey}" }
+        where: { to: "${safeAddress}" }
       ) {
         from
         to
@@ -88,7 +84,7 @@
   let queryTrustIN = gql`
     {
       safes(
-        where: { id: "${publickey}" }
+        where: { id: "${safeAddress}" }
       ) {   
           incoming(orderBy: limit, orderDirection: desc) {
             limit
@@ -104,7 +100,7 @@
   let queryTrustOUT = gql`
     {
       safes(
-        where: { id: "${publickey}" }
+        where: { id: "${safeAddress}" }
       ) {
           outgoing(orderBy: limit, orderDirection: desc) {
             limit

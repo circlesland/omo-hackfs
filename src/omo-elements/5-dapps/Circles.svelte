@@ -1,6 +1,7 @@
 <script>
   import CirclesCore from "@circles/core";
   import Web3 from "web3";
+  
 
   const provider = new Web3.providers.WebsocketProvider(
     process.env.ETHEREUM_NODE_WS,
@@ -64,6 +65,12 @@
 
   current = omo1;
 
+  $: from = "";
+  $: to = "";
+  $: amount = 0;
+
+  let recipient = {};
+
   const createAccount = async function() {
     // Create account
     account = web3.eth.accounts.create();
@@ -117,11 +124,11 @@
     alert(payout);
   };
 
-  const payMe = async function() {
-    const payment = await core.token.transfer(omo1.account, {
-      from: omo1.safe.safeAddress,
-      to: omo2.safe.safeAddress,
-      value: new web3.utils.BN(web3.utils.toWei("5", "ether"))
+  const payMe = async function(from, to, amount) {
+    const payment = await core.token.transfer(from.account, {
+      from: from.safe.safeAddress,
+      to: to.safe.safeAddress,
+      value: new web3.utils.BN(web3.utils.toWei(amount, "ether"))
     });
     alert(payment);
   };
@@ -187,5 +194,26 @@
     on:click={requestUBI}>
     request UBI
   </div>
-
+  <div class="flex">
+    <input
+      class="w-full p-3 border-t mr-0 border-b border-l text-gray-800
+      border-gray-200 bg-white"
+      placeholder="sender"
+      bind:value={from} />
+    <input
+      class="w-full p-3 border-t mr-0 border-b border-l text-gray-800
+      border-gray-200 bg-white"
+      placeholder="recipient"
+      bind:value={to} />
+    <input
+      class="w-full p-3 border-t mr-0 border-b border-l text-gray-800
+      border-gray-200 bg-white"
+      placeholder="amount to send"
+      bind:value={amount} />
+    <button
+      on:click={OmoPay}
+      class="px-6 bg-green-400 text-gray-800 font-bold p-3 uppercase">
+      Pay Now
+    </button>
+  </div>
 </section>
