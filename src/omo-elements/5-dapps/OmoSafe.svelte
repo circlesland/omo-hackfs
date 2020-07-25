@@ -46,12 +46,12 @@
     return b.sum("amount") / 1000000000000000000;
   }
 
-  function handleSendButton() {
+  function handleSendButton(safeAddress) {
     sendCircles(
       getSafeOwnerFromLocalStorage(),
       getSafeFromLocalStorage(),
       {
-        safeAddress: "0xc1251f7a72b54d025338c4808b059699baa12472"
+        safeAddress: safeAddress
       },
       "1"
     );
@@ -112,7 +112,7 @@
                       .fromNow()})
                   </p>
                   <div class="h-12 py-1 px-3 text-2xl text-green-400">
-                    {(data.transfer.amount / 1000000000000000000).toFixed(4)}
+                    {(data.transfer.amount / 1000000000000000000).toFixed(2)}
                   </div>
                 {/if}
               </div>
@@ -158,7 +158,7 @@
               {data.canSendTo.id} (max limit you can send to this address: {data.limitPercentage}%)
               <span
                 class="p-2 bg-primary text-white"
-                on:click={() => handleSendButton()}>
+                on:click={() => handleSendButton(data.canSendTo.id)}>
                 send 1
               </span>
             </p>

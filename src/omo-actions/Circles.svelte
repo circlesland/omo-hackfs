@@ -35,9 +35,10 @@
 
   export async function sendCircles(fromSafeOwner, fromSafe, toSafe, amount) {
     let toSafeAddress = web3.utils.toChecksumAddress(toSafe.safeAddress);
-    alert(toSafeAddress);
+    let fromSender = web3.utils.toChecksumAddress(fromSafe.safeAddress);
+
     const payment = await core.token.transfer(fromSafeOwner, {
-      from: fromSafe.safeAddress,
+      from: fromSender,
       to: toSafeAddress,
       value: new web3.utils.BN(web3.utils.toWei(amount, "ether"))
     });
