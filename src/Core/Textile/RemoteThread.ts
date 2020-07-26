@@ -13,6 +13,11 @@ export class RemoteThread {
         this.collections = [];
     }
 
+    static async byThreadID(threadId: string): Promise<RemoteThread> {
+        var newThreadId = ThreadID.fromString(threadId);
+        return new RemoteThread(newThreadId);
+    }
+
     static async init(threadName: any): Promise<RemoteThread> {
         var client = await this.getClient();
         var threadList = (await client.listThreads()).listList;
@@ -23,6 +28,7 @@ export class RemoteThread {
         }
         var newThreadId = ThreadID.fromRandom();
         await client.newDB(newThreadId, threadName);
+        debugger;
         return new RemoteThread(newThreadId);
     }
 
@@ -37,19 +43,17 @@ export class RemoteThread {
         return await RemoteThread.getClient();
     }
 
+    async getInvite() {
+        let client = await this.getClient();
+        let info = await client.getDBInfo(this.threadID);
+        return JSON.stringify(info);
+    }
+
     async hasCollection(collectionName: string): Promise<boolean> {
-        // let start = performance.now();
         var client = await this.getClient();
-        // let end = performance.now();
-        // console.log(`get client takes ${end - start}ms`);
         try {
-            // start = performance.now();
-            var foo = await client.has(this.threadID, collectionName, []);
-            // let end = performance.now();
-            // console.log(`has collection takes ${end - start}ms`);
-            return foo;
+            return await client.has(this.threadID, collectionName, []);
         } catch (e) {
-            debugger;
             if (e.message == "collection not found") return false;
             throw e;
         }
@@ -68,9 +72,14 @@ export class RemoteThread {
         return remoteCollection;
     }
 
-    async getOrCreateCollection<X extends Instance>(collectionName: string, schema: JSONSchema) {
+    async getOrCreateCollection<X extends Instance>(collectionName: string, schema: JSONSchema): Promise<RemoteCollection<X>> {
         if (!await this.hasCollection(collectionName))
             await this.createCollection(collectionName, schema);
         return await this.getCollection(collectionName);
+    }
+
+    async deleteThread() {
+        var client = await this.getClient();
+        client.deleteDB(this.threadID);
     }
 }

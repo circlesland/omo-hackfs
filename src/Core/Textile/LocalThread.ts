@@ -16,10 +16,13 @@ export class LocalThread {
             key: process.env.GROUP_API_KEY || '',
             secret: process.env.GROUP_API_SECRET || ''
         };
-        let local = await Database.withKeyInfo(localAuth, threadName, undefined, undefined, false);
-        await local.start(await Database.randomIdentity());
+        let local = await Database.withKeyInfo(localAuth, threadName, undefined, undefined, true);
         var instance = new LocalThread(local);
         return instance;
+    }
+
+    async start() {
+        await this.database.start(await Database.randomIdentity());
     }
 
     async hasCollection(collectionName: string): Promise<boolean> {

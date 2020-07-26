@@ -2,7 +2,6 @@ import { Instance } from "@textile/threads-store";
 import { ICollection } from "./ICollection";
 import { RemoteCollection } from "./RemoteCollection";
 import { LocalCollection } from "./LocalCollection";
-import { QueryJSON } from "@textile/threads-client";
 import { FilterQuery } from "@textile/hub";
 import { LocalThread } from "./LocalThread";
 import { RemoteThread } from "./RemoteThread";
@@ -22,16 +21,24 @@ export class SyncedCollection<T extends Instance> implements ICollection<T> {
         remoteThread.then((thread) => {
             instance.remoteCollection = thread.getCollection<T>(collectionName);
             instance.remoteCollection.then(rc =>
-                this.fakeDyncCollections<T>(localCollection, rc))
+                this.fakeSyncCollections<T>(localCollection, rc))
         });
         return instance;
     }
 
-    private static async fakeDyncCollections<T extends Instance>(localCollection: LocalCollection<T>, remoteCollection: RemoteCollection<T>) {
+    private static async fakeSyncCollections<T extends Instance>(localCollection: LocalCollection<T>, remoteCollection: RemoteCollection<T>) {
         await localCollection.saveMany(await remoteCollection.all());
         remoteCollection.observeUpdate(["CREATE"], "", async (instance) => {
-            console.log("UPDATE", instance);
-            await localCollection.create(instance);
+            console.log("CREATE", instance);
+            await localCollection.save(instance);
+        })
+        remoteCollection.observeUpdate(["SAVE"], "", async (instance) => {
+            console.log("SAVE", instance);
+            await localCollection.save(instance);
+        })
+        remoteCollection.observeUpdate(["DELETE"], "", async (instance) => {
+            console.log("DELETE", instance);
+            await localCollection.save(instance);
         })
     }
 

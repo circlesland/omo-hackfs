@@ -10,16 +10,17 @@ import { navigate } from "../Router";
 import { OdentitySchema } from "./Data/JsonSchemas/OdentitySchema";
 import { OdentityProviderSchema } from "./Data/JsonSchemas/OdentityProviderSchema";
 import { LoginRequestSchema } from "./Data/JsonSchemas/LoginRequestSchema";
-import { SyncedCollection } from "./Textile/SyncedCollection";
+import { RemoteCollection } from "./Textile/RemoteCollection";
+import { RemoteThread } from "./Textile/RemoteThread";
 
 export class Odentity {
-    private static THREADNAME = "ODENTITY3";
+    private static THREADNAME = "ODENTITY";
     private static STORAGE = "ODENTITY";
     private static _instance: Odentity;
 
-    private odentityCollection: SyncedCollection<OdentityEntity>;
-    private odentityProviderCollection: SyncedCollection<OdentityProvider>;
-    private loginRequestCollection: SyncedCollection<LoginRequest>;
+    private odentityCollection: RemoteCollection<OdentityEntity>;
+    private odentityProviderCollection: RemoteCollection<OdentityProvider>;
+    private loginRequestCollection: RemoteCollection<LoginRequest>;
 
     private _current: OdentityEntity | null;
     private provider = {
@@ -38,7 +39,19 @@ export class Odentity {
     static async init(threads: Threads): Promise<Odentity> {
         if (this._instance == undefined) {
             var restored = await this.restoreOdentity();
-            let odentityThread = await threads.getOrCreateThread(Odentity.THREADNAME);
+            let odentityThread = process.env.ODENTITY ? await RemoteThread.byThreadID(process.env.ODENTITY) : await RemoteThread.init("ODENTITY");
+            let odentityCollection = await odentityThread.getCollection<OdentityEntity>("odentity");
+            let providerCollection = await odentityThread.getCollection<OdentityProvider>("odentityProvider");
+            let loginReqCollection = await odentityThread.getCollection<LoginRequest>("loginRequest");
+            this._instance = new Odentity(restored, odentityCollection, providerCollection, loginReqCollection);
+        }
+        return this._instance;
+    }
+
+    static async createSchemas(threads: Threads): Promise<Odentity> {
+        if (this._instance == undefined) {
+            var restored = await this.restoreOdentity();
+            let odentityThread = process.env.ODENTITY ? await RemoteThread.byThreadID(process.env.ODENTITY) : await RemoteThread.init("ODENTITY");
             let odentityCollection = await odentityThread.getOrCreateCollection<OdentityEntity>("odentity", OdentitySchema);
             let providerCollection = await odentityThread.getOrCreateCollection<OdentityProvider>("odentityProvider", OdentityProviderSchema);
             let loginReqCollection = await odentityThread.getOrCreateCollection<LoginRequest>("loginRequest", LoginRequestSchema);
@@ -47,7 +60,7 @@ export class Odentity {
         return this._instance;
     }
 
-    private constructor(odentity: OdentityEntity | null, odentityCollection: SyncedCollection<OdentityEntity>, providerCollection: SyncedCollection<OdentityProvider>, loginReqCollection: SyncedCollection<LoginRequest>) {
+    private constructor(odentity: OdentityEntity | null, odentityCollection: RemoteCollection<OdentityEntity>, providerCollection: RemoteCollection<OdentityProvider>, loginReqCollection: RemoteCollection<LoginRequest>) {
         this._current = odentity;
         this.odentityCollection = odentityCollection;
         this.odentityProviderCollection = providerCollection;

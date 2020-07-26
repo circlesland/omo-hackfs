@@ -1,9 +1,7 @@
 import { Instance } from "@textile/threads-store";
-import { KeyInfo, Collection, JSONSchema, FilterQuery } from "@textile/hub";
-import Client, { QueryJSON } from "@textile/threads-client";
+import { Collection, FilterQuery } from "@textile/hub";
 import { ICollection } from "./ICollection";
 import { Result, Database } from "@textile/threads-database";
-import { fromEvent, Observable } from 'rxjs';
 
 export class LocalCollection<T extends Instance> implements ICollection<T> {
     private collection: Collection<T>;

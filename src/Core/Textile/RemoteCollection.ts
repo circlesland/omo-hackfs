@@ -1,10 +1,9 @@
 import { Instance } from "@textile/threads-store";
-import { ThreadID, KeyInfo, JSONSchema, FilterQuery } from "@textile/hub";
-import Client, { QueryJSON } from "@textile/threads-client";
+import { ThreadID, KeyInfo, FilterQuery } from "@textile/hub";
+import Client from "@textile/threads-client";
 import { ICollection } from "./ICollection";
 
 export class RemoteCollection<T extends Instance> implements ICollection<T> {
-
     private threadId: ThreadID;
     collectionName: string;
 

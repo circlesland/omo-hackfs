@@ -1,6 +1,8 @@
 import App from "./App.svelte";
 import { Quantum } from "./Core/Quantum";
 import { Threads } from "./Core/Textile/Threads";
+import { RemoteThread } from "./Core/Textile/RemoteThread";
+import { async } from "rxjs";
 
 declare global {
   interface Window {
@@ -10,18 +12,14 @@ declare global {
 
 var app;
 
-//async function start() {
-// window["threads"] = new Threads();
-// let start = performance.now();
-// window.o = await Quantum.leap();
-// let end = performance.now();
-// console.debug(`quantumleap takes ${end - start}ms`);
+async function start() {
+  window.o = await Quantum.leap();
+  app = new App({
+    target: document.body,
+  });
+}
+start();
 
-app = new App({
-  target: document.body,
-});
-// }
-//start();
 export default app;
 
 window["restore"] = function (key) {
