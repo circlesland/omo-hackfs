@@ -16,14 +16,14 @@
     return await safeAddress;
   }
 
-  export async function loggedInSafe(safeAddress) {
+  export async function loadingSafeDataAsync(safeAddress) {
     let queryReturn = await query(client, {
       query: queryLoggedInSafe(safeAddress)
     });
     let r = await queryReturn.result();
     return r;
   }
-  export async function transferResult(safeAddress) {
+  export async function loadingTransferDataAsync(safeAddress) {
     let queryReturn = query(client, {
       query: queryTransfers(safeAddress)
     });
