@@ -63,7 +63,6 @@ export class ModelQuant {
         ${this.typeName(this.name)}ById(_id:String): ${this.typeName(this.name)}
         `;
     }
-
     async addQueryResolver(query: any, thread: SyncedThread) {
         if (this.isManyToMany) return "";
         var collection = await thread.getCollection(this.collectionName);
@@ -75,21 +74,32 @@ export class ModelQuant {
 
     async addTypeResolver(typeResolvers: any, thread: SyncedThread) {
         var retval: any = {};
-        this.oneToManyRelations.forEach(async (rel) => {
+        for (let rel of this.oneToManyRelations) {
             let collection = await thread.getCollection(rel.reference);
-            retval[rel.name] = async (x: any) => await collection.find({ ands: [{ fieldPath: this.collectionName.toLowerCase() + 'Id', value: { string: x._id } }] })
-        });
+            retval[rel.name] = async (x: any) => await collection.find({ ands: [{ fieldPath: this.collectionName.toLowerCase() + 'Id', value: { string: x._id } }] });
+        };
 
-        this.ManyToOneRelations.forEach(async (rel) => {
+        for (let rel of this.ManyToOneRelations) {
             let collection = await thread.getCollection(rel.reference);
             retval[rel.name] = async (x: any) => {
                 if (x[rel.fieldName])
-                    return await collection.findById(x[rel.fieldName]);
+                    try {
+                        return await collection.findById(x[rel.fieldName]);
+
+                    }
+                    catch (e) {
+                        // debugger;
+                        // await new Promise(resolve => setTimeout(resolve, 2000));
+                        // return await collection.findById(x[rel.fieldName]);
+
+                    }
                 return null;
             }
-        });
+        };
+
         typeResolvers[this.collectionName] = retval;
     }
+
     async addMutationResolver(mutation: any, thread: SyncedThread) {
         if (this.isManyToMany) return "";
         var collection = await thread.getCollection(this.collectionName);
@@ -148,31 +158,47 @@ export class ModelQuant {
                 return entity;
             }
         };
+
+        mutation['delete' + this.typeName(this.name)] = {
+            resolve: async (_, { _id }) => {
+                await collection.deleteById(_id);
+                // TODO RELATION HANDLING
+            }
+        };
     }
+
     async addSubscriptionResolver(subscription: any, thread: SyncedThread) {
         if (this.isManyToMany) return "";
         console.log(this.collectionName + "_changed");
         var collection = await thread.getCollection(this.collectionName);
         subscription[pluralize(this.typeName(this.name))] = {
-            resolve: async () => await collection.find({}),
-            subscribe: async () => ModelQuant.pubsub.asyncIterator(this.collectionName + "_changed"),
+            resolve: async () => {
+                return await collection.find({})
+            },
+            subscribe: async () => {
+                collection.observeUpdate(["SAVE"], "", (foo) => {
+                    console.log("FOOOOO", foo);
+                    ModelQuant.pubsub.publish(this.collectionName + "_changed", foo);
+                })
+                return ModelQuant.pubsub.asyncIterator(this.collectionName + "_changed")
+            },
         }
-        subscription[this.typeName(this.name) + 'ById'] = {
-            resolve: async (_, data) => { console.log(data); return await collection.find({}) },
-            subscribe: async (_, { _id }) => { console.warn("Subscrition not working in the moment"); return ModelQuant.pubsub.asyncIterator(_id + "_changed") },
-        }
-        subscription[this.typeName(this.name) + 'Added'] = {
-            resolve: async (_, data) => { console.log(data); return await collection.find({}) },
-            subscribe: async () => { console.warn("Subscrition not working in the moment"); return ModelQuant.pubsub.asyncIterator(this.collectionName + "_added") },
-        }
-        subscription[this.typeName(this.name) + 'Updated'] = {
-            resolve: async (_, data) => { console.log(data); return await collection.find({}) },
-            subscribe: async () => { console.warn("Subscrition not working in the moment"); return ModelQuant.pubsub.asyncIterator(this.collectionName + "_updated") },
-        }
-        subscription[this.typeName(this.name) + 'Deleted'] = {
-            resolve: async (_, data) => { console.log(data); return await collection.find({}) },
-            subscribe: async () => { console.warn("Subscrition not working in the moment"); return ModelQuant.pubsub.asyncIterator(this.collectionName + "_deleted") },
-        }
+        // subscription[this.typeName(this.name) + 'ById'] = {
+        //     resolve: async (_, data) => { console.log(data); return await collection.find({}) },
+        //     subscribe: async (_, { _id }) => { console.warn("Subscrition not working in the moment"); return ModelQuant.pubsub.asyncIterator(_id + "_changed") },
+        // }
+        // subscription[this.typeName(this.name) + 'Added'] = {
+        //     resolve: async (_, data) => { console.log(data); return await collection.find({}) },
+        //     subscribe: async () => { console.warn("Subscrition not working in the moment"); return ModelQuant.pubsub.asyncIterator(this.collectionName + "_added") },
+        // }
+        // subscription[this.typeName(this.name) + 'Updated'] = {
+        //     resolve: async (_, data) => { console.log(data); return await collection.find({}) },
+        //     subscribe: async () => { console.warn("Subscrition not working in the moment"); return ModelQuant.pubsub.asyncIterator(this.collectionName + "_updated") },
+        // }
+        // subscription[this.typeName(this.name) + 'Deleted'] = {
+        //     resolve: async (_, data) => { console.log(data); return await collection.find({}) },
+        //     subscribe: async () => { console.warn("Subscrition not working in the moment"); return ModelQuant.pubsub.asyncIterator(this.collectionName + "_deleted") },
+        // }
     }
 
     getGraphQlMutation() {
@@ -183,6 +209,7 @@ export class ModelQuant {
         delete${this.typeName(this.name)}(_id:String): ${this.typeName(this.name)}
         `;
     }
+
     getGraphQlSubscription() {
         if (this.isManyToMany) return "";
         return `${pluralize(this.typeName(this.name))}: [${this.typeName(this.name)}]
@@ -192,6 +219,7 @@ export class ModelQuant {
         ${this.typeName(this.name)}Deleted: ${this.typeName(this.name)}
         `;
     }
+
     getArguments() {
         var args = this.properties.map(prop => `${prop.name}: ${prop.type}`);
         args.push(...this.oneToOneRelations.map(rel => `${rel.fieldName}:String`));

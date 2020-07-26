@@ -84,7 +84,8 @@ export class LocalCollection<T extends Instance> implements ICollection<T> {
     async observeUpdate(actionTypes: string[], id: string, callback: any): Promise<void> {
         this.database.emitter.on(`${this.collectionName}.*.*`,
             async (update) => {
-                console.log("UPDATE", update)
+                console.log("UPDATE", update);
+                callback(update);
             });
     }
 }

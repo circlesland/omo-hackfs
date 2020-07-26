@@ -1,40 +1,58 @@
 <script>
+  import { moment } from "moment";
   import OmoLayoutChat from "./../4-layouts/OmoLayoutChat";
   import OmoInput from "./../1-atoms/OmoInput";
   import OmoButton from "./../1-atoms/OmoButton";
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
 
-  // export let messages = [];
-  // var urlParams = new URLSearchParams(window.location.search);
-  // if (urlParams.has("invite")) {
-  //   ChatRoom.initFromInvite(urlParams.get("invite")).then(() => subscribe());
-  // } else {
-  //   ChatRoom.initNew("mama@omo.earth").then(() => subscribe());
-  // }
+  let rooms = window.o.graphQL.subscribe(
+    "ChatRooms{_id,name}",
+    result => (rooms = result)
+  );
 
-  // function subscribe() {
-  //   ChatRoom.messageSubscription("omoearthchat", function(message) {
-  //     if (message.author == ChatRoom.usermail) message.bg = "bg-green-200";
-  //     else message.bg = "bg-blue-200";
-  //     messages = [...messages, message];
-  //   });
-  // }
-
-  export let message;
-
-  function sendMessage() {
-    console.log("clicked");
-    // ChatRoom.sendMessage(message, ChatRoom.usermail);
-    message = "";
+  let newRoom = "";
+  async function createNewRoom() {
+    currentRoom = (await o.graphQL.mutation(
+      `addChatRoom(name:"${newRoom}") {_id name}`
+    )).data.addChatRoom;
+    newRoom = "";
   }
 
-  let rooms = window.o.graphQL.query("ChatRooms{_id, name}");
-  window.o.graphQL.subscribe("ChatRooms{_id,name}", result => {
-    debugger;
-    rooms = result;
-  });
+  async function deleteRoom(id) {
+    await o.graphQL.mutation(`deleteChatRoom(_id:"${id}") {name}`);
+    if (currentRoom._id == id) currentRoom = { _id: null };
+  }
 
-  // let progress = (leap.current / leap.goal) * 100;
+  function chooseRoom(room) {
+    currentRoom = room;
+  }
+
+  let currentRoom = { _id: null };
+  let messages;
+
+  $: {
+    console.warn(currentRoom);
+    console.warn("MESSAGES");
+    messages = window.o.graphQL.subscribe(
+      "Messages{_id,text, name, date, ChatRoom{_id}}",
+      result => {
+        console.log("CALLBACK", result);
+        messages = result;
+      }
+    );
+  }
+
+  let newMessage;
+  async function sendMessage() {
+    await window.o.graphQL.mutation(
+      `addMessage(name: "${
+        o.odentity.current._id
+      }",text: "${newMessage}", date: "${Date.now()}", chatroomId: "${
+        currentRoom._id
+      }"){_id}`
+    );
+    newMessage = "";
+  }
 </script>
 
 <style>
@@ -64,6 +82,10 @@
   .bottom-right {
     grid-area: bottom-right;
   }
+
+  .active {
+    @apply text-white bg-primary;
+  }
 </style>
 
 <OmoIconsFA />
@@ -77,11 +99,14 @@
           loading
         {:then rooms}
           {#each rooms.data.ChatRooms as room}
-            <p
+            <div
+              on:click={() => chooseRoom(room)}
               class="text-md w-full py-2 bg-gray-200 hover:bg-secondary
-              text-center text-blue-900 uppercase font-bold cursor-pointer">
+              text-center text-blue-900 uppercase font-bold cursor-pointer "
+              class:active={room._id === currentRoom._id}>
               {room.name}
-            </p>
+              <button on:click={() => deleteRoom(room._id)}>del</button>
+            </div>
           {/each}
         {/await}
 
@@ -92,38 +117,53 @@
   <div class="bottom-right ">
     <div class="flex">
       <input
+        bind:value={newRoom}
         class="w-full p-3 border-t mr-0 border-b border-l text-gray-800
         border-gray-200 bg-white"
         placeholder="room name" />
 
       <button
         class="px-6 bg-primary hover:bg-secondary text-white font-bold p-3
-        uppercase ">
+        uppercase "
+        on:click={createNewRoom}>
         +room
       </button>
     </div>
   </div>
-  <div class="content-left">
-    <div class=" py-6 px-8 text-md">
-      <!-- {#each messages as message}
-        <p class="mb-4 py-2 px-3 rounded {message.bg}">{message.text}</p>
-      {/each}  -->
-    </div>
-  </div>
-  <div class="bottom-left">
-    <div class="flex">
-      <input
-        class="w-full p-3 border-t mr-0 border-b border-l text-gray-800
-        border-gray-200 bg-white"
-        placeholder="enter your chat message here"
-        bind:value={message} />
 
-      <button
-        on:click={sendMessage}
-        class="px-6 bg-primary hover:bg-secondary text-white font-bold p-3
-        uppercase">
-        Send
-      </button>
+  {#if currentRoom._id != null}
+    <div class="content-left">
+      <div class=" py-6 px-8 text-md">
+        <h1>{currentRoom.name}</h1>
+        {#await messages}
+          loading
+        {:then messages}
+          {#each messages.data.Messages.filter(x => x.ChatRoom !== null && x.ChatRoom._id == currentRoom._id) as message}
+            <p class="mb-4 py-2 px-3 rounded">
+              {message.text} from {message.name} at {message.date}
+            </p>
+          {/each}
+        {/await}
+
+      </div>
     </div>
-  </div>
+    <div class="bottom-left">
+      <div class="flex">
+        <input
+          bind:value={newMessage}
+          class="w-full p-3 border-t mr-0 border-b border-l text-gray-800
+          border-gray-200 bg-white"
+          placeholder="enter your chat message here" />
+
+        <button
+          on:click={sendMessage}
+          class="px-6 bg-primary hover:bg-secondary text-white font-bold p-3
+          uppercase">
+          Send
+        </button>
+      </div>
+    </div>
+  {:else}
+    <div class="content-left">Please choose room</div>
+  {/if}
 </div>

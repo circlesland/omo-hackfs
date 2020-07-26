@@ -20,11 +20,11 @@ export class ModelHelper {
             Query: query,
             Subscription: subscription,
             Mutation: mutation
-
         }
 
         for (let key of Object.keys(typeResolvers)) {
-            key => resolvers[key] = typeResolvers[key];
+            // key => resolvers[key] = typeResolvers[key];
+            resolvers[key] = typeResolvers[key];
         }
         return resolvers;
     }

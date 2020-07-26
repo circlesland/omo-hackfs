@@ -28,7 +28,6 @@ export class RemoteThread {
         }
         var newThreadId = ThreadID.fromRandom();
         await client.newDB(newThreadId, threadName);
-        debugger;
         return new RemoteThread(newThreadId);
     }
 

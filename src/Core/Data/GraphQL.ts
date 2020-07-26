@@ -1,4 +1,4 @@
-import { GraphQLSchema, printSchema, graphql, subscribe, parse, ExecutionResult, GraphQLString, GraphQLObjectType, Thunk, GraphQLFieldConfigMap, GraphQLID, GraphQLBoolean } from "graphql";
+import { GraphQLSchema, printSchema, graphql, subscribe, parse, ExecutionResult, GraphQLString, GraphQLObjectType, Thunk, GraphQLBoolean } from "graphql";
 import { Quant } from "./Entities/Quant";
 import { QuantRegistry } from "../Quant/QuantRegistry";
 import { ModelHelper } from "./ModelHelper";
@@ -42,6 +42,7 @@ export class GraphQL {
     printSchema(): string {
         return printSchema(this.graphQLSchema);
     }
+
     async execute(query) {
         return await graphql(this.getSchema(), query);
     }
@@ -67,15 +68,16 @@ export class GraphQL {
     }
 
     async subscribe(query, callback) {
-        this.getSubscription(query).then(
+        this.getSubscription(`subscription { ${query}}`).then(
             subscription => {
                 (async () => {
-                    for await (let value of subscription)
-                        callback(value.data);
+                    for await (let value of subscription) {
+                        callback(value);
+                    }
                 })();
             }
         );
-        // return ()
+        return await this.query(query);
     }
 
     private async getSubscription(query) {
@@ -86,76 +88,77 @@ export class GraphQL {
         })) as AsyncIterableIterator<ExecutionResult>;
     }
 
-    private getArguments(schema: JSONSchema) {
-        var args = {};
-        if (schema.properties) {
-            for (let key of Object.keys(schema.properties)) {
-                args[key] = {
-                    type: GraphQLString
-                }
-            }
-        }
-        return args;
-    }
+    // private getArguments(schema: JSONSchema) {
+    //     var args = {};
+    //     if (schema.properties) {
+    //         for (let key of Object.keys(schema.properties)) {
+    //             args[key] = {
+    //                 type: GraphQLString
+    //             }
+    //         }
+    //     }
+    //     return args;
+    // }
 
-    private async getMutations(map: Map<Quant, GraphQLObjectType>): Promise<Thunk<GraphQLFieldConfigMap<any, any>>> {
-        var mutations: Thunk<GraphQLFieldConfigMap<any, any>> = {};
-        for (var [quant, type] of map) {
-            let collection = await this.thread.getCollection(quant.collectionName);
-            let schema = JSON.parse(quant.jsonSchema);
-            let args = this.getArguments(schema);
-            mutations[`add${quant.name}`] = {
-                args,
-                resolve: async (root: any, data: any) => {
-                    data = await collection.create(data);
-                    return data;
-                },
-                type
-            };
-            mutations[`update${quant.name}`] = {
-                args,
-                resolve: async (root: any, data: any) => {
-                    var entity = await collection.findById(data.ID);
-                    for (let key of Object.keys(data)) {
-                        entity[key] = data[key];
-                    }
-                    await collection.save(entity);
-                    return entity;
-                },
-                type
-            };
-            mutations[`addOrUpdate${quant.name}`] = {
-                args,
-                resolve: async (root: any, data: any) => {
-                    var entity;
-                    if (data.ID) {
-                        entity = await collection.findById(data.ID);
-                        for (let key of Object.keys(data)) {
-                            entity[key] = data[key];
-                        }
-                        await collection.save(entity);
-                        return entity;
-                    } else {
-                        entity = await collection.create(data);
-                    }
-                    return entity;
-                },
-                type
-            };
-            mutations[`delete${quant.name}`] = {
-                args: { ID: { type: GraphQLID } },
-                resolve: async (root: any, data: any) => {
-                    try {
-                        await collection.delete(data.ID);
-                        return true;
-                    }
-                    catch (e) {
-                        return false;
-                    }
-                },
-                type: GraphQLBoolean
-            };
-        }
-        return mutations;
-    }
+    // private async getMutations(map: Map<Quant, GraphQLObjectType>): Promise<Thunk<GraphQLFieldConfigMap<any, any>>> {
+    //     var mutations: Thunk<GraphQLFieldConfigMap<any, any>> = {};
+    //     for (var [quant, type] of map) {
+    //         let collection = await this.thread.getCollection(quant.collectionName);
+    //         let schema = JSON.parse(quant.jsonSchema);
+    //         let args = this.getArguments(schema);
+    //         mutations[`add${quant.name}`] = {
+    //             args,
+    //             resolve: async (root: any, data: any) => {
+    //                 debugger;
+    //                 data = await collection.create(data);
+    //                 return data;
+    //             },
+    //             type
+    //         };
+    //         mutations[`update${quant.name}`] = {
+    //             args,
+    //             resolve: async (root: any, data: any) => {
+    //                 var entity = await collection.findById(data.ID);
+    //                 for (let key of Object.keys(data)) {
+    //                     entity[key] = data[key];
+    //                 }
+    //                 await collection.save(entity);
+    //                 return entity;
+    //             },
+    //             type
+    //         };
+    //         mutations[`addOrUpdate${quant.name}`] = {
+    //             args,
+    //             resolve: async (root: any, data: any) => {
+    //                 var entity;
+    //                 if (data.ID) {
+    //                     entity = await collection.findById(data.ID);
+    //                     for (let key of Object.keys(data)) {
+    //                         entity[key] = data[key];
+    //                     }
+    //                     await collection.save(entity);
+    //                     return entity;
+    //                 } else {
+    //                     entity = await collection.create(data);
+    //                 }
+    //                 return entity;
+    //             },
+    //             type
+    //         };
+    //         mutations[`delete${quant.name}`] = {
+    //             args: { ID: { type: GraphQLID } },
+    //             resolve: async (root: any, data: any) => {
+    //                 try {
+    //                     await collection.delete(data.ID);
+    //                     return true;
+    //                 }
+    //                 catch (e) {
+    //                     return false;
+    //                 }
+    //             },
+    //             type: GraphQLBoolean
+    //         };
+    //     }
+    //     return mutations;
+    // }
 }
