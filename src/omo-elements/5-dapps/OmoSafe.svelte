@@ -91,12 +91,15 @@
                     alt=""
                     src="https://api.adorable.io/avatars/{data.transfer.to}"
                     class="h-full w-auto" />
-                  <p class="py-3 px-4 rounded w-full">
-                    {data.transfer.to} ({moment
-                      .unix(data.time)
-                      .locale('en')
-                      .fromNow()})
-                  </p>
+                  <div class="text-sm py-2 px-4 w-full">
+                    <p>{data.transfer.to}</p>
+                    <p class="text-xs -mt-3 text-gray-600">
+                      {moment
+                        .unix(data.time)
+                        .locale('en')
+                        .fromNow()}
+                    </p>
+                  </div>
                   <div class="h-12 py-1 px-3 text-2xl text-red-400">
                     Ø{(data.transfer.amount / 1000000000000000000).toFixed(2)}
                   </div>
@@ -105,12 +108,15 @@
                     alt=""
                     src="https://api.adorable.io/avatars/{data.transfer.from}"
                     class="h-full w-auto" />
-                  <p class="py-3 px-4 rounded w-full">
-                    {data.transfer.from} ({moment
-                      .unix(data.time)
-                      .locale('en')
-                      .fromNow()})
-                  </p>
+                  <div class="text-sm py-2 px-4 w-full">
+                    <p>{data.transfer.from}</p>
+                    <p class="text-xs -mt-3 text-gray-600">
+                      {moment
+                        .unix(data.time)
+                        .locale('en')
+                        .fromNow()}
+                    </p>
+                  </div>
                   <div class="h-12 py-1 px-3 text-2xl text-green-400">
                     Ø{(data.transfer.amount / 1000000000000000000).toFixed(2)}
                   </div>
@@ -216,12 +222,15 @@
                   alt="ubi payout"
                   src="/logos/logo.png"
                   class="h-full w-auto" />
-                <p class="py-3 px-4 rounded w-full">
-                  MamaOmo's universal basic income payout ({moment
-                    .unix(data.time)
-                    .locale('en')
-                    .fromNow()})
-                </p>
+                <div class="text-sm py-2 px-4 w-full">
+                  <p>Universal basic income payout</p>
+                  <p class="text-xs -mt-3 text-gray-600">
+                    {moment
+                      .unix(data.time)
+                      .locale('en')
+                      .fromNow()}
+                  </p>
+                </div>
                 <div class="h-12 py-1 px-3 text-2xl text-green-400">
                   Ø{(data.transfer.amount / 1000000000000000000).toFixed(2)}
                 </div>
