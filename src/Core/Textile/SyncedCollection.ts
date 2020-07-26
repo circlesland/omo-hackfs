@@ -28,18 +28,18 @@ export class SyncedCollection<T extends Instance> implements ICollection<T> {
 
     private static async fakeSyncCollections<T extends Instance>(localCollection: LocalCollection<T>, remoteCollection: RemoteCollection<T>) {
         await localCollection.saveMany(await remoteCollection.all());
-        remoteCollection.observeUpdate(["CREATE"], "", async (instance) => {
-            console.log("CREATE", instance);
-            await localCollection.save(instance);
-        })
-        remoteCollection.observeUpdate(["SAVE"], "", async (instance) => {
-            console.log("SAVE", instance);
-            await localCollection.save(instance);
-        })
-        remoteCollection.observeUpdate(["DELETE"], "", async (instance) => {
-            console.log("DELETE", instance);
-            await localCollection.save(instance);
-        })
+        // remoteCollection.observeUpdate(["CREATE"], "", async (instance) => {
+        //     console.log("CREATE", instance);
+        //     await localCollection.save(instance);
+        // })
+        // remoteCollection.observeUpdate(["SAVE"], "", async (instance) => {
+        //     console.log("SAVE", instance);
+        //     await localCollection.save(instance);
+        // })
+        // remoteCollection.observeUpdate(["DELETE"], "", async (instance) => {
+        //     console.log("DELETE", instance);
+        //     await localCollection.save(instance);
+        // })
     }
 
     async all(): Promise<T[]> {

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import OmoChat from "./omo-elements/2-molecules/OmoChat.svelte";
   import OmoConnectCircles from "./omo-elements/5-dapps/OmoConnectCircles.svelte";
   import OmoButton from "./omo-elements/1-atoms/OmoButton.svelte";
   import { getRoute, curRoute, navigate, getComponent } from "./Router.ts";
@@ -71,6 +72,8 @@
     { route: "?page=omosafe", quant: OmoSafe, authenticate: true },
     { route: "?page=omodreams", quant: OmoDreams, authenticate: false },
     { route: "?page=circles", quant: Circles, authenticate: false },
+    { route: "?page=omochat", quant: OmoChat, authenticate: true },
+
     {
       route: "?page=omoconnectcircles",
       quant: OmoConnectCircles,
@@ -106,5 +109,3 @@
     {/if}
   </footer> -->
 </div>
-
-<OmoButton name={6789} />

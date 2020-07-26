@@ -10,9 +10,9 @@ import { StopWatch } from "./StopWatch";
 
 export class Quantum {
     odentity: Odentity;
-    // graphQL: GraphQL;
-    // quantRegistry: QuantRegistry;
-    // threads: Threads;
+    graphQL: GraphQL;
+    quantRegistry: QuantRegistry;
+    threads: Threads;
     // localDB: LocalThread;
     // remoteDB: RemoteThread;
 
@@ -22,10 +22,14 @@ export class Quantum {
     //     this.quantRegistry = quantRegistry;
     //     this.graphQL = graphQL;
     // }
-    private constructor(odentity: Odentity) {
+    private constructor(threads: Threads, odentity: Odentity, quantRegistry: QuantRegistry, graphQL: GraphQL) {
+        this.threads = threads;
+
         this.odentity = odentity;
         // this.localDB = thread;
         // this.remoteDB = thread2;
+        this.quantRegistry = quantRegistry;
+        this.graphQL = graphQL;
     }
     static async leap(): Promise<Quantum> {
         StopWatch.start("threads");
@@ -35,13 +39,13 @@ export class Quantum {
         var odentity = await Odentity.init(threads);
         StopWatch.stop("Odentity");
 
-        // var quantRegistry = await QuantRegistry.init(threads);
-        // var seeder = new Seeder();
-        // await seeder.createCollections(quantRegistry);
-        // var graphQL = await GraphQL.init(quantRegistry);
-        // return new Quantum(threads, odentity, quantRegistry, graphQL);
+        var quantRegistry = await QuantRegistry.init(threads);
+        var seeder = new Seeder();
+        await seeder.createCollections(quantRegistry);
+        var graphQL = await GraphQL.init(quantRegistry);
+        // return new Quantum(threads, odentity, uantRegistry, graphQL);
         // var local = await LocalThread.init("omodb");
         // var remote = await RemoteThread.init("omoooooodb");
-        return new Quantum(odentity);
+        return new Quantum(threads, odentity, quantRegistry, graphQL);
     }
 }
