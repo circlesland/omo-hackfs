@@ -3,6 +3,8 @@ import { JSONSchema } from "@textile/hub";
 import { LibrarySchema } from "./JsonSchemas/LibrarySchema";
 import { BookSchema } from "./JsonSchemas/BookSchema";
 import { AuthorSchema } from "./JsonSchemas/AuthorSchema";
+import { MessageSchema } from "./JsonSchemas/MessageSchema";
+import { ChatRoomSchema } from "./JsonSchemas/ChatRoomSchema";
 export interface SeedQuant {
     name: string,
     schema: JSONSchema,
@@ -18,21 +20,32 @@ interface Seed {
 const seeds: Seed[] = [{
     thread: {
         name: "quanta", quanta: [
+            // {
+            //     name: "Library",
+            //     schema: LibrarySchema,
+            //     data: []
+            // },
+            // {
+            //     name: "Book",
+            //     schema: BookSchema,
+            //     data: []
+            // },
+            // {
+            //     name: "Author",
+            //     schema: AuthorSchema,
+            //     data: []
+            // },
             {
-                name: "Library",
-                schema: LibrarySchema,
+                name: "Message",
+                schema: MessageSchema,
                 data: []
             },
             {
-                name: "Book",
-                schema: BookSchema,
+                name: "ChatRoom",
+                schema: ChatRoomSchema,
                 data: []
             },
-            {
-                name: "Author",
-                schema: AuthorSchema,
-                data: []
-            },
+
         ]
     }
 }];

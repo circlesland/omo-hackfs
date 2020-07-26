@@ -66,7 +66,7 @@ export class GraphQL {
         return makeExecutableSchema({ typeDefs, resolvers });
     }
 
-    subscribe(query, callback) {
+    async subscribe(query, callback) {
         this.getSubscription(query).then(
             subscription => {
                 (async () => {
@@ -74,7 +74,8 @@ export class GraphQL {
                         callback(value.data);
                 })();
             }
-        )
+        );
+        // return ()
     }
 
     private async getSubscription(query) {

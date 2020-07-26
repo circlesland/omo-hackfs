@@ -161,7 +161,7 @@
       {
         type: "molecule",
         slot: "main",
-        quant: "OmoChat",
+        quant: "OmoDream",
         data: { leaps, levels, design }
       }
     ]

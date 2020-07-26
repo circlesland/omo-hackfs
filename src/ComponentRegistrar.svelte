@@ -1,4 +1,5 @@
 <script>
+  import OmoDream from "./omo-elements/5-dapps/OmoDream.svelte";
   import OmoDapps from "./omo-elements/2-molecules/OmoDapps";
   import OmoNavBar from "./omo-elements/2-molecules/OmoNavBar";
   import OmoTitleBar from "./omo-elements/2-molecules/OmoTitleBar";
@@ -21,6 +22,7 @@
   window.registrar.set("OmoLogin", OmoLogin);
   window.registrar.set("OmoIntro", OmoIntro);
   window.registrar.set("OmoChat", OmoChat);
+  window.registrar.set("OmoDream", OmoDream);
   window.registrar.set("OmoGridDreams", OmoGridDreams);
   window.registrar.set("OmoNext", OmoNext);
   window.registrar.set("OmoCircles", OmoCircles);
