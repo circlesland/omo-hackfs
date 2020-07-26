@@ -1,7 +1,7 @@
 <script>
   import { getRoute, curRoute, navigate, getComponent } from "./Router.ts";
   import { onMount, onDestroy } from "svelte";
-  import { seed } from "./Seed.ts";
+  import { seed } from "./seed.ts";
 
   import OmoHome from "./omo-elements/5-dapps/OmoHome";
   import MamaOmo from "./omo-elements/5-dapps/MamaOmo";
@@ -9,7 +9,7 @@
 
   import OmoDocs from "./omo-elements/5-pages/OmoDocs";
   import OmoDapps from "./omo-elements/5-pages/OmoDapps";
-  import Odentity from "./omo-elements/5-pages/Odentity";
+  import Odentity from "./omo-elements/5-dapps/oDentity";
   import OmoDreams from "./omo-elements/5-dapps/OmoDreams";
   import OmoOrgas from "./omo-elements/5-pages/OmoOrgas";
   import OmoSafe from "./omo-elements/5-dapps/OmoSafe";
@@ -60,7 +60,7 @@
     { route: "?page=mamaomo", quant: MamaOmo, authenticate: false },
     { route: "?page=omoauth", quant: OmoAuth, authenticate: false },
     { route: "?page=magicLogin", quant: MagicLogin, authenticate: false },
-    { route: "?page=odentity", quant: Odentity, authenticate: true },
+    { route: "?page=odentity", quant: Odentity, authenticate: false },
     { route: "?page=docs", quant: OmoDocs, authenticate: true },
     { route: "?page=omodapps", quant: OmoDapps, authenticate: true },
     { route: "?page=omodream", quant: OmoDream, authenticate: false },
@@ -86,7 +86,7 @@
 <ComponentRegistrar />
 
 <div class="app">
-  <OmoNotify />
+  <!-- <OmoNotify /> -->
   <svelte:component this={getComponent($curRoute, routes)} {routes} />
   <!-- <footer>
     {#if omo != null}

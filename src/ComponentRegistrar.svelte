@@ -9,6 +9,8 @@
   import OmoNext from "./omo-elements/2-molecules/OmoNext";
   import OmoHero from "./omo-elements/2-molecules/OmoHero";
   import OmoGridDreams from "./omo-elements/2-molecules/OmoGridDreams";
+  import OmoCircles from "./omo-elements/2-molecules/OmoCircles";
+  import OmoCirclesBalance from "./omo-elements/2-molecules/OmoCirclesBalance";
 
   window.registrar = new Map();
   window.registrar.set("OmoNavBar", OmoNavBar);
@@ -21,4 +23,6 @@
   window.registrar.set("OmoChat", OmoChat);
   window.registrar.set("OmoGridDreams", OmoGridDreams);
   window.registrar.set("OmoNext", OmoNext);
+  window.registrar.set("OmoCircles", OmoCircles);
+  window.registrar.set("OmoCirclesBalance", OmoCirclesBalance);
 </script>
