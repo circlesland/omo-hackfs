@@ -26,10 +26,10 @@ export class RemoteCollection<T extends Instance> implements ICollection<T> {
         return response.instancesList;
     }
 
-    async find(query: FilterQuery): Promise<T[]> {
+    async find(query: any): Promise<T[]> {
         console.warn("FILTER NOT SUPPORTED YET ON REMOTE DB ");
         var client = await this.getClient();
-        var response = await client.find<T>(this.threadId, this.collectionName, {});
+        var response = await client.find<T>(this.threadId, this.collectionName, query);
         return response.instancesList;
     }
 
