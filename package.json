@@ -40,6 +40,7 @@
     "web3": "^1.2.11"
   },
   "devDependencies": {
+    "@tsconfig/svelte": "^1.0.3",
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.1",
     "dotenv": "^8.2.0",
@@ -47,12 +48,14 @@
     "mdsvex": "^0.8.2",
     "postcss-loader": "^2.1.1",
     "style-loader": "^0.23.1",
+    "svelte-check": "^0.1.57",
     "svelte-loader": "2.13.3",
+    "svelte-preprocess": "^4.0.8",
     "tailwindcss": "^1",
     "ts-loader": "^7.0.5",
-    "typescript": "^3.9.6",
+    "typescript": "^3.9.7",
     "webpack": "^4.30.0",
-    "webpack-dev-server": "^3.3.1",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.3.1"
   }
 }

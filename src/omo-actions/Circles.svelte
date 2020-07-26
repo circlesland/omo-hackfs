@@ -9,9 +9,9 @@
 
   export async function trustByOmo(safe) {
     // Trust the Save 3 times with Omo1, Omo2 and Omo3
-    let trust1 = await addTrustLine(omo1.safeOwner, omo1.safe, safe, 1);
-    let trust2 = await addTrustLine(omo2.safeOwner, omo2.safe, safe, 1);
-    let trust3 = await addTrustLine(omo3.safeOwner, omo3.safe, safe, 1);
+    /*let trust1 = */ await addTrustLine(omo1.safeOwner, omo1.safe, safe, 1);
+    /*let trust2 = */ await addTrustLine(omo2.safeOwner, omo2.safe, safe, 1);
+    /*let trust3 = */ await addTrustLine(omo3.safeOwner, omo3.safe, safe, 1);
   }
 
   export async function deploySafe(safeOwner, safe) {

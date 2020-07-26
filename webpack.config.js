@@ -36,7 +36,8 @@ module.exports = {
 					options: {
 						emitCss: true,
 						hotReload: true,
-						preprocess: mdsvex()
+						preprocess: mdsvex(),
+						preprocess: require('./svelte.config.js').preprocess
 					},
 				}
 			},

@@ -20,4 +20,3 @@ export class Threads {
         return await Threads.getOrCreateThread(threadName);
     }
 }
-

@@ -1,4 +1,5 @@
-<script>
+<script lang="ts">
+  import OmoButton from "./omo-elements/1-atoms/OmoButton.svelte";
   import { getRoute, curRoute, navigate, getComponent } from "./Router.ts";
   import { onMount, onDestroy } from "svelte";
   import { seed } from "./seed.ts";
@@ -18,7 +19,6 @@
   import OmoFunding from "./omo-elements/5-pages/OmoFunding";
   import OmoNavTop from "./omo-elements/2-molecules/OmoNavTop";
   import OmoNavBottom from "./omo-elements/2-molecules/OmoNavBottom";
-  import OmoButton from "./omo-elements/1-atoms/OmoButton";
 
   import OmoNotify from "./omo-elements/2-molecules/OmoNotify";
   import Circles from "./omo-elements/5-dapps/Circles";
@@ -100,3 +100,5 @@
     {/if}
   </footer> -->
 </div>
+
+<OmoButton name={6789} />

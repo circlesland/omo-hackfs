@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   export let data = {
     text: "button",
     design: "o-btn-primary",
