@@ -12,16 +12,6 @@
       rows: "1fr"
     },
     blocks: [
-      // {
-      //   type: "molecule",
-      //   slot: "top",
-      //   quant: "OmoHero",
-      //   data: {
-      //     uptitle: "OMO DREAMERS",
-      //     title: "omos dream small and big, local and global",
-      //     bg: "bg-gray-200"
-      //   }
-      // },
       {
         type: "molecule",
         slot: "main",
