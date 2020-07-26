@@ -1,7 +1,5 @@
 <script>
   import OmoOrganisms from "./../4-templates/OmoOrganisms.svelte";
-
-  import OmoCircles from "./../2-molecules/OmoCircles";
   import { getSafeFromLocalStorage } from "./../../omo-actions/Circles";
   import {
     loadingSafeDataAsync,
