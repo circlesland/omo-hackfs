@@ -1,4 +1,5 @@
 <script lang="ts">
+  import OmoConnectCircles from "./omo-elements/5-dapps/OmoConnectCircles.svelte";
   import OmoButton from "./omo-elements/1-atoms/OmoButton.svelte";
   import { getRoute, curRoute, navigate, getComponent } from "./Router.ts";
   import { onMount, onDestroy } from "svelte";
@@ -67,9 +68,14 @@
     { route: "?page=omoactions", quant: OmoActions, authenticate: true },
     { route: "?page=omofunding", quant: OmoFunding, authenticate: false },
     { route: "?page=omoorgas", quant: OmoOrgas, authenticate: true },
-    { route: "?page=omosafe", quant: OmoSafe, authenticate: false },
+    { route: "?page=omosafe", quant: OmoSafe, authenticate: true },
     { route: "?page=omodreams", quant: OmoDreams, authenticate: false },
-    { route: "?page=circles", quant: Circles, authenticate: false }
+    { route: "?page=circles", quant: Circles, authenticate: false },
+    {
+      route: "?page=omoconnectcircles",
+      quant: OmoConnectCircles,
+      authenticate: true
+    }
   ];
 </script>
 

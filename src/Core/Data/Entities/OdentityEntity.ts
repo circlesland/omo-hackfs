@@ -9,9 +9,13 @@ export class OdentityEntity implements Instance {
   lastName?: string;
   profileImage?: string;
   cryptoIdentity?: string;
+  circleSafe?: { safeAddress: string; };
+  circleSafeOwner?: { address: string, privateKey: string };
 
   constructor() {
     this._id = "";
     this.threadId = (ThreadID.fromRandom()).toString();
   }
+
+
 }

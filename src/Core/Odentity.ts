@@ -12,6 +12,8 @@ import { OdentityProviderSchema } from "./Data/JsonSchemas/OdentityProviderSchem
 import { LoginRequestSchema } from "./Data/JsonSchemas/LoginRequestSchema";
 import { RemoteCollection } from "./Textile/RemoteCollection";
 import { RemoteThread } from "./Textile/RemoteThread";
+import { SeedPhraseProvider } from "../Identity/SeedPhraseProvider";
+import { Account } from "web3-core";
 
 export class Odentity {
     private static THREADNAME = "ODENTITY";
@@ -24,7 +26,8 @@ export class Odentity {
 
     private _current: OdentityEntity | null;
     private provider = {
-        email: EmailProvider
+        email: EmailProvider,
+        seedPhrase: SeedPhraseProvider
     }
 
     /**
@@ -142,5 +145,14 @@ export class Odentity {
             return await this.createOdentityProvider(odentity, identityReference, type);
         }
         return instances[0];
+    }
+
+    async connectCircleWallet(safeOwner: Account, safeAddress: string) {
+        if (this._current == null)
+            throw new Error("You are not logged in");
+        this._current.circleSafe = { safeAddress: safeAddress };
+        this._current.circleSafeOwner = safeOwner;
+        localStorage.setItem(Odentity.STORAGE, JSON.stringify(this._current));
+        await this.odentityCollection.save(this._current);
     }
 }

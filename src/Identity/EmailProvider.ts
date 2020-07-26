@@ -19,6 +19,4 @@ export class EmailProvider implements IdentityProviderInterface {
         // Email cannot login directly so this has to be handled by Listenig to Request Changes
         return null;
     }
-
-
 }

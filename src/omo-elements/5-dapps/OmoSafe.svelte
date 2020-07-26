@@ -1,4 +1,5 @@
 <script>
+  import { Odentity } from "./../../Core/Odentity.ts";
   import OmoOrganisms from "./../4-templates/OmoOrganisms.svelte";
   import { getSafeFromLocalStorage } from "./../../omo-actions/Circles";
   import {
@@ -8,8 +9,12 @@
 
   async function loadingData() {
     let d = {};
-    let safeAddress = "0xc1251f7a72b54d025338c4808b059699baa12472";
-    safeAddress = getSafeFromLocalStorage().safeAddress;
+    if (window.o.odentity.current == null) {
+      navigate("omoauth"); // add redirect ...
+      return;
+    }
+    let safeAddress = window.o.odentity.current.circleSafe.safeAddress;
+
     d.safeData = await loadingSafeDataAsync(safeAddress);
     d.transferData = await loadingTransferDataAsync(safeAddress);
     d.safeAddress = safeAddress;
