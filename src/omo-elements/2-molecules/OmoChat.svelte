@@ -69,7 +69,7 @@
   .content-left {
     grid-area: content-left;
     height: 100%;
-    overflow-y: scroll;
+    overflow: hidden;
   }
   .bottom-left {
     grid-area: bottom-left;
@@ -77,7 +77,7 @@
   .content-right {
     grid-area: content-right;
     height: 100%;
-    overflow-y: scroll;
+    overflow: hidden;
   }
   .bottom-right {
     grid-area: bottom-right;
@@ -93,8 +93,8 @@
 <div class="omo-layout">
 
   <div class="content-right bg-gray-100">
-    <div class="py-6 px-8 text-md">
-      <div class="bg-gray-300">
+    <div class="py-6 px-8 text-md ">
+      <div class="bg-gray-300 overflow-y-scroll">
         {#await rooms}
           loading
         {:then rooms}
@@ -109,7 +109,6 @@
             </div>
           {/each}
         {/await}
-
       </div>
     </div>
   </div>
@@ -133,8 +132,8 @@
 
   {#if currentRoom._id != null}
     <div class="content-left">
-      <div class=" py-6 px-8 text-md">
-        <h1>{currentRoom.name}</h1>
+      <h1 class="text-center p-3 uppercase">{currentRoom.name}</h1>
+      <div class="py-6 px-8 text-md h-full overflow-y-scroll">
         {#await messages}
           loading
         {:then messages}
@@ -144,7 +143,6 @@
             </p>
           {/each}
         {/await}
-
       </div>
     </div>
     <div class="bottom-left">
