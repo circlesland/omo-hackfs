@@ -1,4 +1,5 @@
 <script>
+  import Odentity from "./../5-pages/Odentity.svelte";
   import { mnemonicToEntropy } from "bip39";
   import Web3 from "web3";
   import ApolloClient, { gql } from "apollo-boost";
@@ -34,7 +35,11 @@
         window.navigate(urlParams.get("redirect"), urlParams.get("data"));
         return;
       }
-      navigate("mamaomo");
+      if (o.odentity._current.circleSafe) {
+        navigate("omosafe");
+      } else {
+        navigate("mamaomo");
+      }
     });
   }
   export let loading = false;
@@ -90,7 +95,7 @@
           </button>
         </form>
 
-        <form
+        <!-- <form
           class="flex flex-col pt-3 md:pt-8"
           onsubmit="event.preventDefault();">
           <div class="flex flex-col pt-6">
@@ -112,7 +117,7 @@
             hover:bg-secondary p-2">
             Login with Circles Seedphrase
           </button>
-        </form>
+        </form> -->
       {:else}
         <h1 class="text-center text-2xl text-primary">{data.magiclink}</h1>
       {/if}
