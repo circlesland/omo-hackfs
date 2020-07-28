@@ -20,7 +20,7 @@
   import OmoConnectCircles from "./omo-elements/5-dapps/OmoConnectCircles.svelte";
   import OmoChat from "./omo-elements/5-dapps/OmoChat.svelte";
   import OmoActions from "./omo-elements/5-dapps/OmoActions.svelte";
-
+  import OmoNotifications from "./omo-elements/5-dapps/OmoNotifications.svelte";
 
   onMount(() => {
     let route = getRoute();
@@ -62,8 +62,17 @@
     { route: "?page=omodreams", quant: OmoDreams, authenticate: true },
     { route: "?page=omochat", quant: OmoChat, authenticate: true },
     { route: "?page=onboarding", quant: OnBoarding, authenticate: true },
-    { route: "?page=omodialog", quant: OmoDialog, authenticate: true },{
-    route: "?page=omoactions", quant: OmoActions, authenticate: true },
+    { route: "?page=omodialog", quant: OmoDialog, authenticate: true },
+    {
+      route: "?page=omonotifications",
+      quant: OmoNotifications,
+      authenticate: true
+    },
+    {
+      route: "?page=omoactions",
+      quant: OmoActions,
+      authenticate: true
+    },
     {
       route: "?page=omoconnectcircles",
       quant: OmoConnectCircles,
