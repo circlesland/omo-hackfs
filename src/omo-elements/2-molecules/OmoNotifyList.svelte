@@ -10,6 +10,18 @@
   ];
 </script>
 
+<style>
+  .top-100 {
+    top: 100%;
+  }
+  .bottom-100 {
+    bottom: 100%;
+  }
+  .max-h-select {
+    max-height: 300px;
+  }
+</style>
+
 <section>
   {#each data as item}
     <div class="p-2 w-full md:w-4/5 lg:w-3/5 mx-auto">
