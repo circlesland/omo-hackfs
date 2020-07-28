@@ -14,6 +14,7 @@ export class Node {
     parent:Node|null;
     children:Node[] = [];
 
+    quant?:string;
     action?:() => Promise<void>;
 
     constructor(parent:Node|null)

@@ -15,6 +15,7 @@ export class Trust extends Node
         {
             console.log("Enter safe address to trust")
         };
+        otherPartySafe.quant = "OmoSafeLookup";
 
         const trustPercentage = new Node(this);
         trustPercentage.title = "Enter trust percentage";
@@ -22,6 +23,7 @@ export class Trust extends Node
         {
             console.log("Enter trust percentage")
         };
+        trustPercentage.quant = "OmoDialogContent";
 
         this.children = [
             otherPartySafe,

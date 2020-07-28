@@ -1,6 +1,7 @@
 <script>
   import OmoOrganism from "./OmoOrganism";
   import OmoMolecule from "./OmoMolecule";
+
   export let organisms = {
     name: "Organisms",
     type: "organisms",
