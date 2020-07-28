@@ -51,17 +51,27 @@
     },{
         title: "Add another owner to this safe",
         event: () => {
-            return new AddOwner();
+            const event = new AddOwner();
+            event.data = {
+                ownerAddress: "ownerAddress",
+                safeAddress: "safeAddress"
+            };
+            return event;
         }
     },{
         title: "Remove an owner from this safe",
         event: () => {
-            return new RemoveOwner();
+            const event = new RemoveOwner();
+            event.data = {
+                ownerAddress: "ownerAddress",
+                safeAddress: "safeAddress"
+            };
+            return event;
         }
     }];
 
   function click(action) {
-    window.eventBroker.tryGetTopic("omo", "notification").publish(action);
+    window.eventBroker.tryGetTopic("omo", "shell").publish(action);
   }
 </script>
 

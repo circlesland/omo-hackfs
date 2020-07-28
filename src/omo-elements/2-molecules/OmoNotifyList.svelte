@@ -1,5 +1,8 @@
 <script>
-  let data = [
+  import CirclesCore from "@circles/core";
+  import Web3 from "web3";
+
+  let notifications = [
     { tag: "TRANSFER", text: "x payed y 10 Circles", date: "14396123489" },
     {
       tag: "OWNER CHANGE",
@@ -8,10 +11,77 @@
     },
     { tag: "TRUST", text: "x trusted y to 100%", date: "14396123489" }
   ];
+
+  async function updateAsync() {
+
+    const provider = new Web3.providers.WebsocketProvider(
+            process.env.ETHEREUM_NODE_WS,
+            {
+              timeout: 30000,
+              reconnect: {
+                auto: true,
+                delay: 5000,
+                maxAttempts: 5,
+                onTimeout: false
+              },
+              clientConfig: {
+                keepalive: true,
+                keepaliveInterval: 60000
+              }
+            }
+    );
+
+    const web3 = new Web3();
+    web3.setProvider(provider);
+
+    const core = new CirclesCore(web3, {
+      apiServiceEndpoint: process.env.API_SERVICE_EXTERNAL,
+      graphNodeEndpoint: process.env.GRAPH_NODE_EXTERNAL,
+      hubAddress: process.env.HUB_ADDRESS,
+      proxyFactoryAddress: process.env.PROXY_FACTORY_ADDRESS,
+      relayServiceEndpoint: process.env.RELAY_SERVICE_EXTERNAL,
+      safeMasterAddress: process.env.SAFE_ADDRESS,
+      subgraphName: process.env.SUBGRAPH_NAME
+    });
+
+    // Get list of my activities
+    const addr = web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());
+    const {activities} = await core.activity.getLatest(window.o.odentity.current.circleSafeOwner, {
+      safeAddress:addr
+    });
+
+    // Example: Display activities
+    const {ActivityTypes} = core.activity;
+
+    activities.forEach((activity) => {
+      const {timestamp, type, data} = activity;
+
+      let text = "";
+      if (type === ActivityTypes.HUB_TRANSFER) {
+        text = `transferred ${data.value.toString()} Circles to ${data.to}`;
+      } else if (type === ActivityTypes.ADD_CONNECTION) {
+        text = `${data.limitPercentage} ${data.canSendTo} allowed ${data.send} to transfer Circles`;
+      } else if (type === ActivityTypes.REMOVE_CONNECTION) {
+        text = `${data.canSendTo} untrusted ${data.user}`;
+      } else if (type === ActivityTypes.ADD_OWNER) {
+        text = `added ${data.ownerAddress} to ${data.safeAddress}`;
+      } else if (type === ActivityTypes.REMOVE_OWNER) {
+        text = `removed ${data.ownerAddress} from ${data.safeAddress}`;
+      }
+
+      notifications = [...notifications, {
+        date: timestamp,
+        tag: type.toString(),
+        text: text
+      }];
+    });
+  }
+  updateAsync();
+
 </script>
 
 <section>
-  {#each data as item}
+  {#each notifications as item}
     <div class="p-2 w-full md:w-4/5 lg:w-3/5 mx-auto">
       <div
         class="inline-flex items-center bg-gray-100 leading-none text-primary
