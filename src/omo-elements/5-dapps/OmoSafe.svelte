@@ -22,14 +22,14 @@
       name: "OmoSafe",
       type: "organisms",
       layout: {
-        areas: "'top' 'main'",
+        areas: "'head' 'main' 'foot'",
         columns: "1fr",
-        rows: "16rem 1fr"
+        rows: "12rem 1fr 4rem"
       },
       blocks: [
         {
           type: "molecule",
-          slot: "top",
+          slot: "head",
           quant: "OmoCirclesBalance",
           data: await d
         },
@@ -38,6 +38,12 @@
           slot: "main",
           quant: "OmoCircles",
           data: await d
+        },
+        {
+          type: "molecule",
+          slot: "foot",
+          quant: "OmoNavBottom",
+          data: {}
         }
       ]
     };

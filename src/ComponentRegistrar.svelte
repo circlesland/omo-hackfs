@@ -12,9 +12,12 @@
   import OmoGridDreams from "./omo-elements/2-molecules/OmoGridDreams";
   import OmoCircles from "./omo-elements/2-molecules/OmoCircles";
   import OmoCirclesBalance from "./omo-elements/2-molecules/OmoCirclesBalance";
+  import OmoNavBottom from "./omo-elements/2-molecules/OmoNavBottom";
+  import OmoNavTop from "./omo-elements/2-molecules/OmoNavTop";
+  import OmoNavbar from "./omo-elements/2-molecules/OmoNavbar";
+  import OmoDappsGrid from "./omo-elements/2-molecules/OmoDappsGrid";
 
   window.registrar = new Map();
-  window.registrar.set("OmoNavBar", OmoNavBar);
   window.registrar.set("OmoHero", OmoHero);
   window.registrar.set("OmoTitleBar", OmoTitleBar);
   window.registrar.set("OmoDapps", OmoDapps);
@@ -24,7 +27,12 @@
   window.registrar.set("OmoChat", OmoChat);
   window.registrar.set("OmoDream", OmoDream);
   window.registrar.set("OmoGridDreams", OmoGridDreams);
+  window.registrar.set("OmoDappsGrid", OmoDappsGrid);
+
   window.registrar.set("OmoNext", OmoNext);
   window.registrar.set("OmoCircles", OmoCircles);
   window.registrar.set("OmoCirclesBalance", OmoCirclesBalance);
+  window.registrar.set("OmoNavBottom", OmoNavBottom);
+  window.registrar.set("OmoNavTop", OmoNavTop);
+  window.registrar.set("OmoNavbar", OmoNavbar);
 </script>

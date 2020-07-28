@@ -1,6 +1,29 @@
 <script>
-  import OmoDappGrid from "./../3-organisms/OmoDappGrid";
-  import OmoHero from "./../2-molecules/OmoHero";
+  import OmoOrganisms from "./../4-layouts/OmoOrganisms.svelte";
+
+  let OmoDapps = {
+    name: "OmoDream",
+    type: "organisms",
+    layout: {
+      areas: "'main' 'foot'",
+      columns: "1fr",
+      rows: "1fr 4rem"
+    },
+    blocks: [
+      {
+        type: "molecule",
+        slot: "main",
+        quant: "OmoDappsGrid",
+        data: {}
+      },
+      {
+        type: "molecule",
+        slot: "foot",
+        quant: "OmoNavBottom",
+        data: {}
+      }
+    ]
+  };
 </script>
 
-<OmoDappGrid />
+<OmoOrganisms organisms={OmoDapps} />
