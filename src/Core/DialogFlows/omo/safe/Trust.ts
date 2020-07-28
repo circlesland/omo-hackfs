@@ -1,6 +1,6 @@
-import {Node, State} from "../../Node"
+import {ProcessNode, State} from "../../ProcessNode"
 
-export class Trust extends Node
+export class Trust extends ProcessNode
 {
     title = "Trust someone";
 
@@ -8,7 +8,7 @@ export class Trust extends Node
     {
         super(null);
 
-        const otherPartySafe = new Node(this);
+        const otherPartySafe = new ProcessNode(this);
         otherPartySafe.title = "Enter safe address to trust";
         otherPartySafe.state = State.Active;
         otherPartySafe.action = async () =>
@@ -17,7 +17,7 @@ export class Trust extends Node
         };
         otherPartySafe.quant = "OmoSafeLookup";
 
-        const trustPercentage = new Node(this);
+        const trustPercentage = new ProcessNode(this);
         trustPercentage.title = "Enter trust percentage";
         trustPercentage.action = async () =>
         {

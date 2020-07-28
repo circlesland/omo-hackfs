@@ -7,23 +7,23 @@ export enum State
 }
 
 
-export class Node {
+export class ProcessNode {
     state?:State = State.Locked;
     title?:string;
 
-    parent:Node|null;
-    children:Node[] = [];
+    parent:ProcessNode|null;
+    children:ProcessNode[] = [];
 
     quant?:string;
     action?:() => Promise<void>;
 
-    constructor(parent:Node|null)
+    constructor(parent:ProcessNode|null)
     {
         this.parent = parent;
     }
 
-    getActiveNode() : Node|null {
-        const stack:Node[] = [];
+    getActiveNode() : ProcessNode|null {
+        const stack:ProcessNode[] = [];
         stack.push(this);
         while (stack.length > 0)
         {
@@ -40,7 +40,7 @@ export class Node {
         return null;
     }
 
-    getNextNode() : Node|null {
+    getNextNode() : ProcessNode|null {
         const activeNode = this.getActiveNode();
         if (!activeNode) {
             throw new Error("No currently active node so no next node.");
@@ -59,7 +59,7 @@ export class Node {
         return activeParent.children[activeNodeIndex + 1];
     }
 
-    async submit() : Promise<Node|null>{
+    async submit() : Promise<ProcessNode|null>{
         if (!this.action) {
             throw new Error("The node '" + this.title + "' has no action.");
         }

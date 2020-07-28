@@ -1,5 +1,5 @@
 # omo-hackfs
-*Note that you will need to have [Node.js](https://nodejs.org) installed.*
+*Note that you will need to have [ProcessNode.js](https://nodejs.org) installed.*
 
 
 ## Get started
