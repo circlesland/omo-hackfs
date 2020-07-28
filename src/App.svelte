@@ -22,6 +22,7 @@
   import OmoActions from "./omo-elements/5-dapps/OmoActions.svelte";
   import {EventBroker} from "./Core/Events/eventBroker"
 
+  import OmoNotifications from "./omo-elements/5-dapps/OmoNotifications.svelte";
 
   onMount(() => {
     let route = getRoute();
@@ -74,8 +75,17 @@
     { route: "?page=omodreams", quant: OmoDreams, authenticate: true },
     { route: "?page=omochat", quant: OmoChat, authenticate: true },
     { route: "?page=onboarding", quant: OnBoarding, authenticate: true },
-    { route: "?page=omodialog", quant: OmoDialog, authenticate: true },{
-    route: "?page=omoactions", quant: OmoActions, authenticate: true },
+    { route: "?page=omodialog", quant: OmoDialog, authenticate: true },
+    {
+      route: "?page=omonotifications",
+      quant: OmoNotifications,
+      authenticate: true
+    },
+    {
+      route: "?page=omoactions",
+      quant: OmoActions,
+      authenticate: true
+    },
     {
       route: "?page=omoconnectcircles",
       quant: OmoConnectCircles,

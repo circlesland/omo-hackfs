@@ -16,6 +16,7 @@
   import OmoNavbar from "./omo-elements/2-molecules/OmoNavbar";
   import OmoDappsGrid from "./omo-elements/2-molecules/OmoDappsGrid";
   import OmoDapps from "./omo-elements/2-molecules/OmoDapps";
+  import OmoNotifyList from "./omo-elements/2-molecules/OmoNotifyList";
 
   window.registrar = new Map();
   window.registrar.set("OmoHero", OmoHero);
@@ -35,4 +36,5 @@
   window.registrar.set("OmoNavTop", OmoNavTop);
   window.registrar.set("OmoNavbar", OmoNavbar);
   window.registrar.set("ActionsList", ActionsList);
+  window.registrar.set("OmoNotifyList", OmoNotifyList);
 </script>
