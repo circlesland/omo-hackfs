@@ -20,6 +20,7 @@
   import OmoConnectCircles from "./omo-elements/5-dapps/OmoConnectCircles.svelte";
   import OmoChat from "./omo-elements/5-dapps/OmoChat.svelte";
   import OmoActions from "./omo-elements/5-dapps/OmoActions.svelte";
+  import {EventBroker} from "./Core/Events/eventBroker"
 
 
   onMount(() => {
@@ -36,6 +37,17 @@
     //   omo = o;
     // });
     window.navigate = navigate;
+
+    if (!window.eventBroker) {
+      window.eventBroker = new EventBroker();
+      window.eventBroker.createTopic("omo", "safe");
+      window.eventBroker.createTopic("omo", "notification");
+    }
+
+    let notificationsTopic = window.eventBroker.tryGetTopic("omo", "notification");
+    notificationsTopic.observable.subscribe(next => {
+      alert(next);
+    });
   });
 
   function handlerBackNavigation(event) {

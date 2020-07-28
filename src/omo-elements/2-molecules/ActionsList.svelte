@@ -1,5 +1,9 @@
 <script>
-    let actions =  [{
+function click(action) {
+    window.eventBroker.tryGetTopic("omo", "safe").publish(action);
+}
+
+let actions =  [{
         name: "omo.safe.trust"
     },{
         name: "omo.safe.untrust"
@@ -13,5 +17,5 @@
 </script>
 hello list
 {#each actions as action}
-    <a onclick="javascript:navigate('omodialog');"> {action.name} </a>
+    <a on:click={() => click(action.name)}> {action.name} </a>
 {/each}
