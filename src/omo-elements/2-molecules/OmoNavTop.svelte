@@ -5,13 +5,8 @@
   // export let home = "javascript:navigate('home')";
 </script>
 
-<style>
-  /* a {
-    @apply text-primary;
-  } */
-</style>
-
 <OmoIconsFA />
+
 <header>
   <nav class="flex justify-between w-full bg-gray-200 text-primary">
     <i class="fas p-2 hover:bg-secondary" />
