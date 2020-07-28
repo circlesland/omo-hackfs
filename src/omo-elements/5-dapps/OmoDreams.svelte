@@ -5,21 +5,15 @@
     name: "OmoDream",
     type: "organisms",
     layout: {
-      areas: "'main' 'foot'",
+      areas: "'main'",
       columns: "1fr",
-      rows: "1fr 4rem"
+      rows: "1fr"
     },
     blocks: [
       {
         type: "molecule",
         slot: "main",
         quant: "OmoGridDreams",
-        data: {}
-      },
-      {
-        type: "molecule",
-        slot: "foot",
-        quant: "OmoNavBottom",
         data: {}
       }
     ]

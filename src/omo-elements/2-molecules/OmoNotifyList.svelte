@@ -1,14 +1,6 @@
 <script>
 
-  let notifications = [
-    { tag: "TRANSFER", text: "x payed y 10 Circles", date: "14396123489" },
-    {
-      tag: "OWNER CHANGE",
-      text: "You added a new PPK to your safe",
-      date: "14396123489"
-    },
-    { tag: "TRUST", text: "x trusted y to 100%", date: "14396123489" }
-  ];
+  let notifications = [];
 
   async function updateAsync() {
 

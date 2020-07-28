@@ -20,7 +20,6 @@
   import OmoConnectCircles from "./omo-elements/5-dapps/OmoConnectCircles.svelte";
   import OmoChat from "./omo-elements/5-dapps/OmoChat.svelte";
   import OmoActions from "./omo-elements/5-dapps/OmoActions.svelte";
-  import { EventBroker } from "./Core/Events/eventBroker";
   import OmoNotifications from "./omo-elements/5-dapps/OmoNotifications.svelte";
 
   import OmoNavTop from "./omo-elements/2-molecules/OmoNavTop.svelte";
@@ -41,18 +40,13 @@
     // });
     window.navigate = navigate;
 
-    if (!window.eventBroker) {
-      window.eventBroker = new EventBroker();
-      window.eventBroker.createTopic("omo", "safe");
-      window.eventBroker.createTopic("omo", "shell");
-    }
-
-    let notifications = window.eventBroker.tryGetTopic("omo", "shell");
+    let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
     notifications.observable.subscribe(next => {
       if (next._$eventType === "omo.shell.notification") {
 
-      } else {
-
+      } else if (next._$eventType === "omo.shell.navigate") {
+        navigate(next.page);
+        // TODO: Add arguments
       }
       console.log(next);
     });

@@ -1,9 +1,9 @@
 <script>
-    import {Trust} from "../../Core/Data/Entities/Events/omo/safe/trust";
-    import {RemoveOwner} from "../../Core/Data/Entities/Events/omo/safe/removeOwner";
-    import {AddOwner} from "../../Core/Data/Entities/Events/omo/safe/addOwner";
-    import {Untrust} from "../../Core/Data/Entities/Events/omo/safe/untrust";
-    import {Transfer} from "../../Core/Data/Entities/Events/omo/safe/transfer";
+    import {Trust} from "../../Core/Data/Entities/Events/omo/safe/Trust";
+    import {RemoveOwner} from "../../Core/Data/Entities/Events/omo/safe/RemoveOwner";
+    import {AddOwner} from "../../Core/Data/Entities/Events/omo/safe/AddOwner";
+    import {Untrust} from "../../Core/Data/Entities/Events/omo/safe/Untrust";
+    import {Transfer} from "../../Core/Data/Entities/Events/omo/safe/Transfer";
 
     let actions =  [{
         title: "Trust someone",
@@ -71,7 +71,7 @@
     }];
 
   function click(action) {
-    window.eventBroker.tryGetTopic("omo", "shell").publish(action);
+    window.o.eventBroker.tryGetTopic("omo", "shell").publish(action);
   }
 </script>
 
@@ -82,11 +82,11 @@
       <div
         on:click={() => click(action.event())}
         class="py-4 px-8 hover:bg-primary hover:text-white">
-        {action.name}
+        {action.title}
         <div
           class="text-xs truncate w-full normal-case font-normal -mt-1
           text-gray-500">
-          description
+            {#if action.description}{action.description}{/if}
         </div>
       </div>
     {/each}

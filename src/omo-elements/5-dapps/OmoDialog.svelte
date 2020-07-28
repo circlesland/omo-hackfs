@@ -1,48 +1,39 @@
 <script>
-  export let data = [
-    {
-      title: "Odentity",
-      level: 1,
-      steps: [
-        {
-          title: "welcome",
-          locked: false,
-          step: 1
-        },
-        {
-          title: "add name",
-          locked: false,
-          step: 2
-        },
-        {
-          title: "add last name",
-          locked: true,
-          step: 3
-        },
-        {
-          title: "add profile image",
-          locked: true,
-          step: 4
-        }
-      ]
-    },
-    {
-      title: "Omo Auth",
-      level: 2,
-      steps: [
-        {
-          title: "OmoEarthAuth Email",
-          locked: false,
-          step: 1
-        },
-        {
-          title: "Circles Wallet",
-          locked: true,
-          step: 2
-        }
-      ]
+  import {Trust} from "../../Core/DialogFlows/omo/safe/Trust"
+
+  export let data = [];
+
+  const df = new Trust();
+
+  function refreshTree() {
+    data = [
+      {
+        title: df.title,
+        level: 1,
+        steps: df.children.map((o, i) => {
+          return {
+            title: o.title,
+            state: o.state,
+            step: i + 1
+          }
+        })
+      }];
+  }
+
+  function submit()
+  {
+    const activeNode = df.getActiveNode();
+    if (!activeNode) {
+      alert("No active DialogFlow node");
+      return;
     }
-  ];
+
+    activeNode.submit().then(() => {
+      refreshTree();
+    });
+  }
+
+  refreshTree();
 
 </script>
 
@@ -90,7 +81,7 @@
           if (first.step > second.step) return 1;
           return 0;
         }) as step, i}
-          {#if step.locked}
+          {#if step.state == "Locked"}
             <div
               class="flex flex-col justify-center bg-gray-300 h-12 mb-4 w-full">
               <div class="text-center">
@@ -124,7 +115,7 @@
         border-gray-200 bg-white"
         placeholder="Safe address" />
       <button
-        onclick="javascript:alert('')"
+        on:click="{() => submit()}"
         class="px-6 bg-green-400 text-gray-800 font-bold p-3 uppercase ">
         Next
       </button>
