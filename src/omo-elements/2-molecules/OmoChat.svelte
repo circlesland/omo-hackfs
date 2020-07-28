@@ -1,8 +1,4 @@
 <script>
-  import { moment } from "moment";
-  import OmoLayoutChat from "./../4-layouts/OmoLayoutChat";
-  import OmoInput from "./../1-atoms/OmoInput";
-  import OmoButton from "./../1-atoms/OmoButton";
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
 
   let rooms = window.o.graphQL.subscribe(

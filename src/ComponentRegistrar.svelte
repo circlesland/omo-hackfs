@@ -1,7 +1,5 @@
 <script>
   import OmoDream from "./omo-elements/5-dapps/OmoDream.svelte";
-  import OmoDapps from "./omo-elements/2-molecules/OmoDapps";
-  import OmoNavBar from "./omo-elements/2-molecules/OmoNavBar";
   import OmoTitleBar from "./omo-elements/2-molecules/OmoTitleBar";
   import OmoBanner from "./omo-elements/2-molecules/OmoBanner";
   import OmoLogin from "./omo-elements/2-molecules/OmoLogin";
@@ -16,6 +14,8 @@
   import OmoNavTop from "./omo-elements/2-molecules/OmoNavTop";
   import OmoNavbar from "./omo-elements/2-molecules/OmoNavbar";
   import OmoDappsGrid from "./omo-elements/2-molecules/OmoDappsGrid";
+  import OmoDapps from "./omo-elements/2-molecules/OmoDapps";
+
 
   window.registrar = new Map();
   window.registrar.set("OmoHero", OmoHero);
