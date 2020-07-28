@@ -11,13 +11,15 @@ export class Trust extends Node
         const otherPartySafe = new Node(this);
         otherPartySafe.title = "Enter safe address to trust";
         otherPartySafe.state = State.Active;
-        otherPartySafe.action = async () => {
+        otherPartySafe.action = async () =>
+        {
             console.log("Enter safe address to trust")
         };
 
         const trustPercentage = new Node(this);
         trustPercentage.title = "Enter trust percentage";
-        trustPercentage.action = async () => {
+        trustPercentage.action = async () =>
+        {
             console.log("Enter trust percentage")
         };
 

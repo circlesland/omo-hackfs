@@ -1,4 +1,4 @@
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 
 export class EventBroker {
     public constructor() {
@@ -81,20 +81,16 @@ export class Topic<T> {
     /**
      * The event source for regular subscribers.
      */
-    public get observable():Observable<T> {
+    public get observable():Subject<T> {
         return this._observable;
     }
-    private _observable: Observable<T>;
-
-    private _observer:any;
+    private _observable: Subject<T>;
 
     constructor(namespace:string, name:string) {
         this._namespace = namespace;
         this._name = name;
 
-        this._observable = new Observable<T>(subscriber => {
-            this._observer = subscriber;
-        });
+        this._observable = new Subject<T>();
     }
 
     /**
@@ -109,13 +105,7 @@ export class Topic<T> {
         }
 
         await Promise.all(promises);
-
-        // Then dispatch all fire-and-forget events
-        if (!this._observer) {
-            return; // If nobody subscribed -> leave
-        }
-
-        this._observer.next(event);
+        this._observable.next(event);
     }
 
     /**

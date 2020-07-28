@@ -37,6 +37,7 @@
     "svelte-apollo": "^0.3.0",
     "svelte-simple-modal": "^0.4.2",
     "truffle": "^5.1.35",
+    "uuid": "^8.3.0",
     "web3": "^1.2.11"
   },
   "devDependencies": {

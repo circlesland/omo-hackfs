@@ -6,7 +6,6 @@ import OmoTabs from "./../2-molecules/OmoTabs";
     getSafeOwnerFromLocalStorage,
     getSafeFromLocalStorage,
     sendCircles,
-    addTrustLineAsync
   } from "./../../omo-actions/Circles";
 
   //Tabs

@@ -6,6 +6,7 @@ export enum State
     Failed = "Failed"
 }
 
+
 export class Node {
     state?:State = State.Locked;
     title?:string;
@@ -57,7 +58,7 @@ export class Node {
         return activeParent.children[activeNodeIndex + 1];
     }
 
-    async submit() {
+    async submit() : Promise<Node|null>{
         if (!this.action) {
             throw new Error("The node '" + this.title + "' has no action.");
         }
@@ -70,8 +71,10 @@ export class Node {
 
             if (!next) {
                 await this.finish();
+                return null;
             } else {
-                await this.next(next);
+                next.state = State.Active;
+                return next;
             }
         }
         catch (e)
@@ -80,10 +83,6 @@ export class Node {
             // TODO: Retry?!
             throw e;
         }
-    }
-
-    async next(node:Node) {
-        node.state = State.Active;
     }
 
     async finish() {
