@@ -16,7 +16,7 @@
     },
     {
       icon: "fa-plus",
-      text: "Logout",
+      text: "Actions",
       link: "javascript:navigate('omoactions')",
       design: "bg-secondary text-white"
     },

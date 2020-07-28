@@ -14,13 +14,14 @@
 <OmoIconsFA />
 <header>
   <nav class="flex justify-between w-full bg-gray-200 text-primary">
-    <i class="fas fa-arrow-left p-2 hover:bg-secondary" />
-    <div class="py-2 uppercase text-xs font-bold justify-center">
-      context title
-      <!-- <a href={home}>
-        <img alt="" class="h-6" src="/logos/omo.svg" alt="logo" />
-      </a> -->
+    <i class="fas p-2 hover:bg-secondary" />
+    <div class="p-1 justify-center">
+      <a href="javascript:navigate('omohome')">
+        <img class="h-6" src="/logos/logo.png" alt="logo" />
+      </a>
     </div>
-    <i class="fas fa-arrow-right p-2 hover:bg-secondary" />
+    <a href="javascript:navigate('omonotifications')">
+      <i class="fas fa-bell p-2 text-red-600 hover:text-primary" />
+    </a>
   </nav>
 </header>
