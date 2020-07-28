@@ -5,6 +5,7 @@
   import MagicLogin from "./omo-elements/5-dapps/MagicLogin.svelte";
 
   import OmoHome from "./omo-elements/5-dapps/OmoHome";
+  import OmoDialog from "./omo-elements/5-dapps/OmoDialog";
   import MamaOmo from "./omo-elements/5-dapps/MamaOmo";
   import OmoDream from "./omo-elements/5-dapps/OmoDream";
   import OmoDocs from "./omo-elements/5-dapps/OmoDocs";
@@ -18,6 +19,8 @@
   import OmoFunding from "./omo-elements/5-dapps/OmoFunding";
   import OmoConnectCircles from "./omo-elements/5-dapps/OmoConnectCircles.svelte";
   import OmoChat from "./omo-elements/5-dapps/OmoChat.svelte";
+  import OmoActions from "./omo-elements/5-dapps/OmoActions.svelte";
+
 
   onMount(() => {
     let route = getRoute();
@@ -58,6 +61,9 @@
     { route: "?page=omosafe", quant: OmoSafe, authenticate: true },
     { route: "?page=omodreams", quant: OmoDreams, authenticate: true },
     { route: "?page=omochat", quant: OmoChat, authenticate: true },
+    { route: "?page=onboarding", quant: OnBoarding, authenticate: true },
+    { route: "?page=omodialog", quant: OmoDialog, authenticate: true },{
+    route: "?page=omoactions", quant: OmoActions, authenticate: true },
     {
       route: "?page=omoconnectcircles",
       quant: OmoConnectCircles,

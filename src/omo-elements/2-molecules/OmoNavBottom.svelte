@@ -17,7 +17,7 @@
     {
       icon: "fa-plus",
       text: "Logout",
-      link: "javascript:o.store.odentity.logout()",
+      link: "javascript:navigate('omoactions')",
       design: "bg-secondary text-white"
     },
     {

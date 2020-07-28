@@ -100,4 +100,9 @@
       }
     `;
   }
+
+  // TODO:
+  function subscribeTo(){
+    throw new Error("Not implemented.");
+  }
 </script>

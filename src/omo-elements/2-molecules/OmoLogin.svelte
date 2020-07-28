@@ -1,5 +1,5 @@
 <script>
-  import { mnemonicToEntropy } from "bip39";
+  import { mnemonicToEntropy, entropyToMnemonic } from "bip39";
   import Web3 from "web3";
   import ApolloClient, { gql } from "apollo-boost";
   import { query } from "svelte-apollo";
@@ -54,6 +54,12 @@
     localStorage.setItem("safe", JSON.stringify({ safeAddress: safeAddress }));
     navigate("omosafe");
   }
+
+  async function createSeedPhrase(privateKeyString)  {
+    const mnemonic = entropyToMnemonic(privateKeyString);
+    console.log("Mnemonic:", mnemonic);
+  }
+
 </script>
 
 <div class="w-full flex flex-wrap">

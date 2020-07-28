@@ -9,6 +9,7 @@
   } from "./../../omo-actions/Circles";
 
   $: safe = getSafeFromLocalStorage();
+  $: safeOwner = getSafeOwnerFromLocalStorage();
 
   async function handleCreateSafe() {
     await createNewSafe();
@@ -54,5 +55,7 @@
     on:click={handleDeployToken}>
     Deploy Token
   </div>
-  {#if safe != null}LoggedInSafe: {safe.safeAddress.toLowerCase()}{/if}
+  {#if safe != null}LoggedInSafe: {safe.safeAddress}
+    <br>LoggedInSafeLowerCase: {safe.safeAddress.toLowerCase()}
+  private key: {safeOwner.privateKey} <br>public address key: {safeOwner.address}{/if}
 </div>

@@ -9,9 +9,9 @@
 
   export async function trustByOmo(safe) {
     // Trust the Save 3 times with Omo1, Omo2 and Omo3
-    /*let trust1 = */ await addTrustLine(omo1.safeOwner, omo1.safe, safe, 1);
-    /*let trust2 = */ await addTrustLine(omo2.safeOwner, omo2.safe, safe, 1);
-    /*let trust3 = */ await addTrustLine(omo3.safeOwner, omo3.safe, safe, 1);
+    /*let trust1 = */ await addTrustLineAsync(omo1.safeOwner, omo1.safe, safe, 1);
+    /*let trust2 = */ await addTrustLineAsync(omo2.safeOwner, omo2.safe, safe, 1);
+    /*let trust3 = */ await addTrustLineAsync(omo3.safeOwner, omo3.safe, safe, 1);
   }
 
   export async function deploySafe(safeOwner, safe) {
@@ -103,7 +103,7 @@
     return safe;
   }
 
-  async function addTrustLine(
+  export async function addTrustLineAsync(
     trustGivingSafeOwner,
     trustGivingSafe,
     trustReceivingSafe,
@@ -111,11 +111,12 @@
   ) {
     // .. give user the permission to send their Token to you
     const trusted = await core.trust.addConnection(trustGivingSafeOwner, {
-      user: trustReceivingSafe.safeAddress,
       canSendTo: trustGivingSafe.safeAddress,
+      user: trustReceivingSafe.safeAddress,
       limitPercentage: trustPercentage
     });
     alert(JSON.stringify(trusted));
+    return trusted;
   }
 
   async function requestUBI() {
