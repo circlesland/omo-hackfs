@@ -12,11 +12,16 @@
 
   async function updateAsync() {
 
+    const PAGE_SIZE = 100;
+
     // Get list of my activities
     const addr = window.o.web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());
     const {activities} = await window.o.circlesCore.activity.getLatest(window.o.odentity.current.circleSafeOwner, {
       safeAddress:addr
-    });
+    },
+    PAGE_SIZE,
+    0,
+    0);
 
     // Example: Display activities
     const {ActivityTypes} = window.o.circlesCore.activity;
