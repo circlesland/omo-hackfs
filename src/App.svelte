@@ -47,12 +47,9 @@
       window.eventBroker.createTopic("omo", "notification");
     }
 
-    let notificationsTopic = window.eventBroker.tryGetTopic(
-      "omo",
-      "notification"
-    );
-    notificationsTopic.observable.subscribe(next => {
-      alert(next);
+    let notifications = window.eventBroker.tryGetTopic("omo", "notification");
+    notifications.observable.subscribe(next => {
+      console.log(next);
     });
   });
 
