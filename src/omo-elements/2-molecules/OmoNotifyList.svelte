@@ -14,12 +14,12 @@
   {#each data as item}
     <div class="p-2 w-full md:w-4/5 lg:w-3/5 mx-auto">
       <div
-        class="inline-flex items-center bg-white leading-none text-primary
-        rounded-full p-1 shadow text-primary text-sm w-full">
+        class="inline-flex items-center bg-gray-100 leading-none text-primary
+        rounded p-1 shadow text-primary text-sm w-full">
         <span
           class="inline-flex text-white rounded-full h-6 px-3 justify-center
           items-center"
-          class:bg-blue-600={item.tag === 'TRANSFER'}
+          class:bg-secondary={item.tag === 'TRANSFER'}
           class:bg-green-500={item.tag === 'TRUST'}
           class:bg-red-500={item.tag === 'OWNER CHANGE'}>
           {item.tag}

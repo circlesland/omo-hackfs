@@ -5,17 +5,11 @@
     name: "OmoNotifications",
     type: "organisms",
     layout: {
-      areas: "'top' 'main'",
+      areas: "'main'",
       columns: "1fr",
-      rows: "2rem 1fr"
+      rows: "1fr"
     },
     blocks: [
-      {
-        type: "molecule",
-        slot: "top",
-        quant: "OmoNavTop",
-        data: {}
-      },
       {
         type: "molecule",
         slot: "main",

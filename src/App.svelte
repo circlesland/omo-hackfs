@@ -20,9 +20,11 @@
   import OmoConnectCircles from "./omo-elements/5-dapps/OmoConnectCircles.svelte";
   import OmoChat from "./omo-elements/5-dapps/OmoChat.svelte";
   import OmoActions from "./omo-elements/5-dapps/OmoActions.svelte";
-  import {EventBroker} from "./Core/Events/eventBroker"
-
+  import { EventBroker } from "./Core/Events/eventBroker";
   import OmoNotifications from "./omo-elements/5-dapps/OmoNotifications.svelte";
+
+  import OmoNavTop from "./omo-elements/2-molecules/OmoNavTop.svelte";
+  import OmoNavBottom from "./omo-elements/2-molecules/OmoNavBottom.svelte";
 
   onMount(() => {
     let route = getRoute();
@@ -100,6 +102,24 @@
     width: 100%;
     padding: 0;
     margin: 0;
+    display: grid;
+    grid-template-areas: "'header', 'main', 'footer'";
+    grid-template-columns: "1fr";
+    grid-template-rows: 2rem 1fr 4rem;
+  }
+  header {
+    grid-area: "header";
+  }
+  main {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    grid-area: "main";
+    overflow: hidden;
+  }
+  footer {
+    grid-area: "footer";
   }
 </style>
 
@@ -107,7 +127,15 @@
 <ComponentRegistrar />
 
 <div class="app">
-  <svelte:component this={getComponent($curRoute, routes)} {routes} />
+  <header>
+    <OmoNavTop />
+  </header>
+  <main>
+    <svelte:component this={getComponent($curRoute, routes)} {routes} />
+  </main>
+  <footer>
+    <OmoNavBottom />
+  </footer>
   <!-- <footer>
     {#if omo != null}
       <OmoNavBottom />

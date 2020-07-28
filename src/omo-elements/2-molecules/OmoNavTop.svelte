@@ -15,9 +15,9 @@
 <header>
   <nav class="flex justify-between w-full bg-gray-200 text-primary">
     <i class="fas p-2 hover:bg-secondary" />
-    <div class="py-1 uppercase text-xs font-bold justify-center">
+    <div class="p-1 justify-center">
       <a href="javascript:navigate('omohome')">
-        <img class="h-6" src="/logos/omo.svg" alt="logo" />
+        <img class="h-6" src="/logos/logo.png" alt="logo" />
       </a>
     </div>
     <a href="javascript:navigate('omonotifications')">
