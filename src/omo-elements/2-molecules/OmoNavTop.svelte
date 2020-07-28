@@ -1,13 +1,12 @@
 <script>
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
   import OmoButton from "./../1-atoms/OmoButton.svelte";
-
+  import OmoNotify from "./../2-molecules/OmoNotify";
   // export let home = "javascript:navigate('home')";
 </script>
 
 <OmoIconsFA />
-
-<header>
+<!-- <header>
   <nav class="flex justify-between w-full bg-gray-200 text-primary">
     <i class="fas p-2 hover:bg-secondary" />
     <div class="p-1 justify-center">
@@ -18,5 +17,13 @@
     <a href="javascript:navigate('omonotifications')">
       <i class="fas fa-bell p-2 text-red-600 hover:text-primary" />
     </a>
+  </nav>
+</header> -->
+
+<header
+  class="h-12 flex items-center justify-between px-4 py-2 text-gray-100 bg-dark">
+  <h1 class="text-lg">omo.earth</h1>
+  <nav class="relative">
+    <OmoNotify />
   </nav>
 </header>
