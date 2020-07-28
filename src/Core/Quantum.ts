@@ -7,8 +7,11 @@ import { LocalThread } from "./Textile/LocalThread";
 import { throwError } from "rxjs";
 import { RemoteThread } from "./Textile/RemoteThread";
 import { StopWatch } from "./StopWatch";
+import CirclesCore from "@circles/core";
+import Web3 from "web3";
 
 export class Quantum {
+    readonly circlesCore:CirclesCore;
     odentity: Odentity;
     graphQL: GraphQL;
     quantRegistry: QuantRegistry;
@@ -30,6 +33,36 @@ export class Quantum {
         // this.remoteDB = thread2;
         this.quantRegistry = quantRegistry;
         this.graphQL = graphQL;
+
+        const provider = new Web3.providers.WebsocketProvider(
+            process.env.ETHEREUM_NODE_WS ?? "-",
+            {
+                timeout: 30000,
+                reconnect: {
+                    auto: true,
+                    delay: 5000,
+                    maxAttempts: 5,
+                    onTimeout: false
+                },
+                clientConfig: {
+                    keepalive: true,
+                    keepaliveInterval: 60000
+                }
+            }
+        );
+
+        const web3 = new Web3();
+        web3.setProvider(provider);
+
+        this.circlesCore = new CirclesCore(web3, {
+            apiServiceEndpoint: process.env.API_SERVICE_EXTERNAL,
+            graphNodeEndpoint: process.env.GRAPH_NODE_EXTERNAL,
+            hubAddress: process.env.HUB_ADDRESS,
+            proxyFactoryAddress: process.env.PROXY_FACTORY_ADDRESS,
+            relayServiceEndpoint: process.env.RELAY_SERVICE_EXTERNAL,
+            safeMasterAddress: process.env.SAFE_ADDRESS,
+            subgraphName: process.env.SUBGRAPH_NAME
+        });
     }
     static async leap(): Promise<Quantum> {
         StopWatch.start("threads");

@@ -1,6 +1,4 @@
 <script>
-  import CirclesCore from "@circles/core";
-  import Web3 from "web3";
 
   let notifications = [
     { tag: "TRANSFER", text: "x payed y 10 Circles", date: "14396123489" },
@@ -14,39 +12,9 @@
 
   async function updateAsync() {
 
-    const provider = new Web3.providers.WebsocketProvider(
-            process.env.ETHEREUM_NODE_WS,
-            {
-              timeout: 30000,
-              reconnect: {
-                auto: true,
-                delay: 5000,
-                maxAttempts: 5,
-                onTimeout: false
-              },
-              clientConfig: {
-                keepalive: true,
-                keepaliveInterval: 60000
-              }
-            }
-    );
-
-    const web3 = new Web3();
-    web3.setProvider(provider);
-
-    const core = new CirclesCore(web3, {
-      apiServiceEndpoint: process.env.API_SERVICE_EXTERNAL,
-      graphNodeEndpoint: process.env.GRAPH_NODE_EXTERNAL,
-      hubAddress: process.env.HUB_ADDRESS,
-      proxyFactoryAddress: process.env.PROXY_FACTORY_ADDRESS,
-      relayServiceEndpoint: process.env.RELAY_SERVICE_EXTERNAL,
-      safeMasterAddress: process.env.SAFE_ADDRESS,
-      subgraphName: process.env.SUBGRAPH_NAME
-    });
-
     // Get list of my activities
     const addr = web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());
-    const {activities} = await core.activity.getLatest(window.o.odentity.current.circleSafeOwner, {
+    const {activities} = await window.o.circlesCore.getLatest(window.o.odentity.current.circleSafeOwner, {
       safeAddress:addr
     });
 
