@@ -5,13 +5,12 @@ export interface IEvent
     _$eventType:string;
 }
 
-export class Notification implements Instance, IEvent {
+export abstract class Event implements Instance, IEvent {
     static CollectionName: string = "Notifications";
-    _$eventType = "omo.notification";
+    abstract _$eventType:string;
 
     _id: string;
-    timestamp?: string;
-    data: any
+    readonly timestamp?: string = new Date().toJSON();
 
     constructor() {
         this._id = '';

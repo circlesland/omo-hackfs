@@ -1,14 +1,20 @@
-import { Odentity } from "./Odentity";
-import { Threads } from "./Textile/Threads";
-import { QuantRegistry } from "./Quant/QuantRegistry";
-import { GraphQL } from "./Data/GraphQL";
-import { Seeder } from "./Data/Seeder";
-import { LocalThread } from "./Textile/LocalThread";
-import { throwError } from "rxjs";
-import { RemoteThread } from "./Textile/RemoteThread";
-import { StopWatch } from "./StopWatch";
+import {Odentity} from "./Odentity";
+import {Threads} from "./Textile/Threads";
+import {QuantRegistry} from "./Quant/QuantRegistry";
+import {GraphQL} from "./Data/GraphQL";
+import {Seeder} from "./Data/Seeder";
+import {LocalThread} from "./Textile/LocalThread";
+import {throwError} from "rxjs";
+import {RemoteThread} from "./Textile/RemoteThread";
+import {StopWatch} from "./StopWatch";
+import CirclesCore from "@circles/core";
+import Web3 from "web3";
 
-export class Quantum {
+export class Quantum
+{
+    circlesCore: CirclesCore;
+    web3: Web3;
+
     odentity: Odentity;
     graphQL: GraphQL;
     quantRegistry: QuantRegistry;
@@ -22,7 +28,8 @@ export class Quantum {
     //     this.quantRegistry = quantRegistry;
     //     this.graphQL = graphQL;
     // }
-    private constructor(threads: Threads, odentity: Odentity, quantRegistry: QuantRegistry, graphQL: GraphQL) {
+    private constructor(threads: Threads, odentity: Odentity, quantRegistry: QuantRegistry, graphQL: GraphQL, web3: Web3, circlesCore: CirclesCore)
+    {
         this.threads = threads;
 
         this.odentity = odentity;
@@ -30,8 +37,12 @@ export class Quantum {
         // this.remoteDB = thread2;
         this.quantRegistry = quantRegistry;
         this.graphQL = graphQL;
+        this.web3 = web3;
+        this.circlesCore = circlesCore;
     }
-    static async leap(): Promise<Quantum> {
+
+    static async leap(): Promise<Quantum>
+    {
         StopWatch.start("threads");
         var threads = new Threads();
         StopWatch.stop("threads");
@@ -46,6 +57,38 @@ export class Quantum {
         // return new Quantum(threads, odentity, uantRegistry, graphQL);
         // var local = await LocalThread.init("omodb");
         // var remote = await RemoteThread.init("omoooooodb");
-        return new Quantum(threads, odentity, quantRegistry, graphQL);
+
+        const provider = new Web3.providers.WebsocketProvider(
+            !process.env.ETHEREUM_NODE_WS ? "-" : process.env.ETHEREUM_NODE_WS,
+            {
+                timeout: 30000,
+                reconnect: {
+                    auto: true,
+                    delay: 5000,
+                    maxAttempts: 5,
+                    onTimeout: false
+                },
+                clientConfig: {
+                    keepalive: true,
+                    keepaliveInterval: 60000
+                }
+            }
+        );
+
+        const web3 = new Web3();
+        web3.setProvider(provider);
+
+        const circlesCore = new CirclesCore(web3, {
+            apiServiceEndpoint: process.env.API_SERVICE_EXTERNAL,
+            graphNodeEndpoint: process.env.GRAPH_NODE_EXTERNAL,
+            hubAddress: process.env.HUB_ADDRESS,
+            proxyFactoryAddress: process.env.PROXY_FACTORY_ADDRESS,
+            relayServiceEndpoint: process.env.RELAY_SERVICE_EXTERNAL,
+            safeMasterAddress: process.env.SAFE_ADDRESS,
+            subgraphName: process.env.SUBGRAPH_NAME
+        });
+
+
+        return new Quantum(threads, odentity, quantRegistry, graphQL, web3, circlesCore);
     }
 }

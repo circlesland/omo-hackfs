@@ -1,11 +1,8 @@
 <script>
   import { mnemonicToEntropy, entropyToMnemonic } from "bip39";
-  import Web3 from "web3";
   import ApolloClient, { gql } from "apollo-boost";
   import { query } from "svelte-apollo";
   import { getSafeAddressAsync } from "./../../omo-data/queries/circles";
-
-  const web3 = new Web3();
 
   const client = new ApolloClient({
     uri:
@@ -48,7 +45,7 @@
   async function restoreFromSeed() {
     const restoredKey = mnemonicToEntropy(seedPhrase);
     const privateKey = `0x${restoredKey}`;
-    const safeOwner = web3.eth.accounts.privateKeyToAccount(privateKey);
+    const safeOwner = window.o.web3.eth.accounts.privateKeyToAccount(privateKey);
     localStorage.setItem("safeOwner", JSON.stringify(safeOwner));
     const safeAddress = await getSafeAddressAsync(safeOwner);
     localStorage.setItem("safe", JSON.stringify({ safeAddress: safeAddress }));

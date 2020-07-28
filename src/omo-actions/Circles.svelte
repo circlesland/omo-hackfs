@@ -1,6 +1,4 @@
 <script context="module">
-  import CirclesCore from "@circles/core";
-  import Web3 from "web3";
 
   export async function createNewSafe() {
     var safeOwner = await createNewPPK();
@@ -16,11 +14,11 @@
 
   export async function deploySafe(safeOwner, safe) {
     //  Check if we have enough trust connections
-    const trustReturn = await core.trust.isTrusted(safeOwner, safe);
+    const trustReturn = await window.o.circlesCore.trust.isTrusted(safeOwner, safe);
     alert(JSON.stringify(trustReturn));
 
     if (trustReturn.isTrusted) {
-      const safeDeployed = await core.safe.deploy(safeOwner, safe);
+      const safeDeployed = await window.o.circlesCore.safe.deploy(safeOwner, safe);
       alert("safe deploy success: " + safeDeployed);
       // Deploy Token to Safe
     } else {
@@ -29,18 +27,18 @@
   }
 
   export async function deployToken(safeOwner, safe) {
-    const tokenDeployed = await core.token.deploy(safeOwner, safe);
+    const tokenDeployed = await window.o.circlesCore.token.deploy(safeOwner, safe);
     alert("token deploy done: " + tokenDeployed);
   }
 
   export async function sendCircles(fromSafeOwner, fromSafe, toSafe, amount) {
-    let toSafeAddress = web3.utils.toChecksumAddress(toSafe.safeAddress);
-    let fromSafeAddress = web3.utils.toChecksumAddress(fromSafe.safeAddress);
+    let toSafeAddress = window.o.web3.utils.toChecksumAddress(toSafe.safeAddress);
+    let fromSafeAddress = window.o.web3.utils.toChecksumAddress(fromSafe.safeAddress);
 
-    const payment = await core.token.transfer(fromSafeOwner, {
+    const payment = await window.o.circlesCore.token.transfer(fromSafeOwner, {
       from: fromSafeAddress,
       to: toSafeAddress,
-      value: new web3.utils.BN(web3.utils.toWei(amount, "ether"))
+      value: new window.o.web3.utils.BN(window.o.web3.utils.toWei(amount, "ether"))
     });
     alert(payment);
   }
@@ -55,40 +53,9 @@
     return JSON.parse(localStorageSafe);
   }
 
-  const provider = new Web3.providers.WebsocketProvider(
-    process.env.ETHEREUM_NODE_WS,
-    {
-      timeout: 30000,
-      reconnect: {
-        auto: true,
-        delay: 5000,
-        maxAttempts: 5,
-        onTimeout: false
-      },
-      clientConfig: {
-        keepalive: true,
-        keepaliveInterval: 60000
-      }
-    }
-  );
-
-  const web3 = new Web3();
-  web3.setProvider(provider);
-
-  // Initialize core
-  const core = new CirclesCore(web3, {
-    apiServiceEndpoint: process.env.API_SERVICE_EXTERNAL,
-    graphNodeEndpoint: process.env.GRAPH_NODE_EXTERNAL,
-    hubAddress: process.env.HUB_ADDRESS,
-    proxyFactoryAddress: process.env.PROXY_FACTORY_ADDRESS,
-    relayServiceEndpoint: process.env.RELAY_SERVICE_EXTERNAL,
-    safeMasterAddress: process.env.SAFE_ADDRESS,
-    subgraphName: process.env.SUBGRAPH_NAME
-  });
-
   async function createNewPPK() {
     // Create account and save to wallet
-    let ppk = web3.eth.accounts.create();
+    let ppk = window.o.web3.eth.accounts.create();
     localStorage.setItem("safeOwner", JSON.stringify(ppk));
     return ppk;
   }
@@ -97,7 +64,7 @@
     // Generate a nonce to predict Safe address
     var nonce = new Date().getTime();
     // Prepare Safe deployment and receive a predicted safeAddress
-    let safeAddress = await core.safe.prepareDeploy(ppk, { nonce });
+    let safeAddress = await window.o.circlesCore.safe.prepareDeploy(ppk, { nonce });
     let safe = { safeAddress: safeAddress };
     localStorage.setItem("safe", JSON.stringify(safe));
     return safe;
@@ -110,7 +77,7 @@
     trustPercentage
   ) {
     // .. give user the permission to send their Token to you
-    const trusted = await core.trust.addConnection(trustGivingSafeOwner, {
+    const trusted = await window.o.circlesCore.trust.addConnection(trustGivingSafeOwner, {
       canSendTo: trustGivingSafe.safeAddress,
       user: trustReceivingSafe.safeAddress,
       limitPercentage: trustPercentage
@@ -121,7 +88,7 @@
 
   async function requestUBI() {
     // Request my UBI
-    const payout = await core.token.requestUBIPayout(safeOwner, safe);
+    const payout = await window.o.circlesCore.token.requestUBIPayout(safeOwner, safe);
     alert(payout);
   }
 

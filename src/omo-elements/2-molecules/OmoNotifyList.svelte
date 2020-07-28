@@ -1,5 +1,6 @@
 <script>
-  let data = [
+
+  let notifications = [
     { tag: "TRANSFER", text: "x payed y 10 Circles", date: "14396123489" },
     {
       tag: "OWNER CHANGE",
@@ -8,6 +9,43 @@
     },
     { tag: "TRUST", text: "x trusted y to 100%", date: "14396123489" }
   ];
+
+  async function updateAsync() {
+
+    // Get list of my activities
+    const addr = window.o.web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());
+    const {activities} = await window.o.circlesCore.activity.getLatest(window.o.odentity.current.circleSafeOwner, {
+      safeAddress:addr
+    });
+
+    // Example: Display activities
+    const {ActivityTypes} = window.o.circlesCore.activity;
+
+    activities.forEach((activity) => {
+      const {timestamp, type, data} = activity;
+
+      let text = "";
+      if (type === ActivityTypes.HUB_TRANSFER) {
+        text = `transferred ${data.value.toString()} Circles to ${data.to}`;
+      } else if (type === ActivityTypes.ADD_CONNECTION) {
+        text = `${data.limitPercentage} ${data.canSendTo} allowed ${data.send} to transfer Circles`;
+      } else if (type === ActivityTypes.REMOVE_CONNECTION) {
+        text = `${data.canSendTo} untrusted ${data.user}`;
+      } else if (type === ActivityTypes.ADD_OWNER) {
+        text = `added ${data.ownerAddress} to ${data.safeAddress}`;
+      } else if (type === ActivityTypes.REMOVE_OWNER) {
+        text = `removed ${data.ownerAddress} from ${data.safeAddress}`;
+      }
+
+      notifications = [...notifications, {
+        date: timestamp,
+        tag: type.toString(),
+        text: text
+      }];
+    });
+  }
+  updateAsync();
+
 </script>
 
 <style>
@@ -23,7 +61,7 @@
 </style>
 
 <section>
-  {#each data as item}
+  {#each notifications as item}
     <div class="p-2 w-full md:w-4/5 lg:w-3/5 mx-auto">
       <div
         class="inline-flex items-center bg-gray-100 leading-none text-primary

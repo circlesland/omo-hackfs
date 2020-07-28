@@ -44,11 +44,16 @@
     if (!window.eventBroker) {
       window.eventBroker = new EventBroker();
       window.eventBroker.createTopic("omo", "safe");
-      window.eventBroker.createTopic("omo", "notification");
+      window.eventBroker.createTopic("omo", "shell");
     }
 
-    let notifications = window.eventBroker.tryGetTopic("omo", "notification");
+    let notifications = window.eventBroker.tryGetTopic("omo", "shell");
     notifications.observable.subscribe(next => {
+      if (next._$eventType === "omo.shell.notification") {
+
+      } else {
+
+      }
       console.log(next);
     });
   });

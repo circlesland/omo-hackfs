@@ -1,9 +1,6 @@
 <script>
   import { mnemonicToEntropy } from "bip39";
-  import Web3 from "web3";
   import { getSafeAddressAsync } from "./../../omo-data/queries/circles";
-
-  const web3 = new Web3();
 
   let seedPhrase = "";
 
@@ -11,7 +8,7 @@
     try {
       const restoredKey = mnemonicToEntropy(seedPhrase);
       const privateKey = `0x${restoredKey}`;
-      const safeOwner = web3.eth.accounts.privateKeyToAccount(privateKey);
+      const safeOwner = window.o.web3.eth.accounts.privateKeyToAccount(privateKey);
       const safeAddress = await getSafeAddressAsync(safeOwner);
       if (window.o.odentity.current) {
         window.o.odentity.connectCircleWallet(safeOwner, safeAddress);
