@@ -87,7 +87,19 @@
   }
 </script>
 
-hello list
-{#each actions as action}
-  <a on:click={() => click(action.event())}>{action.name}</a>
-{/each}
+<section>
+  {#each actions as action}
+    <div class="p-2 w-full md:w-4/5 lg:w-3/5 mx-auto">
+      <div
+        class="inline-flex items-center bg-gray-100 leading-none text-primary
+        rounded p-1 shadow text-primary text-sm w-full">
+        <a
+          href="#"
+          on:click={() => click(action.event())}
+          class="inline-flex px-2">
+          {action.name}
+        </a>
+      </div>
+    </div>
+  {/each}
+</section>
