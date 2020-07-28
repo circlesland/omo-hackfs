@@ -1,6 +1,6 @@
 <script>
   import { Odentity } from "./../../Core/Odentity.ts";
-  import OmoOrganisms from "./../4-templates/OmoOrganisms.svelte";
+  import OmoOrganisms from "./../4-layouts/OmoOrganisms.svelte";
   import { getSafeFromLocalStorage } from "./../../omo-actions/Circles";
   import {
     loadingSafeDataAsync,

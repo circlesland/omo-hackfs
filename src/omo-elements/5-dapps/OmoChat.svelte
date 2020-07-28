@@ -1,5 +1,5 @@
 <script>
-  import OmoOrganisms from "./../4-templates/OmoOrganisms";
+  import OmoOrganisms from "./../4-layouts/OmoOrganisms";
 
   let OmoChat = {
     name: "OmoChat",

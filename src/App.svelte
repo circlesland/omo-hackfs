@@ -1,31 +1,23 @@
 <script lang="ts">
-  import OmoChat from "./omo-elements/2-molecules/OmoChat.svelte";
-  import OmoConnectCircles from "./omo-elements/5-dapps/OmoConnectCircles.svelte";
-  import OmoButton from "./omo-elements/1-atoms/OmoButton.svelte";
   import { getRoute, curRoute, navigate, getComponent } from "./Router.ts";
   import { onMount, onDestroy } from "svelte";
-  import { seed } from "./seed.ts";
+  import ComponentRegistrar from "./ComponentRegistrar";
+  import MagicLogin from "./omo-elements/5-dapps/MagicLogin.svelte";
 
   import OmoHome from "./omo-elements/5-dapps/OmoHome";
   import MamaOmo from "./omo-elements/5-dapps/MamaOmo";
   import OmoDream from "./omo-elements/5-dapps/OmoDream";
-
-  import OmoDocs from "./omo-elements/5-pages/OmoDocs";
-  import OmoDapps from "./omo-elements/5-pages/OmoDapps";
+  import OmoDocs from "./omo-elements/5-dapps/OmoDocs";
+  import OmoDapps from "./omo-elements/5-dapps/OmoDapps";
+  import OnBoarding from "./omo-elements/5-dapps/OnBoarding";
   import Odentity from "./omo-elements/5-dapps/oDentity";
   import OmoDreams from "./omo-elements/5-dapps/OmoDreams";
-  import OmoOrgas from "./omo-elements/5-pages/OmoOrgas";
+  import OmoOrgas from "./omo-elements/5-dapps/OmoOrgas";
   import OmoSafe from "./omo-elements/5-dapps/OmoSafe";
   import OmoAuth from "./omo-elements/5-dapps/OmoAuth";
-  import OmoActions from "./omo-elements/5-pages/OmoActions";
-  import OmoFunding from "./omo-elements/5-pages/OmoFunding";
-  import OmoNavTop from "./omo-elements/2-molecules/OmoNavTop";
-  import OmoNavBottom from "./omo-elements/2-molecules/OmoNavBottom";
-
-  import OmoNotify from "./omo-elements/2-molecules/OmoNotify";
-  import Circles from "./omo-elements/5-dapps/Circles";
-
-  import ComponentRegistrar from "./ComponentRegistrar";
+  import OmoFunding from "./omo-elements/5-dapps/OmoFunding";
+  import OmoConnectCircles from "./omo-elements/5-dapps/OmoConnectCircles.svelte";
+  import OmoChat from "./omo-elements/5-dapps/OmoChat.svelte";
 
   onMount(() => {
     let route = getRoute();
@@ -40,10 +32,6 @@
     // o.store.odentity.currentOmo().then(o => {
     //   omo = o;
     // });
-
-    var jsonString = localStorage.getItem("data");
-    var data = jsonString == null ? seed() : JSON.parse(jsonString);
-    window.data = data;
     window.navigate = navigate;
   });
 
@@ -55,25 +43,21 @@
   //@todo listen to changes
 
   // ROUTING
-  import MagicLogin from "./omo-elements/5-pages/MagicLogin.svelte";
   var routes = [
     { route: "/", quant: OmoHome, authenticate: false },
     { route: "?page=home", quant: OmoHome, authenticate: false },
-    { route: "?page=mamaomo", quant: MamaOmo, authenticate: false },
+    { route: "?page=mamaomo", quant: MamaOmo, authenticate: true },
     { route: "?page=omoauth", quant: OmoAuth, authenticate: false },
     { route: "?page=magicLogin", quant: MagicLogin, authenticate: false },
     { route: "?page=odentity", quant: Odentity, authenticate: false },
     { route: "?page=docs", quant: OmoDocs, authenticate: true },
     { route: "?page=omodapps", quant: OmoDapps, authenticate: true },
-    { route: "?page=omodream", quant: OmoDream, authenticate: false },
-    { route: "?page=omoactions", quant: OmoActions, authenticate: true },
-    { route: "?page=omofunding", quant: OmoFunding, authenticate: false },
+    { route: "?page=omodream", quant: OmoDream, authenticate: true },
+    { route: "?page=omofunding", quant: OmoFunding, authenticate: true },
     { route: "?page=omoorgas", quant: OmoOrgas, authenticate: true },
     { route: "?page=omosafe", quant: OmoSafe, authenticate: true },
-    { route: "?page=omodreams", quant: OmoDreams, authenticate: false },
-    { route: "?page=circles", quant: Circles, authenticate: false },
+    { route: "?page=omodreams", quant: OmoDreams, authenticate: true },
     { route: "?page=omochat", quant: OmoChat, authenticate: true },
-
     {
       route: "?page=omoconnectcircles",
       quant: OmoConnectCircles,
@@ -95,7 +79,6 @@
 <ComponentRegistrar />
 
 <div class="app">
-  <!-- <OmoNotify /> -->
   <svelte:component this={getComponent($curRoute, routes)} {routes} />
   <!-- <footer>
     {#if omo != null}

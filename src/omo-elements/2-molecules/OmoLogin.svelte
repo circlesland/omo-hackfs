@@ -1,5 +1,4 @@
 <script>
-  import Odentity from "./../5-pages/Odentity.svelte";
   import { mnemonicToEntropy } from "bip39";
   import Web3 from "web3";
   import ApolloClient, { gql } from "apollo-boost";

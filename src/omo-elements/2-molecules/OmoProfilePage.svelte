@@ -1,24 +1,7 @@
 <script>
   import OmoAvatarsGrouped from "./../2-molecules/OmoAvatarsGrouped";
-  import OmoProgressBar from "./../2-molecules/OmoProgressBar";
-
-  export const progressbar = {
-    height: "h-6"
-  };
 
   export const data = {};
-
-  // export let dreamers = [];
-
-  // fetch("https://randomuser.me/api?results=10")
-  //   .then(response => response.json())
-  //   .then(
-  //     data =>
-  //       (data = data.results.map((item, i) => {
-  //         item.profile = item.picture.large;
-  //         return item;
-  //       }))
-  //   );
 </script>
 
 <section class="bg-white py-4 font-sans">

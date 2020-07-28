@@ -2,17 +2,6 @@
   import OmoImageGrid from "./../2-molecules/OmoImageGrid";
   import OmoHero from "./../2-molecules/OmoHero";
 
-  // let omo = {};
-
-  // o.store.odentity.currentOmo().then(o => {
-  //   omo = o;
-  // });
-
-  // $: hero = {
-  //   uptitle: "My Omo Dapps",
-  //   title: `Welcome, ${omo.name != null ? omo.name : omo._id}`
-  // };
-
   export let logos = [
     {
       id: "1",

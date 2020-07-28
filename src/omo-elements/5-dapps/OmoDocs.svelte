@@ -1,6 +1,5 @@
 <script>
   import OmoMarkdown from "./../3-organisms/OmoMarkdown";
-  import OmoLayoutAsideContent from "./../4-layouts/OmoLayoutAsideContent";
 
   import Overview from "./../../omo-docs/Overview.svx";
   import Introduction from "./../../omo-docs/Introduction.svx";
@@ -39,21 +38,15 @@
   }
 </style>
 
-<OmoLayoutAsideContent>
-  <div slot="aside">
-    <ul class="list">
-      {#each blogs as blog}
-        <li
-          class="item hover:text-green-500"
-          on:click={() => (selected = blog)}>
-          {blog.text}
-        </li>
-      {/each}
-    </ul>
-  </div>
-  <div slot="content">
-    <OmoMarkdown>
-      <svelte:component this={selected.component} />
-    </OmoMarkdown>
-  </div>
-</OmoLayoutAsideContent>
+<h1>TODO - fix layout and markdown styling</h1>
+<ul class="list">
+  {#each blogs as blog}
+    <li class="item hover:text-green-500" on:click={() => (selected = blog)}>
+      {blog.text}
+    </li>
+  {/each}
+</ul>
+
+<OmoMarkdown>
+  <svelte:component this={selected.component} />
+</OmoMarkdown>

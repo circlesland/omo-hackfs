@@ -1,7 +1,5 @@
 <script>
-  import OmoOrganisms from "./../4-templates/OmoOrganisms.svelte";
-  // import OmoGridDreams from "./../2-molecules/OmoGridDreams";
-  // import OmoHero from "./../2-molecules/OmoHero";
+  import OmoOrganisms from "./../4-layouts/OmoOrganisms.svelte";
 
   let OmoDreams = {
     name: "OmoDream",

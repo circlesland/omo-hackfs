@@ -1,6 +1,5 @@
 <script>
   import OmoHero from "./../2-molecules/OmoHero.svelte";
-  import OmoProgressBar from "./../2-molecules/OmoProgressBar";
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
 
   export let data = [
@@ -128,9 +127,7 @@
     </div>
   </div>
 
-  <div class="content-top">
-    <OmoProgressBar />
-  </div>
+  <div class="content-top">Progress</div>
   <div class="content-center">
     <div class="h-full flex flex-col justify-center">
       <div class="text-center">
