@@ -13,13 +13,13 @@
   async function updateAsync() {
 
     // Get list of my activities
-    const addr = web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());
-    const {activities} = await window.o.circlesCore.getLatest(window.o.odentity.current.circleSafeOwner, {
+    const addr = window.o.web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());
+    const {activities} = await window.o.circlesCore.activity.getLatest(window.o.odentity.current.circleSafeOwner, {
       safeAddress:addr
     });
 
     // Example: Display activities
-    const {ActivityTypes} = core.activity;
+    const {ActivityTypes} = window.o.circlesCore.activity;
 
     activities.forEach((activity) => {
       const {timestamp, type, data} = activity;

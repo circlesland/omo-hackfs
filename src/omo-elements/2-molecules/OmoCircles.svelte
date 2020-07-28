@@ -1,8 +1,6 @@
 <script>
 import OmoTabs from "./../2-molecules/OmoTabs";
   import moment from "moment";
-  import Web3 from "web3";
-  const web3 = new Web3();
 
   import {
     getSafeOwnerFromLocalStorage,
@@ -56,8 +54,8 @@ import OmoTabs from "./../2-molecules/OmoTabs";
   }
 
   async function trust() {
-    let safeGivingChecksumAddress = web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());
-    let safeReceivingChecksumAddress = web3.utils.toChecksumAddress(trustSafeAddress.trim());
+    let safeGivingChecksumAddress = window.o.web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());
+    let safeReceivingChecksumAddress = window.o.web3.utils.toChecksumAddress(trustSafeAddress.trim());
 
     let trustGivingSafe = {
       safeAddress: safeGivingChecksumAddress

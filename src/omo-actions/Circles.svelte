@@ -1,5 +1,4 @@
 <script context="module">
-  import Web3 from "web3";
 
   export async function createNewSafe() {
     var safeOwner = await createNewPPK();
@@ -33,13 +32,13 @@
   }
 
   export async function sendCircles(fromSafeOwner, fromSafe, toSafe, amount) {
-    let toSafeAddress = web3.utils.toChecksumAddress(toSafe.safeAddress);
-    let fromSafeAddress = web3.utils.toChecksumAddress(fromSafe.safeAddress);
+    let toSafeAddress = window.o.web3.utils.toChecksumAddress(toSafe.safeAddress);
+    let fromSafeAddress = window.o.web3.utils.toChecksumAddress(fromSafe.safeAddress);
 
     const payment = await window.o.circlesCore.token.transfer(fromSafeOwner, {
       from: fromSafeAddress,
       to: toSafeAddress,
-      value: new web3.utils.BN(web3.utils.toWei(amount, "ether"))
+      value: new window.o.web3.utils.BN(window.o.web3.utils.toWei(amount, "ether"))
     });
     alert(payment);
   }
@@ -56,7 +55,7 @@
 
   async function createNewPPK() {
     // Create account and save to wallet
-    let ppk = web3.eth.accounts.create();
+    let ppk = window.o.web3.eth.accounts.create();
     localStorage.setItem("safeOwner", JSON.stringify(ppk));
     return ppk;
   }
