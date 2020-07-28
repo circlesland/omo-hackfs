@@ -26,3 +26,4 @@ Important links:
 * https://web3js.readthedocs.io/en/v1.2.11/
 * https://github.com/CirclesUBI/circles-core (readme & code)
 * https://github.com/CirclesUBI/circles-baby-phoenix
+* https://thegraph.com/docs
