@@ -2,22 +2,42 @@
   export const data = {
     image: ""
   };
+  import OmoModal from "./OmoModal.svelte";
+
+  let isOpen = false;
+
+  let triggerRef;
 </script>
 
 <style>
   section {
     height: 30rem;
   }
+  video {
+    object-fit: cover;
+  }
 </style>
+
+<OmoModal {triggerRef} bind:isOpen>
+  <video controls>
+    <source
+      src="https://ipfs.io/ipfs/QmQn4Wih8PYHBzrkq55y4gnrhe2z9SYtYnsLrJHGenNTXC"
+      type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+</OmoModal>
 
 <section
   class="font-sans h-full w-full bg-cover text-center flex flex-col items-center
   justify-center"
   style="background:url(https://source.unsplash.com/featured/?city) no-repeat
   center;">
+
   <div
     class="h-full w-full bg-cover text-center flex flex-col items-center
-    justify-center bg-primary opacity-50">
+    justify-center bg-primary opacity-50"
+    bind:this={triggerRef}
+    on:click={() => (isOpen = !isOpen)}>
     <div
       class="bg-white text-black hover:bg-secondary rounded-full h-16 w-16 flex
       items-center justify-center mb-8">

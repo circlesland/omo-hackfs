@@ -23,12 +23,12 @@
   }
 </script>
 
-<section class="flex justify-center flex-col text-center bg-dark">
+<section class="flex justify-center flex-col text-center bg-primary">
   <div class="">
-    <h1 class="text-blue-200 text-6xl">
+    <h1 class="text-blue-300 text-6xl">
       Ø{sumCircles(data.safeData).toFixed(2)}
     </h1>
-    <span class="text-center text-secondary">
+    <span class="text-center text-blue-600">
       {data.safeData.data.safes[0].id}
     </span>
   </div>
