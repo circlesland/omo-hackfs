@@ -43,7 +43,6 @@
     let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
     notifications.observable.subscribe(next => {
       if (next._$eventType === "omo.shell.notification") {
-
       } else if (next._$eventType === "omo.shell.navigate") {
         navigate(next.page);
         // TODO: Add arguments
@@ -97,14 +96,14 @@
 
 <style>
   .app {
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
     padding: 0;
     margin: 0;
     display: grid;
     grid-template-areas: "'header', 'main', 'footer'";
     grid-template-columns: "1fr";
-    grid-template-rows: 2rem 1fr 4rem;
+    grid-template-rows: 3rem 1fr 4rem;
   }
   header {
     grid-area: "header";
