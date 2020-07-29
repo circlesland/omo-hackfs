@@ -12,105 +12,123 @@ export class ProcessNode<TContext extends IProcessContext>
     state: ProcessState = ProcessState.Pristine;
     title: string = "";
 
-    quant?:string;
+    quant?: string;
     sideEffect?: string;
 
-    constructor(parent?:ProcessNode<TContext>)
+    constructor(parent?: ProcessNode<TContext>)
     {
         this.parent = !parent ? null : parent;
         this.parentId = !this.parent ? undefined : this.parent.id;
     }
 
-    findActiveBranch(childNodesOnly: boolean = false): ProcessNode<TContext>[]
-    {
-        const activeLeaf = this.findActiveLeaf(childNodesOnly);
-        if (!activeLeaf) {
+    static findActiveBranch(node:ProcessNode<IProcessContext>) {
+        const activeLeaf = this.findActiveLeaf(node);
+        if (!activeLeaf)
+        {
             return [];
         }
         const path = this.path(activeLeaf);
         return path;
     }
 
-    findActiveLeaf(childNodesOnly: boolean = false): ProcessNode<TContext> | null
-    {
-        for (let node of this.flattenSequential(childNodesOnly))
+    static findActiveLeaf(node:ProcessNode<IProcessContext>) {
+        for (let currentNode of ProcessNode.flattenSequencial(node))
         {
-            if (!this.isLeaf(node)) {
+            if (!ProcessNode.isLeaf(currentNode))
+            {
                 continue;
             }
-            if (!this.isActive(node)){
+            if (!ProcessNode.isActive(currentNode))
+            {
                 continue;
             }
 
-            return node;
+            return currentNode;
         }
 
         return null;
     }
 
-    findNextNode(currentNode: ProcessNode<TContext>): ProcessNode<TContext> | null
-    {
-        let next:boolean = false;
+    static flattenSequencial(node:ProcessNode<IProcessContext>) {
+        const stack: ProcessNode<IProcessContext>[] = [];
+        const array: ProcessNode<IProcessContext>[] = [];
+        const hashMap = {};
 
-        for (let node of this.flattenSequential(false, currentNode))
+        stack.push(node);
+
+        while (stack.length !== 0)
         {
-            if (node == currentNode) {
+            var currentNode = stack.pop();
+            if (!currentNode)
+            {
+                throw new Error("The stack returned an undefined element during the recursive iteration of a IProcessNode.");
+            }
+            if (currentNode.children.length == 0)
+            {
+                if (!hashMap[currentNode.id])
+                {
+                    hashMap[currentNode.id] = true;
+                    array.push(currentNode);
+                }
+            }
+            else
+            {
+                for (var i = currentNode.children.length - 1; i >= 0; i--)
+                {
+                    stack.push(currentNode.children[i]);
+                }
+            }
+        }
+
+        return array;
+    }
+
+    static findNextNode(node:ProcessNode<IProcessContext>, afterNodeId:string) {
+        let next: boolean = false;
+
+        for (let currentNode of ProcessNode.flattenSequencial(node))
+        {
+            if (currentNode.id === afterNodeId)
+            {
                 next = true;
                 continue;
             }
-            if (next) {
-                return node;
+            if (next)
+            {
+                return currentNode;
             }
         }
 
         return null;
     }
 
-    findPreviousNode(currentNode: ProcessNode<TContext>): ProcessNode<TContext> | null
-    {
-        let previous: ProcessNode<TContext>|null = null;
-        for (let node of this.flattenSequential(false, currentNode))
+    static findPreviousNode(node:ProcessNode<IProcessContext>, beforeNodeId:string) {
+        let previous: ProcessNode<IProcessContext> | null = null;
+        for (let currentNode of ProcessNode.flattenSequencial(node))
         {
-            if (node == currentNode) {
+            if (beforeNodeId == currentNode.id)
+            {
                 return previous;
             }
-            previous = node;
+            previous = currentNode;
         }
 
         return null;
     }
 
-    isLeaf(otherNode?:ProcessNode<TContext>) : boolean
-    {
-        return (!otherNode ? this : otherNode).children.length == 0;
+    static isLeaf(node:ProcessNode<IProcessContext>) {
+        return node.children.length == 0;
     }
 
-    isActive(otherNode?:ProcessNode<TContext>) : boolean
-    {
-        return (!otherNode ? this : otherNode).state == ProcessState.Active;
+    static isActive(node:ProcessNode<IProcessContext>) {
+        return node.state == ProcessState.Active;
     }
 
-    async canActivate<TArgument>(context:TContext, argument:TArgument, otherNode?:ProcessNode<TContext>) : Promise<boolean>
-    {
-        const nodeToTest:ProcessNode<TContext> = (!otherNode ? this : otherNode);
-        if (!this.isLeaf(nodeToTest)) {
-            return Promise.resolve(false);
-        }
+    static path(node:ProcessNode<IProcessContext>) {
+        const path: ProcessNode<IProcessContext>[] = [];
+        let root: ProcessNode<IProcessContext> = node;
 
-        const sideEffect = (<any>window).sideEffectRegistrar.get(nodeToTest.sideEffect);
-        if (!sideEffect || !sideEffect.canExecute) {
-            return Promise.resolve(true);
-        }
-
-        return await sideEffect.canExecute(context, argument);
-    }
-
-    path(otherNode?:ProcessNode<TContext>) : ProcessNode<TContext>[]
-    {
-        const path:ProcessNode<TContext>[] = [];
-        let root:ProcessNode<TContext> = this;
-
-        path.unshift((!otherNode ? this : otherNode));
+        path.unshift(root);
 
         while (root.parent)
         {
@@ -121,40 +139,60 @@ export class ProcessNode<TContext extends IProcessContext>
         return path;
     }
 
-    root(otherNode?:ProcessNode<TContext>) : ProcessNode<TContext>
-    {
-        const path = this.path(otherNode);
+    static findById(node:ProcessNode<IProcessContext>, id:string) {
+        let stack = [node];
+
+        while (stack.length > 0)
+        {
+            let item = stack.pop();
+            if (!item) {
+                continue;
+            }
+            if (item.id == id)
+                return item;
+
+            item.children.forEach(child => stack.push(child));
+        }
+    }
+
+    static root(node:ProcessNode<IProcessContext>) {
+        const path = ProcessNode.path(node);
         return path[0];
     }
 
-    flattenSequential(childNodesOnly: boolean, otherNode?:ProcessNode<TContext>) : ProcessNode<TContext>[] {
-        const stack:ProcessNode<TContext>[] = [];
-        const array = [];
-        const hashMap = {};
-
-        stack.push(!otherNode ? this : otherNode);
-
-        while(stack.length !== 0) {
-            var node = stack.pop();
-            if (!node) {
-                throw new Error("The stack returned an undefined element during the recursive iteration of a IProcessNode.");
-            }
-            if(node.children.length == 0) {
-                ProcessNode.visitNode(node, hashMap, array);
-            } else {
-                for(var i = node.children.length - 1; i >= 0; i--) {
-                    stack.push(node.children[i]);
-                }
-            }
+    private static visitNode(node, hashMap): ProcessNode<IProcessContext> | null
+    {
+        if (!hashMap[node.id])
+        {
+            hashMap[node.id] = true;
+            return node;
         }
-
-        return array;
+        return null;
     }
 
-    private static visitNode(node, hashMap, array) {
-        if(!hashMap[node.data]) {
-            hashMap[node.data] = true;
-            array.push(node);
+    static restoreParentLinks(processNode)
+    {
+        let map = {};
+        let stack = [processNode];
+
+        while (stack.length > 0)
+        {
+            let item = stack.pop();
+            map[item.id] = item;
+            item.children.forEach(child => stack.push(child));
+        }
+
+        stack = [processNode];
+        while (stack.length > 0)
+        {
+            let item = stack.pop();
+            let parent = map[item.parentId];
+            if (parent)
+            {
+                console.log("restored parent", parent);
+            }
+            item.parent = parent;
+            item.children.forEach(child => stack.push(child));
         }
     }
 }

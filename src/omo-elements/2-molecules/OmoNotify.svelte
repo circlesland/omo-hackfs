@@ -27,7 +27,6 @@
     const { ActivityTypes } = window.o.circlesCore.activity;
 
     activities.forEach(activity => {
-      console.log(activity);
       const { timestamp, type, data } = activity;
 
       let text = "";
