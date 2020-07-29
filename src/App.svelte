@@ -20,15 +20,18 @@
   import OmoConnectCircles from "./omo-elements/5-dapps/OmoConnectCircles.svelte";
   import OmoChat from "./omo-elements/5-dapps/OmoChat.svelte";
   import OmoActions from "./omo-elements/5-dapps/OmoActions.svelte";
-  import OmoNotifications from "./omo-elements/5-dapps/OmoNotifications.svelte";
+  import OmoShop from "./omo-elements/5-dapps/OmoShop.svelte";
+  import OmoVoting from "./omo-elements/5-dapps/OmoVoting.svelte";
+  import OmoPreOrders from "./omo-elements/5-dapps/OmoPreOrders.svelte";
 
   import OmoNavTop from "./omo-elements/2-molecules/OmoNavTop.svelte";
   import OmoNavBottom from "./omo-elements/2-molecules/OmoNavBottom.svelte";
-  import {Trust} from "./Core/Data/Entities/Events/omo/safe/Trust";
-  import {Untrust} from "./Core/Data/Entities/Events/omo/safe/Untrust";
-  import {Transfer} from "./Core/Data/Entities/Events/omo/safe/Transfer";
-  import {AddOwner} from "./Core/Data/Entities/Events/omo/safe/AddOwner";
-  import {RemoveOwner} from "./Core/Data/Entities/Events/omo/safe/RemoveOwner";
+
+  import { Trust } from "./Core/Data/Entities/Events/omo/safe/Trust";
+  import { Untrust } from "./Core/Data/Entities/Events/omo/safe/Untrust";
+  import { Transfer } from "./Core/Data/Entities/Events/omo/safe/Transfer";
+  import { AddOwner } from "./Core/Data/Entities/Events/omo/safe/AddOwner";
+  import { RemoveOwner } from "./Core/Data/Entities/Events/omo/safe/RemoveOwner";
 
   onMount(() => {
     let route = getRoute();
@@ -47,8 +50,7 @@
 
     let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
     notifications.observable.subscribe(next => {
-      if (!next._$eventType)
-        return;
+      if (!next._$eventType) return;
 
       switch (next._$eventType) {
         case "omo.shell.notification":
@@ -92,6 +94,10 @@
     { route: "?page=omodream", quant: OmoDream, authenticate: true },
     { route: "?page=omofunding", quant: OmoFunding, authenticate: true },
     { route: "?page=omoorgas", quant: OmoOrgas, authenticate: true },
+    { route: "?page=omoshop", quant: OmoShop, authenticate: true },
+    { route: "?page=omovoting", quant: OmoVoting, authenticate: true },
+    { route: "?page=omopreorders", quant: OmoPreOrders, authenticate: true },
+
     {
       route: "?page=omosafe",
       quant: OmoSafe,
@@ -174,11 +180,6 @@
     { route: "?page=omochat", quant: OmoChat, authenticate: true },
     { route: "?page=onboarding", quant: OnBoarding, authenticate: true },
     { route: "?page=omodialog", quant: OmoDialog, authenticate: true },
-    {
-      route: "?page=omonotifications",
-      quant: OmoNotifications,
-      authenticate: true
-    },
     {
       route: "?page=omoactions",
       quant: OmoActions,

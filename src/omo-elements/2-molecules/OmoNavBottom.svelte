@@ -2,31 +2,31 @@
   import ActionsList from "./ActionsList.svelte";
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
   import OmoModal from "./OmoModal.svelte";
-  import {onMount} from "svelte";
+  import { onMount } from "svelte";
 
   let isOpen = false;
 
   let triggerRef;
 
-
   let actions = [];
   onMount(() => {
-      let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
-      notifications.observable.subscribe(next => {
-          if (!next._$eventType)
-              return;
+    let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
+    notifications.observable.subscribe(next => {
+      if (!next._$eventType) return;
 
-          switch (next._$eventType) {
-              case "omo.shell.navigated":
-                  const route = window.routes.find(o => o.route === "?page=" + next.data.page); // TODO: Pfui!
-                  if (route && route.actions) {
-                      actions = route.actions;
-                  } else {
-                      actions = [];
-                  }
-                  break;
+      switch (next._$eventType) {
+        case "omo.shell.navigated":
+          const route = window.routes.find(
+            o => o.route === "?page=" + next.data.page
+          ); // TODO: Pfui!
+          if (route && route.actions) {
+            actions = route.actions;
+          } else {
+            actions = [];
           }
-      });
+          break;
+      }
+    });
   });
 
   export let navitems = [
@@ -38,8 +38,8 @@
     },
     {
       icon: "fa-users",
-      text: "dreams",
-      link: "javascript:navigate('omodreams')",
+      text: "contacts",
+      link: "/",
       design: "text-blue-600 hover:text-secondary"
     },
     {
