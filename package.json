@@ -51,6 +51,7 @@
     "style-loader": "^0.23.1",
     "svelte-check": "^0.1.57",
     "svelte-loader": "2.13.3",
+    "svelte-popover": "^2.0.8",
     "svelte-preprocess": "^4.0.8",
     "tailwindcss": "^1",
     "ts-loader": "^7.0.5",

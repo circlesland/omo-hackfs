@@ -1,5 +1,10 @@
 <script>
+  import ActionsList from "./ActionsList.svelte";
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
+  import OmoModal from "./OmoModal.svelte";
+
+  let isOpen = false;
+  let triggerRef;
 
   export let navitems = [
     {
@@ -41,11 +46,16 @@
   }
 </style>
 
+<OmoModal {triggerRef} bind:isOpen>
+  <ActionsList />
+</OmoModal>
+
 <OmoIconsFA />
 <nav class="bottom-0 w-full bg-dark">
   <ul
     class="flex justify-around md:justify-center items-center text-center
     font-semibold">
+
     {#each navitems as item}
       <li class={item.design}>
         <a href={item.link} class={item.design}>
@@ -57,5 +67,11 @@
         </a>
       </li>
     {/each}
+    <button
+      class="text-blue-500"
+      bind:this={triggerRef}
+      on:click={() => (isOpen = !isOpen)}>
+      Open actions
+    </button>
   </ul>
 </nav>

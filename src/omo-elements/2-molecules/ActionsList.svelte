@@ -84,6 +84,30 @@
   }
 </script>
 
+<style>
+  section {
+    max-height: 80vh;
+    overflow-y: scroll;
+  }
+</style>
+
+<section class="text-gray-700 bg-gray-200 w-full">
+  {#each actions as action}
+    <div
+      on:click={() => click(action.event())}
+      class="py-4 px-8 hover:bg-primary hover:text-white">
+      {action.title}
+      <div
+        class="text-xs truncate w-full normal-case font-normal -mt-1
+        text-gray-500">
+        {#if action.description}{action.description}{/if}
+      </div>
+    </div>
+  {/each}
+</section>
+
+<!-- 
+
 <div
   class="flex content-end justify-center w-full flex-wrap bg-gray-100 h-full">
   <div class="text-gray-700 bg-gray-200 w-full lg:w-2/3">
@@ -100,7 +124,7 @@
       </div>
     {/each}
   </div>
-</div>
+</div> -->
 
 <!-- <div class="h-full flex content-end flex-wrap w-full">
   <div class="flex justify-center w-full">
