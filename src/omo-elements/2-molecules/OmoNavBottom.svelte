@@ -9,6 +9,7 @@
 
     let triggerRef;
 
+    let page = "";
     let actions = [];
     let processNode = undefined;
 
@@ -21,7 +22,8 @@
             switch (next._$eventType) {
                 case "omo.shell.navigated":
                     processNode = undefined;
-                    const route = window.routes.find(o => o.route === "?page=" + next.data.page); // TODO: Pfui!
+                    page = next.data.page;
+                    const route = window.routes.find(o => o.route === "?page=" + page); // TODO: Pfui!
                     if (route && route.actions) {
                         actions = route.actions;
                     } else {
@@ -57,7 +59,15 @@
         {
             icon: "fa-plus",
             text: "Actions",
-            link: () => (isOpen = !isOpen),
+            link: () => {
+                (isOpen = !isOpen)
+                if (!isOpen) {
+                    processNode = null;
+                } else {
+                    const route = window.routes.find(o => o.route === "?page=" + page); // TODO: Pfui!
+                    actions = route.actions;
+                }
+            },
             design: "bg-secondary text-white"
         },
         {
