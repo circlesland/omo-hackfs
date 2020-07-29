@@ -52,7 +52,7 @@ import OmoTabs from "./../2-molecules/OmoTabs";
     );
   }
 
-  async function trust() {
+  async function giveTrust() {
     let safeGivingChecksumAddress = window.o.web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());
     let safeReceivingChecksumAddress = window.o.web3.utils.toChecksumAddress(trustSafeAddress.trim());
 

@@ -10,12 +10,12 @@
         event: () => {
             const event = new Trust();
             event.data = {
-                trustGiver: { // Owner of the trust-giving safe
+                trustGiver: { // Owner of the giveTrust-giving safe
                     address: "string",
                     privateKey: "string"
                 },
-                trustGiverSafe: "", // The trust-giving safe (web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());)
-                trustReceiverSafe: "", // The trust-receiving safe (web3.utils.toChecksumAddress(trustSafeAddress.trim()))
+                trustGiverSafe: "", // The giveTrust-giving safe (web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());)
+                trustReceiverSafe: "", // The giveTrust-receiving safe (web3.utils.toChecksumAddress(trustSafeAddress.trim()))
             };
             return event;
         }
@@ -24,12 +24,12 @@
         event: () => {
             const event = new Untrust();
             event.data = {
-                formerTrustGiver: { // Owner of the trust-taking safe
+                formerTrustGiver: { // Owner of the giveTrust-taking safe
                     address: "string",
                     privateKey: "string"
                 },
-                formerTrustGiverSafe: "", // The trust-taking safe (web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());)
-                formerTrustReceiverSafe: "", // The trust-loosing safe (web3.utils.toChecksumAddress(trustSafeAddress.trim()))
+                formerTrustGiverSafe: "", // The giveTrust-taking safe (web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());)
+                formerTrustReceiverSafe: "", // The giveTrust-loosing safe (web3.utils.toChecksumAddress(trustSafeAddress.trim()))
             };
             return event;
         }
@@ -38,7 +38,7 @@
         event: () => {
             const event = new Transfer();
             event.data = {
-                spendSafeOwner: { // Owner of the trust-taking safe
+                spendSafeOwner: { // Owner of the giveTrust-taking safe
                     address: "string",
                     privateKey: "string"
                 },
