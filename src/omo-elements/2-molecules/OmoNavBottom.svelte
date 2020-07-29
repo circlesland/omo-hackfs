@@ -45,31 +45,31 @@
         {
             icon: "fa-user-circle",
             text: "Omo Pay",
-            link: "javascript:navigate('omosafe')",
+            link: () => window.navigate('omosafe'),
             design: "text-blue-600 hover:text-secondary"
         },
         {
             icon: "fa-users",
             text: "dreams",
-            link: "javascript:navigate('omodreams')",
+            link: () => window.navigate('omodreams'),
             design: "text-blue-600 hover:text-secondary"
         },
         {
             icon: "fa-plus",
             text: "Actions",
-            link: "javascript:navigate('omoactions')",
+            link: () => (isOpen = !isOpen),
             design: "bg-secondary text-white"
         },
         {
             icon: "fa-comments",
             text: "Chat",
-            link: "javascript:navigate('omochat')",
+            link: () => window.navigate('omochat'),
             design: "text-blue-600 hover:text-secondary"
         },
         {
             icon: "fa-home",
             text: "dapps",
-            link: "javascript:navigate('omodapps')",
+            link: () => window.navigate('omodapps'),
             design: "text-blue-600 hover:text-secondary"
         }
     ];
@@ -102,7 +102,7 @@
 
     {#each navitems as item}
       <li class={item.design}>
-        <a href={item.link} class={item.design}>
+        <a on:click={() => item.link()} class={item.design}>
           <div>
             <i class="text-lg fas {item.icon}" />
             <br />
@@ -111,11 +111,5 @@
         </a>
       </li>
     {/each}
-    <button
-      class="text-blue-500"
-      bind:this={triggerRef}
-      on:click={() => (isOpen = !isOpen)}>
-      Open actions
-    </button>
   </ul>
 </nav>
