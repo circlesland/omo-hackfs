@@ -1,8 +1,8 @@
 <script>
   import OmoOrganisms from "./../4-layouts/OmoOrganisms.svelte";
 
-  let OmoNotifications = {
-    name: "OmoNotifications",
+  let OmoVoting = {
+    name: "OmoGridVoting",
     type: "organisms",
     layout: {
       areas: "'main'",
@@ -13,11 +13,11 @@
       {
         type: "molecule",
         slot: "main",
-        quant: "OmoNotifyList",
+        quant: "OmoGridVoting",
         data: {}
       }
     ]
   };
 </script>
 
-<OmoOrganisms organisms={OmoNotifications} />
+<OmoOrganisms organisms={OmoVoting} />

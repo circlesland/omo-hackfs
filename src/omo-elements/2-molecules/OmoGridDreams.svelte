@@ -1,25 +1,25 @@
 <script>
   import OmoCardDream from "../2-molecules/OmoCardDream.svelte";
-  import OmoCardVote from "../2-molecules/OmoCardVote.svelte";
-  import OmoCardPreOrder from "../2-molecules/OmoCardPreOrder.svelte";
-  import OmoCardPatron from "../2-molecules/OmoCardPatron.svelte";
-  import OmoCardPreneur from "../2-molecules/OmoCardPreneur.svelte";
+  // import OmoCardVote from "../2-molecules/OmoCardVote.svelte";
+  // import OmoCardPreOrder from "../2-molecules/OmoCardPreOrder.svelte";
+  // import OmoCardPatron from "../2-molecules/OmoCardPatron.svelte";
+  // import OmoCardPreneur from "../2-molecules/OmoCardPreneur.svelte";
 
   import { onMount } from "svelte";
-  import OmoTabs from "./../2-molecules/OmoTabs.svelte";
+  // import OmoTabs from "./../2-molecules/OmoTabs.svelte";
   import mocker from "mocker-data-generator";
 
   // List of tab items with labels and values.
-  let tabItems = [
-    { label: "I want to dream", value: 1 },
-    { label: "I want to vote", value: 2 },
-    { label: "I want to consume", value: 3 },
-    { label: "I want to buy vouchers", value: 4 },
-    { label: "I want to build a franchise", value: 5 }
-  ];
+  // let tabItems = [
+  //   { label: "I want to dream", value: 1 },
+  //   { label: "I want to vote", value: 2 },
+  //   { label: "I want to consume", value: 3 },
+  //   { label: "I want to buy vouchers", value: 4 },
+  //   { label: "I want to build a franchise", value: 5 }
+  // ];
 
   // Current active tab
-  let currentTab;
+  // let currentTab;
 
   let omodreams = [];
   let omovotes = [];
@@ -208,19 +208,17 @@
   }
 </style>
 
-<OmoTabs bind:activeTabValue={currentTab} items={tabItems} class="pb-4" />
+<!-- <OmoTabs bind:activeTabValue={currentTab} items={tabItems} class="pb-4" /> -->
 
 <div class="px-4 py-4 md:p-16 lg:py-20 lg:px-32 overflow-y-scroll">
 
-  {#if 1 === currentTab}
-    <section class=" grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-      {#each omodreams as data, i (data.id)}
-        <OmoCardDream {data} />
-      {/each}
-    </section>
-  {/if}
+  <section class=" grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    {#each omodreams as data, i (data.id)}
+      <OmoCardDream {data} />
+    {/each}
+  </section>
 
-  {#if 2 === currentTab}
+  <!-- {#if 2 === currentTab}
     <section class="grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {#each omovotes as data, i (data.id)}
         <OmoCardVote {data} />
@@ -250,5 +248,5 @@
         <OmoCardPreneur {data} />
       {/each}
     </section>
-  {/if}
+  {/if} -->
 </div>

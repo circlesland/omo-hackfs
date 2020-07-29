@@ -24,6 +24,8 @@
   import {trustFlow} from "./Flows/Flows/omo/safe/TrustFlow";
   import {collectUserValue} from "./Flows/SideEffects/omo/shell/collectUserValue";
   import {giveTrust} from "./Flows/SideEffects/omo/safe/giveTrust";
+  import OmoGridVoting from "./omo-elements/2-molecules/OmoGridVoting";
+  import OmoGridPreOrder from "./omo-elements/2-molecules/OmoGridPreOrder";
 
   window.registrar = new Map();
   window.registrar.set("OmoHero", OmoHero);
@@ -55,4 +57,7 @@
   window.sideEffectRegistrar = new Map();
   window.sideEffectRegistrar.set("omo.shell.collectUserValue", collectUserValue);
   window.sideEffectRegistrar.set("omo.safe.giveTrust", giveTrust);
+  window.registrar.set("OmoSafeLookup", OmoSafeLookup);
+  window.registrar.set("OmoGridVoting", OmoGridVoting);
+  window.registrar.set("OmoGridPreOrder", OmoGridPreOrder);
 </script>

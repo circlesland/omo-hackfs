@@ -5,9 +5,9 @@
     import {onMount} from "svelte";
     import OmoDialog from "../5-dapps/OmoDialog.svelte";
 
-    let isOpen = false;
+  let isOpen = false;
 
-    let triggerRef;
+  let triggerRef;
 
     let page = "";
     let actions = [];
@@ -52,8 +52,8 @@
         },
         {
             icon: "fa-users",
-            text: "dreams",
-            link: () => window.navigate('omodreams'),
+            text: "contacts",
+            link: () => {},
             design: "text-blue-600 hover:text-secondary"
         },
         {

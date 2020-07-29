@@ -176,31 +176,6 @@
 
     {#if 4 === currentTab}
       <div class="py-6 px-8 text-md mt-6">
-
-        <form
-          class="flex flex-col pt-3 md:pt-8"
-          onsubmit="event.preventDefault();">
-          <div class="flex flex-col pt-6">
-            <input
-              type="text"
-              id="safeAddress"
-              bind:value={trustSafeAddress}
-              placeholder="Safe address"
-              class="appearance-none border rounded w-full py-4 px-6
-              text-gray-700 text-xl mt-1 leading-tight focus:outline-none
-              focus:shadow-outline" />
-          </div>
-
-          <button
-            on:click={() => trust()}
-            type="submit"
-            value="Log In"
-            class="bg-primary rounded text-white font-bold text-lg
-            hover:bg-secondary p-2">
-            Trust
-          </button>
-        </form>
-
         {#each data.safeData.data.safes[0].incoming as item}
           <div class="flex h-12 mb-4 w-full bg-gray-100 text-gray-700">
             {#if item.user}

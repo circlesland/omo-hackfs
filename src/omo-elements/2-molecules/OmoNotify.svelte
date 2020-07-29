@@ -31,26 +31,41 @@
 
       let text = "";
       let title = "";
+      let tag = "";
+
       if (type === ActivityTypes.HUB_TRANSFER) {
-        text = `transferred ${data.value.toString()} Circles to ${data.to}`;
+        text = `transferred ${(
+          data.value.toString() / 1000000000000000000
+        ).toFixed(2)} Circles to ${data.to}`;
+        title = `Send ${(data.value.toString() / 1000000000000000000).toFixed(
+          2
+        )}`;
+        tag = "TRANSFER";
       } else if (type === ActivityTypes.ADD_CONNECTION) {
         text = `${data.canSendTo} allowed ${data.user} to transfer Circles`;
-        title = `Added ${data.limitPercentage}% trustFlow`;
+        title = `Added ${data.limitPercentage}% trust`;
+        tag = "TRUST";
       } else if (type === ActivityTypes.REMOVE_CONNECTION) {
         text = `${data.canSendTo} untrusted ${data.user}`;
+        title = `Removed ${data.limitPercentage}% trust`;
+        tag = "TRUST";
       } else if (type === ActivityTypes.ADD_OWNER) {
         text = `added ${data.ownerAddress} to ${data.safeAddress}`;
+        title = `Added SafeOwner`;
+        tag = "OWNERCHANGE";
       } else if (type === ActivityTypes.REMOVE_OWNER) {
         text = `removed ${data.ownerAddress} from ${data.safeAddress}`;
+        title = `Removed SafeOwner`;
+        tag = "OWNERCHANGE";
       }
 
       notifications = [
         ...notifications,
         {
           date: timestamp,
-          tag: type.toString(),
           title: title,
-          text: text
+          text: text,
+          tag: tag
         }
       ];
     });
@@ -64,7 +79,7 @@
     display: inline-block;
     position: absolute;
     top: 0;
-    background-color: #4285f4;
+    background-color: #1c8fc0;
     color: #d7e6fd;
     right: 0;
     border-radius: 9999px;
@@ -84,7 +99,7 @@
     height="24"
     viewBox="0 0 24 24"
     fill="none"
-    stroke="currentColor"
+    stroke="#ffffff"
     stroke-width="2"
     stroke-linecap="round"
     stroke-linejoin="round"

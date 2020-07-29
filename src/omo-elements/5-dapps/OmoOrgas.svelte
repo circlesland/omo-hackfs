@@ -84,37 +84,30 @@
 
 <style>
   .omo-layout {
-    min-height: 100%;
     display: grid;
     grid-template-columns: 1fr 14rem;
     grid-template-rows: 1fr;
     grid-template-areas: "content aside";
+    overflow: hidden;
   }
   .aside {
     grid-area: aside;
     min-height: 100%;
-    display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: 1fr;
     @apply bg-gray-200;
   }
   .content {
     grid-area: content;
     min-height: 100%;
-    display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: 1fr;
   }
-
   .wrap {
     @apply p-10 grid gap-3;
   }
 </style>
 
-<section class="omo-layout">
-  <div class="content">
+<section class="omo-layout ">
+  <div class="content h-full overflow-y-scroll">
 
-    <div class="wrap grid-cols-2 md:grid-cols-4 overflow-x-scroll ">
+    <div class="wrap grid-cols-2 md:grid-cols-4 ">
       {#each orgas as orga}
         <div
           class="container mx-auto max-w-sm overflow-hidden shadow-lg my-2
