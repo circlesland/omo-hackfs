@@ -150,3 +150,17 @@ Important links:
 3. +2584 - 12.5% rebuy disocunt
 4. +4181 - 7.69% rebuy disocunt
 5. +6765 - 4.76% rebuy disocunt
+
+scipr## Chat Flows
+
+### ChatFlow 1 (create new room)
+
+1. Set name for room
+
+### ChatFlow 2 (invite members to room)
+
+2. Send invitation mail || autocomplete existing trusted contact
+
+### ChatFlow 3 (send message)
+
+3. Send new Message
