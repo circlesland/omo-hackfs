@@ -24,6 +24,11 @@
 
   import OmoNavTop from "./omo-elements/2-molecules/OmoNavTop.svelte";
   import OmoNavBottom from "./omo-elements/2-molecules/OmoNavBottom.svelte";
+  import {Trust} from "./Core/Data/Entities/Events/omo/safe/Trust";
+  import {Untrust} from "./Core/Data/Entities/Events/omo/safe/Untrust";
+  import {Transfer} from "./Core/Data/Entities/Events/omo/safe/Transfer";
+  import {AddOwner} from "./Core/Data/Entities/Events/omo/safe/AddOwner";
+  import {RemoveOwner} from "./Core/Data/Entities/Events/omo/safe/RemoveOwner";
 
   onMount(() => {
     let route = getRoute();
@@ -42,14 +47,30 @@
 
     let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
     notifications.observable.subscribe(next => {
-      if (next._$eventType === "omo.shell.notification") {
-      } else if (next._$eventType === "omo.shell.navigate") {
-        navigate(next.page);
-        // TODO: Add arguments
+      if (!next._$eventType)
+        return;
+
+      switch (next._$eventType) {
+        case "omo.shell.notification":
+          notify(next.data);
+          break;
+        case "omo.shell.navigate":
+          navigate(next.data.page);
+          break;
+        case "omo.shell.navigated":
+          navigated(next.data.page);
+          break;
       }
-      console.log(next);
     });
   });
+
+  function notify(next) {
+    console.log("New notification:", next);
+  }
+
+  function navigated(page) {
+    console.log("Navigated to:", page);
+  }
 
   function handlerBackNavigation(event) {
     curRoute.set(event.state.route);
@@ -71,7 +92,84 @@
     { route: "?page=omodream", quant: OmoDream, authenticate: true },
     { route: "?page=omofunding", quant: OmoFunding, authenticate: true },
     { route: "?page=omoorgas", quant: OmoOrgas, authenticate: true },
-    { route: "?page=omosafe", quant: OmoSafe, authenticate: true },
+    {
+      route: "?page=omosafe",
+      quant: OmoSafe,
+      authenticate: true,
+      actions: [
+        {
+          title: "Trust someone",
+          event: () => {
+            const event = new Trust();
+            event.data = {
+              trustGiver: {
+                // Owner of the trust-giving safe
+                address: "string",
+                privateKey: "string"
+              },
+              trustGiverSafe: "", // The trust-giving safe (web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());)
+              trustReceiverSafe: "" // The trust-receiving safe (web3.utils.toChecksumAddress(trustSafeAddress.trim()))
+            };
+            return event;
+          }
+        },
+        {
+          title: "Untrust someone",
+          event: () => {
+            const event = new Untrust();
+            event.data = {
+              formerTrustGiver: {
+                // Owner of the trust-taking safe
+                address: "string",
+                privateKey: "string"
+              },
+              formerTrustGiverSafe: "", // The trust-taking safe (web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());)
+              formerTrustReceiverSafe: "" // The trust-loosing safe (web3.utils.toChecksumAddress(trustSafeAddress.trim()))
+            };
+            return event;
+          }
+        },
+        {
+          title: "Send Circles",
+          event: () => {
+            const event = new Transfer();
+            event.data = {
+              spendSafeOwner: {
+                // Owner of the trust-taking safe
+                address: "string",
+                privateKey: "string"
+              },
+              spendSafe: "",
+              receivingSafe: "",
+              amount: 0.123
+            };
+            return event;
+          }
+        },
+        {
+          title: "Add another owner to this safe",
+          event: () => {
+            const event = new AddOwner();
+            event.data = {
+              ownerAddress: "ownerAddress",
+              safeAddress: "safeAddress"
+            };
+            return event;
+          }
+        },
+        {
+          title: "Remove an owner from this safe",
+          event: () => {
+            const event = new RemoveOwner();
+            event.data = {
+              ownerAddress: "ownerAddress",
+              safeAddress: "safeAddress"
+            };
+            return event;
+          }
+        }
+      ]
+    },
     { route: "?page=omodreams", quant: OmoDreams, authenticate: true },
     { route: "?page=omochat", quant: OmoChat, authenticate: true },
     { route: "?page=onboarding", quant: OnBoarding, authenticate: true },
@@ -92,6 +190,7 @@
       authenticate: true
     }
   ];
+  window.routes = routes; // TODO: Pfui!
 </script>
 
 <style>

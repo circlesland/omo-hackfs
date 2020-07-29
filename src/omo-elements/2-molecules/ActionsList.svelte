@@ -4,105 +4,34 @@
     import {AddOwner} from "../../Core/Data/Entities/Events/omo/safe/AddOwner";
     import {Untrust} from "../../Core/Data/Entities/Events/omo/safe/Untrust";
     import {Transfer} from "../../Core/Data/Entities/Events/omo/safe/Transfer";
+    import {onMount} from "svelte";
 
-  let actions = [
-    {
-      title: "Trust someone",
-      event: () => {
-        const event = new Trust();
-        event.data = {
-          trustGiver: {
-            // Owner of the trust-giving safe
-            address: "string",
-            privateKey: "string"
-          },
-          trustGiverSafe: "", // The trust-giving safe (web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());)
-          trustReceiverSafe: "" // The trust-receiving safe (web3.utils.toChecksumAddress(trustSafeAddress.trim()))
-        };
-        return event;
-      }
-    },
-    {
-      title: "Untrust someone",
-      event: () => {
-        const event = new Untrust();
-        event.data = {
-          formerTrustGiver: {
-            // Owner of the trust-taking safe
-            address: "string",
-            privateKey: "string"
-          },
-          formerTrustGiverSafe: "", // The trust-taking safe (web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());)
-          formerTrustReceiverSafe: "" // The trust-loosing safe (web3.utils.toChecksumAddress(trustSafeAddress.trim()))
-        };
-        return event;
-      }
-    },
-    {
-      title: "Send Circles",
-      event: () => {
-        const event = new Transfer();
-        event.data = {
-          spendSafeOwner: {
-            // Owner of the trust-taking safe
-            address: "string",
-            privateKey: "string"
-          },
-          spendSafe: "",
-          receivingSafe: "",
-          amount: 0.123
-        };
-        return event;
-      }
-    },
-    {
-      title: "Add another owner to this safe",
-      event: () => {
-        const event = new AddOwner();
-        event.data = {
-          ownerAddress: "ownerAddress",
-          safeAddress: "safeAddress"
-        };
-        return event;
-      }
-    },
-    {
-      title: "Remove an owner from this safe",
-      event: () => {
-        const event = new RemoveOwner();
-        event.data = {
-          ownerAddress: "ownerAddress",
-          safeAddress: "safeAddress"
-        };
-        return event;
-      }
+    export let actions = [];
+
+    function click(action) {
+        window.o.eventBroker.tryGetTopic("omo", "shell").publish(action);
     }
-  ];
-
-  function click(action) {
-    window.o.eventBroker.tryGetTopic("omo", "shell").publish(action);
-  }
 </script>
 
 <style>
-  section {
-    max-height: 80vh;
-    overflow-y: scroll;
-  }
+    section {
+        max-height: 80vh;
+        overflow-y: scroll;
+    }
 </style>
 
 <section class="text-gray-700 bg-gray-200 w-full">
   {#each actions as action}
-    <div
-      on:click={() => click(action.event())}
-      class="py-4 px-8 hover:bg-primary hover:text-white text-lg font-bold">
-      {action.title}
       <div
-        class="text-xs truncate w-full normal-case font-normal -mt-1
+              on:click={() => click(action.event())}
+              class="py-4 px-8 hover:bg-primary hover:text-white text-lg font-bold">
+        {action.title}
+          <div
+                  class="text-xs truncate w-full normal-case font-normal -mt-1
         text-gray-500">
-        {#if action.description}{action.description}{/if}
+            {#if action.description}{action.description}{/if}
+          </div>
       </div>
-    </div>
   {/each}
 </section>
 
