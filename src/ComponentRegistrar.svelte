@@ -16,7 +16,6 @@
   import OmoNavbar from "./omo-elements/2-molecules/OmoNavbar";
   import OmoDappsGrid from "./omo-elements/2-molecules/OmoDappsGrid";
   import OmoDapps from "./omo-elements/2-molecules/OmoDapps";
-  import OmoNotifyList from "./omo-elements/2-molecules/OmoNotifyList";
   import OmoDialogSteps from "./omo-elements/2-molecules/OmoDialogSteps";
   import OmoDialogContent from "./omo-elements/2-molecules/OmoDialogContent";
   import OmoSafeLookup from "./omo-elements/2-molecules/OmoSafeLookup";
@@ -45,7 +44,6 @@
   window.registrar.set("OmoNavTop", OmoNavTop);
   window.registrar.set("OmoNavbar", OmoNavbar);
   window.registrar.set("ActionsList", ActionsList);
-  window.registrar.set("OmoNotifyList", OmoNotifyList);
   window.registrar.set("OmoDialogContent", OmoDialogContent);
   window.registrar.set("OmoDialogSteps", OmoDialogSteps);
   window.registrar.set("OmoSafeLookup", OmoSafeLookup)

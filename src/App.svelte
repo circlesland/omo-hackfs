@@ -20,7 +20,6 @@
   import OmoConnectCircles from "./omo-elements/5-dapps/OmoConnectCircles.svelte";
   import OmoChat from "./omo-elements/5-dapps/OmoChat.svelte";
   import OmoActions from "./omo-elements/5-dapps/OmoActions.svelte";
-  import OmoNotifications from "./omo-elements/5-dapps/OmoNotifications.svelte";
   import OmoShop from "./omo-elements/5-dapps/OmoShop.svelte";
   import OmoVoting from "./omo-elements/5-dapps/OmoVoting.svelte";
   import OmoPreOrders from "./omo-elements/5-dapps/OmoPreOrders.svelte";
@@ -126,11 +125,6 @@
         {route: "?page=omochat", quant: OmoChat, authenticate: true},
         {route: "?page=onboarding", quant: OnBoarding, authenticate: true},
         {route: "?page=omodialog", quant: OmoDialog, authenticate: true},
-        {
-            route: "?page=omonotifications",
-            quant: OmoNotifications,
-            authenticate: true
-        },
         {
             route: "?page=omoactions",
             quant: OmoActions,
