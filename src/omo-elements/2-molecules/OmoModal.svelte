@@ -44,7 +44,6 @@
 
   aside .box {
     background: #fff;
-    max-width: 700px;
     position: relative;
     box-sizing: 0 0 20px 0px rgba(0, 0, 0, 0.3);
   }
@@ -82,7 +81,7 @@
     on:click|self={handleClose}
     class="overlay">
 
-    <div class="box w-full lg:w-2/3 bg-gray-100;">
+    <div class="box w-full lg:w-4/5 bg-gray-100;">
       <header>
         <button
           aria-label="Close modal"

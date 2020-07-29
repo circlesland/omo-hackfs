@@ -22,7 +22,9 @@
 
 <header
   class="h-12 flex items-center justify-between px-4 py-2 text-gray-100 bg-dark">
-  <h1 class="text-lg">omo.earth</h1>
+  <a href="javascript:navigate('omodapps')">
+    <h1 class="text-lg text-secondary uppercase">omo.earth</h1>
+  </a>
   <nav class="relative">
     <OmoNotify />
   </nav>

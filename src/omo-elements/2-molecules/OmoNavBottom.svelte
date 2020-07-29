@@ -1,9 +1,11 @@
 <script>
   import ActionsList from "./ActionsList.svelte";
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
+  import OmoDialog from "./../5-dapps/OmoDialog.svelte";
   import OmoModal from "./OmoModal.svelte";
 
   let isOpen = false;
+
   let triggerRef;
 
   export let navitems = [
@@ -47,7 +49,8 @@
 </style>
 
 <OmoModal {triggerRef} bind:isOpen>
-  <ActionsList />
+  <!-- <ActionsList /> -->
+  <OmoDialog />
 </OmoModal>
 
 <OmoIconsFA />

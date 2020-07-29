@@ -95,7 +95,7 @@
   {#each actions as action}
     <div
       on:click={() => click(action.event())}
-      class="py-4 px-8 hover:bg-primary hover:text-white">
+      class="py-4 px-8 hover:bg-primary hover:text-white text-lg font-bold">
       {action.title}
       <div
         class="text-xs truncate w-full normal-case font-normal -mt-1
