@@ -188,7 +188,7 @@ import OmoTabs from "./../2-molecules/OmoTabs";
           </div>
 
           <button
-                  on:click={() => trust()}
+                  on:click={() => trustFlow()}
                   type="submit"
                   value="Log In"
                   class="bg-primary rounded text-white font-bold text-lg hover:bg-secondary p-2">

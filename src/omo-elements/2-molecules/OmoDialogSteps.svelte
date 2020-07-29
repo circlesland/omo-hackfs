@@ -1,12 +1,41 @@
 <script>
+
   let items = [];
 
-  function refreshTree() {
-    items = [
+  function refreshTree(processNode) {
+    if (!processNode.children) {
+        return [];
+    }
+
+    console.log("refreshTree", processNode);
+
+    let map = {};
+
+    let stack = [processNode];
+      while (stack.length > 0)
       {
-        title: node.title,
+          let item = stack.pop();
+          map[item.id] = item;
+          item.children.forEach(child => stack.push(child));
+      }
+
+      stack = [processNode];
+      while (stack.length > 0)
+      {
+          let item = stack.pop();
+          let parent = map[item.parentId];
+          if (parent) {
+              console.log("restored parent", parent);
+          }
+          item.parent = parent;
+          item.children.forEach(child => stack.push(child));
+      }
+
+    return [
+      {
+        title: processNode.children[0].title,
         level: 1,
-        steps: node.children.map((o, i) => {
+        steps: processNode.children[0].children.map((o, i) => {
           return {
             title: o.title,
             state: o.state,
@@ -17,29 +46,13 @@
     ];
   }
 
-  import { onMount } from "svelte";
-
   export let data = {
-    bundleId: ""
   };
 
-  let node = null;
-  let bundleTopic = null;
-
-  onMount(() => {
-    bundleTopic = window.o.eventBroker.tryGetTopic("omo", data.bundleId);
-    bundleTopic.observable.subscribe(next => {
-      console.log("Got message for bundle " + data.bundleId, next);
-      if (
-        next._$eventType === "omo.molecules.OmoDialogSteps.SetNode" &&
-        next.data.bundleId === data.bundleId &&
-        next.data.node
-      ) {
-        node = next.data.node;
-        refreshTree();
-      }
-    });
-  });
+  $: {
+      items = refreshTree(data);
+      console.log("Hello from OmoDialogSteps", data);
+  }
 </script>
 
 <div class="omo-left py-6 px-8 text-md bg-gray-100">

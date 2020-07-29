@@ -1,66 +1,78 @@
 <script>
-  import ActionsList from "./ActionsList.svelte";
-  import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
-  import OmoModal from "./OmoModal.svelte";
-  import {onMount} from "svelte";
+    import ActionsList from "./ActionsList.svelte";
+    import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
+    import OmoModal from "./OmoModal.svelte";
+    import {onMount} from "svelte";
+    import OmoDialog from "../5-dapps/OmoDialog.svelte";
 
-  let isOpen = false;
+    let isOpen = false;
 
-  let triggerRef;
+    let triggerRef;
 
+    let actions = [];
+    let processNode = undefined;
 
-  let actions = [];
-  onMount(() => {
-      let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
-      notifications.observable.subscribe(next => {
-          if (!next._$eventType)
-              return;
+    onMount(() => {
+        let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
+        notifications.observable.subscribe(next => {
+            if (!next._$eventType)
+                return;
 
-          switch (next._$eventType) {
-              case "omo.shell.navigated":
-                  const route = window.routes.find(o => o.route === "?page=" + next.data.page); // TODO: Pfui!
-                  if (route && route.actions) {
-                      actions = route.actions;
-                  } else {
-                      actions = [];
-                  }
-                  break;
-          }
-      });
-  });
+            switch (next._$eventType) {
+                case "omo.shell.navigated":
+                    processNode = undefined;
+                    const route = window.routes.find(o => o.route === "?page=" + next.data.page); // TODO: Pfui!
+                    if (route && route.actions) {
+                        actions = route.actions;
+                    } else {
+                        actions = [];
+                    }
+                    break;
+                case "omo.shell.startFlow":
+                    actions = undefined;
+                    processNode = undefined;
+                    const flowImpl = window.flowRegistrar.get(next.data.flow);
+                    if (!flowImpl) {
+                        throw new Error("Couldn't find a flow with id '" + next.data.flow + "' in 'window.flowRegistrar'");
+                    }
+                    processNode = flowImpl();
+                    break;
+            }
+        });
+    });
 
-  export let navitems = [
-    {
-      icon: "fa-user-circle",
-      text: "Omo Pay",
-      link: "javascript:navigate('omosafe')",
-      design: "text-blue-600 hover:text-secondary"
-    },
-    {
-      icon: "fa-users",
-      text: "dreams",
-      link: "javascript:navigate('omodreams')",
-      design: "text-blue-600 hover:text-secondary"
-    },
-    {
-      icon: "fa-plus",
-      text: "Actions",
-      link: "javascript:navigate('omoactions')",
-      design: "bg-secondary text-white"
-    },
-    {
-      icon: "fa-comments",
-      text: "Chat",
-      link: "javascript:navigate('omochat')",
-      design: "text-blue-600 hover:text-secondary"
-    },
-    {
-      icon: "fa-home",
-      text: "dapps",
-      link: "javascript:navigate('omodapps')",
-      design: "text-blue-600 hover:text-secondary"
-    }
-  ];
+    export let navitems = [
+        {
+            icon: "fa-user-circle",
+            text: "Omo Pay",
+            link: "javascript:navigate('omosafe')",
+            design: "text-blue-600 hover:text-secondary"
+        },
+        {
+            icon: "fa-users",
+            text: "dreams",
+            link: "javascript:navigate('omodreams')",
+            design: "text-blue-600 hover:text-secondary"
+        },
+        {
+            icon: "fa-plus",
+            text: "Actions",
+            link: "javascript:navigate('omoactions')",
+            design: "bg-secondary text-white"
+        },
+        {
+            icon: "fa-comments",
+            text: "Chat",
+            link: "javascript:navigate('omochat')",
+            design: "text-blue-600 hover:text-secondary"
+        },
+        {
+            icon: "fa-home",
+            text: "dapps",
+            link: "javascript:navigate('omodapps')",
+            design: "text-blue-600 hover:text-secondary"
+        }
+    ];
 </script>
 
 <style>
@@ -70,8 +82,12 @@
 </style>
 
 <OmoModal {triggerRef} bind:isOpen>
-  <ActionsList {actions} />
-  <!-- <OmoDialog /> -->
+  {#if actions}
+      <ActionsList {actions} />
+  {/if}
+  {#if processNode}
+      <OmoDialog {processNode} />
+  {/if}
   <!-- <div class="h-64">
     <OmoSpin />
   </div> -->

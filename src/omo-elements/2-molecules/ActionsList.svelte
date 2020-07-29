@@ -1,11 +1,4 @@
 <script>
-    import {Trust} from "../../Core/Data/Entities/Events/omo/safe/Trust";
-    import {RemoveOwner} from "../../Core/Data/Entities/Events/omo/safe/RemoveOwner";
-    import {AddOwner} from "../../Core/Data/Entities/Events/omo/safe/AddOwner";
-    import {Untrust} from "../../Core/Data/Entities/Events/omo/safe/Untrust";
-    import {Transfer} from "../../Core/Data/Entities/Events/omo/safe/Transfer";
-    import {onMount} from "svelte";
-
     export let actions = [];
 
     function click(action) {

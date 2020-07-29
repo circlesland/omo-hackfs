@@ -36,7 +36,7 @@
         text = `transferred ${data.value.toString()} Circles to ${data.to}`;
       } else if (type === ActivityTypes.ADD_CONNECTION) {
         text = `${data.canSendTo} allowed ${data.user} to transfer Circles`;
-        title = `Added ${data.limitPercentage}% trust`;
+        title = `Added ${data.limitPercentage}% trustFlow`;
       } else if (type === ActivityTypes.REMOVE_CONNECTION) {
         text = `${data.canSendTo} untrusted ${data.user}`;
       } else if (type === ActivityTypes.ADD_OWNER) {

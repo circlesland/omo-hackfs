@@ -1,6 +1,4 @@
 <script>
-    import {SetNode as SetStepsNode } from "../../Core/Data/Entities/Events/omo/molecules/OmoDialogSteps/SetNode";
-    import {SetNode as SetContentNode } from "../../Core/Data/Entities/Events/omo/molecules/OmoDialogContent/SetNode";
     import {onMount} from "svelte";
 
     export let data = {
@@ -31,20 +29,6 @@
         }
 
         activeNode.submit().then(() => {
-            const setStepsNode = new SetStepsNode();
-            setStepsNode.data = {
-                bundleId: data.bundleId,
-                node: node
-            };
-
-            const setContentNode = new SetContentNode();
-            setContentNode.data = {
-                bundleId: data.bundleId,
-                node: node
-            };
-
-            bundleTopic.publish(setStepsNode);
-            bundleTopic.publish(setContentNode);
         });
     }
 </script>

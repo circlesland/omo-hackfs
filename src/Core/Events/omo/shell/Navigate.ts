@@ -1,4 +1,4 @@
-import {Event} from "../../../Event"
+import {Event} from "../../../Data/Entities/Event"
 
 export class Navigate extends Event
 {

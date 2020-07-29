@@ -7,4 +7,6 @@ export interface IProcessContext
 {
     stepId:string;
     o:Quantum;
+
+    [others: string]: any;
 }

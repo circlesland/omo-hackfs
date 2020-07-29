@@ -1,5 +1,5 @@
-import {ISideEffect} from "../../../ISideEffect";
-import {TrustContext} from "../Trust";
+import {ISideEffect} from "../../../../Core/Flows/ISideEffect";
+import {TrustContext} from "../../../Flows/omo/safe/TrustContext";
 
 export const giveTrust:ISideEffect<TrustContext, void> = {
   execute: async (context, argument) => {
