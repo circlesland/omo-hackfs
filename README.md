@@ -151,7 +151,7 @@ Important links:
 4. +4181 - 7.69% rebuy disocunt
 5. +6765 - 4.76% rebuy disocunt
 
-scipr## Chat Flows
+## Chat Flows
 
 ### ChatFlow 1 (create new room)
 
