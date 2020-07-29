@@ -1,8 +1,10 @@
 <script>
+  import OmoStatusResponse from "./OmoStatusResponse.svelte";
   import ActionsList from "./ActionsList.svelte";
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
   import OmoDialog from "./../5-dapps/OmoDialog.svelte";
   import OmoModal from "./OmoModal.svelte";
+  import OmoSpin from "./../1-atoms/OmoSpin.svelte";
 
   let isOpen = false;
 
@@ -50,7 +52,11 @@
 
 <OmoModal {triggerRef} bind:isOpen>
   <!-- <ActionsList /> -->
-  <OmoDialog />
+  <!-- <OmoDialog /> -->
+  <!-- <div class="h-64">
+    <OmoSpin />
+  </div> -->
+  <OmoStatusResponse />
 </OmoModal>
 
 <OmoIconsFA />
