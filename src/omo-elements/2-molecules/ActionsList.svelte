@@ -1,89 +1,86 @@
 <script>
+  import { Trust } from "../../Core/Data/Entities/Events/omo/safe/Trust";
+  import { RemoveOwner } from "../../Core/Data/Entities/Events/omo/safe/RemoveOwner";
+  import { AddOwner } from "../../Core/Data/Entities/Events/omo/safe/AddOwner";
+  import { Untrust } from "../../Core/Data/Entities/Events/omo/safe/Untrust";
+  import { Transfer } from "../../Core/Data/Entities/Events/omo/safe/Transfer";
+
   let actions = [
     {
-      name: "omo.safe.trust",
+      title: "Trust someone",
       event: () => {
-        return {
-          _$eventType: "omo.safe.trust",
-          _id: "",
-          timestamp: new Date().toJSON(),
-          data: {
-            trustGiver: {
-              // Owner of the trust-giving safe
-              address: "string",
-              privateKey: "string"
-            },
-            trustGiverSafe: "", // The trust-giving safe (web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());)
-            trustReceiverSafe: "" // The trust-receiving safe (web3.utils.toChecksumAddress(trustSafeAddress.trim()))
-          }
+        const event = new Trust();
+        event.data = {
+          trustGiver: {
+            // Owner of the trust-giving safe
+            address: "string",
+            privateKey: "string"
+          },
+          trustGiverSafe: "", // The trust-giving safe (web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());)
+          trustReceiverSafe: "" // The trust-receiving safe (web3.utils.toChecksumAddress(trustSafeAddress.trim()))
         };
+        return event;
       }
     },
     {
-      name: "omo.safe.untrust",
+      title: "Untrust someone",
       event: () => {
-        return {
-          _$eventType: "omo.safe.untrust",
-          _id: "",
-          timestamp: new Date().toJSON(),
-          data: {
-            exTrustGiver: {
-              // Owner of the trust-taking safe
-              address: "string",
-              privateKey: "string"
-            },
-            exTrustGiverSafe: "", // The trust-taking safe (web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());)
-            exTrustReceiverSafe: "" // The trust-loosing safe (web3.utils.toChecksumAddress(trustSafeAddress.trim()))
-          }
+        const event = new Untrust();
+        event.data = {
+          formerTrustGiver: {
+            // Owner of the trust-taking safe
+            address: "string",
+            privateKey: "string"
+          },
+          formerTrustGiverSafe: "", // The trust-taking safe (web3.utils.toChecksumAddress(window.o.odentity.current.circleSafe.safeAddress.trim());)
+          formerTrustReceiverSafe: "" // The trust-loosing safe (web3.utils.toChecksumAddress(trustSafeAddress.trim()))
         };
+        return event;
       }
     },
     {
-      name: "omo.safe.transfer",
+      title: "Send Circles",
       event: () => {
-        return {
-          _$eventType: "omo.safe.transfer",
-          _id: "",
-          timestamp: new Date().toJSON(),
-          data: {
-            spendSafeOwner: {
-              // Owner of the trust-taking safe
-              address: "string",
-              privateKey: "string"
-            },
-            spendSafe: "",
-            receivingSafe: "",
-            amount: 0.123
-          }
+        const event = new Transfer();
+        event.data = {
+          spendSafeOwner: {
+            // Owner of the trust-taking safe
+            address: "string",
+            privateKey: "string"
+          },
+          spendSafe: "",
+          receivingSafe: "",
+          amount: 0.123
         };
+        return event;
       }
     },
     {
-      name: "omo.safe.addOwner",
+      title: "Add another owner to this safe",
       event: () => {
-        return {
-          _$eventType: "omo.safe.addOwner",
-          _id: "",
-          timestamp: new Date().toJSON(),
-          data: {}
+        const event = new AddOwner();
+        event.data = {
+          ownerAddress: "ownerAddress",
+          safeAddress: "safeAddress"
         };
+        return event;
       }
     },
     {
-      name: "omo.safe.removeOwner",
+      title: "Remove an owner from this safe",
       event: () => {
-        return {
-          _$eventType: "omo.safe.removeOwner",
-          _id: "",
-          timestamp: new Date().toJSON(),
-          data: {}
+        const event = new RemoveOwner();
+        event.data = {
+          ownerAddress: "ownerAddress",
+          safeAddress: "safeAddress"
         };
+        return event;
       }
     }
   ];
 
   function click(action) {
-    window.eventBroker.tryGetTopic("omo", "notification").publish(action);
+    window.o.eventBroker.tryGetTopic("omo", "shell").publish(action);
   }
 </script>
 
@@ -94,11 +91,11 @@
       <div
         on:click={() => click(action.event())}
         class="py-4 px-8 hover:bg-primary hover:text-white">
-        {action.name}
+        {action.title}
         <div
           class="text-xs truncate w-full normal-case font-normal -mt-1
           text-gray-500">
-          description
+          {#if action.description}{action.description}{/if}
         </div>
       </div>
     {/each}

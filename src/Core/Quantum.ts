@@ -9,16 +9,18 @@ import {RemoteThread} from "./Textile/RemoteThread";
 import {StopWatch} from "./StopWatch";
 import CirclesCore from "@circles/core";
 import Web3 from "web3";
+import {EventBroker} from "./Events/EventBroker";
 
 export class Quantum
 {
-    circlesCore: CirclesCore;
-    web3: Web3;
+    readonly circlesCore: CirclesCore;
+    readonly eventBroker: EventBroker;
+    readonly web3: Web3;
 
-    odentity: Odentity;
-    graphQL: GraphQL;
-    quantRegistry: QuantRegistry;
-    threads: Threads;
+    readonly odentity: Odentity;
+    readonly graphQL: GraphQL;
+    readonly quantRegistry: QuantRegistry;
+    readonly threads: Threads;
     // localDB: LocalThread;
     // remoteDB: RemoteThread;
 
@@ -28,10 +30,9 @@ export class Quantum
     //     this.quantRegistry = quantRegistry;
     //     this.graphQL = graphQL;
     // }
-    private constructor(threads: Threads, odentity: Odentity, quantRegistry: QuantRegistry, graphQL: GraphQL, web3: Web3, circlesCore: CirclesCore)
+    private constructor(threads: Threads, odentity: Odentity, quantRegistry: QuantRegistry, graphQL: GraphQL, web3: Web3, circlesCore: CirclesCore, eventBroker:EventBroker)
     {
         this.threads = threads;
-
         this.odentity = odentity;
         // this.localDB = thread;
         // this.remoteDB = thread2;
@@ -39,6 +40,21 @@ export class Quantum
         this.graphQL = graphQL;
         this.web3 = web3;
         this.circlesCore = circlesCore;
+        this.eventBroker = eventBroker;
+    }
+
+    async publishEventAsync(namespace:string, topic:string, event:any) {
+        const t = this.eventBroker.tryGetTopic(namespace, topic);
+        if (!t)
+            throw new Error("Topic '" + topic + "' doesn't exist in namespace '" + namespace + "'");
+        await t.publish(event);
+    }
+
+    async publishShellEventAsync(event:any) {
+        const t = this.eventBroker.tryGetTopic("omo", "shell");
+        if (!t)
+            throw new Error("Topic 'shell' doesn't exist in namespace 'omo'");
+        await t.publish(event);
     }
 
     static async leap(): Promise<Quantum>
@@ -89,6 +105,10 @@ export class Quantum
         });
 
 
-        return new Quantum(threads, odentity, quantRegistry, graphQL, web3, circlesCore);
+        const eventBroker = new EventBroker();
+        eventBroker.createTopic("omo", "safe");
+        eventBroker.createTopic("omo", "shell");
+
+        return new Quantum(threads, odentity, quantRegistry, graphQL, web3, circlesCore, eventBroker);
     }
 }

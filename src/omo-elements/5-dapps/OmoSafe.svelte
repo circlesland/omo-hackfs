@@ -9,7 +9,7 @@
   } from "./../../omo-data/queries/circles";
 
   onMount(() => {
-    let safeTopic = window.eventBroker.tryGetTopic("omo", "safe");
+    let safeTopic = window.o.eventBroker.tryGetTopic("omo", "safe");
     safeTopic.observable.subscribe(next => {
       alert(next);
     });
@@ -26,6 +26,7 @@
     d.safeData = await loadingSafeDataAsync(safeAddress);
     d.transferData = await loadingTransferDataAsync(safeAddress);
     d.safeAddress = safeAddress;
+
     let OmoSafe = {
       name: "OmoSafe",
       type: "organisms",
