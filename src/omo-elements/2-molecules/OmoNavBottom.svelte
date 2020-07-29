@@ -1,14 +1,33 @@
 <script>
-  import OmoStatusResponse from "./OmoStatusResponse.svelte";
   import ActionsList from "./ActionsList.svelte";
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
-  import OmoDialog from "./../5-dapps/OmoDialog.svelte";
   import OmoModal from "./OmoModal.svelte";
-  import OmoSpin from "./../1-atoms/OmoSpin.svelte";
+  import {onMount} from "svelte";
 
   let isOpen = false;
 
   let triggerRef;
+
+
+  let actions = [];
+  onMount(() => {
+      let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
+      notifications.observable.subscribe(next => {
+          if (!next._$eventType)
+              return;
+
+          switch (next._$eventType) {
+              case "omo.shell.navigated":
+                  const route = window.routes.find(o => o.route === "?page=" + next.data.page); // TODO: Pfui!
+                  if (route && route.actions) {
+                      actions = route.actions;
+                  } else {
+                      actions = [];
+                  }
+                  break;
+          }
+      });
+  });
 
   export let navitems = [
     {
@@ -51,12 +70,12 @@
 </style>
 
 <OmoModal {triggerRef} bind:isOpen>
-  <!-- <ActionsList /> -->
+  <ActionsList {actions} />
   <!-- <OmoDialog /> -->
   <!-- <div class="h-64">
     <OmoSpin />
   </div> -->
-  <OmoStatusResponse />
+  <!--<OmoStatusResponse />-->
 </OmoModal>
 
 <OmoIconsFA />

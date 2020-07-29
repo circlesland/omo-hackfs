@@ -1,33 +1,56 @@
-import {ProcessNode, State} from "../../ProcessNode"
+import {ProcessBuilder} from "../../ProcessBuilder";
+import {giveTrust} from "./sideEffects/giveTrust";
+import {collectUserValue} from "./sideEffects/collectUserValue";
+import {IProcessContext} from "../../IProcessContext";
+import {Quantum} from "../../../Quantum";
 
-export class Trust extends ProcessNode
+export class TrustContext implements IProcessContext
 {
-    title = "Trust someone";
+    readonly o: Quantum;
+    readonly stepId: string;
 
-    constructor()
+    get trustGivingSafeOwner():{ address: string, privateKey: string }|undefined {
+        if (!this.o.odentity.current)
+            throw new Error("Fuckup!")
+        return this.o.odentity.current.circleSafeOwner;
+    };
+    get trustGivingSafe(): string|undefined {
+        if (!this.o.odentity.current)
+            throw new Error("Fuckup!")
+        if (!this.o.odentity.current.circleSafe)
+            throw new Error("Fuckup2!")
+        return this.o.odentity.current.circleSafe.safeAddress;
+    };
+    get trustReceivingSafe():string|undefined {
+        return this["omo.safe.giveTrust:collectTrustReceivingSave"];
+    };
+    get trustPercentage():string|undefined {
+        return this["omo.safe.giveTrust:collectTrustReceivingSave"];
+    };
+
+    constructor(o: Quantum, stepId:string)
     {
-        super(null);
-
-        const otherPartySafe = new ProcessNode(this);
-        otherPartySafe.title = "Enter safe address to trust";
-        otherPartySafe.state = State.Active;
-        otherPartySafe.action = async () =>
-        {
-            console.log("Enter safe address to trust")
-        };
-        otherPartySafe.quant = "OmoSafeLookup";
-
-        const trustPercentage = new ProcessNode(this);
-        trustPercentage.title = "Enter trust percentage";
-        trustPercentage.action = async () =>
-        {
-            console.log("Enter trust percentage")
-        };
-        trustPercentage.quant = "OmoDialogContent";
-
-        this.children = [
-            otherPartySafe,
-            trustPercentage
-        ];
+        this.o = o ;
+        this.stepId = stepId;
     }
+}
+
+export function trust()
+{
+    return new ProcessBuilder<TrustContext>("omo.safe.giveTrust")
+        .category("Trust someone", cat => cat
+            .step("omo.safe.giveTrust:collectTrustReceivingSave")
+                .withTitle("Enter safe address to giveTrust")
+                .withQuant("OmoSafeLookup")
+                .withSideEffect(collectUserValue)
+            .step("omo.safe.giveTrust:collectTrustPercentage")
+                .withTitle("Enter giveTrust percentage")
+                .withQuant("OmoSafeLookup")
+                .withSideEffect(collectUserValue)
+            .step("omo.safe.giveTrust:giveTrust")
+                .withTitle("Review & confirm")
+                .withQuant("OmoSafeLookup")
+                .withSideEffect(giveTrust)
+        )
+        .build();
 }

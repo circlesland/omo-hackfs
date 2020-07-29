@@ -13,7 +13,7 @@
   }
 
   export async function deploySafe(safeOwner, safe) {
-    //  Check if we have enough trust connections
+    //  Check if we have enough giveTrust connections
     const trustReturn = await window.o.circlesCore.trust.isTrusted(safeOwner, safe);
     alert(JSON.stringify(trustReturn));
 

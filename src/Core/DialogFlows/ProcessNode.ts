@@ -1,13 +1,158 @@
-export enum State
+import {IProcessNode} from "./IProcessNode";
+import {ProcessState} from "./ProcessState";
+import {IProcessContext} from "./IProcessContext";
+
+export class ProcessNode<TContext extends IProcessContext> implements IProcessNode<TContext>
 {
-    Locked = "Locked",
-    Active = "Active",
-    Succeeded = "Succeeded",
-    Failed = "Failed"
+    children: ProcessNode<TContext>[] = [];
+    parent: IProcessNode<TContext> | null = null;
+    state: ProcessState = ProcessState.Pristine;
+    title: string = "";
+
+    constructor(parent?:IProcessNode<TContext>)
+    {
+        this.parent = !parent ? null : parent;
+    }
+
+    findActiveBranch(childNodesOnly: boolean): IProcessNode<TContext>[]
+    {
+        const activeLeaf = this.findActiveLeaf(childNodesOnly);
+        if (!activeLeaf) {
+            return [];
+        }
+        const path = this.path(activeLeaf);
+        return path;
+    }
+
+    findActiveLeaf(childNodesOnly: boolean): IProcessNode<TContext> | null
+    {
+        for (let node of this.flattenSequential(childNodesOnly))
+        {
+            if (!this.isLeaf(node)) {
+                continue;
+            }
+            if (!this.isActive(node)){
+                continue;
+            }
+
+            return node;
+        }
+
+        return null;
+    }
+
+    findNextNode(currentNode: IProcessNode<TContext>): IProcessNode<TContext> | null
+    {
+        let next:boolean = false;
+
+        for (let node of this.flattenSequential(false, currentNode))
+        {
+            if (node == currentNode) {
+                next = true;
+                continue;
+            }
+            if (next) {
+                return node;
+            }
+        }
+
+        return null;
+    }
+
+    findPreviousNode(currentNode: IProcessNode<TContext>): IProcessNode<TContext> | null
+    {
+        let previous: IProcessNode<TContext>|null = null;
+        for (let node of this.flattenSequential(false, currentNode))
+        {
+            if (node == currentNode) {
+                return previous;
+            }
+            previous = node;
+        }
+
+        return null;
+    }
+
+    isLeaf(otherNode?:IProcessNode<TContext>) : boolean
+    {
+        return (!otherNode ? this : otherNode).children.length == 0;
+    }
+
+    isActive(otherNode?:IProcessNode<TContext>) : boolean
+    {
+        return (!otherNode ? this : otherNode).state == ProcessState.Active;
+    }
+
+    async canActivate<TArgument>(context:TContext, argument:TArgument, otherNode?:IProcessNode<TContext>) : Promise<boolean>
+    {
+        const nodeToTest:IProcessNode<TContext> = (!otherNode ? this : otherNode);
+        if (!this.isLeaf(nodeToTest)) {
+            return Promise.resolve(false);
+        }
+        if (!nodeToTest.sideEffect || !nodeToTest.sideEffect.canExecute) {
+            return Promise.resolve(true);
+        }
+
+        return await nodeToTest.sideEffect.canExecute(context, argument);
+    }
+
+    path(otherNode?:IProcessNode<TContext>) : IProcessNode<TContext>[]
+    {
+        const path:IProcessNode<TContext>[] = [];
+        let root:IProcessNode<TContext> = this;
+
+        path.unshift((!otherNode ? this : otherNode));
+
+        while (root.parent)
+        {
+            root = root.parent;
+            path.unshift(root);
+        }
+
+        return path;
+    }
+
+    root(otherNode?:IProcessNode<TContext>) : IProcessNode<TContext>
+    {
+        const path = this.path(otherNode);
+        return path[0];
+    }
+
+    *flattenSequential(childNodesOnly: boolean, otherNode?:IProcessNode<TContext>) {
+        const stack:IProcessNode<TContext>[] = [];
+        const hashMap = {};
+
+        stack.push(childNodesOnly ? (!otherNode ? this : otherNode) : this.root((!otherNode ? this : otherNode)));
+
+        while(stack.length !== 0) {
+            const node = stack.pop();
+            if (!node) {
+                throw new Error("The stack returned an undefined element during the recursive iteration of a IProcessNode.");
+            }
+            if(node.children === null) {
+                const matchingNode = ProcessNode.visitNode(node, hashMap);
+                if (matchingNode) {
+                    yield matchingNode;
+                }
+            } else {
+                for(let i = node.children.length - 1; i >= 0; i--) {
+                    stack.push(node.children[i]);
+                }
+            }
+        }
+    }
+
+    private static visitNode(node, hashMap) {
+        if(!hashMap[node.data]) {
+            hashMap[node.data] = true;
+            return node;
+        }
+        return null;
+    }
 }
 
-
-export class ProcessNode {
+/*
+export class _ProcessNode {
     state?:State = State.Locked;
     title?:string;
 
@@ -90,3 +235,4 @@ export class ProcessNode {
 
     }
 }
+*/

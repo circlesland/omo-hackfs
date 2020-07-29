@@ -52,31 +52,29 @@
     );
   }
 
-  async function trust() {
-    let safeGivingChecksumAddress = window.o.web3.utils.toChecksumAddress(
-      window.o.odentity.current.circleSafe.safeAddress.trim()
-    );
-    let safeReceivingChecksumAddress = window.o.web3.utils.toChecksumAddress(
-      trustSafeAddress.trim()
-    );
+  // async function giveTrust() {
+  //   let safeGivingChecksumAddress = window.o.web3.utils.toChecksumAddress(
+  //     window.o.odentity.current.circleSafe.safeAddress.trim()
+  //   );
+  //   let safeReceivingChecksumAddress = window.o.web3.utils.toChecksumAddress(
+  //     trustSafeAddress.trim()
+  //   );
 
-    let trustGivingSafe = {
-      safeAddress: safeGivingChecksumAddress
-    };
-    let trustReceivingSafe = {
-      safeAddress: safeReceivingChecksumAddress
-    };
+  //   let trustGivingSafe = {
+  //     safeAddress: safeGivingChecksumAddress
+  //   };
+  //   let trustReceivingSafe = {
+  //     safeAddress: safeReceivingChecksumAddress
+  //   };
 
-    let response = await addTrustLineAsync(
-      window.o.odentity.current.circleSafeOwner,
-      trustGivingSafe,
-      trustReceivingSafe,
-      100
-    );
+  //   let response = await addTrustLineAsync(
+  //     window.o.odentity.current.circleSafeOwner,
+  //     trustGivingSafe,
+  //     trustReceivingSafe,
+  //     100
+  //   );
 
-    console.log("trusted:", response);
-    // TODO: Implement
-  }
+  // }
 </script>
 
 <OmoTabs class="bg-primary" bind:activeTabValue={currentTab} items={tabItems} />

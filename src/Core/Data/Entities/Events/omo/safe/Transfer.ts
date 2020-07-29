@@ -5,7 +5,7 @@ export class Transfer extends Event
     readonly _$eventType = "omo.safe.transfer";
 
     data: {
-        spendSafeOwner: { // Owner of the trust-taking safe
+        spendSafeOwner: { // Owner of the giveTrust-taking safe
             address: string,
             privateKey: string
         },
