@@ -1,5 +1,4 @@
 <script>
-
     import OmoOrganisms from "./../4-layouts/OmoOrganisms.svelte";
     import {ProcessNode} from "../../Core/Flows/ProcessNode";
     import {onDestroy, onMount} from "svelte";
@@ -8,7 +7,9 @@
     export let processNode = {};
 
     let subscription = null;
-    onDestroy(()=> {
+    let executionContext;
+
+    onDestroy(() => {
         if (subscription) {
             subscription.unsubscribe();
         }
@@ -25,7 +26,7 @@
                     if (!event.data.processNodeId === processNode.id) {
                         return; // Not meant for our executing flow
                     }
-                    next(processNode);
+                    next(processNode, event.data.argument);
                     break;
                 case "omo.shell.undoFlowStep":
                     break;
@@ -57,8 +58,7 @@
         ]
     };
 
-    function onNewProcessNode(processNode)
-    {
+    function onNewProcessNode(processNode) {
         const copy = JSON.parse(JSON.stringify(processNode));
         ProcessNode.restoreParentLinks(copy);
 
@@ -67,6 +67,9 @@
         let activeLeaf = ProcessNode.findActiveLeaf(copy);
         if (activeLeaf && activeLeaf.quant) {
             organisms.blocks[1].quant = activeLeaf.quant;
+            organisms.blocks[1].data = {
+                processNode: processNode
+            }
         }
 
         if (isNewProcess(processNode)) {
@@ -75,6 +78,9 @@
             activeLeaf = ProcessNode.findById(copy, activatedNodeId);
             if (activeLeaf && activeLeaf.quant) {
                 organisms.blocks[1].quant = activeLeaf.quant;
+                organisms.blocks[1].data = {
+                    processNode: processNode
+                }
             }
         }
     }
@@ -104,20 +110,28 @@
      * @returns {string} The id of the activated node.
      */
     function initProcess(processNode) {
+        executionContext = {
+            stepId: "",
+            o: window.o
+        };
         const flatLeafs = ProcessNode.flattenSequencial(processNode);
 
         if (!flatLeafs || flatLeafs.length === 0) {
             throw new Error("A non executable or empty 'processNode' was supplied to 'OmoDialog'.");
         }
+
         const first = flatLeafs[0];
         first.state = "Active";
         return first.id;
     }
 
+
     /**
      * Sets the current node to "Finish" and proceeds with the next executable leaf node.
      */
-    function next(processNode) {
+    function next(processNode, argument) {
+        console.log("next(processNode, argument) called:", processNode, argument);
+
         const oldOrg = organisms;
         organisms = false;
 
@@ -135,17 +149,37 @@
             }
 
             // Find the active and next leaf in the copy with the restored 'parent' properties ..
-            let currentlyActiveNode = ProcessNode.findActiveLeaf(copy);
-            let nextNode = ProcessNode.findNextNode(copy, currentlyActiveNode.id);
+            let currentlyActiveNode_ = ProcessNode.findActiveLeaf(copy);
+            let nextNode_ = ProcessNode.findNextNode(copy, currentlyActiveNode_.id);
 
-            if (!nextNode) {
+            // .. then use the IDs to look up the "real" node and execute its side-effect (if any)
+            const currentlyActiveNode = ProcessNode.findById(processNode, currentlyActiveNode_.id);
+            executionContext.stepId = currentlyActiveNode.stepId;
+
+            if (currentlyActiveNode.sideEffect) {
+                const sideEffect = window.sideEffectRegistrar.get(currentlyActiveNode.sideEffect);
+
+                // Check if there is a side effect and if it can be executed
+                if (sideEffect
+                    && (!sideEffect.canExecute ? true : sideEffect.canExecute(executionContext, argument))
+                    && sideEffect.execute) {
+                    try {
+                        sideEffect.execute(executionContext, argument);
+                    } catch (e) {
+                        currentlyActiveNode.state = "Failed";
+                        currentlyActiveNode.error = e;
+                        return;
+                    }
+                }
+            }
+
+            if (!nextNode_) {
                 alert("End of dialog.");
+                // TODO: Close
                 return;
             }
 
-            // .. then use the IDs of the found nodes to set the 'state' on the "real" ProcessNode
-            currentlyActiveNode = ProcessNode.findById(processNode, currentlyActiveNode.id);
-            nextNode = ProcessNode.findById(processNode, nextNode.id);
+            const nextNode = ProcessNode.findById(processNode, nextNode_.id);
 
             currentlyActiveNode.state = "Finished";
             nextNode.state = "Active";
@@ -154,6 +188,9 @@
             // If not, stay with the current quant.
             if (nextNode && nextNode.quant) {
                 oldOrg.blocks[1].quant = nextNode.quant;
+                oldOrg.blocks[1].data = {
+                    processNode: processNode
+                }
             }
 
             organisms = oldOrg;
@@ -164,9 +201,4 @@
 
 {#if organisms}
     <OmoOrganisms {organisms}/>
-    <button
-            class="text-blue-500"
-            on:click={() => window.o.publishShellEventAsync(new SubmitFlowStep(processNode.id))}>
-        Submit flow step
-    </button>
 {/if}

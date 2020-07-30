@@ -3,7 +3,7 @@ import {IProcessContext} from "./IProcessContext";
 
 export class StepBuilder<TContext extends IProcessContext>
 {
-    readonly id:string;
+    readonly stepId:string;
     title?:string;
     readonly parent:CategoryBuilder<TContext>;
     root?: ProcessBuilder<TContext>;
@@ -11,10 +11,10 @@ export class StepBuilder<TContext extends IProcessContext>
     quant?:string;
     sideEffect?:string;
 
-    constructor(parent:CategoryBuilder<TContext>, id:string)
+    constructor(parent:CategoryBuilder<TContext>, stepId:string)
     {
         this.parent = parent;
-        this.id = id;
+        this.stepId = stepId;
     }
 
     withQuant(quant:string) : StepBuilder<TContext>
@@ -48,6 +48,7 @@ export class StepBuilder<TContext extends IProcessContext>
         const step = new ProcessNode<TContext>(parent);
         step.quant = this.quant;
         step.sideEffect = this.sideEffect;
+        step.stepId = this.stepId;
         step.title = !this.title ? "" : this.title;
         return step;
     }

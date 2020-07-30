@@ -1,9 +1,9 @@
 import {ProcessBuilder} from "../../../../Core/Flows/ProcessBuilder";
-import {TrustContext} from "./TrustContext";
+import {IProcessContext} from "../../../../Core/Flows/IProcessContext";
 
 export function trustFlow()
 {
-    return new ProcessBuilder<TrustContext>("omo.safe.giveTrust")
+    return new ProcessBuilder<IProcessContext>("omo.safe.giveTrust")
         .category("Trust someone", build =>
             build
 
@@ -22,13 +22,6 @@ export function trustFlow()
                 .withQuant("OmoStatusResponse")
                 .withTitle("Review & confirm")
         )
-        .end()
-        .category("Other topic", build => {
-            build
-                .step("omo.safe.giveTrust:other")
-                .withQuant("OmoSafeLookup")
-                .withTitle("Enter safe address to giveTrust")
-        })
         .end()
         .build();
 }

@@ -1,3 +1,16 @@
+<script>
+
+    import {SubmitFlowStep} from "../../Core/Events/omo/shell/SubmitFlowStep";
+
+    export let data = {
+        processNode:null
+    }
+
+    function submit() {
+        const submitEvent = new SubmitFlowStep(data.processNode.id);
+        window.o.publishShellEventAsync(submitEvent);
+    }
+</script>
 <div class="bg-white rounded-lg shadow-xl w-full">
   <div class="h-64 bg-blue-500 flex justify-center items-center rounded-t-lg">
     <div
@@ -21,9 +34,10 @@
     <p class="text-gray-600 text-center mt-5">You trusted successfully</p>
     <div class="flex justify-center mt-6">
       <button
+        on:click={ () => submit()}
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4
         rounded">
-        Close
+        Run & Close
       </button>
     </div>
   </div>

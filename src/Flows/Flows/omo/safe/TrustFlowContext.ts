@@ -1,7 +1,7 @@
 import {IProcessContext} from "../../../../Core/Flows/IProcessContext";
 import {Quantum} from "../../../../Core/Quantum";
 
-export class TrustContext implements IProcessContext
+export class TrustFlowContext implements IProcessContext
 {
     readonly o: Quantum;
     readonly stepId: string;

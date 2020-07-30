@@ -17,7 +17,6 @@
   import OmoDappsGrid from "./omo-elements/2-molecules/OmoDappsGrid";
   import OmoDapps from "./omo-elements/2-molecules/OmoDapps";
   import OmoDialogSteps from "./omo-elements/2-molecules/OmoDialogSteps";
-  import OmoDialogContent from "./omo-elements/2-molecules/OmoDialogContent";
   import OmoSafeLookup from "./omo-elements/2-molecules/OmoSafeLookup";
   import OmoStatusResponse from "./omo-elements/2-molecules/OmoStatusResponse";
   import {trustFlow} from "./Flows/Flows/omo/safe/TrustFlow";
@@ -44,10 +43,12 @@
   window.registrar.set("OmoNavTop", OmoNavTop);
   window.registrar.set("OmoNavbar", OmoNavbar);
   window.registrar.set("ActionsList", ActionsList);
-  window.registrar.set("OmoDialogContent", OmoDialogContent);
   window.registrar.set("OmoDialogSteps", OmoDialogSteps);
   window.registrar.set("OmoSafeLookup", OmoSafeLookup)
   window.registrar.set("OmoStatusResponse", OmoStatusResponse)
+  window.registrar.set("OmoSafeLookup", OmoSafeLookup);
+  window.registrar.set("OmoGridVoting", OmoGridVoting);
+  window.registrar.set("OmoGridPreOrder", OmoGridPreOrder);
 
   window.flowRegistrar = new Map();
   window.flowRegistrar.set("omo.safe.trustFlow", trustFlow);
@@ -55,7 +56,4 @@
   window.sideEffectRegistrar = new Map();
   window.sideEffectRegistrar.set("omo.shell.collectUserValue", collectUserValue);
   window.sideEffectRegistrar.set("omo.safe.giveTrust", giveTrust);
-  window.registrar.set("OmoSafeLookup", OmoSafeLookup);
-  window.registrar.set("OmoGridVoting", OmoGridVoting);
-  window.registrar.set("OmoGridPreOrder", OmoGridPreOrder);
 </script>

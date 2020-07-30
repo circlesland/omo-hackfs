@@ -5,11 +5,16 @@ import {v4} from "uuid";
 export class ProcessNode<TContext extends IProcessContext>
 {
     id: string = v4();
+    /**
+     * If this node is a step (leaf), this property must be set.
+     */
+    stepId?:string;
     parentId: string | undefined;
 
     children: ProcessNode<TContext>[] = [];
     parent: ProcessNode<TContext> | null = null;
     state: ProcessState = ProcessState.Pristine;
+    error:any;
     title: string = "";
 
     quant?: string;
