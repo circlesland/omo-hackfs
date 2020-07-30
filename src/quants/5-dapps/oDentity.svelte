@@ -6,7 +6,7 @@
     trustByOmo,
     deploySafe,
     deployToken
-  } from "./../../omo-actions/Circles";
+  } from "./../omo-actions/Circles";
 
   $: safe = getSafeFromLocalStorage();
   $: safeOwner = getSafeOwnerFromLocalStorage();

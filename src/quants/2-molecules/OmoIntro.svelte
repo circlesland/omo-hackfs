@@ -2,7 +2,7 @@
   import OmoInput from "./../1-atoms/OmoInput";
   import OmoButton from "./../1-atoms/OmoButton";
   import OmoHero from "./../2-molecules/OmoHero";
-  import Actions, { nextStep } from "./../../omo-actions/Actions";
+  import Actions, { nextStep } from "./../omo-actions/Actions";
 
   export let data = {
     step: 0,

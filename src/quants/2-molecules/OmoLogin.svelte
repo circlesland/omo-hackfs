@@ -2,7 +2,7 @@
   import { mnemonicToEntropy, entropyToMnemonic } from "bip39";
   import ApolloClient, { gql } from "apollo-boost";
   import { query } from "svelte-apollo";
-  import { getSafeAddressAsync } from "./../../omo-data/queries/circles";
+  import { getSafeAddressAsync } from "./../../queries/omo/safe/circles";
 
   const client = new ApolloClient({
     uri:

@@ -3,16 +3,16 @@ import { Threads } from "./Textile/Threads";
 import { OdentityProvider } from "./Data/Entities/OdentityProvider";
 import { LoginRequest } from "./Data/Entities/LoginRequest";
 import { QueryJSON } from "@textile/threads-client";
-import { EmailProvider } from "../core/Identity/EmailProvider";
+import { EmailProvider } from "./Identity/EmailProvider";
 import { Libp2pCryptoIdentity } from "@textile/threads-core";
-import { IdentityProviderInterface } from "../core/Identity/IdentityProviderInterface";
+import { IdentityProviderInterface } from "./Identity/IdentityProviderInterface";
 import { navigate } from "../Router";
 import { OdentitySchema } from "./Data/JsonSchemas/OdentitySchema";
 import { OdentityProviderSchema } from "./Data/JsonSchemas/OdentityProviderSchema";
 import { LoginRequestSchema } from "./Data/JsonSchemas/LoginRequestSchema";
 import { RemoteCollection } from "./Textile/RemoteCollection";
 import { RemoteThread } from "./Textile/RemoteThread";
-import { SeedPhraseProvider } from "../core/Identity/SeedPhraseProvider";
+import { SeedPhraseProvider } from "./Identity/SeedPhraseProvider";
 import { Account } from "web3-core";
 
 export class Odentity {

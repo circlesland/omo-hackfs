@@ -3,7 +3,7 @@
     getSafeOwnerFromLocalStorage,
     getSafeFromLocalStorage,
     sendCircles
-  } from "./../../omo-actions/Circles";
+  } from "./../omo-actions/Circles";
 
   export let data = {
     safeAddress: ""

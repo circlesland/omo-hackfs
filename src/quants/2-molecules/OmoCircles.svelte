@@ -6,7 +6,7 @@
     getSafeOwnerFromLocalStorage,
     getSafeFromLocalStorage,
     sendCircles
-  } from "./../../omo-actions/Circles";
+  } from "./../omo-actions/Circles";
 
   //Tabs
   let currentTab;

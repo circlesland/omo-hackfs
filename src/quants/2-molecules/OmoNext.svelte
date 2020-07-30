@@ -1,5 +1,5 @@
 <script>
-  import Actions, { nextStep } from "./../../omo-actions/Actions";
+  import Actions, { nextStep } from "./../omo-actions/Actions";
 
   export let data = {
     step: 0,
