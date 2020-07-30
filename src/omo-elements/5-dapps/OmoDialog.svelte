@@ -59,8 +59,8 @@
     function onNewProcessNode(processNode)
     {
         const copy = JSON.parse(JSON.stringify(processNode));
-
         ProcessNode.restoreParentLinks(copy);
+
         organisms.blocks[0].data = processNode;
 
         let activeLeaf = ProcessNode.findActiveLeaf(copy);
@@ -69,9 +69,9 @@
         }
 
         if (isNewProcess(processNode)) {
-            initProcess(processNode);
+            const activatedNodeId = initProcess(processNode);
 
-            activeLeaf = ProcessNode.findActiveLeaf(copy);
+            activeLeaf = ProcessNode.findById(copy, activatedNodeId);
             if (activeLeaf && activeLeaf.quant) {
                 organisms.blocks[1].quant = activeLeaf.quant;
             }
@@ -92,8 +92,7 @@
         if (!activeBranch) {
             // pristine process, set initial active node
             const usedNodes = ProcessNode.flattenSequencial(processNode).filter(o => o.state !== "Pristine");
-            const isNew = usedNodes.length === 0;
-            return isNew;
+            return usedNodes.length === 0;
         }
         return false;
     }
@@ -101,6 +100,7 @@
     /**
      * Initializes a new ProcessNode by setting the first leaf node to "Active".
      * @param processNode {ProcessNode}
+     * @returns {string} The id of the activated node.
      */
     function initProcess(processNode) {
         const flatLeafs = ProcessNode.flattenSequencial(processNode);
@@ -110,6 +110,7 @@
         }
         const first = flatLeafs[0];
         first.state = "Active";
+        return first.id;
     }
 
     /**
