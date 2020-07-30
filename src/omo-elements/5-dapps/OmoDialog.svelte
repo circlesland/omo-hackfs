@@ -23,13 +23,13 @@
                 return;
 
             switch (event._$eventType) {
-                case "omo.shell.submitFlowStep":
+                case "events:omo.shell.submitFlowStep":
                     if (!event.data.processNodeId === processNode.id) {
                         return; // Not meant for our executing flow
                     }
                     next(processNode, event.data.argument);
                     break;
-                case "omo.shell.undoFlowStep":
+                case "events:omo.shell.undoFlowStep":
                     break;
             }
         });

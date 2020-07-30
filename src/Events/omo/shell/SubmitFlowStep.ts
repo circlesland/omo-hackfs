@@ -2,7 +2,7 @@ import {Event} from "../../../Core/Data/Entities/Event"
 
 export class SubmitFlowStep extends Event
 {
-    readonly _$eventType = "omo.shell.submitFlowStep";
+    readonly _$eventType = "events:omo.shell.submitFlowStep";
 
     data: {
         processNodeId: string,

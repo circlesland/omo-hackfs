@@ -59,13 +59,13 @@
                 return;
 
             switch (next._$eventType) {
-                case "omo.shell.notification":
+                case "events:omo.shell.notification":
                     notify(next.data);
                     break;
-                case "omo.shell.navigate":
+                case "events:omo.shell.navigate":
                     navigate(next.data.page);
                     break;
-                case "omo.shell.navigated":
+                case "events:omo.shell.navigated":
                     navigated(next.data.page);
                     break;
             }

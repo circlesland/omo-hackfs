@@ -2,7 +2,7 @@ import {Event} from "../../../Core/Data/Entities/Event"
 
 export class Navigated extends Event
 {
-    readonly _$eventType = "omo.shell.navigated";
+    readonly _$eventType = "events:omo.shell.navigated";
 
     data: {
         page:string, // ?page=

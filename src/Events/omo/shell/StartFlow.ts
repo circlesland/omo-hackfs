@@ -2,7 +2,7 @@ import {Event} from "../../../Core/Data/Entities/Event"
 
 export class StartFlow extends Event
 {
-    readonly _$eventType = "omo.shell.startFlow";
+    readonly _$eventType = "events:omo.shell.startFlow";
 
     data: {
         flow: string

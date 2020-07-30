@@ -21,7 +21,7 @@
                 return;
 
             switch (next._$eventType) {
-                case "omo.shell.navigated":
+                case "events:omo.shell.navigated":
                     processNode = false;
                     page = next.data.page;
                     const route = window.routes.find(o => o.route === "?page=" + page); // TODO: Pfui!
@@ -31,7 +31,7 @@
                         actions = [];
                     }
                     break;
-                case "omo.shell.startFlow":
+                case "events:omo.shell.startFlow":
                     actions = false;
                     processNode = false;
                     const flowImpl = window.flowRegistrar.get(next.data.flow);
@@ -42,7 +42,7 @@
                     if (!isOpen)
                         isOpen = true;
                     break;
-                case "omo.shell.closePopup":
+                case "events:omo.shell.closePopup":
                     isOpen = false;
                     break;
             }
