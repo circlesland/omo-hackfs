@@ -1,5 +1,5 @@
-import {ProcessBuilder} from "../../../../Core/Flows/ProcessBuilder";
-import {IProcessContext} from "../../../../Core/Flows/IProcessContext";
+import {ProcessBuilder} from "../../../Core/Flows/ProcessBuilder";
+import {IProcessContext} from "../../../Core/Flows/IProcessContext";
 
 export function revokeTrust()
 {

@@ -26,8 +26,8 @@
 
     import OmoNavTop from "./omo-elements/2-molecules/OmoNavTop.svelte";
     import OmoNavBottom from "./omo-elements/2-molecules/OmoNavBottom.svelte";
-    import {StartFlow} from "./Events/omo/shell/StartFlow";
-    import {Navigated} from "./Events/omo/shell/Navigated";
+    import {StartFlow} from "./events/omo/shell/StartFlow";
+    import {Navigated} from "./events/omo/shell/Navigated";
 
     let subscription = null;
     onDestroy(()=> {

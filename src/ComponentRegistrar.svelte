@@ -19,13 +19,13 @@
   import OmoDialogSteps from "./omo-elements/2-molecules/OmoDialogSteps";
   import OmoSafeLookup from "./omo-elements/2-molecules/OmoSafeLookup";
   import OmoStatusResponse from "./omo-elements/2-molecules/OmoStatusResponse";
-  import {giveTrust as giveTrustFlow} from "./Flows/flows/omo/safe/giveTrust";
-  import {revokeTrust as revokeTrustFlow} from "./Flows/flows/omo/safe/revokeTrust";
-  import {transferCircles as transferCirclesFlow} from "./Flows/flows/omo/safe/transferCircles";
-  import {collectStepResult} from "./Flows/sideEffects/omo/shell/collectStepResult";
-  import {giveTrust as giveTrustSideEffect} from "./Flows/sideEffects/omo/safe/giveTrust";
-  import {transferCircles as transferCirclesSideEffect} from "./Flows/sideEffects/omo/safe/transferCircles";
-  import {revokeTrust as revokeTrustSideEffect} from "./Flows/sideEffects/omo/safe/revokeTrust";
+  import {giveTrust as giveTrustFlow} from "./flows/omo/safe/giveTrust";
+  import {revokeTrust as revokeTrustFlow} from "./flows/omo/safe/revokeTrust";
+  import {transferCircles as transferCirclesFlow} from "./flows/omo/safe/transferCircles";
+  import {collectStepResult} from "./sideEffects/omo/shell/collectStepResult";
+  import {giveTrust as giveTrustSideEffect} from "./sideEffects/omo/safe/giveTrust";
+  import {transferCircles as transferCirclesSideEffect} from "./sideEffects/omo/safe/transferCircles";
+  import {revokeTrust as revokeTrustSideEffect} from "./sideEffects/omo/safe/revokeTrust";
   import OmoGridVoting from "./omo-elements/2-molecules/OmoGridVoting";
   import OmoGridPreOrder from "./omo-elements/2-molecules/OmoGridPreOrder";
 
