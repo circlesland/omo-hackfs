@@ -1,8 +1,7 @@
 <script>
-
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
-
-
+  import OmoVideo from "./OmoVideo";
+  import OmoProfilePage from "./OmoProfilePage";
 
   export let dreamers = [];
 
@@ -17,30 +16,6 @@
           return item;
         }))
     );
-
-  export let messages = [];
-  // var urlParams = new URLSearchParams(window.location.search);
-  // if (urlParams.has("invite")) {
-  //   ChatRoom.initFromInvite(urlParams.get("invite")).then(() => subscribe());
-  // } else {
-  //   ChatRoom.initNew("mama@omo.earth").then(() => subscribe());
-  // }
-
-  // function subscribe() {
-  //   ChatRoom.messageSubscription("omoearthchat", function(message) {
-  //     if (message.author == ChatRoom.usermail) message.bg = "bg-green-200";
-  //     else message.bg = "bg-blue-200";
-  //     messages = [...messages, message];
-  //   });
-  // }
-
-  export let message;
-
-  function sendMessage() {
-    console.log("clicked");
-    // ChatRoom.sendMessage(message, ChatRoom.usermail);
-    message = "";
-  }
 
   export let data = {
     leap: {
@@ -66,74 +41,43 @@
   .omo-layout {
     display: grid;
     grid-template-areas:
-      "top-left top-right"
-      "content-left content-right"
-      "bottom-left bottom-right";
+      "top top"
+      "content-left content-right";
     grid-template-columns: 1fr 24rem;
-    grid-template-rows: 2.5rem 1fr 3rem;
+    grid-template-rows: 1rem 1fr;
     overflow: hidden;
   }
-  .top-left {
-    grid-area: top-left;
-  }
-  .top-right {
-    grid-area: top-right;
+  .top {
+    grid-area: top;
   }
   .content-left {
     grid-area: content-left;
     height: 100%;
     overflow-y: scroll;
   }
-  .bottom-left {
-    grid-area: bottom-left;
-  }
   .content-right {
     grid-area: content-right;
     overflow-y: scroll;
-  }
-  .bottom-right {
-    grid-area: bottom-right;
   }
 </style>
 
 <OmoIconsFA />
 
 <div class="omo-layout">
-  <div class="top-left bg-gray-200 w-full">
-    <div
-      class="text-xs py-1 leading-none text-center text-white {design.bg}
-      uppercase font-bold">
-      LEAP 1: Omo Dreamers
+  <div class="top bg-gray-200 w-full">
+    <div class="relative">
+      <div class="overflow-hidden h-4 text-xs flex bg-primary">
+        <div
+          style="width: 33%"
+          class="shadow-none flex flex-col text-center whitespace-nowrap
+          text-white justify-center bg-tertiary" />
+      </div>
     </div>
-    <div
-      class="{design.bg} py-1 text-xs leading-none text-center text-white"
-      style="width: {progress}%">
-      {leap.current} of {leap.goal}
-    </div>
+  </div>
 
-  </div>
-  <div class="top-right">
-    <div class="bg-gray-200 w-full">
-      <div
-        class="text-xs py-1 leading-none text-center text-white {design.bg}
-        uppercase font-bold">
-        LEVEL 3
-      </div>
-      <div
-        class="{design.bg} py-1 text-xs leading-none text-center text-white"
-        style="width: 66%">
-        2 of 3
-      </div>
-    </div>
-  </div>
   <div class="content-right bg-gray-200">
     <div class="h-full py-6 px-8 text-md">
-      <!-- {#each dreamers as dreamer}
-        <div class="flex h-12 mb-4 w-full bg-gray-100">
-          <img alt="" src={dreamer.picture.medium} class="h-full w-auto" />
-          <p class="py-3 px-4 rounded w-full">{dreamer.email}</p>
-        </div>
-      {/each} -->
+ 
       {#each levels.sort((first, second) => {
         if (first.order < second.order) return -1;
         if (first.order > second.order) return 1;
@@ -210,40 +154,8 @@
       {/each}
     </div>
   </div>
-  <div class="bottom-right">
-    <div class="flex">
-      <input
-        class="w-full p-3 border-t mr-0 border-b border-l text-gray-800
-        border-gray-200 bg-white"
-        placeholder="enter email" />
-
-      <button
-        class="px-6 bg-primary hover:bg-secondary text-white font-bold p-3
-        uppercase ">
-        Invite
-      </button>
-    </div>
-  </div>
   <div class="content-left bg-gray-100">
-    <div class="py-6 px-8 text-md">
-      {#each messages as message}
-        <p class="mb-4 py-2 px-3 rounded {message.bg}">{message.text}</p>
-      {/each}
-    </div>
-  </div>
-  <div class="bottom-left">
-    <div class="flex">
-      <input
-        class="w-full p-3 border-t mr-0 border-b border-l text-gray-800
-        border-gray-200 bg-white"
-        placeholder="enter your chat message here"
-        bind:value={message} />
-      <button
-        on:click={sendMessage}
-        class="px-6 bg-primary hover:bg-secondary text-white font-bold p-3
-        uppercase">
-        Send
-      </button>
-    </div>
+    <OmoVideo />
+    <OmoProfilePage />
   </div>
 </div>

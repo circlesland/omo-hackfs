@@ -40,21 +40,13 @@
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    overflow-y: scroll;
+    overflow-y: hidden;
   }
 
   aside .box {
     background: #fff;
     position: relative;
     box-sizing: 0 0 20px 0px rgba(0, 0, 0, 0.3);
-  }
-
-  aside .box header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    border-bottom: 1px solid #ededed;
   }
 
   aside .box header button {
@@ -80,16 +72,22 @@
     in:fade
     out:fade
     on:click|self={handleClose}
-    class="overlay">
+    class="overlay ">
 
-    <div class="box w-full lg:w-4/5 bg-gray-100;">
-      <header>
+    <div class="box w-full rounded-t-lg lg:w-4/5 bg-gray-100">
+      <header class="rounded-t-lg ">
+        <div class="relative rounded-t-lg">
+          <div class="overflow-hidden rounded-t-lg h-6 text-xs flex bg-dark">
+            <!-- <div
+              style="width: 33%"
+              class="shadow-none rounded-tl-lg flex flex-col text-center
+              whitespace-nowrap text-white justify-center bg-tertiary" /> -->
+          </div>
+        </div>
         <button
           aria-label="Close modal"
           bind:this={buttonRef}
-          on:click={handleClose}>
-          &#10005;
-        </button>
+          on:click={handleClose} />
       </header>
       <main>
         <slot>No content provided</slot>

@@ -1,5 +1,4 @@
 <script>
-
   export let data = {
     bundleId: "",
     safeId: ""
@@ -13,30 +12,39 @@
   }
 </script>
 
-<div
+<style>
+  section {
+    height: 70vh;
+  }
+</style>
+
+<section
   class="flex flex-col justify-center text-center w-full lg:w-3/4 mx-auto px-12
   py-32">
-  <h1 class="text-primary text-3xl">Enter SafeAddress you want to trustFlow</h1>
+  <h1 class="text-primary text-3xl">[Add here dynamic step title]</h1>
+  <h2 class="text-gray-600 text-lg">
+    [Add here dynamic step detailed description]
+  </h2>
   <form class="flex flex-col pt-3 md:pt-8" onsubmit="event.preventDefault();">
     <div class="flex flex-col pt-6">
       <input
         type="text"
         bind:value={data.safeId}
-        placeholder="Safe ID"
+        placeholder="[add here dynamic placeholder]"
         class="appearance-none border rounded w-full py-4 px-6 text-gray-700
         text-xl mt-1 leading-tight focus:outline-none focus:shadow-outline" />
     </div>
 
-    <button
+    <!-- <button
       on:click={submit}
       type="submit"
       class="bg-primary rounded text-white font-bold text-lg hover:bg-secondary
       p-2">
       Trust Safe
-    </button>
+    </button> -->
   </form>
 
-</div>
+</section>
 
 <!-- <div
   class="bg-cover bg-center object-fill"

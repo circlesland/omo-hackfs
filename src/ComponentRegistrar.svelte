@@ -1,4 +1,5 @@
 <script>
+  // Import Quanta
   import OmoDream from "./omo-elements/2-molecules/OmoDream.svelte";
   import OmoTitleBar from "./omo-elements/2-molecules/OmoTitleBar";
   import ActionsList from "./omo-elements/2-molecules/ActionsList";
@@ -20,12 +21,42 @@
   import OmoDialogContent from "./omo-elements/2-molecules/OmoDialogContent";
   import OmoSafeLookup from "./omo-elements/2-molecules/OmoSafeLookup";
   import OmoStatusResponse from "./omo-elements/2-molecules/OmoStatusResponse";
-  import {trustFlow} from "./Flows/Flows/omo/safe/TrustFlow";
-  import {collectUserValue} from "./Flows/SideEffects/omo/shell/collectUserValue";
-  import {giveTrust} from "./Flows/SideEffects/omo/safe/giveTrust";
   import OmoGridVoting from "./omo-elements/2-molecules/OmoGridVoting";
   import OmoGridPreOrder from "./omo-elements/2-molecules/OmoGridPreOrder";
+  import OmoSelect from "./omo-elements/2-molecules/OmoSelect";
+  import MagicLogin from "./omo-elements/5-dapps/MagicLogin";
 
+  // Import Process Flows
+  import {
+    giveTrustFlow,
+    removeTrustFlow
+  } from "./Flows/Flows/omo/safe/TrustFlow";
+  // Import Process Flows
+  import { transactionFlow } from "./Flows/Flows/omo/safe/TransactionFlow";
+  import {
+    addOwnerDeviceFlow,
+    removeOwnerDeviceFlow
+  } from "./Flows/Flows/omo/odentity/OwnerFlow";
+  import {
+    addChatRoomFlow,
+    removeChatRoomFlow,
+    sendMessageFlow
+  } from "./Flows/Flows/omo/chat/ChatFlow";
+
+  import {
+    addAuthProviderMailFlow,
+    removeAuthProviderMailFlow,
+    addAuthProviderSeedPhraseFlow,
+    removeAuthProviderSeedPhraseFlow
+  } from "./Flows/Flows/omo/odentity/AuthFlow";
+
+  addAuthProviderMailFlow;
+
+  // Import Flow Sideeffects
+  import { collectUserValue } from "./Flows/SideEffects/omo/shell/collectUserValue";
+  import { giveTrust } from "./Flows/SideEffects/omo/safe/giveTrust";
+
+  // Register Quanta
   window.registrar = new Map();
   window.registrar.set("OmoHero", OmoHero);
   window.registrar.set("OmoTitleBar", OmoTitleBar);
@@ -46,16 +77,52 @@
   window.registrar.set("ActionsList", ActionsList);
   window.registrar.set("OmoDialogContent", OmoDialogContent);
   window.registrar.set("OmoDialogSteps", OmoDialogSteps);
-  window.registrar.set("OmoSafeLookup", OmoSafeLookup)
-  window.registrar.set("OmoStatusResponse", OmoStatusResponse)
-
-  window.flowRegistrar = new Map();
-  window.flowRegistrar.set("omo.safe.trustFlow", trustFlow);
-
-  window.sideEffectRegistrar = new Map();
-  window.sideEffectRegistrar.set("omo.shell.collectUserValue", collectUserValue);
-  window.sideEffectRegistrar.set("omo.safe.giveTrust", giveTrust);
+  window.registrar.set("OmoSafeLookup", OmoSafeLookup);
+  window.registrar.set("OmoStatusResponse", OmoStatusResponse);
   window.registrar.set("OmoSafeLookup", OmoSafeLookup);
   window.registrar.set("OmoGridVoting", OmoGridVoting);
   window.registrar.set("OmoGridPreOrder", OmoGridPreOrder);
+  window.registrar.set("OmoSelect", OmoSelect);
+
+  // Register Flows
+  window.flowRegistrar = new Map();
+  window.flowRegistrar.set("omo.safe.giveTrustFlow", giveTrustFlow);
+  window.flowRegistrar.set("omo.safe.removeTrustFlow", removeTrustFlow);
+  window.flowRegistrar.set("omo.safe.transactionFlow", transactionFlow);
+  window.flowRegistrar.set("omo.chat.addChatRoomFlow", addChatRoomFlow);
+  window.flowRegistrar.set("omo.chat.addChatRoomFlow", addChatRoomFlow);
+  window.flowRegistrar.set("omo.chat.sendMessageFlow", sendMessageFlow);
+
+  window.flowRegistrar.set(
+    "omo.odentity.addOwnerDeviceFlow",
+    addOwnerDeviceFlow
+  );
+  window.flowRegistrar.set(
+    "omo.odentity.removeOwnerDeviceFlow",
+    removeOwnerDeviceFlow
+  );
+  window.flowRegistrar.set(
+    "omo.odentity.addAuthProviderMailFlow",
+    addAuthProviderMailFlow
+  );
+  window.flowRegistrar.set(
+    "omo.odentity.removeAuthProviderMailFlow",
+    removeAuthProviderMailFlow
+  );
+  window.flowRegistrar.set(
+    "omo.odentity.addAuthProviderSeedPhraseFlow",
+    addAuthProviderSeedPhraseFlow
+  );
+  window.flowRegistrar.set(
+    "omo.odentity.removeAuthProviderSeedPhraseFlow",
+    removeAuthProviderMailFlow
+  );
+
+  // Register SideEffects
+  window.sideEffectRegistrar = new Map();
+  window.sideEffectRegistrar.set(
+    "omo.shell.collectUserValue",
+    collectUserValue
+  );
+  window.sideEffectRegistrar.set("omo.safe.giveTrust", giveTrust);
 </script>

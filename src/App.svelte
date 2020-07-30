@@ -1,207 +1,261 @@
 <script lang="ts">
-    import {getRoute, curRoute, navigate, getComponent} from "./Router.ts";
-    import {onMount, onDestroy} from "svelte";
-    import ComponentRegistrar from "./ComponentRegistrar";
-    import MagicLogin from "./omo-elements/5-dapps/MagicLogin.svelte";
+  import { getRoute, curRoute, navigate, getComponent } from "./Router.ts";
+  import { onMount, onDestroy } from "svelte";
+  import ComponentRegistrar from "./ComponentRegistrar";
+  import MagicLogin from "./omo-elements/5-dapps/MagicLogin.svelte";
 
-    import OmoHome from "./omo-elements/5-dapps/OmoHome";
-    import OmoDialog from "./omo-elements/5-dapps/OmoDialog";
-    import MamaOmo from "./omo-elements/5-dapps/MamaOmo";
-    import OmoDream from "./omo-elements/5-dapps/OmoDream";
-    import OmoDocs from "./omo-elements/5-dapps/OmoDocs";
-    import OmoDapps from "./omo-elements/5-dapps/OmoDapps";
-    import OnBoarding from "./omo-elements/5-dapps/OnBoarding";
-    import Odentity from "./omo-elements/5-dapps/oDentity";
-    import OmoDreams from "./omo-elements/5-dapps/OmoDreams";
-    import OmoOrgas from "./omo-elements/5-dapps/OmoOrgas";
-    import OmoSafe from "./omo-elements/5-dapps/OmoSafe";
-    import OmoAuth from "./omo-elements/5-dapps/OmoAuth";
-    import OmoFunding from "./omo-elements/5-dapps/OmoFunding";
-    import OmoConnectCircles from "./omo-elements/5-dapps/OmoConnectCircles.svelte";
-    import OmoChat from "./omo-elements/5-dapps/OmoChat.svelte";
-    import OmoActions from "./omo-elements/5-dapps/OmoActions.svelte";
-    import OmoShop from "./omo-elements/5-dapps/OmoShop.svelte";
-    import OmoVoting from "./omo-elements/5-dapps/OmoVoting.svelte";
-    import OmoPreOrders from "./omo-elements/5-dapps/OmoPreOrders.svelte";
+  import OmoHome from "./omo-elements/5-dapps/OmoHome";
+  import OmoDialog from "./omo-elements/5-dapps/OmoDialog";
+  import MamaOmo from "./omo-elements/5-dapps/MamaOmo";
+  import OmoDream from "./omo-elements/5-dapps/OmoDream";
+  import OmoDocs from "./omo-elements/5-dapps/OmoDocs";
+  import OmoDapps from "./omo-elements/5-dapps/OmoDapps";
+  import OnBoarding from "./omo-elements/5-dapps/OnBoarding";
+  import Odentity from "./omo-elements/5-dapps/oDentity";
+  import OmoDreams from "./omo-elements/5-dapps/OmoDreams";
+  import OmoOrgas from "./omo-elements/5-dapps/OmoOrgas";
+  import OmoSafe from "./omo-elements/5-dapps/OmoSafe";
+  import OmoAuth from "./omo-elements/5-dapps/OmoAuth";
+  import OmoFunding from "./omo-elements/5-dapps/OmoFunding";
+  import OmoConnectCircles from "./omo-elements/5-dapps/OmoConnectCircles.svelte";
+  import OmoChat from "./omo-elements/5-dapps/OmoChat.svelte";
+  import OmoActions from "./omo-elements/5-dapps/OmoActions.svelte";
+  import OmoShop from "./omo-elements/5-dapps/OmoShop.svelte";
+  import OmoVoting from "./omo-elements/5-dapps/OmoVoting.svelte";
+  import OmoPreOrders from "./omo-elements/5-dapps/OmoPreOrders.svelte";
 
-    import OmoNavTop from "./omo-elements/2-molecules/OmoNavTop.svelte";
-    import OmoNavBottom from "./omo-elements/2-molecules/OmoNavBottom.svelte";
-    import {StartFlow} from "./Core/Events/omo/shell/StartFlow";
-    import {Navigated} from "./Core/Events/omo/shell/Navigated";
+  import OmoNavTop from "./omo-elements/2-molecules/OmoNavTop.svelte";
+  import OmoNavBottom from "./omo-elements/2-molecules/OmoNavBottom.svelte";
+  import { StartFlow } from "./Core/Events/omo/shell/StartFlow";
+  import { Navigated } from "./Core/Events/omo/shell/Navigated";
 
-    let subscription = null;
-    onDestroy(()=> {
-        if (subscription) {
-            subscription.unsubscribe();
-        }
+  let subscription = null;
+  onDestroy(() => {
+    if (subscription) {
+      subscription.unsubscribe();
+    }
+  });
+  onMount(() => {
+    let route = getRoute();
+    if (route.startsWith("?page")) curRoute.set(route);
+    // if (!history.state) {
+    //   window.history.replaceState(
+    //     { path: window.location.pathname },
+    //     "",
+    //     window.location.href
+    //   );
+    // }
+    // o.store.odentity.currentOmo().then(o => {
+    //   omo = o;
+    // });
+    window.navigate = navigate;
+    if (route) {
+      window.o.publishShellEventAsync(
+        new Navigated(route.replace("?page=", ""))
+      );
+    }
+
+    let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
+    subscription = notifications.observable.subscribe(next => {
+      if (!next._$eventType) return;
+
+      switch (next._$eventType) {
+        case "omo.shell.notification":
+          notify(next.data);
+          break;
+        case "omo.shell.navigate":
+          navigate(next.data.page);
+          break;
+        case "omo.shell.navigated":
+          navigated(next.data.page);
+          break;
+      }
     });
-    onMount(() => {
-        let route = getRoute();
-        if (route.startsWith("?page")) curRoute.set(route);
-        // if (!history.state) {
-        //   window.history.replaceState(
-        //     { path: window.location.pathname },
-        //     "",
-        //     window.location.href
-        //   );
-        // }
-        // o.store.odentity.currentOmo().then(o => {
-        //   omo = o;
-        // });
-        window.navigate = navigate;
-        if (route) {
-            window.o.publishShellEventAsync(new Navigated(route.replace("?page=", "")));
+  });
+
+  function notify(next) {}
+
+  function navigated(page) {}
+
+  function handlerBackNavigation(event) {
+    curRoute.set(event.state.route);
+  }
+
+  // export const omo = window.o.odentity.current;
+  //@todo listen to changes
+
+  // ROUTING
+  var routes = [
+    { route: "/", quant: OmoHome, authenticate: false },
+    { route: "?page=home", quant: OmoHome, authenticate: false },
+    { route: "?page=mamaomo", quant: MamaOmo, authenticate: true },
+    { route: "?page=omoauth", quant: OmoAuth, authenticate: false },
+    { route: "?page=magicLogin", quant: MagicLogin, authenticate: false },
+    {
+      route: "?page=odentity",
+      quant: Odentity,
+      authenticate: false,
+      actions: [
+        // TODO: Custom actions should be available on every level
+        {
+          title: "Remove Circles SeedPhrase Auth",
+          event: () =>
+            new StartFlow("omo.odentity.removeAuthProviderSeedPhraseFlow")
+        },
+        {
+          title: "Remove Email Auth Provider",
+          event: () => new StartFlow("omo.odentity.removeAuthProviderMailFlow")
+        },
+        {
+          title: "Remove owner Device",
+          event: () => new StartFlow("omo.odentity.removeOwnerDeviceFlow")
+        },
+        {
+          title: "Add Circles SeedPhrase Auth",
+          event: () =>
+            new StartFlow("omo.odentity.addAuthProviderSeedPhraseFlow")
+        },
+        {
+          title: "Add Email Auth Provider",
+          event: () => new StartFlow("omo.odentity.addAuthProviderMailFlow")
+        },
+        {
+          title: "Add owner Device",
+          event: () => new StartFlow("omo.odentity.addOwnerDeviceFlow")
+        },
+        {
+          title: "Logout",
+          event: {}
         }
-
-        let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
-        subscription = notifications.observable.subscribe(next => {
-            if (!next._$eventType)
-                return;
-
-            switch (next._$eventType) {
-                case "omo.shell.notification":
-                    notify(next.data);
-                    break;
-                case "omo.shell.navigate":
-                    navigate(next.data.page);
-                    break;
-                case "omo.shell.navigated":
-                    navigated(next.data.page);
-                    break;
-            }
-        });
-    });
-
-    function notify(next) {
-    }
-
-    function navigated(page) {
-    }
-
-    function handlerBackNavigation(event) {
-        curRoute.set(event.state.route);
-    }
-
-    // export const omo = window.o.odentity.current;
-    //@todo listen to changes
-
-    // ROUTING
-    var routes = [
-        {route: "/", quant: OmoHome, authenticate: false},
-        {route: "?page=home", quant: OmoHome, authenticate: false},
-        {route: "?page=mamaomo", quant: MamaOmo, authenticate: true},
-        {route: "?page=omoauth", quant: OmoAuth, authenticate: false},
-        {route: "?page=magicLogin", quant: MagicLogin, authenticate: false},
-        {route: "?page=odentity", quant: Odentity, authenticate: false},
-        {route: "?page=docs", quant: OmoDocs, authenticate: true},
-        {route: "?page=omodapps", quant: OmoDapps, authenticate: true},
+      ]
+    },
+    { route: "?page=docs", quant: OmoDocs, authenticate: true },
+    { route: "?page=omodapps", quant: OmoDapps, authenticate: true },
+    {
+      route: "?page=omodream",
+      quant: OmoDream,
+      authenticate: true,
+      actions: [
+        // TODO: Custom actions should be available on every level
         {
-            route: "?page=omodream",
-            quant: OmoDream,
-            authenticate: true,
-            actions: [
-                // TODO: Custom actions should be available on every level
-                {
-                    title: "fsdfds",
-                    event: () => new StartFlow("omo.safe.trustFlow")
-                }
-            ]
-        },
-        {route: "?page=omofunding", quant: OmoFunding, authenticate: true},
-        {route: "?page=omoorgas", quant: OmoOrgas, authenticate: true},
-        {route: "?page=omoshop", quant: OmoShop, authenticate: true},
-        {route: "?page=omovoting", quant: OmoVoting, authenticate: true},
-        {route: "?page=omopreorders", quant: OmoPreOrders, authenticate: true},
-        {
-            route: "?page=omosafe",
-            quant: OmoSafe,
-            authenticate: true,
-            actions: [
-                // TODO: Custom actions should be available on every level
-                {
-                    title: "Trust someone",
-                    event: () => new StartFlow("omo.safe.trustFlow")
-                },
-                {
-                    title: "Untrust someone",
-                    event: () => new StartFlow("omo.safe.trustFlow")
-                },
-                {
-                    title: "Send Circles",
-                    event: () => new StartFlow("omo.safe.trustFlow")
-                },
-                {
-                    title: "Add another owner to this safe",
-                    event: () => new StartFlow("omo.safe.trustFlow")
-                },
-                {
-                    title: "Remove an owner from this safe",
-                    event: () => new StartFlow("omo.safe.trustFlow")
-                }
-            ]
-        },
-        {route: "?page=omodreams", quant: OmoDreams, authenticate: true},
-        {route: "?page=omochat", quant: OmoChat, authenticate: true},
-        {route: "?page=onboarding", quant: OnBoarding, authenticate: true},
-        {route: "?page=omodialog", quant: OmoDialog, authenticate: true},
-        {
-            route: "?page=omoactions",
-            quant: OmoActions,
-            authenticate: true
+          title: "Start time commitment",
+          event: () => new StartFlow("omo.safe.trustFlow")
         },
         {
-            route: "?page=omoconnectcircles",
-            quant: OmoConnectCircles,
-            authenticate: true
+          title: "Ask question",
+          event: () => new StartFlow("omo.safe.trustFlow")
+        },
+        {
+          title: "Send chat message",
+          event: () => new StartFlow("omo.safe.trustFlow")
         }
-    ];
-    window.routes = routes; // TODO: Pfui!
+      ]
+    },
+    { route: "?page=omofunding", quant: OmoFunding, authenticate: true },
+    { route: "?page=omoorgas", quant: OmoOrgas, authenticate: true },
+    { route: "?page=omoshop", quant: OmoShop, authenticate: true },
+    { route: "?page=omovoting", quant: OmoVoting, authenticate: true },
+    { route: "?page=omopreorders", quant: OmoPreOrders, authenticate: true },
+    {
+      route: "?page=omosafe",
+      quant: OmoSafe,
+      authenticate: true,
+      actions: [
+        // TODO: Custom actions should be available on every level
+        {
+          title: "Add another owner to this safe",
+          event: () => new StartFlow("omo.safe.trustFlow")
+        },
+        {
+          title: "Trust someone",
+          event: () => new StartFlow("omo.safe.giveTrustFlow")
+        },
+        {
+          title: "Send Circles",
+          event: () => new StartFlow("omo.safe.transactionFlow")
+        }
+      ]
+    },
+    { route: "?page=omodreams", quant: OmoDreams, authenticate: true },
+    {
+      route: "?page=omochat",
+      quant: OmoChat,
+      authenticate: true,
+      actions: [
+        {
+          title: "Create new Chat Room",
+          event: () => new StartFlow("omo.chat.addChatRoomFlow")
+        },
+        {
+          title: "Remove Chat Room",
+          event: () => new StartFlow("omo.chat.removeChatRoomFlow")
+        },
+        {
+          title: "Send Message",
+          event: () => new StartFlow("omo.chat.sendMessageFlow")
+        }
+      ]
+    },
+    { route: "?page=onboarding", quant: OnBoarding, authenticate: true },
+    { route: "?page=omodialog", quant: OmoDialog, authenticate: true },
+    {
+      route: "?page=omoactions",
+      quant: OmoActions,
+      authenticate: true
+    },
+    {
+      route: "?page=omoconnectcircles",
+      quant: OmoConnectCircles,
+      authenticate: true
+    }
+  ];
+  window.routes = routes; // TODO: Pfui!
 </script>
 
 <style>
-    .app {
-        height: 100vh;
-        width: 100vw;
-        padding: 0;
-        margin: 0;
-        display: grid;
-        grid-template-areas: "'header', 'main', 'footer'";
-        grid-template-columns: "1fr";
-        grid-template-rows: 3rem 1fr 4rem;
-    }
+  .app {
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-areas: "'header', 'main', 'footer'";
+    grid-template-columns: "1fr";
+    grid-template-rows: 3rem 1fr 4rem;
+  }
 
-    header {
-        grid-area: "header";
-    }
+  header {
+    grid-area: "header";
+  }
 
-    main {
-        height: 100%;
-        width: 100%;
-        padding: 0;
-        margin: 0;
-        grid-area: "main";
-        overflow: hidden;
-    }
+  main {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    grid-area: "main";
+    overflow: hidden;
+  }
 
-    footer {
-        grid-area: "footer";
-    }
+  footer {
+    grid-area: "footer";
+  }
 </style>
 
-<svelte:window on:popstate={handlerBackNavigation}/>
-<ComponentRegistrar/>
+<svelte:window on:popstate={handlerBackNavigation} />
+<ComponentRegistrar />
 
 <div class="app">
-    <header>
-        <OmoNavTop/>
-    </header>
-    <main>
-        <svelte:component this={getComponent($curRoute, routes)} {routes}/>
-    </main>
-    <footer>
-        <OmoNavBottom/>
-    </footer>
-    <!-- <footer>
+  <header>
+    <OmoNavTop />
+  </header>
+  <main>
+    <svelte:component this={getComponent($curRoute, routes)} {routes} />
+  </main>
+  <footer>
+    <OmoNavBottom />
+  </footer>
+  <!-- <footer>
       {#if omo != null}
         <OmoNavBottom />
       {:else if !$curRoute.startsWith('?page=omoauth')}
