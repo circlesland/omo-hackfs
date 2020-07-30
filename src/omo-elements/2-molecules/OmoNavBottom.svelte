@@ -40,6 +40,9 @@
                     }
                     processNode = flowImpl();
                     break;
+                case "omo.shell.closePopup":
+                    isOpen = false;
+                    break;
             }
         });
     });

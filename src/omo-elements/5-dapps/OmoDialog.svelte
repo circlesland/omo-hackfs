@@ -3,6 +3,7 @@
     import {ProcessNode} from "../../Core/Flows/ProcessNode";
     import {onDestroy, onMount} from "svelte";
     import {SubmitFlowStep} from "../../Core/Events/omo/shell/SubmitFlowStep";
+    import {ClosePopup} from "../../Core/Events/omo/shell/ClosePopup";
 
     export let processNode = {};
 
@@ -174,8 +175,7 @@
             }
 
             if (!nextNode_) {
-                alert("End of dialog.");
-                // TODO: Close
+                window.o.publishShellEventAsync(new ClosePopup());
                 return;
             }
 

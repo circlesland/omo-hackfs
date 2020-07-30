@@ -132,11 +132,11 @@
                 },
                 {
                     title: "Add another owner to this safe",
-                    event: () => new StartFlow("omo.safe.giveTrustFlow")
+                    event: () => alert("Nix zu sehen hier. Jetzt ists kaputt!\nPress F5 to reload the page :(")
                 },
                 {
                     title: "Remove an owner from this safe",
-                    event: () => new StartFlow("omo.safe.giveTrustFlow")
+                    event: () => alert("Nix zu sehen hier. Jetzt ists kaputt!\nPress F5 to reload the page :(")
                 }
             ]
         },
