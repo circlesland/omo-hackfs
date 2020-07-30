@@ -4,7 +4,7 @@
     import OmoModal from "./OmoModal.svelte";
     import {onMount} from "svelte";
     import OmoDialog from "../5-dapps/OmoDialog.svelte";
-    import {SubmitFlowStep} from "../../events/omo/shell/SubmitFlowStep";
+    import {SubmitFlowStep} from "../../events/omo/shell/submitFlowStep";
 
   let isOpen = false;
 

@@ -1,7 +1,7 @@
 // https://medium.com/swlh/simple-svelte-3-app-with-router-44fe83c833b6
 
 import { writable } from "svelte/store";
-import {Navigated} from "./events/omo/shell/Navigated";
+import {Navigated} from "./events/omo/shell/navigated";
 export var curRoute = writable("?page=home");
 
 export function getRoute() {

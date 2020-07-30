@@ -2,8 +2,8 @@
     import OmoOrganisms from "./../4-layouts/OmoOrganisms.svelte";
     import {ProcessNode} from "../../Core/Flows/ProcessNode";
     import {onDestroy, onMount} from "svelte";
-    import {SubmitFlowStep} from "../../events/omo/shell/SubmitFlowStep";
-    import {ClosePopup} from "../../events/omo/shell/ClosePopup";
+    import {SubmitFlowStep} from "../../events/omo/shell/submitFlowStep";
+    import {ClosePopup} from "../../events/omo/shell/closePopup";
 
     export let processNode = {};
 

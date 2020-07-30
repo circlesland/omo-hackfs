@@ -1,5 +1,5 @@
 <script>
-    import {SubmitFlowStep} from "../../events/omo/shell/SubmitFlowStep";
+    import {SubmitFlowStep} from "../../events/omo/shell/submitFlowStep";
 
     export let data = {
         processNode: {}
