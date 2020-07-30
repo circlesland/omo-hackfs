@@ -187,10 +187,6 @@ export class ProcessNode<TContext extends IProcessContext>
         {
             let item = stack.pop();
             let parent = map[item.parentId];
-            if (parent)
-            {
-                console.log("restored parent", parent);
-            }
             item.parent = parent;
             item.children.forEach(child => stack.push(child));
         }

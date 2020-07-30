@@ -4,7 +4,6 @@
 
     let items = [];
 
-
     function refreshTree(processNode) {
         if (!processNode.children) {
             return [];

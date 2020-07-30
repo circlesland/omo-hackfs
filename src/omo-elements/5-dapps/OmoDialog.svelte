@@ -2,13 +2,20 @@
 
     import OmoOrganisms from "./../4-layouts/OmoOrganisms.svelte";
     import {ProcessNode} from "../../Core/Flows/ProcessNode";
-    import {onMount} from "svelte";
+    import {onDestroy, onMount} from "svelte";
 
     export let processNode = {};
 
+    let subscription = null;
+    onDestroy(()=> {
+        if (subscription) {
+            subscription.unsubscribe();
+        }
+    });
+
     onMount(() => {
         let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
-        notifications.observable.subscribe(event => {
+        subscription = notifications.observable.subscribe(event => {
             if (!event._$eventType)
                 return;
 
@@ -18,6 +25,8 @@
                         return; // Not meant for our executing flow
                     }
                     next(processNode);
+                    break;
+                case "omo.shell.undoFlowStep":
                     break;
             }
         });

@@ -29,6 +29,12 @@
     import {StartFlow} from "./Core/Events/omo/shell/StartFlow";
     import {Navigated} from "./Core/Events/omo/shell/Navigated";
 
+    let subscription = null;
+    onDestroy(()=> {
+        if (subscription) {
+            subscription.unsubscribe();
+        }
+    });
     onMount(() => {
         let route = getRoute();
         if (route.startsWith("?page")) curRoute.set(route);
@@ -48,7 +54,7 @@
         }
 
         let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
-        notifications.observable.subscribe(next => {
+        subscription = notifications.observable.subscribe(next => {
             if (!next._$eventType)
                 return;
 
