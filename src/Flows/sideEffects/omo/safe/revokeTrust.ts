@@ -9,7 +9,7 @@ export const revokeTrust:ISideEffect<IProcessContext, void> = {
           trustReceivingSafe
       ) {
           // .. give user the permission to send their Token to you
-          await await window.o.circlesCore.trust.removeConnection(trustGivingSafeOwner, {
+          await window.o.circlesCore.trust.removeConnection(trustGivingSafeOwner, {
               user: trustGivingSafeAddress,
               canSendTo: trustReceivingSafe,
           });
@@ -22,7 +22,7 @@ export const revokeTrust:ISideEffect<IProcessContext, void> = {
       await removeTrustLineAsync(
           context.o.odentity.current.circleSafeOwner,
           context.o.odentity.current.circleSafe,
-          context["omo.safe.giveTrust:trustReceivingSafe"]
+          context["sideEffects:omo.safe.giveTrust:trustReceivingSafe"]
       );
   },
   canExecute: async context => true

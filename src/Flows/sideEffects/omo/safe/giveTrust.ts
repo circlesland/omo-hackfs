@@ -25,8 +25,8 @@ export const giveTrust:ISideEffect<IProcessContext, void> = {
       await addTrustLineAsync(
           context.o.odentity.current.circleSafeOwner,
           context.o.odentity.current.circleSafe,
-          context["omo.safe.giveTrustFlow:trustReceivingSafe"],
-          context["omo.safe.giveTrustFlow:trustPercentage"]
+          context["flows:omo.safe.giveTrust:trustReceivingSafe"],
+          context["flows:omo.safe.giveTrust:trustPercentage"]
       );
   },
   canExecute: async context => true

@@ -1,19 +1,19 @@
 import {ProcessBuilder} from "../../../../Core/Flows/ProcessBuilder";
 import {IProcessContext} from "../../../../Core/Flows/IProcessContext";
 
-export function revokeTrustFlow()
+export function revokeTrust()
 {
-    return new ProcessBuilder<IProcessContext>("omo.safe.revokeTrustFlow")
+    return new ProcessBuilder<IProcessContext>("flows:omo.safe.revokeTrust")
         .category("Trust someone", build =>
             build
 
-            .step("omo.safe.revokeTrustFlow:trustReceivingSafe")
-                .withSideEffect("omo.shell.collectUserValue")
+            .step("flows:omo.safe.revokeTrust:trustReceivingSafe")
+                .withSideEffect("sideEffects:omo.shell.collectStepResult")
                 .withQuant("OmoSafeLookup")
                 .withTitle("Enter safe address to un-trust")
 
-            .step("omo.safe.revokeTrustFlow:revokeTrust")
-                .withSideEffect("omo.safe.revokeTrust")
+            .step("flows:omo.safe.revokeTrust:revokeTrust")
+                .withSideEffect("sideEffects:omo.safe.revokeTrust")
                 .withQuant("OmoStatusResponse")
                 .withTitle("Review & confirm")
         )

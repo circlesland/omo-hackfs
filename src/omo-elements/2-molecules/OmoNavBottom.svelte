@@ -22,7 +22,7 @@
 
             switch (next._$eventType) {
                 case "omo.shell.navigated":
-                    processNode = undefined;
+                    processNode = false;
                     page = next.data.page;
                     const route = window.routes.find(o => o.route === "?page=" + page); // TODO: Pfui!
                     if (route && route.actions) {
@@ -32,13 +32,15 @@
                     }
                     break;
                 case "omo.shell.startFlow":
-                    actions = undefined;
-                    processNode = undefined;
+                    actions = false;
+                    processNode = false;
                     const flowImpl = window.flowRegistrar.get(next.data.flow);
                     if (!flowImpl) {
                         throw new Error("Couldn't find a flow with id '" + next.data.flow + "' in 'window.flowRegistrar'");
                     }
                     processNode = flowImpl();
+                    if (!isOpen)
+                        isOpen = true;
                     break;
                 case "omo.shell.closePopup":
                     isOpen = false;

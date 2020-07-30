@@ -16,7 +16,7 @@
 <div
         class="flex flex-col justify-center text-center w-full lg:w-3/4 mx-auto px-12
   py-32">
-    <h1 class="text-primary text-3xl">Enter SafeAddress you want to giveTrustFlow</h1>
+    <h1 class="text-primary text-3xl">Enter SafeAddress you want to giveTrust</h1>
     <form class="flex flex-col pt-3 md:pt-8" onsubmit="event.preventDefault();">
         <div class="flex flex-col pt-6">
             <input

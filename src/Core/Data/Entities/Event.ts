@@ -6,7 +6,7 @@ export interface IEvent
 }
 
 export abstract class Event implements Instance, IEvent {
-    static CollectionName: string = "Notifications";
+    static CollectionName: string = "Events";
     abstract _$eventType:string;
 
     _id: string;

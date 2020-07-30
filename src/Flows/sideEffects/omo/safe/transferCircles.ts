@@ -1,7 +1,7 @@
 import {ISideEffect} from "../../../../Core/Flows/ISideEffect";
 import {IProcessContext} from "../../../../Core/Flows/IProcessContext";
 
-export const sendCircles:ISideEffect<IProcessContext, void> = {
+export const transferCircles:ISideEffect<IProcessContext, void> = {
   execute: async (context, argument) => {
       async function sendCirclesAsync(
           sendingSafeOwner,
@@ -24,8 +24,8 @@ export const sendCircles:ISideEffect<IProcessContext, void> = {
       await sendCirclesAsync(
           context.o.odentity.current.circleSafeOwner,
           context.o.odentity.current.circleSafe,
-          context["omo.safe.sendCirclesFlow:receivingSafe"],
-          context["omo.safe.sendCirclesFlow:amount"]
+          context["flows:omo.safe.transferCircles:receivingSafe"],
+          context["flows:omo.safe.transferCircles:amount"]
       );
   },
   canExecute: async context => true

@@ -19,13 +19,13 @@
   import OmoDialogSteps from "./omo-elements/2-molecules/OmoDialogSteps";
   import OmoSafeLookup from "./omo-elements/2-molecules/OmoSafeLookup";
   import OmoStatusResponse from "./omo-elements/2-molecules/OmoStatusResponse";
-  import {giveTrustFlow} from "./Flows/Flows/omo/safe/GiveTrustFlow";
-  import {revokeTrustFlow} from "./Flows/Flows/omo/safe/RevokeTrustFlow";
-  import {sendCirclesFlow} from "./Flows/Flows/omo/safe/SendCirclesFlow";
-  import {collectUserValue} from "./Flows/SideEffects/omo/shell/collectUserValue";
-  import {giveTrust} from "./Flows/SideEffects/omo/safe/giveTrust";
-  import {sendCircles} from "./Flows/SideEffects/omo/safe/sendCircles";
-  import {revokeTrust} from "./Flows/SideEffects/omo/safe/revokeTrust";
+  import {giveTrust as giveTrustFlow} from "./Flows/flows/omo/safe/giveTrust";
+  import {revokeTrust as revokeTrustFlow} from "./Flows/flows/omo/safe/revokeTrust";
+  import {transferCircles as transferCirclesFlow} from "./Flows/flows/omo/safe/transferCircles";
+  import {collectStepResult} from "./Flows/sideEffects/omo/shell/collectStepResult";
+  import {giveTrust as giveTrustSideEffect} from "./Flows/sideEffects/omo/safe/giveTrust";
+  import {transferCircles as transferCirclesSideEffect} from "./Flows/sideEffects/omo/safe/transferCircles";
+  import {revokeTrust as revokeTrustSideEffect} from "./Flows/sideEffects/omo/safe/revokeTrust";
   import OmoGridVoting from "./omo-elements/2-molecules/OmoGridVoting";
   import OmoGridPreOrder from "./omo-elements/2-molecules/OmoGridPreOrder";
 
@@ -55,13 +55,13 @@
   window.registrar.set("OmoGridPreOrder", OmoGridPreOrder);
 
   window.flowRegistrar = new Map();
-  window.flowRegistrar.set("omo.safe.giveTrustFlow", giveTrustFlow);
-  window.flowRegistrar.set("omo.safe.revokeTrustFlow", revokeTrustFlow);
-  window.flowRegistrar.set("omo.safe.sendCirclesFlow", sendCirclesFlow);
+  window.flowRegistrar.set("flows:omo.safe.giveTrust", giveTrustFlow);
+  window.flowRegistrar.set("flows:omo.safe.revokeTrust", revokeTrustFlow);
+  window.flowRegistrar.set("flows:omo.safe.transferCircles", transferCirclesFlow);
 
   window.sideEffectRegistrar = new Map();
-  window.sideEffectRegistrar.set("omo.shell.collectUserValue", collectUserValue);
-  window.sideEffectRegistrar.set("omo.safe.giveTrust", giveTrust);
-  window.sideEffectRegistrar.set("omo.safe.revokeTrust", revokeTrust);
-  window.sideEffectRegistrar.set("omo.safe.sendCircles", sendCircles);
+  window.sideEffectRegistrar.set("sideEffects:omo.shell.collectStepResult", collectStepResult);
+  window.sideEffectRegistrar.set("sideEffects:omo.safe.giveTrust", giveTrustSideEffect);
+  window.sideEffectRegistrar.set("sideEffects:omo.safe.revokeTrust", revokeTrustSideEffect);
+  window.sideEffectRegistrar.set("sideEffects:omo.safe.transferCircles", transferCirclesSideEffect);
 </script>

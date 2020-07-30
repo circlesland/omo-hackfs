@@ -31,7 +31,7 @@
     alert("token deploy done: " + tokenDeployed);
   }
 
-  export async function sendCircles(fromSafeOwner, fromSafe, toSafe, amount) {
+  export async function transferCircles(fromSafeOwner, fromSafe, toSafe, amount) {
     let toSafeAddress = window.o.web3.utils.toChecksumAddress(toSafe.safeAddress);
     let fromSafeAddress = window.o.web3.utils.toChecksumAddress(fromSafe.safeAddress);
 
