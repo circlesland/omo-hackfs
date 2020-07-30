@@ -1,7 +1,7 @@
 import { IdentityProviderInterface } from "./IdentityProviderInterface";
-import { OdentityEntity } from "../core/Data/Entities/OdentityEntity";
-import { LoginRequest } from "../core/Data/Entities/LoginRequest";
-import { OdentityProvider } from "../core/Data/Entities/OdentityProvider";
+import { OdentityEntity } from "./../Data/Entities/OdentityEntity";
+import { LoginRequest } from "./../Data/Entities/LoginRequest";
+import { OdentityProvider } from "./../Data/Entities/OdentityProvider";
 
 export class EmailProvider implements IdentityProviderInterface {
     async    login(loginRequest: LoginRequest, providerIdentity: OdentityProvider): Promise<OdentityEntity | null> {
