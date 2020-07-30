@@ -1,7 +1,7 @@
 import {ISideEffect} from "../../../../Core/Flows/ISideEffect";
-import {TrustFlowContext} from "../../../Flows/omo/safe/TrustFlowContext";
+import {IProcessContext} from "../../../../Core/Flows/IProcessContext";
 
-export const giveTrust:ISideEffect<TrustFlowContext, void> = {
+export const giveTrust:ISideEffect<IProcessContext, void> = {
   execute: async (context, argument) => {
       async function addTrustLineAsync(
           trustGivingSafeOwner,

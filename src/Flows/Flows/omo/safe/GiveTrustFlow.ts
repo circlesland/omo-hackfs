@@ -1,9 +1,9 @@
 import {ProcessBuilder} from "../../../../Core/Flows/ProcessBuilder";
 import {IProcessContext} from "../../../../Core/Flows/IProcessContext";
 
-export function trustFlow()
+export function giveTrustFlow()
 {
-    return new ProcessBuilder<IProcessContext>("omo.safe.giveTrust")
+    return new ProcessBuilder<IProcessContext>("omo.safe.giveTrustFlow")
         .category("Trust someone", build =>
             build
 

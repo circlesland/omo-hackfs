@@ -103,7 +103,7 @@
                 // TODO: Custom actions should be available on every level
                 {
                     title: "fsdfds",
-                    event: () => new StartFlow("omo.safe.trustFlow")
+                    event: () => new StartFlow("omo.safe.giveTrustFlow")
                 }
             ]
         },
@@ -120,23 +120,23 @@
                 // TODO: Custom actions should be available on every level
                 {
                     title: "Trust someone",
-                    event: () => new StartFlow("omo.safe.trustFlow")
+                    event: () => new StartFlow("omo.safe.giveTrustFlow")
                 },
                 {
                     title: "Untrust someone",
-                    event: () => new StartFlow("omo.safe.trustFlow")
+                    event: () => new StartFlow("omo.safe.revokeTrustFlow")
                 },
                 {
                     title: "Send Circles",
-                    event: () => new StartFlow("omo.safe.trustFlow")
+                    event: () => new StartFlow("omo.safe.giveTrustFlow")
                 },
                 {
                     title: "Add another owner to this safe",
-                    event: () => new StartFlow("omo.safe.trustFlow")
+                    event: () => new StartFlow("omo.safe.giveTrustFlow")
                 },
                 {
                     title: "Remove an owner from this safe",
-                    event: () => new StartFlow("omo.safe.trustFlow")
+                    event: () => new StartFlow("omo.safe.giveTrustFlow")
                 }
             ]
         },

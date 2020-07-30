@@ -43,7 +43,7 @@ Important links:
 2. login success email authentication success (show every details step of odentity) (F)
 3. create PPK (web3) (F)
 4. create gnosis safe (F)
-5. trustFlow gnosis safe (3x) (F)
+5. giveTrustFlow gnosis safe (3x) (F)
 6. deploy gnosis safe (F)
 7. deploy token (F)
 8. -> Flow 3
@@ -107,7 +107,7 @@ Important links:
 1. Welcome Slideshow
 2. create new PPK (F)
 3. create gnosis safe (F)
-4. trustFlow gnosis safe (3x) (F)
+4. giveTrustFlow gnosis safe (3x) (F)
 5. deploy gnosis safe (F)
 6. deploy token (F)
 7. -> Flow 2
