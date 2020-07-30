@@ -3,6 +3,7 @@
     import OmoOrganisms from "./../4-layouts/OmoOrganisms.svelte";
     import {ProcessNode} from "../../Core/Flows/ProcessNode";
     import {onDestroy, onMount} from "svelte";
+    import {SubmitFlowStep} from "../../Core/Events/omo/shell/SubmitFlowStep";
 
     export let processNode = {};
 
@@ -163,4 +164,9 @@
 
 {#if organisms}
     <OmoOrganisms {organisms}/>
+    <button
+            class="text-blue-500"
+            on:click={() => window.o.publishShellEventAsync(new SubmitFlowStep(processNode.id))}>
+        Submit flow step
+    </button>
 {/if}

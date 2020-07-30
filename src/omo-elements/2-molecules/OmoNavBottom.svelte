@@ -122,11 +122,5 @@
         </a>
       </li>
     {/each}
-      <button
-              class="text-blue-500"
-              bind:this={triggerRef}
-              on:click={() => window.o.publishShellEventAsync(new SubmitFlowStep(processNode.id))}>
-          Submit flow step
-      </button>
   </ul>
 </nav>
