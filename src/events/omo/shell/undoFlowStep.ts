@@ -1,4 +1,4 @@
-import {Event} from "../../../Core/Data/Entities/Event"
+import {Event} from "../../../core/Data/Entities/Event"
 
 export class UndoFlowStep extends Event
 {

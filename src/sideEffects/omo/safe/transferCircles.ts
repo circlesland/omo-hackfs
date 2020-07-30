@@ -1,5 +1,5 @@
-import {ISideEffect} from "../../../Core/Flows/ISideEffect";
-import {IProcessContext} from "../../../Core/Flows/IProcessContext";
+import {ISideEffect} from "../../../core/Flows/ISideEffect";
+import {IProcessContext} from "../../../core/Flows/IProcessContext";
 
 export const transferCircles:ISideEffect<IProcessContext, void> = {
   execute: async (context, argument) => {

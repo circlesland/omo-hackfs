@@ -1,6 +1,6 @@
 <script>
 
-    import {ProcessNode} from "../../Core/Flows/ProcessNode";
+    import {ProcessNode} from "../../../core/Flows/ProcessNode";
 
     let items = [];
 

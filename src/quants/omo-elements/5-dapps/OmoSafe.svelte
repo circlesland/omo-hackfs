@@ -1,5 +1,5 @@
 <script>
-  import { Odentity } from "./../../Core/Odentity.ts";
+  import { Odentity } from "../../../core/Odentity.ts";
   import { onMount, onDestroy } from "svelte";
   import OmoOrganisms from "./../4-layouts/OmoOrganisms.svelte";
   import { getSafeFromLocalStorage } from "./../../omo-actions/Circles";

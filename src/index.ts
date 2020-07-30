@@ -1,7 +1,7 @@
 import App from "./App.svelte";
-import { Quantum } from "./Core/Quantum";
-import { Threads } from "./Core/Textile/Threads";
-import { RemoteThread } from "./Core/Textile/RemoteThread";
+import { Quantum } from "./core/Quantum";
+import { Threads } from "./core/Textile/Threads";
+import { RemoteThread } from "./core/Textile/RemoteThread";
 import { async } from "rxjs";
 
 declare global {
