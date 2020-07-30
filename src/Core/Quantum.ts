@@ -9,7 +9,7 @@ import {RemoteThread} from "./Textile/RemoteThread";
 import {StopWatch} from "./StopWatch";
 import CirclesCore from "@circles/core";
 import Web3 from "web3";
-import {EventBroker} from "./Events/EventBroker";
+import {EventBroker} from "./../Events/EventBroker";
 
 export class Quantum
 {
