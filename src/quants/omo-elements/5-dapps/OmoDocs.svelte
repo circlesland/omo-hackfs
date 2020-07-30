@@ -1,17 +1,17 @@
 <script>
   import OmoMarkdown from "./../3-organisms/OmoMarkdown";
 
-  import Overview from "./../../omo-docs/Overview.svx";
-  import Introduction from "./../../omo-docs/Introduction.svx";
-  import OmoEarthPOC from "./../../omo-docs/OmoEarthPOC.svx";
-  import OmoIdentity from "./../../omo-docs/OmoIdentity.svx";
-  import OmoBlocks from "./../../omo-docs/OmoBlocks.svx";
-  import DesignSystem from "./../../omo-docs/DesignSystem.svx";
-  import ModelDesigner from "./../../omo-docs/ModelDesigner.svx";
-  import GraphQLEditor from "./../../omo-docs/GraphQLEditor.svx";
-  import DataStore from "./../../omo-docs/DataStore.svx";
-  import Circles from "./../../omo-docs/Circles.svx";
-  import OmoActions from "./../../omo-docs/OmoActions.svx";
+  import Overview from "./../../../docs/Overview.svx";
+  import Introduction from "./../../../docs/Introduction.svx";
+  import OmoEarthPOC from "./../../../docs/OmoEarthPOC.svx";
+  import OmoIdentity from "./../../../docs/OmoIdentity.svx";
+  import OmoBlocks from "./../../../docs/OmoBlocks.svx";
+  import DesignSystem from "./../../../docs/DesignSystem.svx";
+  import ModelDesigner from "./../../../docs/ModelDesigner.svx";
+  import GraphQLEditor from "./../../../docs/GraphQLEditor.svx";
+  import DataStore from "./../../../docs/DataStore.svx";
+  import Circles from "./../../../docs/Circles.svx";
+  import OmoActions from "./../../../docs/OmoActions.svx";
 
   const blogs = [
     { text: "Overview", component: Overview },
