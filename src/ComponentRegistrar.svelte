@@ -21,8 +21,10 @@
   import OmoStatusResponse from "./omo-elements/2-molecules/OmoStatusResponse";
   import {giveTrustFlow} from "./Flows/Flows/omo/safe/GiveTrustFlow";
   import {revokeTrustFlow} from "./Flows/Flows/omo/safe/RevokeTrustFlow";
+  import {sendCirclesFlow} from "./Flows/Flows/omo/safe/SendCirclesFlow";
   import {collectUserValue} from "./Flows/SideEffects/omo/shell/collectUserValue";
   import {giveTrust} from "./Flows/SideEffects/omo/safe/giveTrust";
+  import {sendCircles} from "./Flows/SideEffects/omo/safe/sendCircles";
   import {revokeTrust} from "./Flows/SideEffects/omo/safe/revokeTrust";
   import OmoGridVoting from "./omo-elements/2-molecules/OmoGridVoting";
   import OmoGridPreOrder from "./omo-elements/2-molecules/OmoGridPreOrder";
@@ -55,9 +57,11 @@
   window.flowRegistrar = new Map();
   window.flowRegistrar.set("omo.safe.giveTrustFlow", giveTrustFlow);
   window.flowRegistrar.set("omo.safe.revokeTrustFlow", revokeTrustFlow);
+  window.flowRegistrar.set("omo.safe.sendCirclesFlow", sendCirclesFlow);
 
   window.sideEffectRegistrar = new Map();
   window.sideEffectRegistrar.set("omo.shell.collectUserValue", collectUserValue);
   window.sideEffectRegistrar.set("omo.safe.giveTrust", giveTrust);
   window.sideEffectRegistrar.set("omo.safe.revokeTrust", revokeTrust);
+  window.sideEffectRegistrar.set("omo.safe.sendCircles", sendCircles);
 </script>

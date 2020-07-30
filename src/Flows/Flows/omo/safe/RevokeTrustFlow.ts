@@ -7,12 +7,12 @@ export function revokeTrustFlow()
         .category("Trust someone", build =>
             build
 
-            .step("omo.safe.giveTrust:trustReceivingSafe")
+            .step("omo.safe.revokeTrustFlow:trustReceivingSafe")
                 .withSideEffect("omo.shell.collectUserValue")
                 .withQuant("OmoSafeLookup")
                 .withTitle("Enter safe address to un-trust")
 
-            .step("omo.safe.giveTrust:revokeTrust")
+            .step("omo.safe.revokeTrustFlow:revokeTrust")
                 .withSideEffect("omo.safe.revokeTrust")
                 .withQuant("OmoStatusResponse")
                 .withTitle("Review & confirm")

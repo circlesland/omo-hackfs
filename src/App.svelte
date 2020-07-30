@@ -128,7 +128,7 @@
                 },
                 {
                     title: "Send Circles",
-                    event: () => new StartFlow("omo.safe.giveTrustFlow")
+                    event: () => new StartFlow("omo.safe.sendCirclesFlow")
                 },
                 {
                     title: "Add another owner to this safe",
