@@ -4,6 +4,7 @@
     import OmoModal from "./OmoModal.svelte";
     import {onMount} from "svelte";
     import OmoDialog from "../5-dapps/OmoDialog.svelte";
+    import {SubmitFlowStep} from "../../Core/Events/omo/shell/SubmitFlowStep";
 
   let isOpen = false;
 
@@ -121,5 +122,11 @@
         </a>
       </li>
     {/each}
+      <button
+              class="text-blue-500"
+              bind:this={triggerRef}
+              on:click={() => window.o.publishShellEventAsync(new SubmitFlowStep(processNode.id))}>
+          Submit flow step
+      </button>
   </ul>
 </nav>
