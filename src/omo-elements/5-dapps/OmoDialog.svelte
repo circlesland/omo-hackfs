@@ -57,7 +57,6 @@
         let activeLeaf = ProcessNode.findActiveLeaf(copy);
         if (activeLeaf && activeLeaf.quant) {
             organisms.blocks[1].quant = activeLeaf.quant;
-            console.log("Setting organisms.blocks[1].quant = " + activeLeaf.quant);
         }
 
         if (isNewProcess(processNode)) {
@@ -66,11 +65,8 @@
             activeLeaf = ProcessNode.findActiveLeaf(copy);
             if (activeLeaf && activeLeaf.quant) {
                 organisms.blocks[1].quant = activeLeaf.quant;
-                console.log("Setting organisms.blocks[1].quant = " + activeLeaf.quant);
             }
         }
-
-        console.log("activeLeaf:", activeLeaf);
     }
 
     $: {
@@ -88,10 +84,8 @@
             // pristine process, set initial active node
             const usedNodes = ProcessNode.flattenSequencial(processNode).filter(o => o.state !== "Pristine");
             const isNew = usedNodes.length === 0;
-            console.log("isNewProcess", isNew);
             return isNew;
         }
-        console.log("isNewProcess", false);
         return false;
     }
 
@@ -101,7 +95,7 @@
      */
     function initProcess(processNode) {
         const flatLeafs = ProcessNode.flattenSequencial(processNode);
-        console.log("initProcess", flatLeafs);
+
         if (!flatLeafs || flatLeafs.length === 0) {
             throw new Error("A non executable or empty 'processNode' was supplied to 'OmoDialog'.");
         }
@@ -154,9 +148,6 @@
             organisms = oldOrg;
         }, 1);
     }
-
-    setTimeout(() => next(), 5000);
-    setTimeout(() => next(), 10000);
 
 </script>
 

@@ -1,36 +1,8 @@
 <script>
-    import {onMount} from "svelte";
-
     export let data = {
         bundleId:""
     };
 
-    let node = null;
-    let bundleTopic = null;
-
-    onMount(() => {
-        bundleTopic = window.o.eventBroker.tryGetTopic("omo", data.bundleId);
-        bundleTopic.observable.subscribe(next => {
-            console.log("Got message for bundle " + data.bundleId, next);
-            if (next._$eventType === "omo.molecules.OmoDialogContent.SetNode"
-                    && next.data.bundleId === data.bundleId
-                    && next.data.node) {
-                node = next.data.node;
-            }
-        });
-    });
-
-    function submit()
-    {
-        const activeNode = node.getActiveNode();
-        if (!activeNode) {
-            alert("No active DialogFlow node");
-            return;
-        }
-
-        activeNode.submit().then(() => {
-        });
-    }
 </script>
 
 <div class="h-full flex flex-col justify-center">

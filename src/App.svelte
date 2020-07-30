@@ -27,6 +27,7 @@
     import OmoNavTop from "./omo-elements/2-molecules/OmoNavTop.svelte";
     import OmoNavBottom from "./omo-elements/2-molecules/OmoNavBottom.svelte";
     import {StartFlow} from "./Core/Events/omo/shell/StartFlow";
+    import {Navigated} from "./Core/Events/omo/shell/Navigated";
 
     onMount(() => {
         let route = getRoute();
@@ -42,6 +43,9 @@
         //   omo = o;
         // });
         window.navigate = navigate;
+        if (route) {
+            window.o.publishShellEventAsync(new Navigated(route.replace("?page=", "")));
+        }
 
         let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
         notifications.observable.subscribe(next => {
@@ -63,11 +67,9 @@
     });
 
     function notify(next) {
-        console.log("New notification:", next);
     }
 
     function navigated(page) {
-        console.log("Navigated to:", page);
     }
 
     function handlerBackNavigation(event) {

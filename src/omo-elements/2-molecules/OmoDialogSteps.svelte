@@ -10,7 +10,6 @@
             return [];
         }
 
-        console.log("refreshTree", processNode);
         ProcessNode.restoreParentLinks(processNode);
 
         return [
@@ -32,7 +31,6 @@
 
     $: {
         items = refreshTree(data);
-        console.log("Hello from OmoDialogSteps", data);
     }
 </script>
 
