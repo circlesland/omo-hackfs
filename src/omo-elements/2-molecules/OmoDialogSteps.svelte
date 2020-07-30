@@ -11,11 +11,11 @@
 
         ProcessNode.restoreParentLinks(processNode);
 
-        return [
-            {
-                title: processNode.children[0].title,
+        return processNode.children.map(node => {
+            return {
+                title: node.title,
                 level: 1,
-                steps: processNode.children[0].children.map((o, i) => {
+                steps: node.children.map((o, i) => {
                     return {
                         title: o.title,
                         state: o.state,
@@ -23,7 +23,7 @@
                     };
                 })
             }
-        ];
+        });
     }
 
     export let data = {};
