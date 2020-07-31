@@ -1,6 +1,7 @@
 <script>
   import {SubmitFlowStep} from "../../events/omo/shell/submitFlowStep";
   import {onDestroy, onMount} from "svelte";
+  import {Logger} from "../../core/Log/logger";
 
   let subscription = null;
   let value = "";
@@ -19,8 +20,6 @@
       subscription = notifications.observable.subscribe(event => {
           if (!event._$schemaId) return;
 
-          console.log(event, data);
-
           switch (event._$schemaId) {
               case "events:omo.shell.requestSubmitFlowStep":
                   if (!event.data.processNodeId === data.id) {
@@ -33,8 +32,8 @@
   });
 
   function submit() {
-    console.log("submit()");
     const submitEvent = new SubmitFlowStep(data.id, value);
+    Logger.log(data.id + ":OmoInput", "Sending SubmitFlowStep(processNodeId: " + data.id + ", value: <see attachment>)", value);
     window.o.publishShellEventAsync(submitEvent);
   }
 </script>

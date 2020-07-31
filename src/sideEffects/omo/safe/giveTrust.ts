@@ -1,5 +1,6 @@
 import {ISideEffect} from "../../../core/Flows/ISideEffect";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
+import {Logger} from "../../../core/Log/logger";
 
 export const giveTrust: ISideEffect<IProcessContext, void> = {
     _$schemaId: "sideEffects:omo.safe.giveTrust",
@@ -44,6 +45,7 @@ export const giveTrust: ISideEffect<IProcessContext, void> = {
             throw new Error("context.o.odentity.current is not set in 'giveTrust' side effect.");
         }
 
+        Logger.log(context.local.processNodeId + ":sideEffects:omo.safe.giveTrust", "'" + context.local.inputs["trustGivingSafe"].safeAddress + "' is giving trust to '" + context.local.inputs["trustReceivingSafe"].safeAddress + "'.");
         await addTrustLineAsync(
             context.local.inputs["trustGivingSafeOwner"],
             context.local.inputs["trustGivingSafe"],
@@ -52,7 +54,6 @@ export const giveTrust: ISideEffect<IProcessContext, void> = {
         );
 
         context.local.outputs["void"] = {};
-        console.log("SE: gave trust");
 
     },
     canExecute: async context => true

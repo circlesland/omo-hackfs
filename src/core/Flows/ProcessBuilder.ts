@@ -3,38 +3,39 @@ import {IProcessContext} from "./IProcessContext";
 
 export class StepBuilder<TContext extends IProcessContext>
 {
-    readonly stepId:string;
-    title?:string;
-    description?:string;
-    readonly parent:CategoryBuilder<TContext>;
+    readonly stepId: string;
+    title?: string;
+    description?: string;
+    readonly parent: CategoryBuilder<TContext>;
     root?: ProcessBuilder<TContext>;
 
-    quant?:string;
-    sideEffect?:string;
+    quant?: string;
+    sideEffect?: string;
     prompt?: string;
+    _isNonInteractive?: boolean;
 
     inputMap: { localName: string; globalName: string }[] = [];
     outputMap: { localName: string; globalName: string }[] = [];
 
-    constructor(parent:CategoryBuilder<TContext>, stepId:string)
+    constructor(parent: CategoryBuilder<TContext>, stepId: string)
     {
         this.parent = parent;
         this.stepId = stepId;
     }
 
-    withQuant(quant:string) : StepBuilder<TContext>
+    withQuant(quant: string): StepBuilder<TContext>
     {
         this.quant = quant;
         return this;
     }
 
-    withSideEffect<TArgument>(sideEffect:string) : StepBuilder<TContext>
+    withSideEffect<TArgument>(sideEffect: string): StepBuilder<TContext>
     {
         this.sideEffect = sideEffect;
         return this;
     }
 
-    step(id:string) : StepBuilder<TContext>
+    step(id: string): StepBuilder<TContext>
     {
         const builder = new StepBuilder(this.parent, id);
         this.parent.categoriesOrSteps.push(builder);
@@ -42,25 +43,25 @@ export class StepBuilder<TContext extends IProcessContext>
         return builder;
     }
 
-    withTitle(title:string) : StepBuilder<TContext>
+    withTitle(title: string): StepBuilder<TContext>
     {
         this.title = title;
         return this;
     }
 
-    withDescription(description:string) : StepBuilder<TContext>
+    withDescription(description: string): StepBuilder<TContext>
     {
         this.description = description;
         return this;
     }
 
-    withPrompt(prompt:string) : StepBuilder<TContext>
+    withPrompt(prompt: string): StepBuilder<TContext>
     {
         this.prompt = prompt;
         return this;
     }
 
-    build(parent:ProcessNode<TContext>) : ProcessNode<TContext>
+    build(parent: ProcessNode<TContext>): ProcessNode<TContext>
     {
         const step = new ProcessNode<TContext>(parent);
         step.quant = this.quant;
@@ -71,6 +72,7 @@ export class StepBuilder<TContext extends IProcessContext>
         step.prompt = this.prompt;
         step.inputMap = this.inputMap;
         step.outputMap = this.outputMap;
+        step.isInteractive = !!this.quant && !this._isNonInteractive;
         return step;
     }
 
@@ -91,26 +93,32 @@ export class StepBuilder<TContext extends IProcessContext>
         });
         return this;
     }
+
+    isNonInteractive(): StepBuilder<TContext>
+    {
+        this._isNonInteractive = true;
+        return this;
+    }
 }
 
 export class CategoryBuilder<TContext extends IProcessContext>
 {
-    readonly parent?:CategoryBuilder<TContext>;
-    readonly title:string;
+    readonly parent?: CategoryBuilder<TContext>;
+    readonly title: string;
 
-    quant?:string;
+    quant?: string;
 
-    readonly categoriesOrSteps:(CategoryBuilder<TContext>|StepBuilder<TContext>)[] = [];
+    readonly categoriesOrSteps: (CategoryBuilder<TContext> | StepBuilder<TContext>)[] = [];
     root: ProcessBuilder<TContext>;
 
-    constructor(title:string, root:ProcessBuilder<TContext>, parent?:CategoryBuilder<TContext>)
+    constructor(title: string, root: ProcessBuilder<TContext>, parent?: CategoryBuilder<TContext>)
     {
         this.root = root;
         this.parent = parent;
         this.title = title;
     }
 
-    category(title:string, nestedBuilder:(b:CategoryBuilder<TContext>) => void): CategoryBuilder<TContext>
+    category(title: string, nestedBuilder: (b: CategoryBuilder<TContext>) => void): CategoryBuilder<TContext>
     {
         const builder = new CategoryBuilder(title, this.root, this);
         this.categoriesOrSteps.push(builder);
@@ -118,13 +126,13 @@ export class CategoryBuilder<TContext extends IProcessContext>
         return builder;
     }
 
-    withQuant(quant:string) : CategoryBuilder<TContext>
+    withQuant(quant: string): CategoryBuilder<TContext>
     {
         this.quant = quant;
         return this;
     }
 
-    step(id:string) : StepBuilder<TContext>
+    step(id: string): StepBuilder<TContext>
     {
         const builder = new StepBuilder(this, id);
         builder.root = this.root;
@@ -132,7 +140,7 @@ export class CategoryBuilder<TContext extends IProcessContext>
         return builder;
     }
 
-    build(parent:ProcessNode<TContext>) : ProcessNode<TContext>
+    build(parent: ProcessNode<TContext>): ProcessNode<TContext>
     {
         const category = new ProcessNode<TContext>(parent);
         category.title = this.title;
@@ -140,9 +148,12 @@ export class CategoryBuilder<TContext extends IProcessContext>
 
         for (let item of this.categoriesOrSteps)
         {
-            if (item instanceof CategoryBuilder) {
+            if (item instanceof CategoryBuilder)
+            {
                 category.children.push(item.build(category));
-            } else if (item instanceof StepBuilder) {
+            }
+            else if (item instanceof StepBuilder)
+            {
                 category.children.push(item.build(category));
             }
         }
@@ -150,7 +161,7 @@ export class CategoryBuilder<TContext extends IProcessContext>
         return category;
     }
 
-    end() : ProcessBuilder<TContext>
+    end(): ProcessBuilder<TContext>
     {
         return this.root;
     }
@@ -158,16 +169,16 @@ export class CategoryBuilder<TContext extends IProcessContext>
 
 export class ProcessBuilder<TContext extends IProcessContext>
 {
-    readonly categories:CategoryBuilder<TContext>[] = [];
+    readonly categories: CategoryBuilder<TContext>[] = [];
 
-    readonly id:string;
+    readonly id: string;
 
-    constructor(id:string)
+    constructor(id: string)
     {
         this.id = id;
     }
 
-    category(title:string, nestedBuilder:(b:CategoryBuilder<TContext>) => void): CategoryBuilder<TContext>
+    category(title: string, nestedBuilder: (b: CategoryBuilder<TContext>) => void): CategoryBuilder<TContext>
     {
         const builder = new CategoryBuilder<TContext>(title, this);
         builder.root = this;
@@ -176,7 +187,7 @@ export class ProcessBuilder<TContext extends IProcessContext>
         return builder;
     }
 
-    build() : ProcessNode<TContext>
+    build(): ProcessNode<TContext>
     {
         const processNode = new ProcessNode<TContext>();
 

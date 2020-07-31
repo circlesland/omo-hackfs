@@ -13,8 +13,10 @@ export function createDream()
                     .withPrompt("Name")
                     .withTitle("Give your dream a name")
 
-                .step("flows:omo.dreams.createDream:createdDream")
+                .step("flows:omo.dreams.createDream:createDream")
+                    .withQuant("OmoLoading")
                     .mapInput("name", "dreamName")
+                    .isNonInteractive()
                     .withSideEffect("sideEffects:omo.dreams.createDream")
 
                 .step("flows:omo.dreams.createDream:generatePpk")

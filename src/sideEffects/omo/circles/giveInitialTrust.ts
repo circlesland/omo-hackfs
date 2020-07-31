@@ -1,6 +1,7 @@
 import {ISideEffect} from "../../../core/Flows/ISideEffect";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
 import {giveTrust} from "../safe/giveTrust";
+import {Logger} from "../../../core/Log/logger";
 
 export const giveInitialTrust: ISideEffect<IProcessContext, any> = {
     _$schemaId: "sideEffects:omo.circles.giveInitialTrust",
@@ -15,7 +16,6 @@ export const giveInitialTrust: ISideEffect<IProcessContext, any> = {
     }],
     execute: async (context, argument) =>
     {
-        console.log("SE: Give initial trust started..");
         const omo1 = {
             safeOwner: {
                 privateKey: process.env.OMO1_ACCOUNT_PRIVATEKEY,
@@ -38,8 +38,6 @@ export const giveInitialTrust: ISideEffect<IProcessContext, any> = {
             safe: { safeAddress: process.env.OMO3_SAFE_SAFEADDRESS }
         };
 
-        console.log("SE: Give initial trust initialized..");
-
         async function addTrustLineAsync(
             trustGivingSafeOwner,
             trustGivingSafe,
@@ -55,31 +53,31 @@ export const giveInitialTrust: ISideEffect<IProcessContext, any> = {
             });
         }
 
-        console.log("SE: Trust from 1");
+        Logger.log(context.local.processNodeId + ":sideEffects:omo.circles.giveInitialTrust", "Owner '" + omo1.safeOwner.address + "' trusts '" + context.local.inputs["trustReceiverSafe"].safeAddress + "'..");
         await addTrustLineAsync(
             omo1.safeOwner,
             omo1.safe,
             context.local.inputs["trustReceiverSafe"],
             1,
         );
-        console.log("SE: Trust from 2");
+
+        Logger.log(context.local.processNodeId + ":sideEffects:omo.circles.giveInitialTrust", "Owner '" + omo2.safeOwner.address + "' trusts '" + context.local.inputs["trustReceiverSafe"].safeAddress + "'..");
         await addTrustLineAsync(
             omo2.safeOwner,
             omo2.safe,
             context.local.inputs["trustReceiverSafe"],
             1,
         );
-        console.log("SE: Trust from 3");
+
+        Logger.log(context.local.processNodeId + ":sideEffects:omo.circles.giveInitialTrust", "Owner '" + omo3.safeOwner.address + "' trusts '" + context.local.inputs["trustReceiverSafe"].safeAddress + "'..");
         await addTrustLineAsync(
             omo3.safeOwner,
             omo3.safe,
             context.local.inputs["trustReceiverSafe"],
             1,
         );
-        console.log("SE: Trusted");
 
         context.local.outputs["void"] = {};
-        console.log("SE: gave initial trust");
     },
     canExecute: async context => true
 };

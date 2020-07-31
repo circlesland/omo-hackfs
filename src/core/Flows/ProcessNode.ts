@@ -27,6 +27,8 @@ export class ProcessNode<TContext extends IProcessContext>
     quant?: string;
     sideEffect?: string;
 
+    isInteractive?: boolean;
+
     constructor(parent?: ProcessNode<TContext>)
     {
         this.parent = !parent ? null : parent;

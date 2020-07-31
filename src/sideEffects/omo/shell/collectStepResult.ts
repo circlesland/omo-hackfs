@@ -10,7 +10,6 @@ export const collectStepResult:ISideEffect<IProcessContext, any> = {
     }],
   execute: async (context, argument) => {
       context.local.outputs["stepResult"] = argument;
-      console.log("SE: collected step result: ", argument);
   },
   canExecute: async context => true
 };

@@ -1,5 +1,6 @@
 import {ISideEffect} from "../../../core/Flows/ISideEffect";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
+import {Logger} from "../../../core/Log/logger";
 
 export const deployToken: ISideEffect<IProcessContext, void> = {
     _$schemaId: "sideEffects:omo.safe.deployToken",
@@ -16,48 +17,50 @@ export const deployToken: ISideEffect<IProcessContext, void> = {
     }],
     execute: async (context, argument) =>
     {
-        console.log("SE: deploy token..");
-        console.log("Finished! safe: ", context.local.inputs["safe"])
-        console.log("Finished! safeOwner: ", context.local.inputs["safeOwner"])
-        async function addTrustLineAsync(
+        async function tryDeployToken(
+            safeOwner,
+            safe
+        ) : Promise<boolean> {
+            return new Promise(async (r) => {
+                setTimeout(async () => {
+                    try
+                    {
+                        await window.o.circlesCore.token.deploy(safeOwner, safe);
+                        r(true);
+                    }catch (e)
+                    {
+                        Logger.warning(context.local.processNodeId + ":sideEffects:omo.safe.deployToken", "Couldn't deploy token for safe '" +  safe.safeAddress + "'. Reason:", e);
+                        r(false);
+                    }
+                }, 10000);
+            });
+        }
+
+        async function deployToken(
             safeOwner,
             safe
         )
         {
             let success = false;
-            let triesLeft = 6;
+            let triesLeft = 10;
+
             while (!success && triesLeft-- >= 0)
             {
-                await new Promise(async (r) => {
-                    setTimeout(async () => {
-                        try
-                        {
-                            await window.o.circlesCore.token.deploy(safeOwner, safe);
-                            success = true;
-                            r();
-                        }
-                        catch (e)
-                        {
-                            success = false;
-                            console.log("Deploying safe failed. Tries left:", e);
-                            if (triesLeft <= 0) {
-                                throw e;
-                            }
-                            r();
-                        }
-                    }, 10000);
-                });
+                success = await tryDeployToken(safeOwner, safe);
+                if (!success) {
+                    Logger.warning(context.local.processNodeId + ":sideEffects:omo.safe.deployToken", "Couldn't deploy token for safe '" +  safe.safeAddress + "'. Tries left: " + triesLeft);
+                    continue;
+                }
+                Logger.log(context.local.processNodeId + ":sideEffects:omo.safe.deployToken", "Deployed token for safe '" +  safe.safeAddress + "'");
             }
         }
 
-        await addTrustLineAsync(
+        await deployToken(
             context.local.inputs["safeOwner"],
             context.local.inputs["safe"]
         );
 
         context.local.outputs["void"] = {};
-        console.log("SE: deployed token");
-        console.log("Finished! Safe: ", context.local.inputs["safe"]);
     },
     canExecute: async context => true
 };

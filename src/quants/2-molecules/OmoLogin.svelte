@@ -90,7 +90,7 @@
           <button
             on:click={login}
             type="submit"
-            value="Log In"
+            value="Logger In"
             class="bg-primary rounded text-white font-bold text-lg
             hover:bg-secondary p-2">
             {data.button}
@@ -114,7 +114,7 @@
           <button
             on:click={restoreFromSeed}
             type="submit"
-            value="Log In"
+            value="Logger In"
             class="bg-pink-700 rounded text-white font-bold text-lg
             hover:bg-secondary p-2">
             Login with Circles Seedphrase

@@ -1,5 +1,6 @@
 import {ISideEffect} from "../../../core/Flows/ISideEffect";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
+import {Logger} from "../../../core/Log/logger";
 
 export const deploySafe: ISideEffect<IProcessContext, void> = {
     _$schemaId: "sideEffects:omo.safe.deploySafe",
@@ -26,7 +27,8 @@ export const deploySafe: ISideEffect<IProcessContext, void> = {
                 setTimeout(async () => {
                     let trustReturn = await window.o.circlesCore.trust.isTrusted(safeOwner, safe);
                     if (!trustReturn.isTrusted) {
-                        console.log("The safe isn't trusted enough to be deployed. Current connections: " + trustReturn.trustConnections + ", required: 3");
+                        Logger.log(context.local.processNodeId + ":sideEffects:omo.circles.deploySafe", "The safe isn't yet trusted enough to be deployed. " +
+                            "Current connections: " + trustReturn.trustConnections + ", required: 3");
                     }
                     r(trustReturn.isTrusted);
                 }, 10000);
@@ -56,10 +58,6 @@ export const deploySafe: ISideEffect<IProcessContext, void> = {
         );
 
         context.local.outputs["void"] = {};
-        console.log("Finished! safe: " ,context.local.inputs["safe"]);
-        console.log("Finished! safeOwner: ", context.local.inputs["safeOwner"]);
-
-        console.log("SE: deployed safe");
     },
     canExecute: async context => true
 };

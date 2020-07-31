@@ -1,5 +1,6 @@
 import {ISideEffect} from "../../../core/Flows/ISideEffect";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
+import {Logger} from "../../../core/Log/logger";
 
 export const generateSafe:ISideEffect<IProcessContext, any> = {
     _$schemaId: "sideEffects:omo.circles.generateSafe",
@@ -18,10 +19,9 @@ export const generateSafe:ISideEffect<IProcessContext, any> = {
       // Prepare Safe deployment and receive a predicted safeAddress
       const safeAddress = await window.o.circlesCore.safe.prepareDeploy(ppk, { nonce });
       const safe = { safeAddress: safeAddress };
-      context.local.outputs["safe"] = safe;
 
-      console.log("SE: Generated safe:" ,context.local.outputs["safe"]);
-      console.log("Generated safe: ", context.local.outputs["safe"])
+
+      context.local.outputs["safe"] = safe;
   },
   canExecute: async context => true
 };

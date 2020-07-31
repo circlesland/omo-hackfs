@@ -1,5 +1,6 @@
 import {ISideEffect} from "../../../core/Flows/ISideEffect";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
+import {Logger} from "../../../core/Log/logger";
 
 export const transferCircles:ISideEffect<IProcessContext, void> = {
     _$schemaId: "sideEffects:omo.safe.transferCircles",
@@ -29,13 +30,17 @@ export const transferCircles:ISideEffect<IProcessContext, void> = {
       ) {
           let receivingSafeAddressC = window.o.web3.utils.toChecksumAddress(receivingSafeAddress.safeAddress);
           let sendingSafeAddressC = window.o.web3.utils.toChecksumAddress(sendingSafeAddress.safeAddress);
+
+          Logger.log(context.local.processNodeId + ":sideEffects:omo.safe.transferCircles", "Transferring '" + amount + "' circles from '" + sendingSafeAddressC + "' to '" + receivingSafeAddressC + "'.");
+
           // .. give user the permission to send their Token to you
           await window.o.circlesCore.token.transfer(sendingSafeOwner, {
               from: sendingSafeAddressC,
               to: receivingSafeAddressC,
               value: amount,
           });
-          alert("Sent " + amount + " Circles to: " + receivingSafeAddress);
+
+          Logger.log(context.local.processNodeId + ":sideEffects:omo.safe.transferCircles", "Sent '" + amount + "' circles from '" + sendingSafeAddressC + "' to '" + receivingSafeAddressC + "'.");
       }
       if (!context.o.odentity.current) {
           throw new Error("context.o.odentity.current is not set in 'giveTrust' side effect.");

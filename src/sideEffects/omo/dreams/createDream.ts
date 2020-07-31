@@ -14,7 +14,6 @@ export const createDream:ISideEffect<IProcessContext, any> = {
   execute: async (context, argument) => {
       const dreamName = context.local.inputs["name"];
       context.local.outputs["void"] = {};
-      console.log("SE: created dream");
   },
   canExecute: async context => true
 };

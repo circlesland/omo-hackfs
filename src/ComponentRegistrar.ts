@@ -25,6 +25,7 @@ import OmoSelect from "./quants/2-molecules/OmoSelect.svelte";
 import OmoGridVoting from "./quants/2-molecules/OmoGridVoting.svelte";
 import OmoGridPreOrder from "./quants/2-molecules/OmoGridPreOrder.svelte";
 import OmoNextButton from "./quants/2-molecules/OmoNextButton.svelte";
+import OmoLoading from "./quants/2-molecules/OmoLoading.svelte";
 
 //
 // Flows
@@ -102,6 +103,7 @@ export function init()
     w.registrar.set("OmoGridPreOrder", OmoGridPreOrder);
     w.registrar.set("OmoSelect", OmoSelect);
     w.registrar.set("OmoNextButton", OmoNextButton);
+    w.registrar.set("OmoLoading", OmoLoading);
 
     w.flowRegistrar = new Map();
     w.flowRegistrar.set("flows:omo.safe.giveTrust", giveTrustFlow);
