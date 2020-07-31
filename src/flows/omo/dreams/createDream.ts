@@ -13,7 +13,7 @@ export function createDream() {
         .withTitle("Give your dream a name")
     )
     .end()
-    .category("Create new safe for your dream", (b) => {
+    .category("Show Details", (b) => {
       b.step("flows:omo.dreams.createDream:createDream")
         .withQuant("OmoLoading")
         .mapInput("name", "dreamName")

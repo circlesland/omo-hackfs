@@ -62,35 +62,38 @@
       {:else if step.state == 'Active'}
         <div
           class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800
-          hover:bg-primary hover:text-white">
-          <p class="py-2 px-4 text-xl font-bold">{step.step}</p>
+          hover:bg-secondary hover:text-white">
+          <p class="w-12 py-2 px-4 text-xl bg-primary text-white font-bold">
+            {step.step}
+          </p>
           <p class="py-3 px-4 rounded w-full">{step.title}</p>
         </div>
       {:else if step.state == 'Working'}
-        <div class="flex mb-4 flex-col justify-center h-12">
-          <div class="py-3 h-12 text-center bg-gray-200">
+        <div
+          class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800
+          hover:bg-secondary hover:text-white">
+          <div class="py-3 px-3 h-12 text-center bg-gray-200">
             <OmoSpin />
           </div>
+          <p class="py-3 px-2 rounded text-gray-500 w-full">{step.title}</p>
         </div>
       {:else if step.state == 'Succeeded'}
         <div
           class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800
-          hover:bg-primary hover:text-white">
+          hover:bg-secondary hover:text-white">
           <p class="py-2 px-4 text-xl bg-tertiary font-bold">
             <i class="fas fa-check-circle text-white" />
           </p>
           <p class="py-3 px-4 rounded w-full">{step.title}</p>
         </div>
-        <!-- <div class="flex mb-4 flex-col justify-center h-12">
-          <div class="py-3 h-12 text-center bg-gray-200">
-            <i class="fas fa-check-circle text-tertiary" />
-          </div>
-        </div> -->
       {:else}
-        <div class="flex mb-4 flex-col justify-center h-12">
+        <div
+          class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800
+          hover:bg-secondary hover:text-white">
           <div class="py-3 h-12 text-center bg-red-400">
             <i class="fas fa-exclamation-triangle text-white" />
           </div>
+          <p class="py-3 px-4 rounded w-full">{step.title}</p>
         </div>
       {/if}
     {/each}
