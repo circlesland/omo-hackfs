@@ -7,9 +7,6 @@ import { EmailProvider } from "./Identity/EmailProvider";
 import { Libp2pCryptoIdentity } from "@textile/threads-core";
 import { IdentityProviderInterface } from "./Identity/IdentityProviderInterface";
 import { navigate } from "../Router";
-import { OdentitySchema } from "./Data/JsonSchemas/OdentitySchema";
-import { OdentityProviderSchema } from "./Data/JsonSchemas/OdentityProviderSchema";
-import { LoginRequestSchema } from "./Data/JsonSchemas/LoginRequestSchema";
 import { RemoteCollection } from "./Textile/RemoteCollection";
 import { RemoteThread } from "./Textile/RemoteThread";
 import { SeedPhraseProvider } from "./Identity/SeedPhraseProvider";
@@ -55,9 +52,9 @@ export class Odentity {
         if (this._instance == undefined) {
             var restored = await this.restoreOdentity();
             let odentityThread = process.env.ODENTITY ? await RemoteThread.byThreadID(process.env.ODENTITY) : await RemoteThread.init("ODENTITY");
-            let odentityCollection = await odentityThread.getOrCreateCollection<OdentityEntity>("odentity", OdentitySchema);
-            let providerCollection = await odentityThread.getOrCreateCollection<OdentityProvider>("odentityProvider", OdentityProviderSchema);
-            let loginReqCollection = await odentityThread.getOrCreateCollection<LoginRequest>("loginRequest", LoginRequestSchema);
+            let odentityCollection = await odentityThread.getOrCreateCollection<OdentityEntity>("odentity", Odentity);
+            let providerCollection = await odentityThread.getOrCreateCollection<OdentityProvider>("odentityProvider", OdentityProvider);
+            let loginReqCollection = await odentityThread.getOrCreateCollection<LoginRequest>("loginRequest", LoginRequest);
             this._instance = new Odentity(restored, odentityCollection, providerCollection, loginReqCollection);
         }
         return this._instance;

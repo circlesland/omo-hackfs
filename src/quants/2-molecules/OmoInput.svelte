@@ -1,14 +1,41 @@
 <script>
+  import {SubmitFlowStep} from "../../events/omo/shell/submitFlowStep";
+  import {onDestroy, onMount} from "svelte";
+
+  let subscription = null;
+  let value = "";
+
   export let data = {
-    bundleId: "",
-    safeId: ""
   };
 
+  onDestroy(() => {
+      if (subscription) {
+          subscription.unsubscribe();
+      }
+  });
+
+  onMount(() => {
+      let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
+      subscription = notifications.observable.subscribe(event => {
+          if (!event._$schemaId) return;
+
+          console.log(event, data);
+
+          switch (event._$schemaId) {
+              case "events:omo.shell.requestSubmitFlowStep":
+                  if (!event.data.processNodeId === data.id) {
+                      return; // Not meant for our executing flow
+                  }
+                  submit()
+                  break;
+          }
+      });
+  });
+
   function submit() {
-    const topic = window.o.eventBroker.tryGetTopic("omo", data.bundleId);
-    const submitEvent = new Submit();
-    submitEvent.data = data;
-    topic.publish(submitEvent);
+    console.log("submit()");
+    const submitEvent = new SubmitFlowStep(data.id, value);
+    window.o.publishShellEventAsync(submitEvent);
   }
 </script>
 
@@ -29,19 +56,11 @@
     <div class="flex flex-col pt-6">
       <input
         type="text"
-        bind:value={data.safeId}
+        bind:value={value}
         placeholder="[add here dynamic placeholder]"
         class="appearance-none border rounded w-full py-4 px-6 text-gray-700
         text-xl mt-1 leading-tight focus:outline-none focus:shadow-outline" />
     </div>
-
-    <!-- <button
-      on:click={submit}
-      type="submit"
-      class="bg-primary rounded text-white font-bold text-lg hover:bg-secondary
-      p-2">
-      Trust Safe
-    </button> -->
   </form>
 
 </section>

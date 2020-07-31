@@ -17,10 +17,10 @@
     onMount(() => {
         let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
         notifications.observable.subscribe(next => {
-            if (!next._$eventType)
+            if (!next._$schemaId)
                 return;
 
-            switch (next._$eventType) {
+            switch (next._$schemaId) {
                 case "events:omo.shell.navigated":
                     processNode = false;
                     page = next.data.page;

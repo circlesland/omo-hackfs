@@ -1,10 +1,10 @@
 import { JSONSchema } from "@textile/threads-database";
 
-
-export const QuantSchema: JSONSchema = {
+export const Quant: JSONSchema = {
     $id: "https://example.com/quant.schema.json",
     $schema: "http://json-schema.org/draft-07/schema#",
-    title: "Library",
+    _$schemaId: "schema:omo.quant",
+    title: "quant",
     type: "object",
     required: ["_id"],
     properties: {

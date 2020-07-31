@@ -1,7 +1,6 @@
 <script lang="ts">
     import {getRoute, curRoute, navigate, getComponent} from "./Router.ts";
     import {onMount, onDestroy} from "svelte";
-    import ComponentRegistrar from "./ComponentRegistrar";
     import MagicLogin from "./quants/5-dapps/MagicLogin.svelte";
 
     import OmoHome from "./quants/5-dapps/OmoHome";
@@ -28,9 +27,11 @@
     import OmoNavBottom from "./quants/2-molecules/OmoNavBottom.svelte";
     import {StartFlow} from "./events/omo/shell/startFlow";
     import {Navigated} from "./events/omo/shell/navigated";
+    import {Logout} from "./events/omo/shell/logout";
+    import {ClosePopup} from "./events/omo/shell/closePopup";
 
     let subscription = null;
-    onDestroy(()=> {
+    onDestroy(() => {
         if (subscription) {
             subscription.unsubscribe();
         }
@@ -55,10 +56,10 @@
 
         let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
         subscription = notifications.observable.subscribe(next => {
-            if (!next._$eventType)
+            if (!next._$schemaId)
                 return;
 
-            switch (next._$eventType) {
+            switch (next._$schemaId) {
                 case "events:omo.shell.notification":
                     notify(next.data);
                     break;
@@ -67,6 +68,10 @@
                     break;
                 case "events:omo.shell.navigated":
                     navigated(next.data.page);
+                    break;
+                case "events:omo.shell.logout":
+                    window.o.odentity.logout();
+                    window.o.publishShellEventAsync(new ClosePopup());
                     break;
             }
         });
@@ -92,7 +97,44 @@
         {route: "?page=mamaomo", quant: MamaOmo, authenticate: true},
         {route: "?page=omoauth", quant: OmoAuth, authenticate: false},
         {route: "?page=magicLogin", quant: MagicLogin, authenticate: false},
-        {route: "?page=odentity", quant: Odentity, authenticate: false},
+        {
+            route: "?page=odentity",
+            quant: Odentity,
+            authenticate: false,
+            actions: [
+                // TODO: Custom actions should be available on every level
+                {
+                    title: "Remove Circles SeedPhrase Auth",
+                    event: () =>
+                            new StartFlow("flows:omo.odentity.removeAuthProviderSeedPhrase")
+                },
+                {
+                    title: "Remove Email Auth Provider",
+                    event: () => new StartFlow("flows:omo.odentity.removeAuthProviderMail")
+                },
+                {
+                    title: "Remove owner Device",
+                    event: () => new StartFlow("flows:omo.odentity.removeOwnerDevice")
+                },
+                {
+                    title: "Add Circles SeedPhrase Auth",
+                    event: () =>
+                            new StartFlow("flows:omo.odentity.addAuthProviderSeedPhrase")
+                },
+                {
+                    title: "Add Email Auth Provider",
+                    event: () => new StartFlow("flows:omo.odentity.addAuthProviderMail")
+                },
+                {
+                    title: "Add owner Device",
+                    event: () => new StartFlow("flows:omo.odentity.addOwnerDevice")
+                },
+                {
+                    title: "Logout",
+                    event: () => new Logout()
+                }
+            ]
+        },
         {route: "?page=docs", quant: OmoDocs, authenticate: true},
         {route: "?page=omodapps", quant: OmoDapps, authenticate: true},
         {
@@ -102,8 +144,16 @@
             actions: [
                 // TODO: Custom actions should be available on every level
                 {
-                    title: "fsdfds",
-                    event: () => new StartFlow("flows:omo.safe.giveTrust")
+                    title: "Start time commitment",
+                    event: () => new StartFlow("flows:omo.safe.trust")
+                },
+                {
+                    title: "Ask question",
+                    event: () => new StartFlow("flows:omo.safe.trust")
+                },
+                {
+                    title: "Send chat message",
+                    event: () => new StartFlow("flows:omo.safe.trust")
                 }
             ]
         },
@@ -123,25 +173,45 @@
                     event: () => new StartFlow("flows:omo.safe.giveTrust")
                 },
                 {
-                    title: "Untrust someone",
+                    title: "Remove trust",
                     event: () => new StartFlow("flows:omo.safe.revokeTrust")
                 },
                 {
                     title: "Send Circles",
                     event: () => new StartFlow("flows:omo.safe.transferCircles")
-                },
-                {
-                    title: "Add another owner to this safe",
-                    event: () => alert("Nix zu sehen hier. Jetzt ists kaputt!\nPress F5 to reload the page :(")
-                },
-                {
-                    title: "Remove an owner from this safe",
-                    event: () => alert("Nix zu sehen hier. Jetzt ists kaputt!\nPress F5 to reload the page :(")
                 }
             ]
         },
-        {route: "?page=omodreams", quant: OmoDreams, authenticate: true},
-        {route: "?page=omochat", quant: OmoChat, authenticate: true},
+        {
+            route: "?page=omodreams",
+            quant: OmoDreams,
+            authenticate: true,
+            actions: [
+                {
+                    title: "Create new dream",
+                    event: () => new StartFlow("flows:omo.dreams.createDream")
+                }
+            ]
+        },
+        {
+            route: "?page=omochat",
+            quant: OmoChat,
+            authenticate: true,
+            actions: [
+                {
+                    title: "Create new Chat Room",
+                    event: () => new StartFlow("flows:omo.chat.addChatRoom")
+                },
+                {
+                    title: "Remove Chat Room",
+                    event: () => new StartFlow("flows:omo.chat.removeChatRoom")
+                },
+                {
+                    title: "Send Message",
+                    event: () => new StartFlow("flows:omo.chat.sendMessage")
+                }
+            ]
+        },
         {route: "?page=onboarding", quant: OnBoarding, authenticate: true},
         {route: "?page=omodialog", quant: OmoDialog, authenticate: true},
         {
@@ -189,7 +259,6 @@
 </style>
 
 <svelte:window on:popstate={handlerBackNavigation}/>
-<ComponentRegistrar/>
 
 <div class="app">
     <header>
@@ -202,14 +271,14 @@
         <OmoNavBottom/>
     </footer>
     <!-- <footer>
-      {#if omo != null}
-        <OmoNavBottom />
-      {:else if !$curRoute.startsWith('?page=omoauth')}
-        <div class="flex flex-col justify-center bg-gray-200 h-12">
-          <div class="p-4 text-center">
-            <OmoButton data={login} />
+        {#if omo != null}
+          <OmoNavBottom />
+        {:else if !$curRoute.startsWith('?page=omoauth')}
+          <div class="flex flex-col justify-center bg-gray-200 h-12">
+            <div class="p-4 text-center">
+              <OmoButton data={login} />
+            </div>
           </div>
-        </div>
-      {/if}
-    </footer> -->
+        {/if}
+      </footer> -->
 </div>

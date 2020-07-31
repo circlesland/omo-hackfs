@@ -5,11 +5,13 @@ export class StepBuilder<TContext extends IProcessContext>
 {
     readonly stepId:string;
     title?:string;
+    description?:string;
     readonly parent:CategoryBuilder<TContext>;
     root?: ProcessBuilder<TContext>;
 
     quant?:string;
     sideEffect?:string;
+    prompt?: string;
 
     constructor(parent:CategoryBuilder<TContext>, stepId:string)
     {
@@ -43,13 +45,27 @@ export class StepBuilder<TContext extends IProcessContext>
         return this;
     }
 
+    withDescription(description:string) : StepBuilder<TContext>
+    {
+        this.description = description;
+        return this;
+    }
+
+    withPrompt(prompt:string) : StepBuilder<TContext>
+    {
+        this.prompt = prompt;
+        return this;
+    }
+
     build(parent:ProcessNode<TContext>) : ProcessNode<TContext>
     {
         const step = new ProcessNode<TContext>(parent);
         step.quant = this.quant;
         step.sideEffect = this.sideEffect;
         step.stepId = this.stepId;
-        step.title = !this.title ? "" : this.title;
+        step.title = this.title;
+        step.description = this.description;
+        step.prompt = this.prompt;
         return step;
     }
 }

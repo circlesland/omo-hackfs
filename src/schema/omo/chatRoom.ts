@@ -1,10 +1,11 @@
 import { JSONSchema } from "@textile/threads-database";
-import { ModelQuant } from "../ModelQuant";
+import {ModelQuant} from "../../core/Data/ModelQuant";
 
-export const ChatRoomSchema: JSONSchema = {
+export const ChatRoom: JSONSchema = {
     $id: "https://example.com/ChatRoom.schema.json",
     $schema: "http://json-schema.org/draft-07/schema#",
-    title: "ChatRoom",
+    _$schemaId: "schema:omo.chatRoom",
+    title: "chatRoom",
     type: "object",
     required: ["_id"],
     definitions: ModelQuant.definitons,

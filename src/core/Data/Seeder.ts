@@ -1,10 +1,8 @@
 import { QuantRegistry } from "../Quant/QuantRegistry";
 import { JSONSchema } from "@textile/hub";
-import { LibrarySchema } from "./JsonSchemas/LibrarySchema";
-import { BookSchema } from "./JsonSchemas/BookSchema";
-import { AuthorSchema } from "./JsonSchemas/AuthorSchema";
-import { MessageSchema } from "./JsonSchemas/MessageSchema";
-import { ChatRoomSchema } from "./JsonSchemas/ChatRoomSchema";
+import { Message } from "../../schema/omo/message";
+import { ChatRoom } from "../../schema/omo/chatRoom";
+import {Safe} from "../../schema/omo/safe/safe";
 export interface SeedQuant {
     name: string,
     schema: JSONSchema,
@@ -20,32 +18,21 @@ interface Seed {
 const seeds: Seed[] = [{
     thread: {
         name: "quanta", quanta: [
-            // {
-            //     name: "Library",
-            //     schema: LibrarySchema,
-            //     data: []
-            // },
-            // {
-            //     name: "Book",
-            //     schema: BookSchema,
-            //     data: []
-            // },
-            // {
-            //     name: "Author",
-            //     schema: AuthorSchema,
-            //     data: []
-            // },
             {
                 name: "Message",
-                schema: MessageSchema,
+                schema: Message,
                 data: []
             },
             {
                 name: "ChatRoom",
-                schema: ChatRoomSchema,
+                schema: ChatRoom,
                 data: []
             },
-
+            {
+                name: "Safe",
+                schema: Safe,
+                data: []
+            }
         ]
     }
 }];

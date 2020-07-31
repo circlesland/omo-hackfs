@@ -1,22 +1,22 @@
 import {ProcessBuilder} from "../../../core/Flows/ProcessBuilder";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
 
-export function addOwnerDeviceFlow() {
-    return new ProcessBuilder<IProcessContext>("omo.odentity.addOwnerDeviceFlow")
+export function addOwnerDevice() {
+    return new ProcessBuilder<IProcessContext>("flows:omo.odentity.addOwnerDevice")
         .category("Add new owner device", (build) =>
             build
 
-                .step("omo.odentity.addOwnerDevice:createPPK")
+                .step("flows:omo.odentity.addOwnerDevice:getDevice")
                 .withSideEffect("omo.shell.collectUserValue")
-                .withQuant("OmoSafeLookup")
+                .withQuant("OmoInput")
                 .withTitle("Name the device you want to add")
 
-                .step("omo.odentity.addOwnerDevice:createPPK")
+                .step("flows:omo.odentity.addOwnerDevice:scanQrCode")
                 .withSideEffect("omo.shell.collectUserValue")
-                .withQuant("OmoSafeLookup")
+                .withQuant("OmoInput")
                 .withTitle("Scan QR-Code with 2nd Device")
 
-                .step("omo.odentity.addOwnerDevice")
+                .step("flows:omo.odentity.addOwnerDevice:trustDevice")
                 .withSideEffect("omo.safe.giveTrust")
                 .withQuant("OmoStatusResponse")
                 .withTitle("Added new Owner Device")

@@ -1,7 +1,7 @@
 import { Quant } from "../Data/Entities/Quant";
 import { Threads } from "../Textile/Threads";
 import { SeedQuant } from "../Data/Seeder";
-import { QuantSchema } from "../Data/JsonSchemas/QuantSchema";
+import { Quant as QuantSchema } from "../../schema/omo/quant";
 import { ModelHelper } from "../Data/ModelHelper";
 import { SyncedCollection } from "../Textile/SyncedCollection";
 import { SyncedThread } from "../Textile/SyncedThread";

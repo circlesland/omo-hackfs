@@ -9,7 +9,7 @@ export function revokeTrust()
 
             .step("flows:omo.safe.revokeTrust:trustReceivingSafe")
                 .withSideEffect("sideEffects:omo.shell.collectStepResult")
-                .withQuant("OmoSafeLookup")
+                .withQuant("OmoInput")
                 .withTitle("Enter safe address to un-trust")
 
             .step("flows:omo.safe.revokeTrust:revokeTrust")

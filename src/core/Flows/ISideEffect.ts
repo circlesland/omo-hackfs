@@ -2,6 +2,10 @@ import {IProcessContext} from "./IProcessContext";
 
 export interface ISideEffect<IContext extends IProcessContext, TArgument>
 {
+    _$schemaId:string;
+    inputs?:{name:string, type:string, description?:string}[];
+    outputs?:{name:string, type:string, description?:string}[];
+
     execute?:(context:IContext, argument:TArgument) => Promise<void>;
 
     /**

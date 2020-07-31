@@ -9,12 +9,12 @@ export function transferCircles()
 
             .step("flows:omo.safe.transferCircles:receivingSafe")
                 .withSideEffect("sideEffects:omo.shell.collectStepResult")
-                .withQuant("OmoSafeLookup")
+                .withQuant("OmoInput")
                 .withTitle("Enter the address of the safe you want to send Circles to.")
 
             .step("flows:omo.safe.transferCircles:amount")
                 .withSideEffect("sideEffects:omo.shell.collectStepResult")
-                .withQuant("OmoSafeLookup")
+                .withQuant("OmoInput")
                 .withTitle("How much?")
 
             .step("flows:omo.safe.transferCircles:transferCircles")

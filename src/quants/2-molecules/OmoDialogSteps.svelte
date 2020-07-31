@@ -12,11 +12,11 @@
 
     return processNode.children.map(node => {
       return {
-        title: node.title,
+        title: !node.title ? node.stepId : node.title,
         level: 1,
         steps: node.children.map((o, i) => {
           return {
-            title: o.title,
+            title: !o.title ? o.stepId : o.title,
             state: o.state,
             step: i + 1
           };

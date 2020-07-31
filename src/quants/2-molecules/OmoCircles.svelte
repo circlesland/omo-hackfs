@@ -2,11 +2,6 @@
   import OmoTabs from "./../2-molecules/OmoTabs";
   import moment from "moment";
 
-  import {
-    getSafeOwnerFromLocalStorage,
-    getSafeFromLocalStorage,
-    sendCircles
-  } from "./../omo-actions/Circles";
 
   //Tabs
   let currentTab;
@@ -40,41 +35,6 @@
     return b.sum("amount") / 1000000000000000000;
   }
 
-  // Make Ø 1 payments to trusted addresses
-  function handleSendButton(safeAddress) {
-    sendCircles(
-      getSafeOwnerFromLocalStorage(),
-      getSafeFromLocalStorage(),
-      {
-        safeAddress: safeAddress
-      },
-      "1"
-    );
-  }
-
-  // async function giveTrust() {
-  //   let safeGivingChecksumAddress = window.o.web3.utils.toChecksumAddress(
-  //     window.o.odentity.current.circleSafe.safeAddress.trim()
-  //   );
-  //   let safeReceivingChecksumAddress = window.o.web3.utils.toChecksumAddress(
-  //     trustSafeAddress.trim()
-  //   );
-
-  //   let trustGivingSafe = {
-  //     safeAddress: safeGivingChecksumAddress
-  //   };
-  //   let trustReceivingSafe = {
-  //     safeAddress: safeReceivingChecksumAddress
-  //   };
-
-  //   let response = await addTrustLineAsync(
-  //     window.o.odentity.current.circleSafeOwner,
-  //     trustGivingSafe,
-  //     trustReceivingSafe,
-  //     100
-  //   );
-
-  // }
 </script>
 
 <OmoTabs class="bg-primary" bind:activeTabValue={currentTab} items={tabItems} />
@@ -163,12 +123,6 @@
             <div class="h-12 py-1 px-3 text-2xl text-blue-400">
               ({item.limitPercentage}%) Ø{(item.limit / 1000000000000000000).toFixed(0)}
             </div>
-            <span
-              class="h-full py-2 px-4 bg-secondary text-lg text-white
-              cursor-pointer uppercase"
-              on:click={() => handleSendButton(item.canSendTo.id)}>
-              send Ø 1
-            </span>
           </div>
         {/each}
       </div>
