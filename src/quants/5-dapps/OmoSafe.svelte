@@ -1,6 +1,10 @@
 <script>
   import OmoOrganisms from "./../4-layouts/OmoOrganisms.svelte";
   import OmoSpin from "./../1-atoms/OmoSpin.svelte";
+  import {
+    loadingSafeDataAsync,
+    loadingTransferDataAsync
+  } from "./../../queries/omo/safe/circles";
 
   async function loadingData() {
     let d = {};
