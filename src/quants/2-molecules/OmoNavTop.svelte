@@ -67,7 +67,7 @@
       <div
         class="flex-1 flex items-center justify-center sm:items-stretch
         sm:justify-start">
-        <div class="flex-shrink-0">
+        <a href="javascript:location = '/'" class="flex-shrink-0">
           <img
             class="block lg:hidden h-8 w-auto"
             src="/logos/logo.png"
@@ -76,7 +76,7 @@
             class="hidden lg:block h-8 w-auto"
             src="logos/logo_with_name.png"
             alt="Omo logo" />
-        </div>
+        </a>
         <div class="hidden sm:block sm:ml-6">
           <div class="flex">
             {#each a as a}

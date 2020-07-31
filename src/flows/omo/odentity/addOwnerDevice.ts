@@ -8,12 +8,12 @@ export function addOwnerDevice() {
 
                 .step("flows:omo.odentity.addOwnerDevice:getDevice")
                 .withSideEffect("omo.shell.collectUserValue")
-                .withQuant("OmoSafeLookup")
+                .withQuant("OmoInput")
                 .withTitle("Name the device you want to add")
 
                 .step("flows:omo.odentity.addOwnerDevice:scanQrCode")
                 .withSideEffect("omo.shell.collectUserValue")
-                .withQuant("OmoSafeLookup")
+                .withQuant("OmoInput")
                 .withTitle("Scan QR-Code with 2nd Device")
 
                 .step("flows:omo.odentity.addOwnerDevice:trustDevice")

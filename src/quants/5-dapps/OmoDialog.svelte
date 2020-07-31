@@ -16,9 +16,9 @@
   onMount(() => {
     let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
     subscription = notifications.observable.subscribe(event => {
-      if (!event._$eventType) return;
+      if (!event._$schemaId) return;
 
-      switch (event._$eventType) {
+      switch (event._$schemaId) {
         case "omo.shell.submitFlowStep":
           if (!event.data.processNodeId === processNode.id) {
             return; // Not meant for our executing flow

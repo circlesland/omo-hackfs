@@ -2,7 +2,7 @@ import {Event} from "../../../core/Data/Entities/Event"
 
 export class Notification extends Event
 {
-    readonly _$eventType = "events:omo.shell.notification";
+    readonly _$schemaId = "events:omo.shell.notification";
 
     data: {
         icon:string,

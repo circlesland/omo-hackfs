@@ -8,5 +8,8 @@ export interface IProcessContext
     stepId:string;
     o:Quantum;
 
+    inputs:{name:string, value:any}[];
+    outputs:{name:string, value:any}[];
+
     [others: string]: any;
 }

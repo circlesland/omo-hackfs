@@ -9,7 +9,7 @@ export function addAuthProviderSeedPhrase() {
             build
 
                 .step("flows:omo.safe.addAuthProviderSeedPhrase:seedphrase")
-                .withQuant("OmoSafeLookup")
+                .withQuant("OmoInput")
                 .withTitle("Connect (Circles) Seedphrase")
 
                 .step("flows:omo.safe.addAuthProviderSeedPhrase:sucess")

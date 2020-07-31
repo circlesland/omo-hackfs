@@ -1,7 +1,6 @@
 <script lang="ts">
     import {getRoute, curRoute, navigate, getComponent} from "./Router.ts";
     import {onMount, onDestroy} from "svelte";
-    import ComponentRegistrar from "./ComponentRegistrar";
     import MagicLogin from "./quants/5-dapps/MagicLogin.svelte";
 
     import OmoHome from "./quants/5-dapps/OmoHome";
@@ -28,6 +27,8 @@
     import OmoNavBottom from "./quants/2-molecules/OmoNavBottom.svelte";
     import {StartFlow} from "./events/omo/shell/startFlow";
     import {Navigated} from "./events/omo/shell/navigated";
+    import {Logout} from "./events/omo/shell/logout";
+    import {ClosePopup} from "./events/omo/shell/closePopup";
 
     let subscription = null;
     onDestroy(()=> {
@@ -55,10 +56,10 @@
 
         let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
         subscription = notifications.observable.subscribe(next => {
-            if (!next._$eventType)
+            if (!next._$schemaId)
                 return;
 
-            switch (next._$eventType) {
+            switch (next._$schemaId) {
                 case "events:omo.shell.notification":
                     notify(next.data);
                     break;
@@ -67,6 +68,10 @@
                     break;
                 case "events:omo.shell.navigated":
                     navigated(next.data.page);
+                    break;
+                case "events:omo.shell.logout":
+                    window.o.odentity.logout();
+                    window.o.publishShellEventAsync(new ClosePopup());
                     break;
             }
         });
@@ -126,7 +131,7 @@
         },
         {
           title: "Logout",
-          event: {}
+          event: () => new Logout()
         }
       ]
     },
@@ -244,7 +249,6 @@
 </style>
 
 <svelte:window on:popstate={handlerBackNavigation} />
-<ComponentRegistrar />
 
 <div class="app">
   <header>

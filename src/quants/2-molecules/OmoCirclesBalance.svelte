@@ -1,9 +1,4 @@
 <script>
-  import {
-    getSafeOwnerFromLocalStorage,
-    getSafeFromLocalStorage,
-    sendCircles
-  } from "./../omo-actions/Circles";
 
   export let data = {
     safeAddress: ""

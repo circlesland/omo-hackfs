@@ -1,28 +1,25 @@
 import { JSONSchema } from "@textile/threads-database";
+import {ModelQuant} from "../../core/Data/ModelQuant";
 
-export const OdentitySchema: JSONSchema = {
-    $id: "https://example.com/omo.schema.json",
+export const Message: JSONSchema = {
+    $id: "https://example.com/message.schema.json",
     $schema: "http://json-schema.org/draft-07/schema#",
-    title: "Odentity",
+    _$schemaId: "schema:omo.message",
+    title: "message",
     type: "object",
     required: ["_id"],
+    definitions: ModelQuant.definitons,
     properties: {
         _id: {
             type: "string",
         },
-        firstName: {
+        name: {
             type: "string",
         },
-        lastName: {
+        text: {
             type: "string",
         },
-        threadId: {
-            type: "string",
-        },
-        profileImage: {
-            type: "string"
-        },
-        cryptoIdentity: {
+        date: {
             type: "string"
         }
     },

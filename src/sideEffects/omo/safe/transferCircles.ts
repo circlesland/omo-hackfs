@@ -2,6 +2,24 @@ import {ISideEffect} from "../../../core/Flows/ISideEffect";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
 
 export const transferCircles:ISideEffect<IProcessContext, void> = {
+    $_schemaId: "sideEffects:omo.safe.transferCircles",
+    inputs: [{
+        name: "sendingSafeOwner",
+        type: "schema:omo.safe.safeOwner"
+    },{
+        name: "sendingSafeAddress",
+        type: "schema:omo.safe.safe"
+    },{
+        name: "receivingSafeAddress",
+        type: "schema:omo.safe.safe"
+    }, {
+        name: "amount",
+        type: "schema:omo.number"
+    }],
+    outputs:[{
+        name: "void",
+        type: "schema:omo.void"
+    }],
   execute: async (context, argument) => {
       async function sendCirclesAsync(
           sendingSafeOwner,
@@ -9,10 +27,12 @@ export const transferCircles:ISideEffect<IProcessContext, void> = {
           receivingSafeAddress,
           amount
       ) {
+          let receivingSafeAddressC = window.o.web3.utils.toChecksumAddress(receivingSafeAddress.safeAddress);
+          let sendingSafeAddressC = window.o.web3.utils.toChecksumAddress(sendingSafeAddress.safeAddress);
           // .. give user the permission to send their Token to you
           await window.o.circlesCore.token.transfer(sendingSafeOwner, {
-              from: sendingSafeAddress,
-              to: receivingSafeAddress,
+              from: sendingSafeAddressC,
+              to: receivingSafeAddressC,
               value: amount,
           });
           alert("Sent " + amount + " Circles to: " + receivingSafeAddress);
@@ -22,11 +42,12 @@ export const transferCircles:ISideEffect<IProcessContext, void> = {
       }
 
       await sendCirclesAsync(
-          context.o.odentity.current.circleSafeOwner,
-          context.o.odentity.current.circleSafe,
-          context["flows:omo.safe.transferCircles:receivingSafe"],
-          context["flows:omo.safe.transferCircles:amount"]
+          context.inputs["sendingSafeOwner"],
+          context.inputs["sendingSafeAddress"],
+          context.inputs["receivingSafeAddress"],
+          context.inputs["amount"]
       );
+      context.outputs["void"] = {};
   },
   canExecute: async context => true
 };

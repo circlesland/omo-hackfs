@@ -2,6 +2,21 @@ import {ISideEffect} from "../../../core/Flows/ISideEffect";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
 
 export const revokeTrust:ISideEffect<IProcessContext, void> = {
+    $_schemaId: "sideEffects:omo.safe.revokeTrust",
+    inputs: [{
+        name: "trustGivingSafeOwner",
+        type: "schema:omo.safe.safeOwner"
+    },{
+        name: "trustGivingSafe",
+        type: "schema:omo.safe.safe"
+    },{
+        name: "trustReceivingSafe",
+        type: "schema:omo.safe.safe"
+    }],
+    outputs:[{
+        name: "void",
+        type: "schema:omo.void"
+    }],
   execute: async (context, argument) => {
       async function removeTrustLineAsync(
           trustGivingSafeOwner,
@@ -20,10 +35,11 @@ export const revokeTrust:ISideEffect<IProcessContext, void> = {
       }
 
       await removeTrustLineAsync(
-          context.o.odentity.current.circleSafeOwner,
-          context.o.odentity.current.circleSafe,
-          context["sideEffects:omo.safe.giveTrust:trustReceivingSafe"]
+          context.inputs["trustGivingSafeOwner"],
+          context.inputs["trustGivingSafe"],
+          context.inputs["trustReceivingSafe"]
       );
+      context.outputs["void"] = {};
   },
   canExecute: async context => true
 };

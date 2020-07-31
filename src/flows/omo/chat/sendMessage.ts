@@ -8,7 +8,7 @@ export function sendMessage() {
 
                 .step("flows:omo.chat.sendMessage:send")
                 .withSideEffect("omo.shell.collectUserValue")
-                .withQuant("OmoSafeLookup")
+                .withQuant("OmoInput")
                 .withTitle("Send message")
         )
         .end()

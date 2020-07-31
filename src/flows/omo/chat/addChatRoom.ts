@@ -8,7 +8,7 @@ export function addChatRoom() {
 
                 .step("flows:omo.chat.addChatRoom:addRoom")
                 .withSideEffect("omo.shell.collectUserValue")
-                .withQuant("OmoSafeLookup")
+                .withQuant("OmoInput")
                 .withTitle("Name the chat room")
         )
         .end()

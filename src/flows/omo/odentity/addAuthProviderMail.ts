@@ -8,7 +8,7 @@ export function addAuthProviderMail() {
 
                 .step("flows:omo.safe.addAuthProviderMail:getEmailAddress")
                 .withSideEffect("omo.shell.collectUserValue")
-                .withQuant("OmoSafeLookup")
+                .withQuant("OmoInput")
                 .withTitle("Set email you want to connect")
 
                 .step("flows:omo.safe.addAuthProviderMail:waitForMagicLink")

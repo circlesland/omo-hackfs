@@ -8,12 +8,12 @@ export function transactionFlow() {
 
         .step("omo.safe.transferCircles:transferRecipient")
         .withSideEffect("omo.shell.collectUserValue")
-        .withQuant("OmoSafeLookup")
+        .withQuant("OmoInput")
         .withTitle("Select Recipient")
 
         .step("omo.safe.giveTrust:transferAmount")
         .withSideEffect("omo.shell.collectUserValue")
-        .withQuant("OmoSafeLookup")
+        .withQuant("OmoInput")
         .withTitle("Choose Amount")
 
         .step("omo.safe.giveTrust:transactionCheck")

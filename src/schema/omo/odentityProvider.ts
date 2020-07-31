@@ -1,8 +1,10 @@
 import { JSONSchema } from "@textile/threads-database";
-export const OdentityProviderSchema: JSONSchema = {
+
+export const OdentityProvider: JSONSchema = {
     $id: "https://example.com/identityprovider.schema.json",
     $schema: "http://json-schema.org/draft-07/schema#",
-    title: "OdentityProvider",
+    _$schemaId: "schema:omo.odentityProvider",
+    title: "odentityProvider",
     type: "object",
     required: ["_id"],
     properties: {

@@ -9,12 +9,12 @@ export function giveTrust()
 
             .step("flows:omo.safe.giveTrust:trustReceivingSafe")
                 .withSideEffect("sideEffects:omo.shell.collectStepResult")
-                .withQuant("OmoSafeLookup")
+                .withQuant("OmoInput")
                 .withTitle("Enter safe address to giveTrust")
 
             .step("flows:omo.safe.giveTrust:trustPercentage")
                 .withSideEffect("sideEffects:omo.shell.collectStepResult")
-                .withQuant("OmoSafeLookup")
+                .withQuant("OmoInput")
                 .withTitle("Enter giveTrust percentage")
 
             .step("flows:omo.safe.giveTrust:giveTrust")

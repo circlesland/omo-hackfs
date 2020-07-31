@@ -8,12 +8,12 @@ export function giveTrustFlow() {
 
         .step("omo.safe.giveTrust:trustReceivingSafe")
         .withSideEffect("omo.shell.collectUserValue")
-        .withQuant("OmoSafeLookup")
+        .withQuant("OmoInput")
         .withTitle("Choose Safe Address")
 
         .step("omo.safe.giveTrust:trustPercentage")
         .withSideEffect("omo.shell.collectUserValue")
-        .withQuant("OmoSafeLookup")
+        .withQuant("OmoInput")
         .withTitle("Choose Trust Percentage")
 
         .step("omo.safe.giveTrust:giveTrust")
@@ -25,7 +25,7 @@ export function giveTrustFlow() {
     .category("Other topic", (build) => {
       build
         .step("omo.safe.giveTrust:other")
-        .withQuant("OmoSafeLookup")
+        .withQuant("OmoInput")
         .withTitle("Enter safe address to giveTrust");
     })
     .end()
@@ -39,7 +39,7 @@ export function removeTrustFlow() {
 
         .step("omo.safe.removeTrust:trustReceivingSafe")
         .withSideEffect("omo.shell.collectUserValue")
-        .withQuant("OmoSafeLookup")
+        .withQuant("OmoInput")
         .withTitle("Choose Safe Address")
 
         .step("omo.safe.removeTrust:removeTrust")

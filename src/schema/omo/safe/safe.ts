@@ -1,20 +1,20 @@
 import { JSONSchema } from "@textile/threads-database";
+import {ModelQuant} from "../../../core/Data/ModelQuant";
 
-export const BookSchema: JSONSchema = {
-    $id: "https://example.com/person.schema.json",
+export const Safe: JSONSchema = {
+    $id: "https://example.com/message.schema.json",
     $schema: "http://json-schema.org/draft-07/schema#",
-    title: "Book",
+    _$schemaId: "schema:omo.safe.safe",
+    title: "safe",
     type: "object",
     required: ["_id"],
-    // definitions: ModelQuant.definitons,
+    definitions: ModelQuant.definitons,
     properties: {
         _id: {
             type: "string",
-            description: "The instance's id.",
         },
-        name: {
+        address: {
             type: "string",
-            description: "The book title",
         }
     },
 };
