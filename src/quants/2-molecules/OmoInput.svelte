@@ -1,12 +1,18 @@
 <script>
   import {SubmitFlowStep} from "../../events/omo/shell/submitFlowStep";
-  import {onMount} from "svelte";
+  import {onDestroy, onMount} from "svelte";
 
   let subscription = null;
   let value = "";
 
   export let data = {
   };
+
+  onDestroy(() => {
+      if (subscription) {
+          subscription.unsubscribe();
+      }
+  });
 
   onMount(() => {
       let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");

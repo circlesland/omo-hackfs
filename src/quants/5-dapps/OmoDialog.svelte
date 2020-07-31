@@ -4,10 +4,13 @@
     import {onDestroy, onMount} from "svelte";
     import {SubmitFlowStep} from "../../events/omo/shell/submitFlowStep";
     import {RequestSubmitFlowStep} from "../../events/omo/shell/requestSubmitFlowStep";
+    import {ClosePopup} from "../../events/omo/shell/closePopup";
 
     export let processNode = {};
 
     let subscription = null;
+    let executionContext;
+
     onDestroy(() => {
         if (subscription) {
             subscription.unsubscribe();
@@ -134,13 +137,19 @@
         }
         const first = flatLeafs[0];
         first.state = "Active";
+        executionContext = {
+            stepId: first.stepId,
+            o: window.o
+        };
         return first.id;
     }
 
     /**
      * Sets the current node to "Finish" and proceeds with the next executable leaf node.
      */
-    function next(processNode) {
+    function next(processNode, argument) {
+        console.log("next(processNode, argument) called:", processNode, argument);
+
         const oldOrg = organisms;
         organisms = false;
 
@@ -158,20 +167,36 @@
             }
 
             // Find the active and next leaf in the copy with the restored 'parent' properties ..
-            let _currentlyActiveNode = ProcessNode.findActiveLeaf(copy);
-            let nextNode = ProcessNode.findNextNode(copy, _currentlyActiveNode.id);
+            let currentlyActiveNode_ = ProcessNode.findActiveLeaf(copy);
+            let nextNode_ = ProcessNode.findNextNode(copy, currentlyActiveNode_.id);
 
-            if (!nextNode) {
-                alert("End of dialog.");
+            // .. then use the IDs to look up the "real" node and execute its side-effect (if any)
+            const currentlyActiveNode = ProcessNode.findById(processNode, currentlyActiveNode_.id);
+            executionContext.stepId = currentlyActiveNode.stepId;
+
+            if (currentlyActiveNode.sideEffect) {
+                const sideEffect = window.sideEffectRegistrar.get(currentlyActiveNode.sideEffect);
+
+                // Check if there is a side effect and if it can be executed
+                if (sideEffect
+                        && (!sideEffect.canExecute ? true : sideEffect.canExecute(executionContext, argument))
+                        && sideEffect.execute) {
+                    try {
+                        sideEffect.execute(executionContext, argument);
+                    } catch (e) {
+                        currentlyActiveNode.state = "Failed";
+                        currentlyActiveNode.error = e;
+                        return;
+                    }
+                }
+            }
+
+            if (!nextNode_) {
+                window.o.publishShellEventAsync(new ClosePopup());
                 return;
             }
 
-            // .. then use the IDs of the found nodes to set the 'state' on the "real" ProcessNode
-            currentlyActiveNode = ProcessNode.findById(
-                    processNode,
-                    _currentlyActiveNode.id
-            );
-            nextNode = ProcessNode.findById(processNode, nextNode.id);
+            const nextNode = ProcessNode.findById(processNode, nextNode_.id);
 
             currentlyActiveNode.state = "Finished";
             nextNode.state = "Active";
@@ -180,10 +205,12 @@
             // If not, stay with the current quant.
             if (nextNode && nextNode.quant) {
                 oldOrg.blocks[1].quant = nextNode.quant;
-                oldOrg.blocks[1].data = processNode;
+                oldOrg.blocks[1].data = {
+                    processNode: processNode
+                }
                 organisms.blocks[2].data = {
                     processNode: processNode,
-                    label: _currentlyActiveNode.submitButtonLabel
+                    label: currentlyActiveNode.submitButtonLabel
                 };
             }
 
