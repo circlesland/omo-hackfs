@@ -10,6 +10,7 @@
     export let processNode = {};
 
     let subscription = null;
+    let log = "";
     let executionContext;
 
     onDestroy(() => {
@@ -33,6 +34,14 @@
                     next(processNode, event.data.argument);
                     break;
                 case "events:omo.shell.undoFlowStep":
+                    break;
+                case "events:omo.shell.log":
+                    if (event.data.dataJson) {
+                        log += new Date().toJSON() + " | " + event.data.severity + " | " + event.data.source + " | " + event.data.message + " | " + event.data.dataJson + "\n";
+                    }
+                    else {
+                        log += new Date().toJSON() + " | " + event.data.severity + " | " + event.data.source + " | " + event.data.message + "\n";
+                    }
                     break;
             }
         });
@@ -83,7 +92,8 @@
             organisms.blocks[1].data = processNode;
             organisms.blocks[2].data = {
                 processNode: processNode,
-                label: activeLeaf.submitButtonLabel
+                label: activeLeaf.submitButtonLabel,
+                log: log
             };
         }
 
@@ -96,7 +106,8 @@
                 organisms.blocks[1].data = processNode;
                 organisms.blocks[2].data = {
                     processNode: processNode,
-                    label: activeLeaf.submitButtonLabel
+                    label: activeLeaf.submitButtonLabel,
+                    log: log
                 };
             }
         }
@@ -266,7 +277,8 @@
         if (nextNode && nextNode.quant) {
             oldOrg.blocks[1].quant = nextNode.quant;
             oldOrg.blocks[1].data = {
-                processNode: processNode
+                processNode: processNode,
+                log: log
             }
             oldOrg.blocks[2].data = {
                 processNode: processNode,
