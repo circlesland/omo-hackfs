@@ -48,7 +48,7 @@
               {#if item.transfer.from == data.safeAddress}
                 <img
                   alt=""
-                  src="https://api.adorable.io/avatars/{item.transfer.to}"
+                  src="https://i.pravatar.cc/150?u={item.transfer.to}"
                   class="h-full w-auto" />
                 <div class="text-sm py-2 px-4 w-full">
                   <p>{item.transfer.to}</p>
@@ -65,7 +65,7 @@
               {:else}
                 <img
                   alt=""
-                  src="https://api.adorable.io/avatars/{item.transfer.from}"
+                  src="https://i.pravatar.cc/150?u={item.transfer.from}"
                   class="h-full w-auto" />
                 <div class="text-sm py-2 px-4 w-full">
                   <p>{item.transfer.from}</p>
@@ -99,7 +99,7 @@
             {:else}
               <img
                 alt=""
-                src="https://api.adorable.io/avatars/{item.token.owner.id}"
+                src="https://i.pravatar.cc/150?u={item.token.owner.id}"
                 class="h-full w-auto" />
               <p class="py-3 px-4 rounded flex-1">{item.token.owner.id}</p>
             {/if}
@@ -117,7 +117,7 @@
           <div class="flex h-12 mb-4 w-full bg-gray-100">
             <img
               alt=""
-              src="https://api.adorable.io/avatars/{item.canSendTo.id}"
+              src="https://i.pravatar.cc/150?u={item.canSendTo.id}"
               class="h-full w-auto" />
             <p class="py-3 px-4 flex-1 text-gray-700">{item.canSendTo.id}</p>
             <div class="h-12 py-1 px-3 text-2xl text-blue-400">
@@ -135,7 +135,7 @@
             {#if item.user}
               <img
                 alt=""
-                src="https://api.adorable.io/avatars/{item.user.id}"
+                src="https://i.pravatar.cc/150?u={item.user.id}"
                 class="h-full w-auto" />
               <div class="py-3 px-4 rounded flex-1">{item.user.id}</div>
               <div class="h-12 py-1 px-3 text-2xl text-blue-400">

@@ -82,10 +82,10 @@
             {#each a as a}
               <a
                 href={a.link}
-                class="uppercase ml-4 px-3 py-2 rounded-md text-sm font-medium
-                leading-5 text-gray-300 hover:text-white hover:bg-primary
-                focus:outline-none focus:text-white focus:bg-primary transition
-                duration-150 ease-in-out">
+                class="uppercase ml-4 px-3 py-1 border-2 border-white rounded
+                text-sm font-medium leading-5 text-gray-300 hover:text-white
+                hover:bg-secondary focus:outline-none focus:text-white
+                focus:bg-primary transition duration-150 ease-in-out">
                 {a.title}
               </a>
             {/each}
@@ -103,15 +103,13 @@
         <div class="ml-3 relative">
           <a href="javascript:navigate('odentity')">
             <button
-              class="flex text-sm border-2 border-transparent rounded-full
-              focus:outline-none focus:border-white transition duration-150
-              ease-in-out"
+              class="flex text-sm border-2 border-white rounded ease-in-out"
               id="user-menu"
               aria-label="User menu"
               aria-haspopup="true">
               <img
-                class="h-8 w-8 rounded-full"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                class="h-8 w-8 rounded"
+                src="https://source.unsplash.com/collection/portrait"
                 alt="" />
             </button>
           </a>
