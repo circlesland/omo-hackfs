@@ -187,6 +187,9 @@
 
         // Find the active and next leaf in the copy with the restored 'parent' properties ..
         let currentlyActiveNode_ = ProcessNode.findActiveLeaf(copy);
+        if (!currentlyActiveNode_) {
+            throw new Error("Couldn't find a currently active node.")
+        }
         let nextNode_ = ProcessNode.findNextNode(copy, currentlyActiveNode_.id);
 
         Logger.log(processNode.id + ":OmoDialog", "Executing current step ('" + currentlyActiveNode.stepId + "') and moving to next ('" + !nextNode_ ? "<end>" : nextNode_.stepId + "').");
@@ -255,7 +258,7 @@
 
         const nextNode = ProcessNode.findById(processNode, nextNode_.id);
 
-        currentlyActiveNode.state = "Finished";
+        currentlyActiveNode.state = "Succeeded";
         nextNode.state = nextNode.isInteractive ? "Active" : "Working";
 
         // If the nextNode has a 'quant' set, use it.

@@ -135,7 +135,7 @@ export class ProcessNode<TContext extends IProcessContext>
     }
 
     static isActive(node:ProcessNode<IProcessContext>) {
-        return node.state == ProcessState.Active;
+        return node.state == ProcessState.Active || node.state == ProcessState.Working;
     }
 
     static path(node:ProcessNode<IProcessContext>) {
