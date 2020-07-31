@@ -62,7 +62,7 @@
       {:else if step.state == 'Active'}
         <div
           class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800
-          hover:bg-secondary hover:text-white">
+          hover:bg-primary hover:text-white">
           <p class="w-12 py-2 px-4 text-xl bg-primary text-white font-bold">
             {step.step}
           </p>
@@ -71,7 +71,7 @@
       {:else if step.state == 'Working'}
         <div
           class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800
-          hover:bg-secondary hover:text-white">
+          hover:bg-primary hover:text-white">
           <div class="py-3 px-3 h-12 text-center bg-gray-200">
             <OmoSpin />
           </div>
@@ -80,7 +80,7 @@
       {:else if step.state == 'Succeeded'}
         <div
           class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800
-          hover:bg-secondary hover:text-white">
+          hover:bg-primary hover:text-white">
           <p class="py-2 px-4 text-xl bg-tertiary font-bold">
             <i class="fas fa-check-circle text-white" />
           </p>
@@ -89,7 +89,7 @@
       {:else}
         <div
           class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800
-          hover:bg-secondary hover:text-white">
+          hover:bg-primary hover:text-white">
           <div class="py-3 h-12 text-center bg-red-400">
             <i class="fas fa-exclamation-triangle text-white" />
           </div>
