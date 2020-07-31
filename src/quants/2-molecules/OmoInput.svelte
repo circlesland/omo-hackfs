@@ -2,6 +2,7 @@
   import {SubmitFlowStep} from "../../events/omo/shell/submitFlowStep";
   import {onDestroy, onMount} from "svelte";
   import {Logger} from "../../core/Log/logger";
+  import {ProcessNode} from "../../core/Flows/ProcessNode";
 
   let subscription = null;
   let value = "";
@@ -36,6 +37,21 @@
     Logger.log(data.id + ":OmoInput", "Sending SubmitFlowStep(processNodeId: " + data.id + ", value: <see attachment>)", value);
     window.o.publishShellEventAsync(submitEvent);
   }
+
+  let title;
+  let desc;
+  let prompt;
+  $:{
+      const copy = JSON.parse(JSON.stringify(data));
+      ProcessNode.restoreParentLinks(copy);
+
+      const activeNode = ProcessNode.findActiveLeaf(copy);
+      if (activeNode) {
+          title = activeNode.title;
+          desc = activeNode.description;
+          prompt = activeNode.prompt;
+      }
+  }
 </script>
 
 <style>
@@ -47,16 +63,18 @@
 <section
   class="flex flex-col justify-center text-center w-full lg:w-3/4 mx-auto px-12
   py-32">
-  <h1 class="text-primary text-3xl">[Add here dynamic step title]</h1>
+  <h1 class="text-primary text-3xl">{title}</h1>
   <h2 class="text-gray-600 text-lg">
-    [Add here dynamic step detailed description]
+    {#if desc}
+    {desc}
+    {/if}
   </h2>
   <form class="flex flex-col pt-3 md:pt-8" onsubmit="event.preventDefault();">
     <div class="flex flex-col pt-6">
       <input
         type="text"
         bind:value={value}
-        placeholder="[add here dynamic placeholder]"
+        placeholder="{prompt}"
         class="appearance-none border rounded w-full py-4 px-6 text-gray-700
         text-xl mt-1 leading-tight focus:outline-none focus:shadow-outline" />
     </div>

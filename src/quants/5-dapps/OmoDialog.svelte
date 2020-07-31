@@ -47,14 +47,21 @@
         });
     });
 
+    let layoutWithNext = {
+        areas: "'aside content' 'foot foot'",
+        columns: "400px 1fr",
+        rows: "1fr 3rem"
+    };
+    let layoutWithoutNext = { // TODO: The molecule shouldn't be shown when it has no layout slot.
+        areas: "'aside content'",
+        columns: "400px 1fr",
+        rows: "1fr"
+    };
+
     let organisms = {
         name: "OmoSafe",
         type: "organisms",
-        layout: {
-            areas: "'aside content' 'foot foot'",
-            columns: "400px 1fr",
-            rows: "1fr 3rem"
-        },
+        layout: layoutWithNext,
         blocks: [
             {
                 type: "molecule",
@@ -284,6 +291,11 @@
                 processNode: processNode,
                 label: currentlyActiveNode.submitButtonLabel
             };
+        }
+        if (!nextNode.isInteractive) {
+            oldOrg.layout = layoutWithoutNext;
+        } else {
+            oldOrg.layout = layoutWithNext;
         }
 
         setTimeout(() => {
