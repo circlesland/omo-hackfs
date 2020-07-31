@@ -1,4 +1,5 @@
 <script>
+  import OmoSpin from "./../1-atoms/OmoSpin.svelte";
   import { ProcessNode } from "../../core/Flows/ProcessNode";
 
   let items = [];
@@ -58,12 +59,30 @@
             <i class="fas fa-lock text-gray-500" />
           </div>
         </div>
-      {:else}
+      {:else if step.state == 'Active'}
         <div
           class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800
           hover:bg-primary hover:text-white">
           <p class="py-2 px-4 text-xl font-bold">{step.step}</p>
           <p class="py-3 px-4 rounded w-full">{step.title}</p>
+        </div>
+      {:else if step.state == 'Working'}
+        <div class="flex mb-4 flex-col justify-center h-12">
+          <div class="py-3 h-12 text-center bg-gray-200">
+            <OmoSpin />
+          </div>
+        </div>
+      {:else if step.state == 'Succeeded'}
+        <div class="flex mb-4 flex-col justify-center h-12">
+          <div class="py-3 h-12 text-center bg-gray-200">
+            <i class="fas fa-check-circle text-tertiary" />
+          </div>
+        </div>
+      {:else}
+        <div class="flex mb-4 flex-col justify-center h-12">
+          <div class="py-3 h-12 text-center bg-red-400">
+            <i class="fas fa-exclamation-triangle text-white" />
+          </div>
         </div>
       {/if}
     {/each}
