@@ -16,9 +16,9 @@ export const requestUbi:ISideEffect<IProcessContext, any> = {
     }],
     execute: async (context, argument) => {
         const payout = await window.o.circlesCore.token.requestUBIPayout(
-            context.inputs["safeOwner"],
-            context.inputs["safe"]);
-        context.outputs["void"] = {};
+            context.local.inputs["safeOwner"],
+            context.local.inputs["safe"]);
+        context.local.outputs["void"] = {};
     },
     canExecute: async context => true
 };

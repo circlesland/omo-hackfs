@@ -35,11 +35,12 @@ export const revokeTrust:ISideEffect<IProcessContext, void> = {
       }
 
       await removeTrustLineAsync(
-          context.inputs["trustGivingSafeOwner"],
-          context.inputs["trustGivingSafe"],
-          context.inputs["trustReceivingSafe"]
+          context.local.inputs["trustGivingSafeOwner"],
+          context.local.inputs["trustGivingSafe"],
+          context.local.inputs["trustReceivingSafe"]
       );
-      context.outputs["void"] = {};
+      context.local.outputs["void"] = {};
+      console.log("SE: revoked trust");
   },
   canExecute: async context => true
 };

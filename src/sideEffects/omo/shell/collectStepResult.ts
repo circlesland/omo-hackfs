@@ -5,12 +5,12 @@ export const collectStepResult:ISideEffect<IProcessContext, any> = {
     _$schemaId: "sideEffects:omo.shell.collectStepResult",
     inputs: [],
     outputs: [{
-        name: "void",
-        type: "schema:omo.void"
+        name: "stepResult",
+        type: "schema:omo.any"
     }],
   execute: async (context, argument) => {
-      context[context.stepId] = argument;
-      context.outputs["void"] = {};
+      context.local.outputs["stepResult"] = argument;
+      console.log("SE: collected step result: ", argument);
   },
   canExecute: async context => true
 };

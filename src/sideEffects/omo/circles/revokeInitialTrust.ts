@@ -2,8 +2,8 @@ import {ISideEffect} from "../../../core/Flows/ISideEffect";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
 import {giveTrust} from "../safe/giveTrust";
 
-export const giveInitialTrust: ISideEffect<IProcessContext, any> = {
-    _$schemaId: "sideEffects:omo.circles.giveInitialTrust",
+export const revokeInitialTrust: ISideEffect<IProcessContext, any> = {
+    _$schemaId: "sideEffects:omo.circles.revokeInitialTrust",
     inputs: [{
         name: "trustReceiverSafe",
         type: "schema:omo.safe.safe",
@@ -38,48 +38,44 @@ export const giveInitialTrust: ISideEffect<IProcessContext, any> = {
             safe: { safeAddress: process.env.OMO3_SAFE_SAFEADDRESS }
         };
 
-        console.log("SE: Give initial trust initialized..");
+        console.log("SE: Revoke initial trust initialized..");
 
-        async function addTrustLineAsync(
+
+        async function removeTrustLineAsync(
             trustGivingSafeOwner,
-            trustGivingSafe,
-            trustReceivingSafe,
-            trustPercentage
-        )
-        {
+            trustGivingSafeAddress,
+            trustReceivingSafe
+        ) {
             // .. give user the permission to send their Token to you
-            await window.o.circlesCore.trust.addConnection(trustGivingSafeOwner, {
-                canSendTo: trustGivingSafe.safeAddress,
-                user: trustReceivingSafe.safeAddress,
-                limitPercentage: trustPercentage
+            await window.o.circlesCore.trust.removeConnection(trustGivingSafeOwner, {
+                user: trustGivingSafeAddress.safeAddress,
+                canSendTo: trustReceivingSafe.safeAddress,
             });
+
         }
 
-        console.log("SE: Trust from 1");
-        await addTrustLineAsync(
+        console.log("'" + omo1.safeOwner.address + "' is untrusting '" + context.local.inputs["trustReceiverSafe"].safeAddress + "'..")
+        await removeTrustLineAsync(
             omo1.safeOwner,
             omo1.safe,
-            context.local.inputs["trustReceiverSafe"],
-            1,
+            context.local.inputs["trustReceiverSafe"]
         );
-        console.log("SE: Trust from 2");
-        await addTrustLineAsync(
+        console.log("'" + omo2.safeOwner.address + "' is untrusting '" + context.local.inputs["trustReceiverSafe"].safeAddress + "'..")
+        await removeTrustLineAsync(
             omo2.safeOwner,
             omo2.safe,
-            context.local.inputs["trustReceiverSafe"],
-            1,
+            context.local.inputs["trustReceiverSafe"]
         );
-        console.log("SE: Trust from 3");
-        await addTrustLineAsync(
+        console.log("'" + omo3.safeOwner.address + "' is untrusting '" + context.local.inputs["trustReceiverSafe"].safeAddress + "'..")
+        await removeTrustLineAsync(
             omo3.safeOwner,
             omo3.safe,
-            context.local.inputs["trustReceiverSafe"],
-            1,
+            context.local.inputs["trustReceiverSafe"]
         );
-        console.log("SE: Trusted");
+
+        console.log("SE: Initial trust removed");
 
         context.local.outputs["void"] = {};
-        console.log("SE: gave initial trust");
     },
     canExecute: async context => true
 };

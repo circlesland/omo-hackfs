@@ -55,6 +55,9 @@ import {generateSafe as generateSafeSideEffect} from "./sideEffects/omo/circles/
 import {giveInitialTrust as giveInitialTrustSideEffect} from "./sideEffects/omo/circles/giveInitialTrust";
 import {deployToken as deployTokenSideEffect} from "./sideEffects/omo/safe/deployToken";
 import {deploySafe as deploySafeSideEffect} from "./sideEffects/omo/safe/deploySafe";
+import {createDream as createDreamSideEffect} from "./sideEffects/omo/dreams/createDream";
+import {revokeInitialTrust as revokeInitialTrustSideEffect} from "./sideEffects/omo/circles/revokeInitialTrust";
+
 
 //
 // Schema
@@ -69,6 +72,7 @@ import {Quant} from "./schema/omo/quant";
 import {Safe} from "./schema/omo/safe/safe";
 import {Number} from "./schema/omo/number";
 import {Void} from "./schema/omo/void";
+import {Any} from "./schema/omo/any";
 
 export function init()
 {
@@ -145,7 +149,9 @@ export function init()
         generateSafeSideEffect,
         giveInitialTrustSideEffect,
         deployTokenSideEffect,
-        deploySafeSideEffect
+        deploySafeSideEffect,
+        createDreamSideEffect,
+        revokeInitialTrustSideEffect
     ].forEach(o =>
     {
         w.sideEffectRegistrar.set(o["_$schemaId"], o);
@@ -162,7 +168,8 @@ export function init()
         Quant,
         Safe,
         Number,
-        Void
+        Void,
+        Any
     ].forEach(o =>
     {
         w.schemaRegistrar.set(o["_$schemaId"], o);

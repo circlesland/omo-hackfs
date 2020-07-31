@@ -42,12 +42,12 @@ export const transferCircles:ISideEffect<IProcessContext, void> = {
       }
 
       await sendCirclesAsync(
-          context.inputs["sendingSafeOwner"],
-          context.inputs["sendingSafeAddress"],
-          context.inputs["receivingSafeAddress"],
-          context.inputs["amount"]
+          context.local.inputs["sendingSafeOwner"],
+          context.local.inputs["sendingSafeAddress"],
+          context.local.inputs["receivingSafeAddress"],
+          context.local.inputs["amount"]
       );
-      context.outputs["void"] = {};
+      context.local.outputs["void"] = {};
   },
   canExecute: async context => true
 };

@@ -138,11 +138,26 @@
         const first = flatLeafs[0];
         first.state = "Active";
         executionContext = {
-            stepId: first.stepId,
-            o: window.o
+            o: window.o,
+            local: {
+                stepId: first.stepId,
+                inputs: {},
+                outputs: {}
+            },
+            global: {}
         };
         return first.id;
     }
+
+    let defaultInputs = [{
+        name: "currentSafeOwner",
+        type: "schema:omo.safe.safeOwner",
+        value: () => window.o.odentity.current.circleSafeOwner
+    },{
+        name: "currentSafe",
+        type: "schema:omo.safe.safe",
+        value: () => window.o.odentity.current.circleSafe
+    }]
 
     /**
      * Sets the current node to "Finish" and proceeds with the next executable leaf node.
@@ -153,7 +168,7 @@
         const oldOrg = organisms;
         organisms = false;
 
-        setTimeout(() => {
+        setTimeout(async () => {
             // We need to work with a copy of the tree because OmoOrganism doesn't like circular references
             // (specifically the 'parent' property of the ProcessNode)
             const copy = JSON.parse(JSON.stringify(processNode));
@@ -172,21 +187,46 @@
 
             // .. then use the IDs to look up the "real" node and execute its side-effect (if any)
             const currentlyActiveNode = ProcessNode.findById(processNode, currentlyActiveNode_.id);
-            executionContext.stepId = currentlyActiveNode.stepId;
+            executionContext.local.stepId = currentlyActiveNode.stepId;
 
             if (currentlyActiveNode.sideEffect) {
                 const sideEffect = window.sideEffectRegistrar.get(currentlyActiveNode.sideEffect);
 
+                if (!sideEffect) {
+                    throw new Error("Couldn't find sideEffect '" + currentlyActiveNode.sideEffect + "' in flow step '" + currentlyActiveNode.stepId + "'. Maybe it's not registered?!");
+                }
+
                 // Check if there is a side effect and if it can be executed
                 if (sideEffect
-                        && (!sideEffect.canExecute ? true : sideEffect.canExecute(executionContext, argument))
+                        && (!sideEffect.canExecute ? true : (await sideEffect.canExecute(executionContext, argument)))
                         && sideEffect.execute) {
                     try {
-                        sideEffect.execute(executionContext, argument);
+
+                        // Map all inputs to the 'local' scope
+                        currentlyActiveNode.inputMap.forEach(inputMap => {
+                            let globalValue = executionContext.global[inputMap.globalName];
+                            if (!globalValue) {
+                                // Look if the default values can satisfy
+                                let globalValueFactory = defaultInputs.find(o => o.name === inputMap.globalName);
+                                if (globalValueFactory)
+                                    globalValue = globalValueFactory();
+                            }
+                            if (!globalValue){
+                                throw new Error("Couldn't find a matching input value for sideEffect '" + currentlyActiveNode.sideEffect +  "' in step '" + currentlyActiveNode.stepId + "'. Requested globalName: " + inputMap.globalName);
+                            }
+                           executionContext.local.inputs[inputMap.localName] = executionContext.global[inputMap.globalName];
+                        });
+
+                        await sideEffect.execute(executionContext, argument);
+
+                        // Map all results to the 'global' scope
+                        currentlyActiveNode.outputMap.forEach(outputMap => {
+                            executionContext.global[outputMap.globalName] = executionContext.local.outputs[outputMap.localName];
+                        });
                     } catch (e) {
                         currentlyActiveNode.state = "Failed";
                         currentlyActiveNode.error = e;
-                        return;
+                        throw e;
                     }
                 }
             }

@@ -16,20 +16,48 @@ export const deployToken: ISideEffect<IProcessContext, void> = {
     }],
     execute: async (context, argument) =>
     {
+        console.log("SE: deploy token..");
+        console.log("Finished! safe: ", context.local.inputs["safe"])
+        console.log("Finished! safeOwner: ", context.local.inputs["safeOwner"])
         async function addTrustLineAsync(
             safeOwner,
             safe
         )
         {
-            await window.o.circlesCore.token.deploy(safeOwner, safe);
+            let success = false;
+            let triesLeft = 6;
+            while (!success && triesLeft-- >= 0)
+            {
+                await new Promise(async (r) => {
+                    setTimeout(async () => {
+                        try
+                        {
+                            await window.o.circlesCore.token.deploy(safeOwner, safe);
+                            success = true;
+                            r();
+                        }
+                        catch (e)
+                        {
+                            success = false;
+                            console.log("Deploying safe failed. Tries left:", e);
+                            if (triesLeft <= 0) {
+                                throw e;
+                            }
+                            r();
+                        }
+                    }, 10000);
+                });
+            }
         }
 
         await addTrustLineAsync(
-            context.inputs["safeOwner"],
-            context.inputs["safe"]
+            context.local.inputs["safeOwner"],
+            context.local.inputs["safe"]
         );
 
-        context.outputs["void"] = {};
+        context.local.outputs["void"] = {};
+        console.log("SE: deployed token");
+        console.log("Finished! Safe: ", context.local.inputs["safe"]);
     },
     canExecute: async context => true
 };

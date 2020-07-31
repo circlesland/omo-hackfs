@@ -13,6 +13,9 @@ export class StepBuilder<TContext extends IProcessContext>
     sideEffect?:string;
     prompt?: string;
 
+    inputMap: { localName: string; globalName: string }[] = [];
+    outputMap: { localName: string; globalName: string }[] = [];
+
     constructor(parent:CategoryBuilder<TContext>, stepId:string)
     {
         this.parent = parent;
@@ -66,7 +69,27 @@ export class StepBuilder<TContext extends IProcessContext>
         step.title = this.title;
         step.description = this.description;
         step.prompt = this.prompt;
+        step.inputMap = this.inputMap;
+        step.outputMap = this.outputMap;
         return step;
+    }
+
+    mapOutput(localName: string, globalName: string): StepBuilder<TContext>
+    {
+        this.outputMap.push({
+            localName: localName,
+            globalName: globalName
+        });
+        return this;
+    }
+
+    mapInput(localName: string, globalName: string): StepBuilder<TContext>
+    {
+        this.inputMap.push({
+            localName: localName,
+            globalName: globalName
+        });
+        return this;
     }
 }
 

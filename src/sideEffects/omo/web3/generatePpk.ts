@@ -10,7 +10,7 @@ export const generatePpk:ISideEffect<IProcessContext, any> = {
     }],
   execute: async (context, argument) => {
       const ppk = window.o.web3.eth.accounts.create();
-      context.outputs["safeOwner"] = ppk;
+      context.local.outputs["safeOwner"] = ppk;
   },
   canExecute: async context => true
 };

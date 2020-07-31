@@ -4,10 +4,10 @@ import {IProcessContext} from "../../../core/Flows/IProcessContext";
 export const giveTrust: ISideEffect<IProcessContext, void> = {
     _$schemaId: "sideEffects:omo.safe.giveTrust",
     inputs: [{
-        name: "trustGivingSafeOwner",
+        name: "currentSafeOwner",
         type: "schema:omo.safe.safeOwner"
     },{
-        name: "trustGivingSafe",
+        name: "currentSafe",
         type: "schema:omo.safe.safe"
     },{
         name: "trustReceivingSafe",
@@ -32,7 +32,7 @@ export const giveTrust: ISideEffect<IProcessContext, void> = {
             // .. give user the permission to send their Token to you
             const trusted = await window.o.circlesCore.trust.addConnection(trustGivingSafeOwner, {
                 canSendTo: trustGivingSafe.safeAddress,
-                user: trustReceivingSafe,
+                user: trustReceivingSafe.safeAddress,
                 limitPercentage: trustPercentage
             });
             alert(JSON.stringify(trusted));
@@ -45,13 +45,14 @@ export const giveTrust: ISideEffect<IProcessContext, void> = {
         }
 
         await addTrustLineAsync(
-            context.inputs["trustGivingSafeOwner"],
-            context.inputs["trustGivingSafe"],
-            context.inputs["trustReceivingSafe"],
-            context.inputs["trustPercentage"]
+            context.local.inputs["trustGivingSafeOwner"],
+            context.local.inputs["trustGivingSafe"],
+            context.local.inputs["trustReceivingSafe"],
+            context.local.inputs["trustPercentage"]
         );
 
-        context.outputs["void"] = {};
+        context.local.outputs["void"] = {};
+        console.log("SE: gave trust");
 
     },
     canExecute: async context => true

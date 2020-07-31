@@ -8,18 +8,20 @@ export const generateSafe:ISideEffect<IProcessContext, any> = {
         type: "schema:omo.safe.safeOwner"
     }],
     outputs:[{
-        name: "void",
-        type: "schema:omo.void"
+        name: "safe",
+        type: "schema:omo.safe.safe"
     }],
   execute: async (context, argument) => {
-      const ppk = context.inputs["safeOwner"]
+      const ppk = context.local.inputs["safeOwner"]
       // Generate a nonce to predict Safe address
       const nonce = new Date().getTime();
       // Prepare Safe deployment and receive a predicted safeAddress
       const safeAddress = await window.o.circlesCore.safe.prepareDeploy(ppk, { nonce });
       const safe = { safeAddress: safeAddress };
-      context[context.stepId] = safe;
-      context.outputs["void"] = {};
+      context.local.outputs["safe"] = safe;
+
+      console.log("SE: Generated safe:" ,context.local.outputs["safe"]);
+      console.log("Generated safe: ", context.local.outputs["safe"])
   },
   canExecute: async context => true
 };
