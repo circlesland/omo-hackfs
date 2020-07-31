@@ -8,6 +8,8 @@ export function createDream()
             build
                 .step("flows:omo.dreams.createDream:getName")
                     .withQuant("OmoInput")
+                    .withPrompt("Name")
+                    .withTitle("Give your dream a name")
                     .withSideEffect("sideEffects:omo.shell.collectStepResult")
 
                 .step("flows:omo.dreams.createDream:generatePpk")

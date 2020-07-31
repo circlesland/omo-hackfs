@@ -24,6 +24,7 @@ import OmoStatusResponse from "./quants/2-molecules/OmoStatusResponse.svelte";
 import OmoSelect from "./quants/2-molecules/OmoSelect.svelte";
 import OmoGridVoting from "./quants/2-molecules/OmoGridVoting.svelte";
 import OmoGridPreOrder from "./quants/2-molecules/OmoGridPreOrder.svelte";
+import OmoNextButton from "./quants/2-molecules/OmoNextButton.svelte";
 
 //
 // Flows
@@ -40,6 +41,7 @@ import {addAuthProviderMail as addAuthProviderMailFlow} from "./flows/omo/odenti
 import {removeAuthProviderMail as removeAuthProviderMailFlow} from "./flows/omo/odentity/removeAuthProviderMail";
 import {addAuthProviderSeedPhrase as addAuthProviderSeedPhraseFlow} from "./flows/omo/odentity/addAuthProviderSeedPhrase";
 import {removeAuthProviderSeedPhrase as removeAuthProviderSeedPhraseFlow} from "./flows/omo/odentity/removeAuthProviderSeedPhraseFlow";
+import {createDream as createDreamFlow} from "./flows/omo/dreams/createDream";
 
 //
 // SideEffects
@@ -51,6 +53,8 @@ import {revokeTrust as revokeTrustSideEffect} from "./sideEffects/omo/safe/revok
 import {generatePpk as generatePpkSideEffect} from "./sideEffects/omo/web3/generatePpk";
 import {generateSafe as generateSafeSideEffect} from "./sideEffects/omo/circles/generateSafe";
 import {giveInitialTrust as giveInitialTrustSideEffect} from "./sideEffects/omo/circles/giveInitialTrust";
+import {deployToken as deployTokenSideEffect} from "./sideEffects/omo/safe/deployToken";
+import {deploySafe as deploySafeSideEffect} from "./sideEffects/omo/safe/deploySafe";
 
 //
 // Schema
@@ -93,6 +97,7 @@ export function init()
     w.registrar.set("OmoGridVoting", OmoGridVoting);
     w.registrar.set("OmoGridPreOrder", OmoGridPreOrder);
     w.registrar.set("OmoSelect", OmoSelect);
+    w.registrar.set("OmoNextButton", OmoNextButton);
 
     w.flowRegistrar = new Map();
     w.flowRegistrar.set("flows:omo.safe.giveTrust", giveTrustFlow);
@@ -125,6 +130,10 @@ export function init()
         "flows:omo.odentity.removeAuthProviderSeedPhrase",
         removeAuthProviderSeedPhraseFlow
     );
+    w.flowRegistrar.set(
+        "flows:omo.dreams.createDream",
+        createDreamFlow
+    );
 
     w.sideEffectRegistrar = new Map();
     [
@@ -134,7 +143,9 @@ export function init()
         transferCirclesSideEffect,
         generatePpkSideEffect,
         generateSafeSideEffect,
-        giveInitialTrustSideEffect
+        giveInitialTrustSideEffect,
+        deployTokenSideEffect,
+        deploySafeSideEffect
     ].forEach(o =>
     {
         w.sideEffectRegistrar.set(o["_$schemaId"], o);

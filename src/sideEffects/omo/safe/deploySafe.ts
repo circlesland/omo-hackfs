@@ -1,7 +1,7 @@
 import {ISideEffect} from "../../../core/Flows/ISideEffect";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
 
-export const giveTrust: ISideEffect<IProcessContext, void> = {
+export const deploySafe: ISideEffect<IProcessContext, void> = {
     $_schemaId: "sideEffects:omo.safe.giveTrust",
     inputs: [{
         name: "safeOwner",

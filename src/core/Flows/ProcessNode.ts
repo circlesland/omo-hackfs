@@ -15,7 +15,11 @@ export class ProcessNode<TContext extends IProcessContext>
     parent: ProcessNode<TContext> | null = null;
     state: ProcessState = ProcessState.Pristine;
     error:any;
-    title: string = "";
+
+    title?: string = "";
+    description?: string = "";
+    prompt?: string;
+    submitButtonLabel: string = "Next";
 
     quant?: string;
     sideEffect?: string;
