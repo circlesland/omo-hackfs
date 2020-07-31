@@ -1,3 +1,5 @@
+import {Log} from "../../events/omo/shell/log";
+
 export class Logger
 {
     public static readonly MAX_SEVERITY_LENGTH = 10;
@@ -49,11 +51,12 @@ export class Logger
             };
 
             const dataJson = JSON.stringify(data, getCircularReplacer());
-            console.log(new Date().toJSON() + " | " + severity + " | " + src + " | " + msg + " | " + dataJson)
+
+            window.o.publishShellEventAsync(new Log(src, severity, msg, dataJson ));
         }
         else
         {
-            console.log(new Date().toJSON() + " | " + severity + " | " + src + " | " + msg)
+            window.o.publishShellEventAsync(new Log(src, severity, msg));
         }
     }
 }

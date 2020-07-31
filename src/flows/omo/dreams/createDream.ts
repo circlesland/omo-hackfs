@@ -49,6 +49,9 @@ export function createDream()
                 .step("flows:omo.dreams.createDream:revokeInitialTrust")
                 .withSideEffect("sideEffects:omo.circles.revokeInitialTrust")
                 .mapInput("trustReceiverSafe", "safe")
+
+                .step("flows:omo.dreams.createDream:end")
+                .withQuant("OmoStatusResponse")
         })
         .end()
         .build();

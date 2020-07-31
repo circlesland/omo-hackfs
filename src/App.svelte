@@ -73,6 +73,14 @@
                     window.o.odentity.logout();
                     window.o.publishShellEventAsync(new ClosePopup());
                     break;
+                case "events:omo.shell.log":
+                    if (next.data.dataJson) {
+                        console.log(new Date().toJSON() + " | " + next.data.severity + " | " + next.data.source + " | " + next.data.message + " | " + next.data.dataJson)
+                    }
+                    else {
+                        console.log(new Date().toJSON() + " | " + next.data.severity + " | " + next.data.source + " | " + next.data.message)
+                    }
+                    break;
             }
         });
     });
