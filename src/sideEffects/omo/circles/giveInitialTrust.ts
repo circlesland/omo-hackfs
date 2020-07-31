@@ -3,7 +3,7 @@ import {IProcessContext} from "../../../core/Flows/IProcessContext";
 import {giveTrust} from "../safe/giveTrust";
 
 export const giveInitialTrust: ISideEffect<IProcessContext, any> = {
-    $_schemaId: "sideEffects:omo.circles.giveInitialTrust",
+    _$schemaId: "sideEffects:omo.circles.giveInitialTrust",
     inputs: [{
         name: "trustReceiverSafe",
         type: "schema:omo.safe.safe",

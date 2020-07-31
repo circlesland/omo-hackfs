@@ -2,7 +2,7 @@ import {IProcessContext} from "./IProcessContext";
 
 export interface ISideEffect<IContext extends IProcessContext, TArgument>
 {
-    $_schemaId:string;
+    _$schemaId:string;
     inputs?:{name:string, type:string, description?:string}[];
     outputs?:{name:string, type:string, description?:string}[];
 

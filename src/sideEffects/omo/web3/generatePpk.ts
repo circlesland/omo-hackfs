@@ -2,7 +2,7 @@ import {ISideEffect} from "../../../core/Flows/ISideEffect";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
 
 export const generatePpk:ISideEffect<IProcessContext, any> = {
-    $_schemaId: "sideEffects:omo.web3.generatePpk",
+    _$schemaId: "sideEffects:omo.web3.generatePpk",
     inputs: [],
     outputs: [{
         name: "safeOwner",

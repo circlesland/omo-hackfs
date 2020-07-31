@@ -2,7 +2,7 @@ import {ISideEffect} from "../../../core/Flows/ISideEffect";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
 
 export const deployToken: ISideEffect<IProcessContext, void> = {
-    $_schemaId: "sideEffects:omo.safe.deployToken",
+    _$schemaId: "sideEffects:omo.safe.deployToken",
     inputs: [{
         name: "safeOwner",
         type: "schema:omo.safe.safeOwner"

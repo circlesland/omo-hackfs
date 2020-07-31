@@ -2,7 +2,7 @@ import {ISideEffect} from "../../../core/Flows/ISideEffect";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
 
 export const generateSafe:ISideEffect<IProcessContext, any> = {
-    $_schemaId: "sideEffects:omo.circles.generateSafe",
+    _$schemaId: "sideEffects:omo.circles.generateSafe",
     inputs: [{
         name: "safeOwner",
         type: "schema:omo.safe.safeOwner"

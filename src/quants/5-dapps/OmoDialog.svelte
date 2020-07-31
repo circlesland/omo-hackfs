@@ -29,7 +29,7 @@
                     if (!event.data.processNodeId === processNode.id) {
                         return; // Not meant for our executing flow
                     }
-                    next(processNode);
+                    next(processNode, event.data.argument);
                     break;
                 case "events:omo.shell.undoFlowStep":
                     break;

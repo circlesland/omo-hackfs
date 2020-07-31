@@ -2,7 +2,7 @@ import {ISideEffect} from "../../../core/Flows/ISideEffect";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
 
 export const requestUbi:ISideEffect<IProcessContext, any> = {
-    $_schemaId: "sideEffects:omo.circles.requestUbi",
+    _$schemaId: "sideEffects:omo.circles.requestUbi",
     inputs: [{
         name: "safeOwner",
         type: "schema:omo.safe.safeOwner"
