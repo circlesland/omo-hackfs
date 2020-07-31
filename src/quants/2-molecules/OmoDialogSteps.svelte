@@ -39,7 +39,7 @@
   }
 </style>
 
-<section class="omo-left py-6 px-8 text-md bg-gray-100">
+<section class="omo-left py-6 px-8 text-md bg-gray-100 overflow-y-scroll">
   {#each items.sort((first, second) => {
     if (first.level < second.level) return -1;
     if (first.level > second.level) return 1;
@@ -73,11 +73,19 @@
           </div>
         </div>
       {:else if step.state == 'Succeeded'}
-        <div class="flex mb-4 flex-col justify-center h-12">
+        <div
+          class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800
+          hover:bg-primary hover:text-white">
+          <p class="py-2 px-4 text-xl bg-tertiary font-bold">
+            <i class="fas fa-check-circle text-white" />
+          </p>
+          <p class="py-3 px-4 rounded w-full">{step.title}</p>
+        </div>
+        <!-- <div class="flex mb-4 flex-col justify-center h-12">
           <div class="py-3 h-12 text-center bg-gray-200">
             <i class="fas fa-check-circle text-tertiary" />
           </div>
-        </div>
+        </div> -->
       {:else}
         <div class="flex mb-4 flex-col justify-center h-12">
           <div class="py-3 h-12 text-center bg-red-400">
