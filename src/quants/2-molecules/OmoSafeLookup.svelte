@@ -1,41 +1,50 @@
 <script>
-    import {SubmitFlowStep} from "../../events/omo/shell/submitFlowStep";
+  export let data = {
+    bundleId: "",
+    safeId: ""
+  };
 
-    export let data = {
-        processNode: {}
-    };
-
-    let submitvalue = "";
-
-    function submit() {
-        const submitEvent = new SubmitFlowStep(data.processNode.id, submitvalue);
-        window.o.publishShellEventAsync(submitEvent);
-    }
+  function submit() {
+    const topic = window.o.eventBroker.tryGetTopic("omo", data.bundleId);
+    const submitEvent = new Submit();
+    submitEvent.data = data;
+    topic.publish(submitEvent);
+  }
 </script>
 
-<div
-        class="flex flex-col justify-center text-center w-full lg:w-3/4 mx-auto px-12
-  py-32">
-    <h1 class="text-primary text-3xl">Enter SafeAddress you want to giveTrust</h1>
-    <form class="flex flex-col pt-3 md:pt-8" onsubmit="event.preventDefault();">
-        <div class="flex flex-col pt-6">
-            <input
-                    type="text"
-                    bind:value={submitvalue}
-                    placeholder="Safe ID"
-                    class="appearance-none border rounded w-full py-4 px-6 text-gray-700
-        text-xl mt-1 leading-tight focus:outline-none focus:shadow-outline"/>
-        </div>
-        <button
-                type="submit"
-                class="bg-primary rounded text-white font-bold text-lg hover:bg-secondary
-                p-2"
-                on:click={ () => submit()}>
-            Next
-        </button>
-    </form>
+<style>
+  section {
+    height: 70vh;
+  }
+</style>
 
-</div>
+<section
+  class="flex flex-col justify-center text-center w-full lg:w-3/4 mx-auto px-12
+  py-32">
+  <h1 class="text-primary text-3xl">[Add here dynamic step title]</h1>
+  <h2 class="text-gray-600 text-lg">
+    [Add here dynamic step detailed description]
+  </h2>
+  <form class="flex flex-col pt-3 md:pt-8" onsubmit="event.preventDefault();">
+    <div class="flex flex-col pt-6">
+      <input
+        type="text"
+        bind:value={data.safeId}
+        placeholder="[add here dynamic placeholder]"
+        class="appearance-none border rounded w-full py-4 px-6 text-gray-700
+        text-xl mt-1 leading-tight focus:outline-none focus:shadow-outline" />
+    </div>
+
+    <!-- <button
+      on:click={submit}
+      type="submit"
+      class="bg-primary rounded text-white font-bold text-lg hover:bg-secondary
+      p-2">
+      Trust Safe
+    </button> -->
+  </form>
+
+</section>
 
 <!-- <div
   class="bg-cover bg-center object-fill"

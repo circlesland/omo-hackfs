@@ -1,6 +1,6 @@
 <script>
   import { mnemonicToEntropy } from "bip39";
-  import { getSafeAddressAsync } from "./../../queries/omo/safe/circles";
+  import { getSafeAddressAsync } from "./../../queries/omo/safe/circles.svelte";
 
   let seedPhrase = "";
 

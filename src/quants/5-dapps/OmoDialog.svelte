@@ -1,204 +1,178 @@
 <script>
-    import OmoOrganisms from "./../4-layouts/OmoOrganisms.svelte";
-    import {ProcessNode} from "../../core/Flows/ProcessNode";
-    import {onDestroy, onMount} from "svelte";
-    import {SubmitFlowStep} from "../../events/omo/shell/submitFlowStep";
-    import {ClosePopup} from "../../events/omo/shell/closePopup";
+  import OmoOrganisms from "./../4-layouts/OmoOrganisms.svelte";
+  import { ProcessNode } from "../../core/Flows/ProcessNode";
+  import { onDestroy, onMount } from "svelte";
+  import { SubmitFlowStep } from "../../events/omo/shell/submitFlowStep";
 
-    export let processNode = {};
+  export let processNode = {};
 
-    let subscription = null;
-    let executionContext;
+  let subscription = null;
+  onDestroy(() => {
+    if (subscription) {
+      subscription.unsubscribe();
+    }
+  });
 
-    onDestroy(() => {
-        if (subscription) {
-            subscription.unsubscribe();
-        }
+  onMount(() => {
+    let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
+    subscription = notifications.observable.subscribe(event => {
+      if (!event._$eventType) return;
+
+      switch (event._$eventType) {
+        case "omo.shell.submitFlowStep":
+          if (!event.data.processNodeId === processNode.id) {
+            return; // Not meant for our executing flow
+          }
+          next(processNode);
+          break;
+        case "omo.shell.undoFlowStep":
+          break;
+      }
     });
+  });
 
-    onMount(() => {
-        let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
-        subscription = notifications.observable.subscribe(event => {
-            if (!event._$eventType)
-                return;
+  let organisms = {
+    name: "OmoSafe",
+    type: "organisms",
+    layout: {
+      areas: "'aside content'",
+      columns: "400px 1fr",
+      rows: "1fr"
+    },
+    blocks: [
+      {
+        type: "molecule",
+        slot: "aside",
+        quant: "OmoDialogSteps",
+        data: processNode
+      },
+      {
+        type: "molecule",
+        slot: "content",
+        quant: "OmoStatusResponse",
+        data: {}
+      }
+    ]
+  };
 
-            switch (event._$eventType) {
-                case "events:omo.shell.submitFlowStep":
-                    if (!event.data.processNodeId === processNode.id) {
-                        return; // Not meant for our executing flow
-                    }
-                    next(processNode, event.data.argument);
-                    break;
-                case "events:omo.shell.undoFlowStep":
-                    break;
-            }
-        });
-    });
+  function onNewProcessNode(processNode) {
+    const copy = JSON.parse(JSON.stringify(processNode));
+    ProcessNode.restoreParentLinks(copy);
 
-    let organisms = {
-        name: "OmoSafe",
-        type: "organisms",
-        layout: {
-            areas: "'aside content'",
-            columns: "400px 1fr",
-            rows: "1fr"
-        },
-        blocks: [
-            {
-                type: "molecule",
-                slot: "aside",
-                quant: "OmoDialogSteps",
-                data: processNode
-            },
-            {
-                type: "molecule",
-                slot: "content",
-                quant: "OmoStatusResponse",
-                data: {}
-            }
-        ]
-    };
+    organisms.blocks[0].data = processNode;
 
-    function onNewProcessNode(processNode) {
-        const copy = JSON.parse(JSON.stringify(processNode));
-        ProcessNode.restoreParentLinks(copy);
-
-        organisms.blocks[0].data = processNode;
-
-        let activeLeaf = ProcessNode.findActiveLeaf(copy);
-        if (activeLeaf && activeLeaf.quant) {
-            organisms.blocks[1].quant = activeLeaf.quant;
-            organisms.blocks[1].data = {
-                processNode: processNode
-            }
-        }
-
-        if (isNewProcess(processNode)) {
-            const activatedNodeId = initProcess(processNode);
-
-            activeLeaf = ProcessNode.findById(copy, activatedNodeId);
-            if (activeLeaf && activeLeaf.quant) {
-                organisms.blocks[1].quant = activeLeaf.quant;
-                organisms.blocks[1].data = {
-                    processNode: processNode
-                }
-            }
-        }
+    let activeLeaf = ProcessNode.findActiveLeaf(copy);
+    if (activeLeaf && activeLeaf.quant) {
+      organisms.blocks[1].quant = activeLeaf.quant;
     }
 
-    $: {
-        onNewProcessNode(processNode);
+    if (isNewProcess(processNode)) {
+      const activatedNodeId = initProcess(processNode);
+
+      activeLeaf = ProcessNode.findById(copy, activatedNodeId);
+      if (activeLeaf && activeLeaf.quant) {
+        organisms.blocks[1].quant = activeLeaf.quant;
+      }
     }
+  }
 
-    /**
-     * Checks if the supplied ProcessNode is a pristine ProcessNode.
-     * @param processNode {ProcessNode}
-     * @returns {boolean}
-     */
-    function isNewProcess(processNode) {
-        const activeBranch = !ProcessNode.findActiveBranch(processNode);
-        if (!activeBranch) {
-            // pristine process, set initial active node
-            const usedNodes = ProcessNode.flattenSequencial(processNode).filter(o => o.state !== "Pristine");
-            return usedNodes.length === 0;
-        }
-        return false;
+  $: {
+    onNewProcessNode(processNode);
+  }
+
+  /**
+   * Checks if the supplied ProcessNode is a pristine ProcessNode.
+   * @param processNode {ProcessNode}
+   * @returns {boolean}
+   */
+  function isNewProcess(processNode) {
+    const activeBranch = !ProcessNode.findActiveBranch(processNode);
+    if (!activeBranch) {
+      // pristine process, set initial active node
+      const usedNodes = ProcessNode.flattenSequencial(processNode).filter(
+        o => o.state !== "Pristine"
+      );
+      return usedNodes.length === 0;
     }
+    return false;
+  }
 
-    /**
-     * Initializes a new ProcessNode by setting the first leaf node to "Active".
-     * @param processNode {ProcessNode}
-     * @returns {string} The id of the activated node.
-     */
-    function initProcess(processNode) {
-        executionContext = {
-            stepId: "",
-            o: window.o
-        };
-        const flatLeafs = ProcessNode.flattenSequencial(processNode);
+  /**
+   * Initializes a new ProcessNode by setting the first leaf node to "Active".
+   * @param processNode {ProcessNode}
+   * @returns {string} The id of the activated node.
+   */
+  function initProcess(processNode) {
+    const flatLeafs = ProcessNode.flattenSequencial(processNode);
 
-        if (!flatLeafs || flatLeafs.length === 0) {
-            throw new Error("A non executable or empty 'processNode' was supplied to 'OmoDialog'.");
-        }
-
-        const first = flatLeafs[0];
-        first.state = "Active";
-        return first.id;
+    if (!flatLeafs || flatLeafs.length === 0) {
+      throw new Error(
+        "A non executable or empty 'processNode' was supplied to 'OmoDialog'."
+      );
     }
+    const first = flatLeafs[0];
+    first.state = "Active";
+    return first.id;
+  }
 
+  /**
+   * Sets the current node to "Finish" and proceeds with the next executable leaf node.
+   */
+  function next(processNode) {
+    const oldOrg = organisms;
+    organisms = false;
 
-    /**
-     * Sets the current node to "Finish" and proceeds with the next executable leaf node.
-     */
-    function next(processNode, argument) {
-        console.log("next(processNode, argument) called:", processNode, argument);
+    setTimeout(() => {
+      // We need to work with a copy of the tree because OmoOrganism doesn't like circular references
+      // (specifically the 'parent' property of the ProcessNode)
+      const copy = JSON.parse(JSON.stringify(processNode));
 
-        const oldOrg = organisms;
-        organisms = false;
+      // Because OmoDialog received the ProcessNode as JSON copy as well, the parent links must
+      // be restored from the node IDs first.
+      ProcessNode.restoreParentLinks(copy);
 
-        setTimeout(() => {
-            // We need to work with a copy of the tree because OmoOrganism doesn't like circular references
-            // (specifically the 'parent' property of the ProcessNode)
-            const copy = JSON.parse(JSON.stringify(processNode));
+      if (isNewProcess(copy)) {
+        throw new Error("You must first call 'initProcess()'.");
+      }
 
-            // Because OmoDialog received the ProcessNode as JSON copy as well, the parent links must
-            // be restored from the node IDs first.
-            ProcessNode.restoreParentLinks(copy);
+      // Find the active and next leaf in the copy with the restored 'parent' properties ..
+      let currentlyActiveNode = ProcessNode.findActiveLeaf(copy);
+      let nextNode = ProcessNode.findNextNode(copy, currentlyActiveNode.id);
 
-            if (isNewProcess(copy)) {
-                throw new Error("You must first call 'initProcess()'.");
-            }
+      if (!nextNode) {
+        alert("End of dialog.");
+        return;
+      }
 
-            // Find the active and next leaf in the copy with the restored 'parent' properties ..
-            let currentlyActiveNode_ = ProcessNode.findActiveLeaf(copy);
-            let nextNode_ = ProcessNode.findNextNode(copy, currentlyActiveNode_.id);
+      // .. then use the IDs of the found nodes to set the 'state' on the "real" ProcessNode
+      currentlyActiveNode = ProcessNode.findById(
+        processNode,
+        currentlyActiveNode.id
+      );
+      nextNode = ProcessNode.findById(processNode, nextNode.id);
 
-            // .. then use the IDs to look up the "real" node and execute its side-effect (if any)
-            const currentlyActiveNode = ProcessNode.findById(processNode, currentlyActiveNode_.id);
-            executionContext.stepId = currentlyActiveNode.stepId;
+      currentlyActiveNode.state = "Finished";
+      nextNode.state = "Active";
 
-            if (currentlyActiveNode.sideEffect) {
-                const sideEffect = window.sideEffectRegistrar.get(currentlyActiveNode.sideEffect);
+      // If the nextNode has a 'quant' set, use it.
+      // If not, stay with the current quant.
+      if (nextNode && nextNode.quant) {
+        oldOrg.blocks[1].quant = nextNode.quant;
+      }
 
-                // Check if there is a side effect and if it can be executed
-                if (sideEffect
-                    && (!sideEffect.canExecute ? true : sideEffect.canExecute(executionContext, argument))
-                    && sideEffect.execute) {
-                    try {
-                        sideEffect.execute(executionContext, argument);
-                    } catch (e) {
-                        currentlyActiveNode.state = "Failed";
-                        currentlyActiveNode.error = e;
-                        return;
-                    }
-                }
-            }
-
-            if (!nextNode_) {
-                window.o.publishShellEventAsync(new ClosePopup());
-                return;
-            }
-
-            const nextNode = ProcessNode.findById(processNode, nextNode_.id);
-
-            currentlyActiveNode.state = "Finished";
-            nextNode.state = "Active";
-
-            // If the nextNode has a 'quant' set, use it.
-            // If not, stay with the current quant.
-            if (nextNode && nextNode.quant) {
-                oldOrg.blocks[1].quant = nextNode.quant;
-                oldOrg.blocks[1].data = {
-                    processNode: processNode
-                }
-            }
-
-            organisms = oldOrg;
-        }, 1);
-    }
-
+      organisms = oldOrg;
+    }, 1);
+  }
 </script>
 
 {#if organisms}
-    <OmoOrganisms {organisms}/>
+  <OmoOrganisms {organisms} />
+  <div class="w-full">
+    <button
+      class="w-full font-bold uppercase text-center bg-tertiary px-4 py-3
+      text-white"
+      on:click={() => window.o.publishShellEventAsync(new SubmitFlowStep(processNode.id, ))}>
+      next step
+    </button>
+  </div>
 {/if}

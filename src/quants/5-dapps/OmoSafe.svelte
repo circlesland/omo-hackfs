@@ -1,12 +1,12 @@
 <script>
-  import { Odentity } from "../../core/Odentity.ts";
+  import { Odentity } from "./../../core/Odentity.ts";
   import { onMount, onDestroy } from "svelte";
   import OmoOrganisms from "./../4-layouts/OmoOrganisms.svelte";
   import { getSafeFromLocalStorage } from "./../omo-actions/Circles";
   import {
     loadingSafeDataAsync,
     loadingTransferDataAsync
-  } from "./../../queries/omo/safe/circles";
+  } from "./../../queries/omo/safe/circles.svelte";
 
   onMount(() => {
     let safeTopic = window.o.eventBroker.tryGetTopic("omo", "safe");

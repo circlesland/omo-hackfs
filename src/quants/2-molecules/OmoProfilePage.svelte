@@ -1,7 +1,21 @@
 <script>
+  import { onMount } from "svelte";
   import OmoAvatarsGrouped from "./../2-molecules/OmoAvatarsGrouped";
 
   export const data = {};
+  let dreamers;
+
+  onMount(async () => {
+    dreamers = await fetch("https://randomuser.me/api?results=4")
+      .then(response => response.json())
+      .then(
+        data =>
+          (dreamers = data.results.map((item, i) => {
+            item.profile = item.picture.large;
+            return item;
+          }))
+      );
+  });
 </script>
 
 <section class="bg-white py-4 font-sans">
@@ -16,7 +30,7 @@
               <span
                 class="text-3xl font-bold block uppercase tracking-wide
                 text-white">
-                {data.follower}
+                {#if data}{data.follower}{:else}6{/if}
               </span>
               <span class="text-xs uppercase text-blue-400 font-bold">
                 of 13 dreamers
@@ -44,17 +58,7 @@
             </div>
           </div>
         </div>
-        <div class="relative border-4 border-secondary">
-          <div class="overflow-hidden h-8 text-xs flex bg-primary">
-            <div
-              style="width: {data.follower * 7.69}%"
-              class="shadow-none flex flex-col text-center whitespace-nowrap
-              text-blue-300 justify-center bg-secondary">
-              {data.follower} of 13 dreamers
-            </div>
-          </div>
-        </div>
-        <!-- <OmoAvatarsGrouped data={dreamers} /> -->
+        <OmoAvatarsGrouped data={dreamers} />
         <div class="text-center mt-4">
           <h3 class="text-4xl font-semibold leading-normal mb-2 text-gray-800">
             {data.first} {data.last}
