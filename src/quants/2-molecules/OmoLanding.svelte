@@ -78,7 +78,7 @@
               href="javascript;"
               class="ml-8 font-medium text-indigo-600 hover:text-indigo-900
               transition duration-150 ease-in-out">
-              Log in
+              Logger in
             </a>
           </div>
         </nav>
@@ -178,7 +178,7 @@
                 hover:text-indigo-700 focus:outline-none focus:bg-gray-100
                 focus:text-indigo-700 transition duration-150 ease-in-out"
                 role="menuitem">
-                Log in
+                Logger in
               </a>
             </div>
           </div>

@@ -25,6 +25,7 @@ import OmoSelect from "./quants/2-molecules/OmoSelect.svelte";
 import OmoGridVoting from "./quants/2-molecules/OmoGridVoting.svelte";
 import OmoGridPreOrder from "./quants/2-molecules/OmoGridPreOrder.svelte";
 import OmoNextButton from "./quants/2-molecules/OmoNextButton.svelte";
+import OmoLoading from "./quants/2-molecules/OmoLoading.svelte";
 
 //
 // Flows
@@ -55,6 +56,9 @@ import {generateSafe as generateSafeSideEffect} from "./sideEffects/omo/circles/
 import {giveInitialTrust as giveInitialTrustSideEffect} from "./sideEffects/omo/circles/giveInitialTrust";
 import {deployToken as deployTokenSideEffect} from "./sideEffects/omo/safe/deployToken";
 import {deploySafe as deploySafeSideEffect} from "./sideEffects/omo/safe/deploySafe";
+import {createDream as createDreamSideEffect} from "./sideEffects/omo/dreams/createDream";
+import {revokeInitialTrust as revokeInitialTrustSideEffect} from "./sideEffects/omo/circles/revokeInitialTrust";
+
 
 //
 // Schema
@@ -69,6 +73,7 @@ import {Quant} from "./schema/omo/quant";
 import {Safe} from "./schema/omo/safe/safe";
 import {Number} from "./schema/omo/number";
 import {Void} from "./schema/omo/void";
+import {Any} from "./schema/omo/any";
 
 export function init()
 {
@@ -98,6 +103,7 @@ export function init()
     w.registrar.set("OmoGridPreOrder", OmoGridPreOrder);
     w.registrar.set("OmoSelect", OmoSelect);
     w.registrar.set("OmoNextButton", OmoNextButton);
+    w.registrar.set("OmoLoading", OmoLoading);
 
     w.flowRegistrar = new Map();
     w.flowRegistrar.set("flows:omo.safe.giveTrust", giveTrustFlow);
@@ -145,7 +151,9 @@ export function init()
         generateSafeSideEffect,
         giveInitialTrustSideEffect,
         deployTokenSideEffect,
-        deploySafeSideEffect
+        deploySafeSideEffect,
+        createDreamSideEffect,
+        revokeInitialTrustSideEffect
     ].forEach(o =>
     {
         w.sideEffectRegistrar.set(o["_$schemaId"], o);
@@ -162,7 +170,8 @@ export function init()
         Quant,
         Safe,
         Number,
-        Void
+        Void,
+        Any
     ].forEach(o =>
     {
         w.schemaRegistrar.set(o["_$schemaId"], o);

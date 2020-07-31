@@ -21,8 +21,13 @@ export class ProcessNode<TContext extends IProcessContext>
     prompt?: string;
     submitButtonLabel: string = "Next";
 
+    inputMap?: { localName: string; globalName: string }[];
+    outputMap?: { localName: string; globalName: string }[];
+
     quant?: string;
     sideEffect?: string;
+
+    isInteractive?: boolean;
 
     constructor(parent?: ProcessNode<TContext>)
     {

@@ -1,5 +1,6 @@
 import {ISideEffect} from "../../../core/Flows/ISideEffect";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
+import {Logger} from "../../../core/Log/logger";
 
 export const revokeTrust:ISideEffect<IProcessContext, void> = {
     _$schemaId: "sideEffects:omo.safe.revokeTrust",
@@ -34,12 +35,13 @@ export const revokeTrust:ISideEffect<IProcessContext, void> = {
           throw new Error("context.o.odentity.current is not set in 'giveTrust' side effect.");
       }
 
+      Logger.log(context.local.processNodeId + ":sideEffects:omo.safe.revokeTrust", "'" + context.local.inputs["trustGivingSafe"].safeAddress + "' is revoking trust from '" + context.local.inputs["trustReceivingSafe"].safeAddress + "'.");
       await removeTrustLineAsync(
-          context.inputs["trustGivingSafeOwner"],
-          context.inputs["trustGivingSafe"],
-          context.inputs["trustReceivingSafe"]
+          context.local.inputs["trustGivingSafeOwner"],
+          context.local.inputs["trustGivingSafe"],
+          context.local.inputs["trustReceivingSafe"]
       );
-      context.outputs["void"] = {};
+      context.local.outputs["void"] = {};
   },
   canExecute: async context => true
 };

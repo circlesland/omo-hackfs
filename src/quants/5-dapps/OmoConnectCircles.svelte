@@ -43,7 +43,7 @@
       <button
         on:click={connectWithSeed}
         type="submit"
-        value="Log In"
+        value="Logger In"
         class="bg-pink-700 rounded text-white font-bold text-lg
         hover:bg-secondary p-2">
         Connect Circles Wallet
@@ -55,7 +55,7 @@
       <button
         on:click={() => alert('to be implemented')}
         type="submit"
-        value="Log In"
+        value="Logger In"
         class="bg-pink-700 rounded text-white font-bold text-lg
         hover:bg-secondary p-2">
         Create new Circles Wallet

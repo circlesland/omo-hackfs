@@ -1,6 +1,7 @@
 <script>
     import OmoOrganisms from "./../4-layouts/OmoOrganisms.svelte";
     import {ProcessNode} from "../../core/Flows/ProcessNode";
+    import {Logger} from "../../core/Log/logger";
     import {onDestroy, onMount} from "svelte";
     import {SubmitFlowStep} from "../../events/omo/shell/submitFlowStep";
     import {RequestSubmitFlowStep} from "../../events/omo/shell/requestSubmitFlowStep";
@@ -138,84 +139,147 @@
         const first = flatLeafs[0];
         first.state = "Active";
         executionContext = {
-            stepId: first.stepId,
-            o: window.o
+            o: window.o,
+            local: {
+                stepId: first.stepId,
+                processNodeId: processNode.id,
+                inputs: {},
+                outputs: {}
+            },
+            global: {}
         };
         return first.id;
     }
 
+    let defaultInputs = [{
+        name: "currentSafeOwner",
+        type: "schema:omo.safe.safeOwner",
+        value: () => window.o.odentity.current.circleSafeOwner
+    }, {
+        name: "currentSafe",
+        type: "schema:omo.safe.safe",
+        value: () => window.o.odentity.current.circleSafe
+    }]
+
     /**
      * Sets the current node to "Finish" and proceeds with the next executable leaf node.
      */
-    function next(processNode, argument) {
-        console.log("next(processNode, argument) called:", processNode, argument);
+    async function next(processNode, argument) {
 
         const oldOrg = organisms;
         organisms = false;
 
         setTimeout(() => {
-            // We need to work with a copy of the tree because OmoOrganism doesn't like circular references
-            // (specifically the 'parent' property of the ProcessNode)
-            const copy = JSON.parse(JSON.stringify(processNode));
+            organisms = oldOrg;
+        });
 
-            // Because OmoDialog received the ProcessNode as JSON copy as well, the parent links must
-            // be restored from the node IDs first.
-            ProcessNode.restoreParentLinks(copy);
+        // We need to work with a copy of the tree because OmoOrganism doesn't like circular references
+        // (specifically the 'parent' property of the ProcessNode)
+        const copy = JSON.parse(JSON.stringify(processNode));
 
-            if (isNewProcess(copy)) {
-                throw new Error("You must first call 'initProcess()'.");
+        // Because OmoDialog received the ProcessNode as JSON copy as well, the parent links must
+        // be restored from the node IDs first.
+        ProcessNode.restoreParentLinks(copy);
+
+        if (isNewProcess(copy)) {
+            throw new Error("You must first call 'initProcess()'.");
+        }
+
+        // Find the active and next leaf in the copy with the restored 'parent' properties ..
+        let currentlyActiveNode_ = ProcessNode.findActiveLeaf(copy);
+        let nextNode_ = ProcessNode.findNextNode(copy, currentlyActiveNode_.id);
+
+        Logger.log(processNode.id + ":OmoDialog", "Executing current step ('" + currentlyActiveNode.stepId + "') and moving to next ('" + !nextNode_ ? "<end>" : nextNode_.stepId + "').");
+
+        // .. then use the IDs to look up the "real" node and execute its side-effect (if any)
+        const currentlyActiveNode = ProcessNode.findById(processNode, currentlyActiveNode_.id);
+        executionContext.local.stepId = currentlyActiveNode.stepId;
+
+        if (currentlyActiveNode.sideEffect) {
+            const sideEffect = window.sideEffectRegistrar.get(currentlyActiveNode.sideEffect);
+
+            if (!sideEffect) {
+                throw new Error("Couldn't find sideEffect '" + currentlyActiveNode.sideEffect + "' in flow step '" + currentlyActiveNode.stepId + "'. Maybe it's not registered?!");
             }
 
-            // Find the active and next leaf in the copy with the restored 'parent' properties ..
-            let currentlyActiveNode_ = ProcessNode.findActiveLeaf(copy);
-            let nextNode_ = ProcessNode.findNextNode(copy, currentlyActiveNode_.id);
+            // Check if there is a side effect and if it can be executed
+            if (sideEffect
+                    && (!sideEffect.canExecute ? true : (await sideEffect.canExecute(executionContext, argument)))
+                    && sideEffect.execute) {
+                try {
+                    Logger.log(processNode.id + ":OmoDialog", "Executing SideEffect '" + currentlyActiveNode.sideEffect + "'...");
 
-            // .. then use the IDs to look up the "real" node and execute its side-effect (if any)
-            const currentlyActiveNode = ProcessNode.findById(processNode, currentlyActiveNode_.id);
-            executionContext.stepId = currentlyActiveNode.stepId;
+                    // Map all inputs to the 'local' scope
+                    currentlyActiveNode.inputMap.forEach(inputMap => {
+                        Logger.log(processNode.id + ":OmoDialog", "Mapping " + currentlyActiveNode.sideEffect + "' input '" + inputMap.globalName + "' to '" + inputMap.localName + "'");
 
-            if (currentlyActiveNode.sideEffect) {
-                const sideEffect = window.sideEffectRegistrar.get(currentlyActiveNode.sideEffect);
+                        let globalValue = executionContext.global[inputMap.globalName];
+                        if (!globalValue) {
+                            // Look if the default values can satisfy
+                            let globalValueFactory = defaultInputs.find(o => o.name === inputMap.globalName);
+                            if (globalValueFactory)
+                                globalValue = globalValueFactory();
+                        }
 
-                // Check if there is a side effect and if it can be executed
-                if (sideEffect
-                        && (!sideEffect.canExecute ? true : sideEffect.canExecute(executionContext, argument))
-                        && sideEffect.execute) {
-                    try {
-                        sideEffect.execute(executionContext, argument);
-                    } catch (e) {
-                        currentlyActiveNode.state = "Failed";
-                        currentlyActiveNode.error = e;
-                        return;
-                    }
+                        Logger.log(processNode.id + ":OmoDialog", "Mapping " + currentlyActiveNode.sideEffect + "' input '" + inputMap.globalName + "' to '" + inputMap.localName + "'. Global value:", globalValue);
+
+                        if (!globalValue) {
+                            throw new Error("Couldn't find a matching input value for sideEffect '" + currentlyActiveNode.sideEffect + "' in step '" + currentlyActiveNode.stepId + "'. Requested globalName: " + inputMap.globalName);
+                        }
+                        executionContext.local.inputs[inputMap.localName] = executionContext.global[inputMap.globalName];
+                    });
+
+                    await sideEffect.execute(executionContext, argument);
+
+                    // Map all results to the 'global' scope
+                    currentlyActiveNode.outputMap.forEach(outputMap => {
+                        Logger.log(processNode.id + ":OmoDialog", "Mapping " + currentlyActiveNode.sideEffect + "' output '" + outputMap.globalName + "' to '" + outputMap.localName + "'");
+                        const localValue = executionContext.local.outputs[outputMap.localName];
+                        Logger.log(processNode.id + ":OmoDialog", "Mapping " + currentlyActiveNode.sideEffect + "' output '" + outputMap.globalName + "' to '" + outputMap.localName + "'. Local value:", localValue);
+                        executionContext.global[outputMap.globalName] = localValue;
+                    });
+                    currentlyActiveNode.state = "Succeeded";
+                } catch (e) {
+                    currentlyActiveNode.state = "Failed";
+                    currentlyActiveNode.error = e;
+                    Logger.error("OmoDialog:" + processNode.id, "Execution of side effect '" + currentlyActiveNode.sideEffect + "' failed:", e);
+                    throw e;
                 }
             }
+        }
 
-            if (!nextNode_) {
-                window.o.publishShellEventAsync(new ClosePopup());
-                return;
+        if (!nextNode_) {
+            window.o.publishShellEventAsync(new ClosePopup());
+            return;
+        }
+
+        const nextNode = ProcessNode.findById(processNode, nextNode_.id);
+
+        currentlyActiveNode.state = "Finished";
+        nextNode.state = nextNode.isInteractive ? "Active" : "Working";
+
+        // If the nextNode has a 'quant' set, use it.
+        // If not, stay with the current quant.
+        if (nextNode && nextNode.quant) {
+            oldOrg.blocks[1].quant = nextNode.quant;
+            oldOrg.blocks[1].data = {
+                processNode: processNode
             }
+            oldOrg.blocks[2].data = {
+                processNode: processNode,
+                label: currentlyActiveNode.submitButtonLabel
+            };
+        }
 
-            const nextNode = ProcessNode.findById(processNode, nextNode_.id);
-
-            currentlyActiveNode.state = "Finished";
-            nextNode.state = "Active";
-
-            // If the nextNode has a 'quant' set, use it.
-            // If not, stay with the current quant.
-            if (nextNode && nextNode.quant) {
-                oldOrg.blocks[1].quant = nextNode.quant;
-                oldOrg.blocks[1].data = {
-                    processNode: processNode
-                }
-                organisms.blocks[2].data = {
-                    processNode: processNode,
-                    label: currentlyActiveNode.submitButtonLabel
-                };
-            }
-
+        setTimeout(() => {
             organisms = oldOrg;
         }, 1);
+
+        if (!nextNode.isInteractive) {
+            setTimeout(() => {
+                next(processNode, argument);
+            }, 1);
+        }
     }
 </script>
 
