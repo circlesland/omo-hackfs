@@ -2,6 +2,8 @@
   import { Odentity } from "./../../core/Odentity.ts";
   import { onMount, onDestroy } from "svelte";
   import OmoOrganisms from "./../4-layouts/OmoOrganisms.svelte";
+  import OmoSpin from "./../1-atoms/OmoSpin.svelte";
+
   import { getSafeFromLocalStorage } from "./../omo-actions/Circles";
   import {
     loadingSafeDataAsync,
@@ -55,7 +57,7 @@
 </script>
 
 {#await loadingData()}
-  loading
+  <OmoSpin />
 {:then organisms}
   <OmoOrganisms {organisms} />
 {/await}
