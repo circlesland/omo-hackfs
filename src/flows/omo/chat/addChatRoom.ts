@@ -1,12 +1,12 @@
 import {ProcessBuilder} from "../../../core/Flows/ProcessBuilder";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
 
-export function addChatRoomFlow() {
-    return new ProcessBuilder<IProcessContext>("omo.chat.addChatRoomFlow")
+export function addChatRoom() {
+    return new ProcessBuilder<IProcessContext>("flows:omo.chat.addChatRoom")
         .category("Add new chat room", (build) =>
             build
 
-                .step("omo.chat.addChatRoomFlow")
+                .step("flows:omo.chat.addChatRoom:addRoom")
                 .withSideEffect("omo.shell.collectUserValue")
                 .withQuant("OmoSafeLookup")
                 .withTitle("Name the chat room")

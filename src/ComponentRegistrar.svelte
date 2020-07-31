@@ -19,15 +19,28 @@
   import OmoDialogSteps from "./quants/2-molecules/OmoDialogSteps";
   import OmoSafeLookup from "./quants/2-molecules/OmoSafeLookup";
   import OmoStatusResponse from "./quants/2-molecules/OmoStatusResponse";
+  import OmoSelect from "./quants/2-molecules/OmoSelect";
+  import OmoGridVoting from "./quants/2-molecules/OmoGridVoting";
+  import OmoGridPreOrder from "./quants/2-molecules/OmoGridPreOrder";
+
   import {giveTrust as giveTrustFlow} from "./flows/omo/safe/giveTrust";
   import {revokeTrust as revokeTrustFlow} from "./flows/omo/safe/revokeTrust";
   import {transferCircles as transferCirclesFlow} from "./flows/omo/safe/transferCircles";
+  import {addChatRoom as addChatRoomFlow} from "./flows/omo/chat/addChatRoom";
+  import {removeChatRoom as removeChatRoomFlow} from "./flows/omo/chat/removeChatRoom";
+  import {sendMessage as sendMessageFlow} from "./flows/omo/chat/sendMessage";
+  import {addOwnerDevice as addOwnerDeviceFlow} from "./flows/omo/odentity/addOwnerDevice";
+  import {removeOwnerDevice as removeOwnerDeviceFlow} from "./flows/omo/odentity/removeOwnerDevice";
+  import {addAuthProviderMail as addAuthProviderMailFlow} from "./flows/omo/odentity/addAuthProviderMail";
+  import {removeAuthProviderMail as removeAuthProviderMailFlow} from "./flows/omo/odentity/removeAuthProviderMail";
+  import {addAuthProviderSeedPhrase as addAuthProviderSeedPhraseFlow} from "./flows/omo/odentity/addAuthProviderSeedPhrase";
+  import {removeAuthProviderSeedPhrase as removeAuthProviderSeedPhraseFlow} from "./flows/omo/odentity/removeAuthProviderSeedPhraseFlow";
+
   import {collectStepResult} from "./sideEffects/omo/shell/collectStepResult";
   import {giveTrust as giveTrustSideEffect} from "./sideEffects/omo/safe/giveTrust";
   import {transferCircles as transferCirclesSideEffect} from "./sideEffects/omo/safe/transferCircles";
   import {revokeTrust as revokeTrustSideEffect} from "./sideEffects/omo/safe/revokeTrust";
-  import OmoGridVoting from "./quants/2-molecules/OmoGridVoting";
-  import OmoGridPreOrder from "./quants/2-molecules/OmoGridPreOrder";
+
 
   window.registrar = new Map();
   window.registrar.set("OmoHero", OmoHero);
@@ -53,11 +66,39 @@
   window.registrar.set("OmoSafeLookup", OmoSafeLookup);
   window.registrar.set("OmoGridVoting", OmoGridVoting);
   window.registrar.set("OmoGridPreOrder", OmoGridPreOrder);
+  window.registrar.set("OmoSelect", OmoSelect);
 
   window.flowRegistrar = new Map();
   window.flowRegistrar.set("flows:omo.safe.giveTrust", giveTrustFlow);
   window.flowRegistrar.set("flows:omo.safe.revokeTrust", revokeTrustFlow);
   window.flowRegistrar.set("flows:omo.safe.transferCircles", transferCirclesFlow);
+  window.flowRegistrar.set("flows:omo.chat.addChatRoom", addChatRoomFlow);
+  window.flowRegistrar.set("flows:omo.chat.removeChatRoom", removeChatRoomFlow);
+  window.flowRegistrar.set("flows:omo.chat.sendMessage", sendMessageFlow);
+  window.flowRegistrar.set(
+          "flows:omo.odentity.addOwnerDevice",
+          addOwnerDeviceFlow
+  );
+  window.flowRegistrar.set(
+          "flows:omo.odentity.removeOwnerDevice",
+          removeOwnerDeviceFlow
+  );
+  window.flowRegistrar.set(
+          "flows:omo.odentity.addAuthProviderMail",
+          addAuthProviderMailFlow
+  );
+  window.flowRegistrar.set(
+          "flows:omo.odentity.removeAuthProviderMail",
+          removeAuthProviderMailFlow
+  );
+  window.flowRegistrar.set(
+          "flows:omo.odentity.addAuthProviderSeedPhrase",
+          addAuthProviderSeedPhraseFlow
+  );
+  window.flowRegistrar.set(
+          "flows:omo.odentity.removeAuthProviderSeedPhrase",
+          removeAuthProviderSeedPhraseFlow
+  );
 
   window.sideEffectRegistrar = new Map();
   window.sideEffectRegistrar.set("sideEffects:omo.shell.collectStepResult", collectStepResult);
