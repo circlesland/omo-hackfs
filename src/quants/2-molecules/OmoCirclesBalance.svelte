@@ -1,5 +1,4 @@
 <script>
-
   export let data = {
     safeAddress: ""
   };
@@ -18,13 +17,13 @@
   }
 </script>
 
-<section class="flex justify-center flex-col text-center bg-primary">
+<section class="flex justify-center flex-col text-center bg-gray-200">
   <div class="">
-    <h1 class="text-blue-300 text-6xl">
+    <h1 class="text-primary text-6xl">
       Ø{sumCircles(data.safeData).toFixed(2)}
     </h1>
-    <span class="text-center text-blue-600">
-      {data.safeData.data.safes[0].id}
+    <span class="text-center text-gray-500">
+      OMO-IBAN: {data.safeData.data.safes[0].id}
     </span>
   </div>
 </section>

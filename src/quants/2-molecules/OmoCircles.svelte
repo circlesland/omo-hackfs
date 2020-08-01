@@ -1,7 +1,6 @@
 <script>
-  import OmoTabs from "./../2-molecules/OmoTabs";
+  import OmoNavTabs from "./../2-molecules/OmoNavTabs";
   import moment from "moment";
-
 
   //Tabs
   let currentTab;
@@ -9,11 +8,32 @@
   let trustSafeAddress;
 
   let tabItems = [
-    { label: "Transactions", value: 1 },
-    { label: "Token", value: 2 },
-    { label: "Trust you Receive", value: 3 },
-    { label: "Trust you Give", value: 4 },
-    { label: "UBI Payouts", value: 5 }
+    {
+      label: "My transactions",
+      value: 1,
+      icon: "fa-exchange-alt",
+      category: "general"
+    },
+    { label: "My streams", value: 2, icon: "fa-history" },
+    { label: "Token", value: 3, icon: "fa-coins" },
+    {
+      label: "Trust I receive",
+      value: 4,
+      icon: "fa-user-astronaut",
+      category: "general"
+    },
+    {
+      label: "Trust I give",
+      value: 5,
+      icon: "fa-user-ninja",
+      category: "general"
+    },
+    {
+      label: "UBI Payouts",
+      value: 6,
+      icon: "fa-hand-holding-heart",
+      category: "general"
+    }
   ];
 
   export let data = {
@@ -34,12 +54,30 @@
     var b = query.data.safes[0].balances;
     return b.sum("amount") / 1000000000000000000;
   }
-
 </script>
 
-<OmoTabs class="bg-primary" bind:activeTabValue={currentTab} items={tabItems} />
-<section class="overflow-y-scroll">
-  <div class="w-full md:w-5/6 lg:w-4/6 mx-auto">
+<style>
+  section {
+    display: grid;
+    grid-template-areas: "'aside main'";
+    grid-template-rows: 1fr;
+    grid-template-columns: 20rem 1fr;
+    @apply h-full;
+    overflow: hidden;
+  }
+  aside {
+    grid-area: "aside";
+  }
+  main {
+    grid-area: "main";
+  }
+</style>
+
+<section>
+  <aside class="h-full overflow-y-scroll">
+    <OmoNavTabs bind:activeTabValue={currentTab} items={tabItems} />
+  </aside>
+  <main class="h-full w-full md:w-5/6 mx-auto overflow-y-scroll">
     {#if 1 === currentTab}
       <div class="py-6 px-8 text-md mt-6">
         {#each data.transferData.data.notifications as item}
@@ -85,8 +123,9 @@
         {/each}
       </div>
     {/if}
+    {#if 2 === currentTab}My list of active streams{/if}
 
-    {#if 2 === currentTab}
+    {#if 3 === currentTab}
       <div class="py-6 px-8 text-md mt-6">
         {#each data.safeData.data.safes[0].balances as item}
           <div class="flex h-12 mb-4 w-full bg-gray-100">
@@ -111,7 +150,7 @@
       </div>
     {/if}
 
-    {#if 3 === currentTab}
+    {#if 4 === currentTab}
       <div class="py-6 px-8 text-md mt-6">
         {#each data.safeData.data.safes[0].outgoing as item}
           <div class="flex h-12 mb-4 w-full bg-gray-100">
@@ -128,7 +167,7 @@
       </div>
     {/if}
 
-    {#if 4 === currentTab}
+    {#if 5 === currentTab}
       <div class="py-6 px-8 text-md mt-6">
         {#each data.safeData.data.safes[0].incoming as item}
           <div class="flex h-12 mb-4 w-full bg-gray-100 text-gray-700">
@@ -149,7 +188,7 @@
       </div>
     {/if}
 
-    {#if 5 === currentTab}
+    {#if 6 === currentTab}
       <div class="py-6 px-8 text-md mt-6">
         {#each data.transferData.data.notifications as item}
           {#if item.transfer.from === '0x0000000000000000000000000000000000000000'}
@@ -176,5 +215,5 @@
         {/each}
       </div>
     {/if}
-  </div>
+  </main>
 </section>

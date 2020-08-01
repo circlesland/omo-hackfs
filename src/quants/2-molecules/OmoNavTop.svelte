@@ -25,7 +25,7 @@
 
 <OmoIconsFA />
 
-<nav class="bg-dark">
+<nav class="bg-gray-500">
   <div class="max-w-7xl mx-auto px-2">
     <div class="relative flex items-center justify-between h-12">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -84,7 +84,7 @@
                 href={a.link}
                 class="uppercase ml-4 px-3 py-1 border-2 border-white rounded
                 text-sm font-medium leading-5 text-gray-300 hover:text-white
-                hover:bg-secondary focus:outline-none focus:text-white
+                hover:bg-primary focus:outline-none focus:text-white
                 focus:bg-primary transition duration-150 ease-in-out">
                 {a.title}
               </a>

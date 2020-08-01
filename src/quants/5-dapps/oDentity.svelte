@@ -1,7 +1,23 @@
 <script>
+  import OmoOrganisms from "./../4-layouts/OmoOrganisms";
 
+  let OmoChat = {
+    name: "OmoChat",
+    type: "organisms",
+    layout: {
+      areas: "'main'",
+      columns: "1fr",
+      rows: "1fr"
+    },
+    blocks: [
+      {
+        type: "molecule",
+        slot: "main",
+        quant: "OmoProfile",
+        data: {}
+      }
+    ]
+  };
 </script>
 
-<div class="w-1/2 p-32 mx-auto">
-  <h1 class="p-12">Placeholder for my profile / odentity page</h1>
-</div>
+<OmoOrganisms organisms={OmoChat} />
