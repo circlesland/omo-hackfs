@@ -239,7 +239,7 @@
                             // Look if the default values can satisfy
                             let globalValueFactory = defaultInputs.find(o => o.name === inputMap.globalName);
                             if (globalValueFactory)
-                                globalValue = globalValueFactory();
+                                globalValue = globalValueFactory.value();
                         }
 
                         Logger.log(processNode.id + ":OmoDialog", "Mapping " + currentlyActiveNode.sideEffect + "' input '" + inputMap.globalName + "' to '" + inputMap.localName + "'. Global value:", globalValue);
@@ -247,7 +247,7 @@
                         if (!globalValue) {
                             throw new Error("Couldn't find a matching input value for sideEffect '" + currentlyActiveNode.sideEffect + "' in step '" + currentlyActiveNode.stepId + "'. Requested globalName: " + inputMap.globalName);
                         }
-                        executionContext.local.inputs[inputMap.localName] = executionContext.global[inputMap.globalName];
+                        executionContext.local.inputs[inputMap.localName] = globalValue;
                     });
 
                     await sideEffect.execute(executionContext, argument);
@@ -283,10 +283,7 @@
         // If not, stay with the current quant.
         if (nextNode && nextNode.quant) {
             oldOrg.blocks[1].quant = nextNode.quant;
-            oldOrg.blocks[1].data = {
-                processNode: processNode,
-                log: log
-            }
+            oldOrg.blocks[1].data = processNode;
             oldOrg.blocks[2].data = {
                 processNode: processNode,
                 label: currentlyActiveNode.submitButtonLabel

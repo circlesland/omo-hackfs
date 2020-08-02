@@ -30,11 +30,14 @@ export const giveTrust: ISideEffect<IProcessContext, void> = {
             trustPercentage
         )
         {
+            let canSendToC = window.o.web3.utils.toChecksumAddress(trustGivingSafe.safeAddress);
+            let userC = window.o.web3.utils.toChecksumAddress(trustReceivingSafe.safeAddress);
+
             // .. give user the permission to send their Token to you
             const trusted = await window.o.circlesCore.trust.addConnection(trustGivingSafeOwner, {
-                canSendTo: trustGivingSafe.safeAddress,
-                user: trustReceivingSafe.safeAddress,
-                limitPercentage: trustPercentage
+                canSendTo: canSendToC,
+                user: userC,
+                limitPercentage: parseInt(trustPercentage)
             });
             alert(JSON.stringify(trusted));
             return trusted;
@@ -49,7 +52,9 @@ export const giveTrust: ISideEffect<IProcessContext, void> = {
         await addTrustLineAsync(
             context.local.inputs["trustGivingSafeOwner"],
             context.local.inputs["trustGivingSafe"],
-            context.local.inputs["trustReceivingSafe"],
+            {
+                safeAddress: context.local.inputs["trustReceivingSafe"]
+            },
             context.local.inputs["trustPercentage"]
         );
 
