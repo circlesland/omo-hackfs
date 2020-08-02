@@ -11,10 +11,29 @@ export const Dream: JSONSchema = {
     definitions: ModelQuant.definitons,
     properties: {
         _id: {
-            type: "string",
+            type: "string"
         },
         name: {
-            type: "string",
+            type: "string"
+        },
+        description: {
+            type: "string"
+        },
+        creator: {
+            $ref: "#/definitions/oneToOne",
+            description: "Omosapien"
+        },
+        timeCommitments: {
+            $ref: "#/definitions/oneToMany",
+            description: "TimeCommitment"
+        },
+        votes: {
+            $ref: "#/definitions/oneToMany",
+            description: "Vote"
+        },
+        subscriptions: {
+            $ref: "#/definitions/oneToMany",
+            description: "DreamSubscription"
         }
-    },
+    }
 };

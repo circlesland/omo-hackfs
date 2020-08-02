@@ -2,7 +2,13 @@ import { QuantRegistry } from "../Quant/QuantRegistry";
 import { JSONSchema } from "@textile/hub";
 import { Message } from "../../schema/omo/message";
 import { ChatRoom } from "../../schema/omo/chatRoom";
-import {Safe} from "../../schema/omo/safe/safe";
+import { Omosapien } from "../../schema/omo/odentity/omosapien";
+import { Dream } from "../../schema/omo/dreams/dream";
+import { Safe } from "../../schema/omo/safe/safe";
+import {TimeCommitment} from "../../schema/omo/dreams/timeCommitment";
+import {Vote} from "../../schema/omo/dreams/vote";
+import {DreamSubscription} from "../../schema/omo/dreams/dreamSubscription";
+
 export interface SeedQuant {
     name: string,
     schema: JSONSchema,
@@ -31,6 +37,31 @@ const seeds: Seed[] = [{
             {
                 name: "Safe",
                 schema: Safe,
+                data: []
+            },
+            {
+                name: "Omosapien",
+                schema: Omosapien,
+                data: []
+            },
+            {
+                name: "Dream",
+                schema: Dream,
+                data: []
+            },
+            {
+                name: "TimeCommitment",
+                schema: TimeCommitment,
+                data: []
+            },
+            {
+                name: "Vote",
+                schema: Vote,
+                data: []
+            },
+            {
+                name: "DreamSubscription",
+                schema: DreamSubscription,
                 data: []
             }
         ]
