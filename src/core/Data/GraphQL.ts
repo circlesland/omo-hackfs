@@ -5,6 +5,10 @@ import { ModelHelper } from "./ModelHelper";
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { SyncedThread } from "../Textile/SyncedThread";
 import { JSONSchema } from "@textile/hub";
+import {from} from 'ix/asynciterable';
+import {map} from 'ix/asynciterable/operators';
+import { observe } from "svelte-observable"
+import Observable from 'zen-observable';
 
 export class GraphQL {
     private quanta: Quant[];
@@ -67,17 +71,33 @@ export class GraphQL {
         return makeExecutableSchema({ typeDefs, resolvers });
     }
 
-    async subscribe(query, callback) {
-        this.getSubscription(`subscription { ${query}}`).then(
-            subscription => {
-                (async () => {
-                    for await (let value of subscription) {
-                        callback(value);
+    async *concat(initialValue:any, iterable:AsyncIterableIterator<any>) {
+        yield initialValue;
+        for await (let element of iterable) {
+            yield element;
+        }
+    }
+
+    subscribe(query) : Observable<any> {
+        return new Observable(observer =>
+        {
+            this.query(query)
+                .then(queryResult => {
+                console.log("A:", queryResult);
+                observer.next(queryResult);
+
+
+                this.getSubscription(`subscription { ${query}}`).then(
+                    subscription => {
+                        (async () => {
+                            for await (let value of subscription) {
+                                observer.next(value);
+                            }
+                        })();
                     }
-                })();
-            }
-        );
-        return await this.query(query);
+                );
+            });
+        });
     }
 
     private async getSubscription(query) {

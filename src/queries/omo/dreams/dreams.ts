@@ -1,16 +1,9 @@
+import {from} from 'ix/asynciterable';
+import {map} from 'ix/asynciterable/operators';
+
 export class Dreams
 {
+    public static all() {
 
-/*
-    dreams:any;
-    query() {
-        this.dreams = window.o.graphQL.subscribe(
-            "Messages{_id,text, name, date, ChatRoom{_id}}",
-            result =>
-            {
-                this.dreams = result;
-            }
-        );
     }
- */
 }
