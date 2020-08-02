@@ -1,5 +1,6 @@
 <script>
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
+  import moment from "moment";
 
   let rooms = window.o.graphQL.subscribe(
     "ChatRooms{_id,name}",
@@ -134,9 +135,43 @@
           loading
         {:then messages}
           {#each messages.data.Messages.filter(x => x.ChatRoom !== null && x.ChatRoom._id == currentRoom._id) as message}
-            <p class="mb-4 py-2 px-3 rounded">
-              {message.text} from {message.name} at {message.date}
-            </p>
+            <li
+              class="flex flex-no-wrap items-center pr-3 text-black rounded-lg
+              cursor-pointer mt-200 py-65 hover:bg-gray-200"
+              style="padding-top: 0.65rem; padding-bottom: 0.65rem">
+              <div class="flex justify-between w-full focus:outline-none">
+                <div class="flex justify-between w-full">
+                  <div
+                    class="relative flex items-center justify-center w-12 h-12
+                    ml-2 mr-3 text-xl font-semibold text-white bg-blue-500
+                    rounded flex-no-shrink">
+                    <img
+                      class="object-cover w-12 h-12 rounded"
+                      src="https://images.unsplash.com/photo-1589349133269-183a6c90fbfc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=100"
+                      alt="" />
+                  </div>
+                  <div class="items-center flex-1 min-w-0">
+                    <div class="flex justify-between">
+                      <h2 class="text-sm font-semibold text-black -mb-2">
+                        {message.name}
+                      </h2>
+                      <div class="flex">
+                        <span class="ml-1 text-xs font-medium text-gray-600">
+                          {moment
+                            .unix(message.date)
+                            .locale('en')
+                            .fromNow()}
+                        </span>
+                      </div>
+                    </div>
+                    <div
+                      class="flex justify-between text-sm leading-none truncate">
+                      <span>{message.text}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
           {/each}
         {/await}
       </div>
