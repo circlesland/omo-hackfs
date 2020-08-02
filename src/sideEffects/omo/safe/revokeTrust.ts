@@ -34,9 +34,6 @@ export const revokeTrust:ISideEffect<IProcessContext, void> = {
           });
           alert("Untrusted: " + userC);
       }
-      if (!context.o.odentity.current) {
-          throw new Error("context.o.odentity.current is not set in 'giveTrust' side effect.");
-      }
 
       Logger.log(context.local.processNodeId + ":sideEffects:omo.safe.revokeTrust", "'" + context.local.inputs["trustGivingSafe"].safeAddress + "' is revoking trust from '" + context.local.inputs["trustReceivingSafe"].safeAddress + "'.");
       await removeTrustLineAsync(

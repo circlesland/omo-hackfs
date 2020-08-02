@@ -43,11 +43,6 @@ export const giveTrust: ISideEffect<IProcessContext, void> = {
             return trusted;
         }
 
-        if (!context.o.odentity.current)
-        {
-            throw new Error("context.o.odentity.current is not set in 'giveTrust' side effect.");
-        }
-
         Logger.log(context.local.processNodeId + ":sideEffects:omo.safe.giveTrust", "'" + context.local.inputs["trustGivingSafe"].safeAddress + "' is giving trust to '" + context.local.inputs["trustReceivingSafe"].safeAddress + "'.");
         await addTrustLineAsync(
             context.local.inputs["trustGivingSafeOwner"],
