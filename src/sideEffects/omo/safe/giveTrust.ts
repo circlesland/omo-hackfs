@@ -39,7 +39,7 @@ export const giveTrust: ISideEffect<IProcessContext, void> = {
                 user: userC,
                 limitPercentage: parseInt(trustPercentage)
             });
-            alert(JSON.stringify(trusted));
+
             return trusted;
         }
 

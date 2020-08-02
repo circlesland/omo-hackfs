@@ -21,15 +21,18 @@ export const revokeTrust:ISideEffect<IProcessContext, void> = {
   execute: async (context, argument) => {
       async function removeTrustLineAsync(
           trustGivingSafeOwner,
-          trustGivingSafeAddress,
+          trustGivingSafe,
           trustReceivingSafe
       ) {
+          let canSendToC = window.o.web3.utils.toChecksumAddress(trustGivingSafe.safeAddress);
+          let userC = window.o.web3.utils.toChecksumAddress(trustReceivingSafe.safeAddress);
+
           // .. give user the permission to send their Token to you
           await window.o.circlesCore.trust.removeConnection(trustGivingSafeOwner, {
-              user: trustGivingSafeAddress,
-              canSendTo: trustReceivingSafe,
+              user: userC,
+              canSendTo: canSendToC,
           });
-          alert("Untrusted: " + trustReceivingSafe);
+          alert("Untrusted: " + userC);
       }
       if (!context.o.odentity.current) {
           throw new Error("context.o.odentity.current is not set in 'giveTrust' side effect.");
@@ -39,7 +42,9 @@ export const revokeTrust:ISideEffect<IProcessContext, void> = {
       await removeTrustLineAsync(
           context.local.inputs["trustGivingSafeOwner"],
           context.local.inputs["trustGivingSafe"],
-          context.local.inputs["trustReceivingSafe"]
+          {
+              safeAddress: context.local.inputs["trustReceivingSafe"]
+          }
       );
       context.local.outputs["void"] = {};
   },
