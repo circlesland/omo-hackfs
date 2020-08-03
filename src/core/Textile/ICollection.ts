@@ -1,8 +1,8 @@
-import {Instance} from "@textile/threads-store";
-import {FilterQuery} from "@textile/hub";
+import { Instance } from "@textile/threads-store";
+import { FilterQuery } from "@textile/hub";
+import { action_destroyer } from "svelte/internal";
 
-export interface ICollection<T extends Instance>
-{
+export interface ICollection<T extends Instance> {
   all(): Promise<T[]>;
 
   find(query: FilterQuery): Promise<T[]>;
@@ -30,4 +30,6 @@ export interface ICollection<T extends Instance>
   deleteManyByIds(values: string[]): Promise<void>;
 
   observeUpdate(actionTypes: string[], id: string, callback: any): Promise<void>;
+
+  // observeAction(actionTypes: Map<string, Function>, id: string | null);
 }
