@@ -60,8 +60,8 @@
     },
     {
       icon: "fa-users",
-      text: "Contacts",
-      link: () => {},
+      text: "Omo Market",
+      link: () => window.navigate("omomarket"),
       design: "text-secondary hover:bg-white"
     },
     {
@@ -76,18 +76,18 @@
           actions = route.actions;
         }
       },
-      design: "text-white bg-secondary   hover:text-secondary hover:bg-white"
+      design: "text-white bg-secondary hover:text-secondary hover:bg-white"
     },
     {
       icon: "fa-comments",
-      text: "Messages",
+      text: "Omo Talk",
       link: () => window.navigate("omochat"),
       design: "text-secondary hover:bg-white"
     },
     {
       icon: "fa-home",
-      text: "Omo Dapps",
-      link: () => window.navigate("omodapps"),
+      text: "Omo Me",
+      link: () => window.navigate("odentity"),
       design: "text-secondary hover:bg-white"
     }
   ];
