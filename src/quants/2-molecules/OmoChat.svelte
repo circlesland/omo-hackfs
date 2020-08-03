@@ -15,6 +15,11 @@
 
     let messages = null;
 
+    function createNewRoom() {
+        RoomMutations.createNewRoom(newRoomName);
+        newRoomName = "";
+    }
+
     function sendNewMessage() {
         MessageMutations.sendMessage(currentRoom._id, newMessageText);
         newMessageText = "";
@@ -101,7 +106,7 @@
             <button
                     class="px-6 bg-primary hover:bg-secondary text-white font-bold p-3
         uppercase "
-                    on:click={() => RoomMutations.createNewRoom(newRoomName)}>
+                    on:click={() => createNewRoom()}>
                 +room
             </button>
         </div>
