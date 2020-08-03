@@ -96,7 +96,10 @@
         let activeLeaf = ProcessNode.findActiveLeaf(copy);
         if (activeLeaf && activeLeaf.quant) {
             organisms.blocks[1].quant = activeLeaf.quant;
-            organisms.blocks[1].data = processNode;
+            organisms.blocks[1].data = {
+                processNode,
+                ...activeLeaf.quantData
+            };
             organisms.blocks[2].data = {
                 processNode: processNode,
                 label: activeLeaf.submitButtonLabel,
@@ -110,7 +113,10 @@
             activeLeaf = ProcessNode.findById(copy, activatedNodeId);
             if (activeLeaf && activeLeaf.quant) {
                 organisms.blocks[1].quant = activeLeaf.quant;
-                organisms.blocks[1].data = processNode;
+                organisms.blocks[1].data = {
+                    processNode,
+                    ...activeLeaf.quantData
+                };
                 organisms.blocks[2].data = {
                     processNode: processNode,
                     label: activeLeaf.submitButtonLabel,
@@ -283,10 +289,13 @@
         // If not, stay with the current quant.
         if (nextNode && nextNode.quant) {
             oldOrg.blocks[1].quant = nextNode.quant;
-            oldOrg.blocks[1].data = processNode;
+            oldOrg.blocks[1].data = {
+                processNode,
+                ...nextNode.quantData
+            };
             oldOrg.blocks[2].data = {
                 processNode: processNode,
-                label: currentlyActiveNode.submitButtonLabel
+                label: nextNode.submitButtonLabel,
             };
         }
         if (!nextNode.isInteractive) {

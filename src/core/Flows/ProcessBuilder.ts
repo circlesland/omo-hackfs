@@ -16,6 +16,7 @@ export class StepBuilder<TContext extends IProcessContext>
 
     inputMap: { localName: string; globalName: string }[] = [];
     outputMap: { localName: string; globalName: string }[] = [];
+    quantData?: any;
 
     constructor(parent: CategoryBuilder<TContext>, stepId: string)
     {
@@ -23,9 +24,10 @@ export class StepBuilder<TContext extends IProcessContext>
         this.stepId = stepId;
     }
 
-    withQuant(quant: string): StepBuilder<TContext>
+    withQuant(quant: string, data:any = undefined): StepBuilder<TContext>
     {
         this.quant = quant;
+        this.quantData = data;
         return this;
     }
 
@@ -73,6 +75,7 @@ export class StepBuilder<TContext extends IProcessContext>
         step.inputMap = this.inputMap;
         step.outputMap = this.outputMap;
         step.isInteractive = !!this.quant && !this._isNonInteractive;
+        step.quantData = this.quantData;
         return step;
     }
 

@@ -25,6 +25,8 @@ export class ProcessNode<TContext extends IProcessContext>
     outputMap?: { localName: string; globalName: string }[];
 
     quant?: string;
+    quantData?: any;
+    
     sideEffect?: string;
 
     isInteractive?: boolean;

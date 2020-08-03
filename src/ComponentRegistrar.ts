@@ -46,6 +46,7 @@ import { removeAuthProviderMail as removeAuthProviderMailFlow } from "./flows/om
 import { addAuthProviderSeedPhrase as addAuthProviderSeedPhraseFlow } from "./flows/omo/odentity/addAuthProviderSeedPhrase";
 import { removeAuthProviderSeedPhrase as removeAuthProviderSeedPhraseFlow } from "./flows/omo/odentity/removeAuthProviderSeedPhraseFlow";
 import { createDream as createDreamFlow } from "./flows/omo/dreams/createDream";
+import {createOmosapien as createOmosapienFlow} from "./flows/omo/onboarding/createOmosapien";
 
 //
 // SideEffects
@@ -138,6 +139,7 @@ export function init() {
     removeAuthProviderSeedPhraseFlow
   );
   w.flowRegistrar.set("flows:omo.dreams.createDream", createDreamFlow);
+  w.flowRegistrar.set("flows:omo.onboarding.createOmosapien", createOmosapienFlow);
 
   w.sideEffectRegistrar = new Map();
   [

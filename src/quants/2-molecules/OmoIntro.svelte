@@ -1,24 +1,42 @@
 <script>
-  import OmoInput from "./../1-atoms/OmoInput";
-  import OmoButton from "./../1-atoms/OmoButton";
-  import OmoHero from "./../2-molecules/OmoHero";
-  import Actions, { nextStep } from "./../omo-actions/Actions.svelte";
 
-  export let data = {
-    step: 0,
-    subline: "",
-    title: "",
-    button: ""
-  };
+    import {SubmitFlowStep} from "../../events/omo/shell/submitFlowStep";
+    import {Logger} from "../../core/Log/logger";
+    import {onDestroy, onMount} from "svelte";
 
-  var handleButton = function() {
-    data = nextStep(step);
-  };
+    let subscription = null;
+    let value = "";
 
-  $: step = data.step;
-  $: title = data.output;
-  $: subline = data.subline;
-  $: button = data.button;
+    export let data = {
+    };
+
+    onDestroy(() => {
+        if (subscription) {
+            subscription.unsubscribe();
+        }
+    });
+
+    onMount(() => {
+        let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
+        subscription = notifications.observable.subscribe(event => {
+            if (!event._$schemaId) return;
+
+            switch (event._$schemaId) {
+                case "events:omo.shell.requestSubmitFlowStep":
+                    if (!event.data.processNodeId === data.id) {
+                        return; // Not meant for our executing flow
+                    }
+                    submit()
+                    break;
+            }
+        });
+    });
+
+    function submit() {
+        const submitEvent = new SubmitFlowStep(data.processNode.id, {});
+        Logger.log(data.processNode.id + ":OmoInput", "Sending SubmitFlowStep(processNodeId: " + data.processNode.id + ", value: <see attachment>)", value);
+        window.o.publishShellEventAsync(submitEvent);
+    }
 </script>
 
 <style>
@@ -41,20 +59,9 @@
   <div class="flex flex-col justify-center">
     <div class="top">
       <div class="py-6 px-8 lg:px-20 text-center mx-auto">
-        <OmoHero {data} />
+        {data.slide.title}
       </div>
     </div>
-  </div>
-  <div class="bottom bg-gray-200">
-    <form onsubmit="event.preventDefault();" class="flex text-center">
-      <button
-        on:click={() => handleButton()}
-        type="submit"
-        class="bg-primary hover:bg-secondary px-6 text-white font-bold p-3
-        uppercase">
-        {button}
-      </button>
-    </form>
   </div>
 </div>
 

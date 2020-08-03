@@ -33,8 +33,8 @@
   });
 
   function submit() {
-    const submitEvent = new SubmitFlowStep(data.id, value);
-    Logger.log(data.id + ":OmoInput", "Sending SubmitFlowStep(processNodeId: " + data.id + ", value: <see attachment>)", value);
+    const submitEvent = new SubmitFlowStep(data.processNode.id, value);
+    Logger.log(data.processNode.id + ":OmoInput", "Sending SubmitFlowStep(processNodeId: " + data.processNode.id + ", value: <see attachment>)", value);
     window.o.publishShellEventAsync(submitEvent);
   }
 
@@ -42,7 +42,7 @@
   let desc;
   let prompt;
   $:{
-      const copy = JSON.parse(JSON.stringify(data));
+      const copy = JSON.parse(JSON.stringify(data.processNode));
       ProcessNode.restoreParentLinks(copy);
 
       const activeNode = ProcessNode.findActiveLeaf(copy);
