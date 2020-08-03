@@ -112,7 +112,6 @@ export class ModelQuant {
         var collection = await thread.getCollection(this.collectionName);
         mutation['add' + this.typeName(this.name)] = {
             resolve: async (_, data) => {
-                debugger;
                 var entity: any = {};
                 Object.keys(data).forEach(key => {
                     if (this.properties.some(x => x.name == key)) {
