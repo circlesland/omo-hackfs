@@ -1,6 +1,3 @@
-import {observe} from "svelte-observable";
-import {from} from "rxjs";
-import {filter, map} from "rxjs/operators";
 import Observable from 'zen-observable';
 
 export class Messages

@@ -6,8 +6,10 @@ export class Messages
 
         const currentIdentity = window.o.odentity.current._id;
 
-        await window.o.graphQL.mutation(
+        const newMessage = await window.o.graphQL.mutation(
             `addMessage(name: "${currentIdentity}",text: "${text}", date: "${Date.now()}", chatroomId: "${chatroomId}"){_id}`
         );
+        const id = !newMessage.data ? null : newMessage.data.addMessage._id;
+        return id;
     }
 }
