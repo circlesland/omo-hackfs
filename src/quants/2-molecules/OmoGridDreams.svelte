@@ -5,7 +5,7 @@
   // import OmoCardPatron from "../2-molecules/OmoCardPatron.svelte";
   // import OmoCardPreneur from "../2-molecules/OmoCardPreneur.svelte";
 
-  import {onMount} from "svelte";
+  import { onMount } from "svelte";
   // import OmoTabs from "./../2-molecules/OmoTabs.svelte";
   import mocker from "mocker-data-generator";
 
@@ -54,7 +54,7 @@
       faker: "company.companyName"
     },
     image: {
-      function: function () {
+      function: function() {
         return "https://source.unsplash.com/featured/?" + this.object.name;
       }
     }
@@ -87,7 +87,7 @@
       faker: "company.companyName"
     },
     image: {
-      function: function () {
+      function: function() {
         return "https://source.unsplash.com/featured/?" + this.object.name;
       }
     }
@@ -103,11 +103,11 @@
     },
     coupon: {
       values: [
-        {value: 5, discount: 33.33},
-        {value: 55, discount: 20},
-        {value: 610, discount: 12.5},
-        {value: 6765, discount: 7.69},
-        {value: 75025, discount: 4.76},
+        { value: 5, discount: 33.33 },
+        { value: 55, discount: 20 },
+        { value: 610, discount: 12.5 },
+        { value: 6765, discount: 7.69 },
+        { value: 75025, discount: 4.76 },
         null
       ]
     },
@@ -124,7 +124,7 @@
       faker: "company.companyName"
     },
     image: {
-      function: function () {
+      function: function() {
         return "https://source.unsplash.com/featured/?" + this.object.name;
       }
     }
@@ -157,48 +157,48 @@
       faker: "company.companyName"
     },
     image: {
-      function: function () {
+      function: function() {
         return "https://source.unsplash.com/featured/?" + this.object.name;
       }
     }
   };
 
   onMount(async () => {
-    const dreamers = await fetch("https://www.randomtext.me/api/p-20/10-16")
-            .then(response => response.json())
-            .then(data => {
-              var texts = data.text_out.split("<p>");
-              fetch("https://randomuser.me/api?results=20")
-                      .then(response => response.json())
-                      .then(
-                              data =>
-                                      (omodreams = data.results.map((item, i) => {
-                                        item.first = item.name.first;
-                                        item.last = item.name.last;
-                                        item.city = item.location.city;
-                                        item.profile = item.picture.large;
-                                        item.image = `https://source.unsplash.com/featured/?${item.location.city},city`;
-                                        item.follower = Math.floor(Math.random() * 11 + 1);
-                                        item.dream = texts[i + 1].replace("</p>", "");
-                                        return item;
-                                      }))
-                      );
-            });
+    const dreamers = await fetch("https://www.randomtext.me/api/p-20/10-12")
+      .then(response => response.json())
+      .then(data => {
+        var texts = data.text_out.split("<p>");
+        fetch("https://randomuser.me/api?results=20")
+          .then(response => response.json())
+          .then(
+            data =>
+              (omodreams = data.results.map((item, i) => {
+                item.first = item.name.first;
+                item.last = item.name.last;
+                item.city = item.location.city;
+                item.profile = item.picture.large;
+                item.image = `https://source.unsplash.com/featured/?${item.location.city},city`;
+                item.follower = Math.floor(Math.random() * 11 + 1);
+                item.dream = texts[i + 1].replace("</p>", "");
+                return item;
+              }))
+          );
+      });
     mocker()
-            .schema("vote", vote, 20)
-            .schema("preorder", preorder, 20)
-            .schema("patron", patron, 20)
-            .schema("preneur", preneur, 20)
-            .build()
-            .then(
-                    data => {
-                      omovotes = data.vote;
-                      omopreorders = data.preorder;
-                      omopatrons = data.patron;
-                      omopreneurs = data.preneur;
-                    },
-                    err => console.error(err)
-            );
+      .schema("vote", vote, 20)
+      .schema("preorder", preorder, 20)
+      .schema("patron", patron, 20)
+      .schema("preneur", preneur, 20)
+      .build()
+      .then(
+        data => {
+          omovotes = data.vote;
+          omopreorders = data.preorder;
+          omopatrons = data.patron;
+          omopreneurs = data.preneur;
+        },
+        err => console.error(err)
+      );
   });
 </script>
 
@@ -214,7 +214,7 @@
 
   <section class=" grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
     {#each omodreams as data, i (data.id)}
-      <OmoCardDream {data}/>
+      <OmoCardDream {data} />
     {/each}
   </section>
 

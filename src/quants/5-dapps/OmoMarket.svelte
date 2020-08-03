@@ -5,7 +5,8 @@
   import OmoGridVoting from "./../2-molecules/OmoGridVoting";
   import OmoGridDreams from "./../2-molecules/OmoGridDreams";
   import OmoGridOrgas from "./../2-molecules/OmoGridOrgas";
-  import OmoGridPreOrder from "./../2-molecules/OmoGridPreOrder";
+  import OmoGridPreOrders from "./../2-molecules/OmoGridPreOrders";
+  import OmoGridProducts from "./../2-molecules/OmoGridProducts";
   import OmoCarousel from "./../2-molecules/OmoCarousel";
   import OmoHero from "./../2-molecules/OmoHero";
 
@@ -25,8 +26,8 @@
       value: 4,
       icon: "fa-vote-yea"
     },
-    { label: "Organisations", value: 5, icon: "fa-bell" },
-    { label: "Cities", value: 6, icon: "fa-bell" }
+    { label: "Organisations", value: 5, icon: "fa-users" },
+    { label: "Cities", value: 6, icon: "fa-city" }
   ];
 
   $: countries = [];
@@ -87,7 +88,7 @@
     display: grid;
     grid-template-areas: "'aside main'";
     grid-template-rows: 1fr;
-    grid-template-columns: 16rem 1fr;
+    grid-template-columns: 14rem 1fr;
     @apply h-full;
     overflow: hidden;
   }
@@ -115,15 +116,19 @@
     {/if}
     {#if 2 === currentTab}
       <OmoCarousel />
-      <OmoGridPreOrder />
+      <OmoGridPreOrders />
     {/if}
     {#if 3 === currentTab}
       <OmoCarousel />
-      <OmoGridPreOrder />
+      <OmoGridProducts />
     {/if}
     {#if 4 === currentTab}
       <OmoCarousel />
       <OmoGridVoting />
+    {/if}
+    {#if 5 === currentTab}
+      <OmoCarousel />
+      <OmoGridOrgas />
     {/if}
     {#if 6 === currentTab}
       <OmoCarousel />
