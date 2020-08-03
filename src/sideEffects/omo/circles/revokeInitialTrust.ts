@@ -50,9 +50,11 @@ export const revokeInitialTrust: ISideEffect<IProcessContext, any> = {
         {
           try
           {
+            let canSendToC = window.o.web3.utils.toChecksumAddress(trustGivingSafeAddress.safeAddress);
+            let userC = window.o.web3.utils.toChecksumAddress(trustReceivingSafe.safeAddress);
             await window.o.circlesCore.trust.removeConnection(trustGivingSafeOwner, {
-              user: trustGivingSafeAddress.safeAddress,
-              canSendTo: trustReceivingSafe.safeAddress,
+              user: userC,
+              canSendTo: canSendToC,
             });
             r(true);
           }

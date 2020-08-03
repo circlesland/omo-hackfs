@@ -219,7 +219,15 @@
         }
       ]
     },
-    {route: "?page=onboarding", quant: OnBoarding, authenticate: true},
+    {
+      route: "?page=onboarding",
+      quant: OnBoarding,
+      authenticate: true,
+      actions: [{
+        title: "Start onboarding",
+        event: () => new StartFlow("flows:omo.onboarding.createOmosapien")
+      }]
+    },
     {route: "?page=omodialog", quant: OmoDialog, authenticate: true},
     {
       route: "?page=omoactions",
