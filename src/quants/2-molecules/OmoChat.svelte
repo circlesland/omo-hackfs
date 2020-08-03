@@ -15,6 +15,11 @@
 
     let messages = null;
 
+    function sendNewMessage() {
+        MessageMutations.sendMessage(currentRoom._id, newMessageText);
+        newMessageText = "";
+    }
+
     $: {
         if (currentRoom._id != "") {
             messages = observe(MessageQueries.messagesByRoom(currentRoom._id));
@@ -161,7 +166,7 @@
                       placeholder="enter your chat message here"/>
 
               <button
-                      on:click={() => MessageMutations.sendMessage(currentRoom.id, newMessageText)}
+                      on:click={() => sendNewMessage()}
                       class="px-6 bg-primary hover:bg-secondary text-white font-bold p-3
           uppercase">
                   Send
