@@ -107,3 +107,6 @@ dist/*
 
 public/styles.css
 public/bundle.js
+
+# Mac
+.DS_Store

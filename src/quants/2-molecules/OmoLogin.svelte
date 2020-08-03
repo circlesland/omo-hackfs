@@ -3,6 +3,7 @@
   import ApolloClient, {gql} from "apollo-boost";
   import {query} from "svelte-apollo";
   import {getSafeAddressAsync} from "./../../queries/omo/safe/circles.svelte";
+  import {StartFlow} from "../../events/omo/shell/startFlow";
 
   const client = new ApolloClient({
     uri:
@@ -34,7 +35,8 @@
       if (o.odentity._current.circleSafe) {
         navigate("omosafe");
       } else {
-        navigate("mamaomo");
+        o.publishEventAsync(new StartFlow("flows:omo.odentity.createOmosapien"));
+        //navigate("mamaomo");
       }
     });
   }

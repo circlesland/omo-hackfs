@@ -91,7 +91,7 @@
                         src="https://i.pravatar.cc/150?u={item.transfer.to}"
                         class="h-full w-auto"/>
                 <div class="text-sm py-2 px-4 w-full">
-                  <p>{item.transfer.to}</p>
+                  <p>item.transfer.to}</p>
                   <p class="text-xs -mt-3 text-gray-600">
                     {moment
                     .unix(item.time)

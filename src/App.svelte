@@ -166,7 +166,13 @@
     },
     {route: "?page=omofunding", quant: OmoFunding, authenticate: true},
     {route: "?page=omoorgas", quant: OmoOrgas, authenticate: true},
-    {route: "?page=omomarket", quant: OmoMarket, authenticate: true},
+    {route: "?page=omomarket", quant: OmoMarket, authenticate: true,
+      actions: [
+        {
+          title: "Create new dream",
+          event: () => new StartFlow("flows:omo.dreams.createDream")
+        }
+      ]},
     {route: "?page=omovoting", quant: OmoVoting, authenticate: true},
     {route: "?page=omopreorders", quant: OmoPreOrders, authenticate: true},
     {

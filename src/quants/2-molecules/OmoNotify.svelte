@@ -9,66 +9,68 @@
   async function updateAsync() {
     const PAGE_SIZE = 100;
 
-    // Get list of my activities
-    const addr = window.o.web3.utils.toChecksumAddress(
-            window.o.odentity.current.circleSafe.safeAddress.trim()
-    );
-    const {activities} = await window.o.circlesCore.activity.getLatest(
-            window.o.odentity.current.circleSafeOwner,
-            {
-              safeAddress: addr
-            },
-            PAGE_SIZE,
-            0,
-            0
-    );
+    if (window.o.odentity.current) {
+      // Get list of my activities
+      const addr = window.o.web3.utils.toChecksumAddress(
+              window.o.odentity.current.circleSafe.safeAddress.trim()
+      );
+      const {activities} = await window.o.circlesCore.activity.getLatest(
+              window.o.odentity.current.circleSafeOwner,
+              {
+                safeAddress: addr
+              },
+              PAGE_SIZE,
+              0,
+              0
+      );
 
-    // Example: Display activities
-    const {ActivityTypes} = window.o.circlesCore.activity;
+      // Example: Display activities
+      const {ActivityTypes} = window.o.circlesCore.activity;
 
-    activities.forEach(activity => {
-      const {timestamp, type, data} = activity;
+      activities.forEach(activity => {
+        const {timestamp, type, data} = activity;
 
-      let text = "";
-      let title = "";
-      let tag = "";
+        let text = "";
+        let title = "";
+        let tag = "";
 
-      if (type === ActivityTypes.HUB_TRANSFER) {
-        text = `transferred ${(
-                data.value.toString() / 1000000000000000000
-        ).toFixed(2)} Circles to ${data.to}`;
-        title = `Send ${(data.value.toString() / 1000000000000000000).toFixed(
-                2
-        )}`;
-        tag = "TRANSFER";
-      } else if (type === ActivityTypes.ADD_CONNECTION) {
-        text = `${data.canSendTo} allowed ${data.user} to transfer Circles`;
-        title = `Added ${data.limitPercentage}% trust`;
-        tag = "TRUST";
-      } else if (type === ActivityTypes.REMOVE_CONNECTION) {
-        text = `${data.canSendTo} untrusted ${data.user}`;
-        title = `Removed ${data.limitPercentage}% trust`;
-        tag = "TRUST";
-      } else if (type === ActivityTypes.ADD_OWNER) {
-        text = `added ${data.ownerAddress} to ${data.safeAddress}`;
-        title = `Added SafeOwner`;
-        tag = "OWNERCHANGE";
-      } else if (type === ActivityTypes.REMOVE_OWNER) {
-        text = `removed ${data.ownerAddress} from ${data.safeAddress}`;
-        title = `Removed SafeOwner`;
-        tag = "OWNERCHANGE";
-      }
-
-      notifications = [
-        ...notifications,
-        {
-          date: timestamp,
-          title: title,
-          text: text,
-          tag: tag
+        if (type === ActivityTypes.HUB_TRANSFER) {
+          text = `transferred ${(
+                  data.value.toString() / 1000000000000000000
+          ).toFixed(2)} Circles to ${data.to}`;
+          title = `Send ${(data.value.toString() / 1000000000000000000).toFixed(
+                  2
+          )}`;
+          tag = "TRANSFER";
+        } else if (type === ActivityTypes.ADD_CONNECTION) {
+          text = `${data.canSendTo} allowed ${data.user} to transfer Circles`;
+          title = `Added ${data.limitPercentage}% trust`;
+          tag = "TRUST";
+        } else if (type === ActivityTypes.REMOVE_CONNECTION) {
+          text = `${data.canSendTo} untrusted ${data.user}`;
+          title = `Removed ${data.limitPercentage}% trust`;
+          tag = "TRUST";
+        } else if (type === ActivityTypes.ADD_OWNER) {
+          text = `added ${data.ownerAddress} to ${data.safeAddress}`;
+          title = `Added SafeOwner`;
+          tag = "OWNERCHANGE";
+        } else if (type === ActivityTypes.REMOVE_OWNER) {
+          text = `removed ${data.ownerAddress} from ${data.safeAddress}`;
+          title = `Removed SafeOwner`;
+          tag = "OWNERCHANGE";
         }
-      ];
-    });
+
+        notifications = [
+          ...notifications,
+          {
+            date: timestamp,
+            title: title,
+            text: text,
+            tag: tag
+          }
+        ];
+      });
+    }
   }
 
   updateAsync();

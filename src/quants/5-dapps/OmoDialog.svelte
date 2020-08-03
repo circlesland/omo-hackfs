@@ -13,6 +13,16 @@
   let log = "";
   let executionContext;
 
+  let defaultInputs = [{
+    name: "currentSafeOwner",
+    type: "schema:omo.safe.safeOwner",
+    value: () => window.o.odentity.current.circleSafeOwner
+  }, {
+    name: "currentSafe",
+    type: "schema:omo.safe.safe",
+    value: () => window.o.odentity.current.circleSafe
+  }]
+
   onDestroy(() => {
     if (subscription) {
       subscription.unsubscribe();
@@ -173,16 +183,6 @@
     };
     return first.id;
   }
-
-  let defaultInputs = [{
-    name: "currentSafeOwner",
-    type: "schema:omo.safe.safeOwner",
-    value: () => window.o.odentity.current.circleSafeOwner
-  }, {
-    name: "currentSafe",
-    type: "schema:omo.safe.safe",
-    value: () => window.o.odentity.current.circleSafe
-  }]
 
   /**
    * Sets the current node to "Finish" and proceeds with the next executable leaf node.
