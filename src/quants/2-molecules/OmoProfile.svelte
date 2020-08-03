@@ -1,8 +1,9 @@
 <script>
   import OmoSpin from "./../1-atoms/OmoSpin.svelte";
   import { Notification } from "./../../events/omo/shell/notification.ts";
-  import OmoNavTabs from "./../2-molecules/OmoNavTabs";
   import moment from "moment";
+
+  import OmoNavTabs from "./../2-molecules/OmoNavTabs";
 
   //Tabs
   let currentTab;

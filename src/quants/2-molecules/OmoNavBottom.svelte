@@ -53,14 +53,14 @@
 
   export let navitems = [
     {
-      icon: "fa-user-circle",
-      text: "Omo Safe",
+      icon: "fa-user-shield",
+      text: "OmoSafe",
       link: () => window.navigate("omosafe"),
       design: "text-secondary hover:bg-white"
     },
     {
       icon: "fa-users",
-      text: "Omo Market",
+      text: "Market",
       link: () => window.navigate("omomarket"),
       design: "text-secondary hover:bg-white"
     },
@@ -80,13 +80,13 @@
     },
     {
       icon: "fa-comments",
-      text: "Omo Talk",
+      text: "OmoTalk",
       link: () => window.navigate("omochat"),
       design: "text-secondary hover:bg-white"
     },
     {
-      icon: "fa-home",
-      text: "Omo Me",
+      icon: "fa-user-circle",
+      text: "MyProfile",
       link: () => window.navigate("odentity"),
       design: "text-secondary hover:bg-white"
     }
