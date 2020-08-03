@@ -1,34 +1,34 @@
 <script lang="ts">
-    import {getRoute, curRoute, navigate, getComponent} from "./Router.ts";
-    import {onMount, onDestroy} from "svelte";
-    import MagicLogin from "./quants/5-dapps/MagicLogin.svelte";
+  import { getRoute, curRoute, navigate, getComponent } from "./Router.ts";
+  import { onMount, onDestroy } from "svelte";
+  import MagicLogin from "./quants/5-dapps/MagicLogin.svelte";
 
-    import OmoHome from "./quants/5-dapps/OmoHome";
-    import OmoDialog from "./quants/5-dapps/OmoDialog";
-    import MamaOmo from "./quants/5-dapps/MamaOmo";
-    import OmoDream from "./quants/5-dapps/OmoDream";
-    import OmoDocs from "./quants/5-dapps/OmoDocs";
-    import OmoDapps from "./quants/5-dapps/OmoDapps";
-    import OnBoarding from "./quants/5-dapps/OnBoarding";
-    import Odentity from "./quants/5-dapps/oDentity";
-    import OmoDreams from "./quants/5-dapps/OmoDreams";
-    import OmoOrgas from "./quants/5-dapps/OmoOrgas";
-    import OmoSafe from "./quants/5-dapps/OmoSafe";
-    import OmoAuth from "./quants/5-dapps/OmoAuth";
-    import OmoFunding from "./quants/5-dapps/OmoFunding";
-    import OmoConnectCircles from "./quants/5-dapps/OmoConnectCircles.svelte";
-    import OmoChat from "./quants/5-dapps/OmoChat.svelte";
-    import OmoActions from "./quants/5-dapps/OmoActions.svelte";
-    import OmoShop from "./quants/5-dapps/OmoShop.svelte";
-    import OmoVoting from "./quants/5-dapps/OmoVoting.svelte";
-    import OmoPreOrders from "./quants/5-dapps/OmoPreOrders.svelte";
+  import OmoHome from "./quants/5-dapps/OmoHome";
+  import OmoDialog from "./quants/5-dapps/OmoDialog";
+  import MamaOmo from "./quants/5-dapps/MamaOmo";
+  import OmoDream from "./quants/5-dapps/OmoDream";
+  import OmoDocs from "./quants/5-dapps/OmoDocs";
+  import OmoDapps from "./quants/5-dapps/OmoDapps";
+  import OnBoarding from "./quants/5-dapps/OnBoarding";
+  import Odentity from "./quants/5-dapps/oDentity";
+  import OmoDreams from "./quants/5-dapps/OmoDreams";
+  import OmoOrgas from "./quants/5-dapps/OmoOrgas";
+  import OmoSafe from "./quants/5-dapps/OmoSafe";
+  import OmoAuth from "./quants/5-dapps/OmoAuth";
+  import OmoFunding from "./quants/5-dapps/OmoFunding";
+  import OmoConnectCircles from "./quants/5-dapps/OmoConnectCircles.svelte";
+  import OmoChat from "./quants/5-dapps/OmoChat.svelte";
+  import OmoActions from "./quants/5-dapps/OmoActions.svelte";
+  import OmoMarket from "./quants/5-dapps/OmoMarket.svelte";
+  import OmoVoting from "./quants/5-dapps/OmoVoting.svelte";
+  import OmoPreOrders from "./quants/5-dapps/OmoPreOrders.svelte";
 
-    import OmoNavTop from "./quants/2-molecules/OmoNavTop.svelte";
-    import OmoNavBottom from "./quants/2-molecules/OmoNavBottom.svelte";
-    import {StartFlow} from "./events/omo/shell/startFlow";
-    import {Navigated} from "./events/omo/shell/navigated";
-    import {Logout} from "./events/omo/shell/logout";
-    import {ClosePopup} from "./events/omo/shell/closePopup";
+  import OmoNavTop from "./quants/2-molecules/OmoNavTop.svelte";
+  import OmoNavBottom from "./quants/2-molecules/OmoNavBottom.svelte";
+  import { StartFlow } from "./events/omo/shell/startFlow";
+  import { Navigated } from "./events/omo/shell/navigated";
+  import { Logout } from "./events/omo/shell/logout";
+  import { ClosePopup } from "./events/omo/shell/closePopup";
 
     let subscription = null;
     onDestroy(() => {
@@ -167,7 +167,7 @@
         },
         {route: "?page=omofunding", quant: OmoFunding, authenticate: true},
         {route: "?page=omoorgas", quant: OmoOrgas, authenticate: true},
-        {route: "?page=omoshop", quant: OmoShop, authenticate: true},
+        {route: "?page=omomarket", quant: OmoMarket, authenticate: true},
         {route: "?page=omovoting", quant: OmoVoting, authenticate: true},
         {route: "?page=omopreorders", quant: OmoPreOrders, authenticate: true},
         {
@@ -220,16 +220,7 @@
                 }
             ]
         },
-        {
-            route: "?page=onboarding",
-            quant: OnBoarding,
-            authenticate: true,
-            actions:[
-                {
-                    title: "Start onboarding",
-                    event: () => new StartFlow("flows:omo.onboarding.createOmosapien")
-                }]
-        },
+        {route: "?page=onboarding", quant: OnBoarding, authenticate: true},
         {route: "?page=omodialog", quant: OmoDialog, authenticate: true},
         {
             route: "?page=omoactions",

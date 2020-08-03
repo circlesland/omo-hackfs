@@ -25,7 +25,7 @@
 
 <OmoIconsFA />
 
-<nav class="bg-gray-500">
+<nav class="bg-gray-400">
   <div class="max-w-7xl mx-auto px-2">
     <div class="relative flex items-center justify-between h-12">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -78,7 +78,7 @@
             alt="Omo logo" />
         </a>
         <div class="hidden sm:block sm:ml-6">
-          <div class="flex">
+          <!-- <div class="flex">
             {#each a as a}
               <a
                 href={a.link}
@@ -89,7 +89,7 @@
                 {a.title}
               </a>
             {/each}
-          </div>
+          </div> -->
         </div>
       </div>
       <div
@@ -100,7 +100,7 @@
         </nav>
 
         <!-- Profile  -->
-        <div class="ml-3 relative">
+        <!-- <div class="ml-3 relative">
           <a href="javascript:navigate('odentity')">
             <button
               class="flex text-sm border-2 border-white rounded ease-in-out"
@@ -113,8 +113,8 @@
                 alt="" />
             </button>
           </a>
+        </div> -->
 
-        </div>
       </div>
     </div>
   </div>
