@@ -12,12 +12,12 @@
     var id = urlParams.get("data");
     if (id != undefined) {
       o.graphql
-        .query(
-          `DreamById(_id:"${id}") {_id first last profile image follower city dream}`
-        )
-        .then(result => {
-          dream = result.data.DreamById;
-        });
+              .query(
+                      `DreamById(_id:"${id}") {_id first last profile image follower city dream}`
+              )
+              .then(result => {
+                dream = result.data.DreamById;
+              });
     }
   }
 
@@ -64,7 +64,7 @@
               order: 3,
               goal: "3",
               content:
-                "this content is explaining the current task and step to level up to the next campaign goal"
+                      "this content is explaining the current task and step to level up to the next campaign goal"
             },
             {
               type: "step",
@@ -287,10 +287,12 @@
     grid-template-rows: 1fr;
     overflow: hidden;
   }
+
   .nav-aside {
     grid-area: nav-aside;
     overflow-y: scroll;
   }
+
   .aside {
     grid-area: aside;
     overflow-y: scroll;
@@ -305,39 +307,39 @@
 
 <div class="omo-layout">
   <div class="nav-aside">
-    <OmoNavAside />
+    <OmoNavAside/>
   </div>
   <div class="aside">
     <div class="">
       {#each data.sort((first, second) => {
-        if (first.leap < second.leap) return -1;
-        if (first.leap > second.leap) return 1;
-        return 0;
+      if (first.leap < second.leap) return -1;
+      if (first.leap > second.leap) return 1;
+      return 0;
       }) as leap, i}
         <p
-          class="uppercase text-md text-center h-12 py-3 bg-primary font-bold
+                class="uppercase text-md text-center h-12 py-3 bg-primary font-bold
           text-white">
           {leap.order}. {leap.title}
         </p>
         {#each leap.levels.sort((first, second) => {
-          if (first.order < second.order) return -1;
-          if (first.order > second.order) return 1;
-          return 0;
+        if (first.order < second.order) return -1;
+        if (first.order > second.order) return 1;
+        return 0;
         }) as level, i}
           <div class="relative border-2 border-secondary">
             <div class="overflow-hidden h-4 text-xs flex bg-primary">
               <div
-                style="width: {dream.follower * 7.69}%"
-                class="shadow-none flex flex-col text-center whitespace-nowrap
+                      style="width: {dream.follower * 7.69}%"
+                      class="shadow-none flex flex-col text-center whitespace-nowrap
                 text-blue-300 justify-center bg-secondary">
                 2 of 3 dreamers
               </div>
             </div>
           </div>
           {#each level.steps.sort((first, second) => {
-            if (first.order < second.order) return -1;
-            if (first.order > second.order) return 1;
-            return 0;
+          if (first.order < second.order) return -1;
+          if (first.order > second.order) return 1;
+          return 0;
           }) as step, i}
             {#if step.state == 'active'}
               <div class="m-4 bg-gray-300 hover:bg-gray-400">
@@ -351,14 +353,14 @@
                 </div>
                 <div class="">
                   <p
-                    class="text-md w-full py-2 bg-tertiary text-center
+                          class="text-md w-full py-2 bg-tertiary text-center
                     text-white uppercase font-bold">
                     subscribe to unlock
                   </p>
                 </div>
               </div>
             {:else if step.state == 'done'}
-              <!-- <div class="m-4 flex flex-col justify-center h-12">
+            <!-- <div class="m-4 flex flex-col justify-center h-12">
                 <div class="py-3 h-12 text-center bg-gray-200">
                   <i class="fas fa-check-circle text-blue-600" />
                 </div>
@@ -366,7 +368,7 @@
             {:else}
               <div class="flex flex-col justify-center m-4 h-12">
                 <div class="py-3 h-12 text-center bg-gray-200">
-                  <i class="fas fa-lock text-gray-500" />
+                  <i class="fas fa-lock text-gray-500"/>
                 </div>
               </div>
             {/if}
@@ -377,8 +379,8 @@
   </div>
 
   <div class="content-center">
-    <OmoVideo data={dream} />
-    <OmoProfilePage data={dream} />
+    <OmoVideo data={dream}/>
+    <OmoProfilePage data={dream}/>
   </div>
 
 </div>

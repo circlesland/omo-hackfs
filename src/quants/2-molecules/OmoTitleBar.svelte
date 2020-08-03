@@ -5,7 +5,7 @@
   // export let home = "javascript:navigate('home')";
 </script>
 
-<OmoIconsFA />
+<OmoIconsFA/>
 <!-- 
 <header>
   <nav class="flex justify-between w-full bg-gray-200 text-primary">

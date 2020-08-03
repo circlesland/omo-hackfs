@@ -1,14 +1,16 @@
-import { Instance } from "@textile/threads-store";
+import {Instance} from "@textile/threads-store";
 
-export class OdentityProvider implements Instance {
-    static CollectionName: string = "OdentityProvider";
+export class OdentityProvider implements Instance
+{
+  static CollectionName: string = "OdentityProvider";
 
-    _id: string;
-    odentityId?: string;
-    type?: string;
-    externalReference?: string;
+  _id: string;
+  odentityId?: string;
+  type?: string;
+  externalReference?: string;
 
-    constructor() {
-        this._id = '';
-    }
+  constructor()
+  {
+    this._id = '';
+  }
 }

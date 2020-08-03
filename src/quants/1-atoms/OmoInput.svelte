@@ -5,6 +5,6 @@
 </style>
 
 <input
-  class="focus:outline-none focus:shadow-outline"
-  type="email"
-  placeholder="omo@sapiens.earth" />
+        class="focus:outline-none focus:shadow-outline"
+        type="email"
+        placeholder="omo@sapiens.earth"/>

@@ -1,30 +1,30 @@
 <script>
-    export let actions = [];
+  export let actions = [];
 
-    function click(action) {
-        window.o.eventBroker.tryGetTopic("omo", "shell").publish(action);
-    }
+  function click(action) {
+    window.o.eventBroker.tryGetTopic("omo", "shell").publish(action);
+  }
 </script>
 
 <style>
-    section {
-        max-height: 80vh;
-        overflow-y: scroll;
-    }
+  section {
+    max-height: 80vh;
+    overflow-y: scroll;
+  }
 </style>
 
 <section class="text-gray-700 bg-gray-200 w-full">
   {#each actions as action}
+    <div
+            on:click={() => click(action.event())}
+            class="py-4 px-8 hover:bg-primary hover:text-white text-lg font-bold">
+      {action.title}
       <div
-              on:click={() => click(action.event())}
-              class="py-4 px-8 hover:bg-primary hover:text-white text-lg font-bold">
-        {action.title}
-          <div
-                  class="text-xs truncate w-full normal-case font-normal -mt-1
+              class="text-xs truncate w-full normal-case font-normal -mt-1
         text-gray-500">
-            {#if action.description}{action.description}{/if}
-          </div>
+        {#if action.description}{action.description}{/if}
       </div>
+    </div>
   {/each}
 </section>
 

@@ -46,7 +46,7 @@
 </script>
 
 {#await loadingData()}
-  <OmoSpin />
+  <OmoSpin/>
 {:then organisms}
-  <OmoOrganisms {organisms} />
+  <OmoOrganisms {organisms}/>
 {/await}

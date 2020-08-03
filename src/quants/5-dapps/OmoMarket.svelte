@@ -97,6 +97,7 @@
   main {
     grid-area: "main";
   }
+
   .wrap {
     @apply p-10 grid gap-3;
   }

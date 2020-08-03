@@ -2,14 +2,12 @@ import {Event} from "../../../core/Data/Entities/Event"
 
 export class Logout extends Event
 {
-    readonly _$schemaId = "events:omo.shell.logout";
+  readonly _$schemaId = "events:omo.shell.logout";
 
-    data: {
-    } = {
-    };
+  data: {} = {};
 
-    constructor()
-    {
-        super();
-    }
+  constructor()
+  {
+    super();
+  }
 }

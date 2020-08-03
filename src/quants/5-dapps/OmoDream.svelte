@@ -147,7 +147,7 @@
       goal: 12
     }
   ];
-  var design = { bg: "bg-primary", text: "bg-primary" };
+  var design = {bg: "bg-primary", text: "bg-primary"};
 
   let OmoDream = {
     name: "OmoDream",
@@ -162,10 +162,10 @@
         type: "molecule",
         slot: "main",
         quant: "OmoDream",
-        data: { leaps, levels, design }
+        data: {leaps, levels, design}
       }
     ]
   };
 </script>
 
-<OmoOrganisms organisms={OmoDream} />
+<OmoOrganisms organisms={OmoDream}/>

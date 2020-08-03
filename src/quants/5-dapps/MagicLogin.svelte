@@ -7,6 +7,7 @@
       window.close();
     }
   }
+
   acceptLogin();
 </script>
 

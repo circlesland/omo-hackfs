@@ -33,51 +33,53 @@ import OmoLoading from "./quants/2-molecules/OmoLoading.svelte";
 //
 // Flows
 //
-import { giveTrust as giveTrustFlow } from "./flows/omo/safe/giveTrust";
-import { revokeTrust as revokeTrustFlow } from "./flows/omo/safe/revokeTrust";
-import { transferCircles as transferCirclesFlow } from "./flows/omo/safe/transferCircles";
-import { addChatRoom as addChatRoomFlow } from "./flows/omo/chat/addChatRoom";
-import { removeChatRoom as removeChatRoomFlow } from "./flows/omo/chat/removeChatRoom";
-import { sendMessage as sendMessageFlow } from "./flows/omo/chat/sendMessage";
-import { addOwnerDevice as addOwnerDeviceFlow } from "./flows/omo/odentity/addOwnerDevice";
-import { removeOwnerDevice as removeOwnerDeviceFlow } from "./flows/omo/odentity/removeOwnerDevice";
-import { addAuthProviderMail as addAuthProviderMailFlow } from "./flows/omo/odentity/addAuthProviderMail";
-import { removeAuthProviderMail as removeAuthProviderMailFlow } from "./flows/omo/odentity/removeAuthProviderMail";
-import { addAuthProviderSeedPhrase as addAuthProviderSeedPhraseFlow } from "./flows/omo/odentity/addAuthProviderSeedPhrase";
-import { removeAuthProviderSeedPhrase as removeAuthProviderSeedPhraseFlow } from "./flows/omo/odentity/removeAuthProviderSeedPhraseFlow";
-import { createDream as createDreamFlow } from "./flows/omo/dreams/createDream";
+import {giveTrust as giveTrustFlow} from "./flows/omo/safe/giveTrust";
+import {revokeTrust as revokeTrustFlow} from "./flows/omo/safe/revokeTrust";
+import {transferCircles as transferCirclesFlow} from "./flows/omo/safe/transferCircles";
+import {addChatRoom as addChatRoomFlow} from "./flows/omo/chat/addChatRoom";
+import {removeChatRoom as removeChatRoomFlow} from "./flows/omo/chat/removeChatRoom";
+import {sendMessage as sendMessageFlow} from "./flows/omo/chat/sendMessage";
+import {addOwnerDevice as addOwnerDeviceFlow} from "./flows/omo/odentity/addOwnerDevice";
+import {removeOwnerDevice as removeOwnerDeviceFlow} from "./flows/omo/odentity/removeOwnerDevice";
+import {addAuthProviderMail as addAuthProviderMailFlow} from "./flows/omo/odentity/addAuthProviderMail";
+import {removeAuthProviderMail as removeAuthProviderMailFlow} from "./flows/omo/odentity/removeAuthProviderMail";
+import {addAuthProviderSeedPhrase as addAuthProviderSeedPhraseFlow} from "./flows/omo/odentity/addAuthProviderSeedPhrase";
+import {removeAuthProviderSeedPhrase as removeAuthProviderSeedPhraseFlow} from "./flows/omo/odentity/removeAuthProviderSeedPhraseFlow";
+import {createDream as createDreamFlow} from "./flows/omo/dreams/createDream";
+import {createOmosapien as createOmosapienFlow} from "./flows/omo/onboarding/createOmosapien";
 
 //
 // SideEffects
 //
-import { collectStepResult } from "./sideEffects/omo/shell/collectStepResult";
-import { giveTrust as giveTrustSideEffect } from "./sideEffects/omo/safe/giveTrust";
-import { transferCircles as transferCirclesSideEffect } from "./sideEffects/omo/safe/transferCircles";
-import { revokeTrust as revokeTrustSideEffect } from "./sideEffects/omo/safe/revokeTrust";
-import { generatePpk as generatePpkSideEffect } from "./sideEffects/omo/web3/generatePpk";
-import { generateSafe as generateSafeSideEffect } from "./sideEffects/omo/circles/generateSafe";
-import { giveInitialTrust as giveInitialTrustSideEffect } from "./sideEffects/omo/circles/giveInitialTrust";
-import { deployToken as deployTokenSideEffect } from "./sideEffects/omo/safe/deployToken";
-import { deploySafe as deploySafeSideEffect } from "./sideEffects/omo/safe/deploySafe";
-import { createDream as createDreamSideEffect } from "./sideEffects/omo/dreams/createDream";
-import { revokeInitialTrust as revokeInitialTrustSideEffect } from "./sideEffects/omo/circles/revokeInitialTrust";
+import {collectStepResult} from "./sideEffects/omo/shell/collectStepResult";
+import {giveTrust as giveTrustSideEffect} from "./sideEffects/omo/safe/giveTrust";
+import {transferCircles as transferCirclesSideEffect} from "./sideEffects/omo/safe/transferCircles";
+import {revokeTrust as revokeTrustSideEffect} from "./sideEffects/omo/safe/revokeTrust";
+import {generatePpk as generatePpkSideEffect} from "./sideEffects/omo/web3/generatePpk";
+import {generateSafe as generateSafeSideEffect} from "./sideEffects/omo/circles/generateSafe";
+import {giveInitialTrust as giveInitialTrustSideEffect} from "./sideEffects/omo/circles/giveInitialTrust";
+import {deployToken as deployTokenSideEffect} from "./sideEffects/omo/safe/deployToken";
+import {deploySafe as deploySafeSideEffect} from "./sideEffects/omo/safe/deploySafe";
+import {createDream as createDreamSideEffect} from "./sideEffects/omo/dreams/createDream";
+import {revokeInitialTrust as revokeInitialTrustSideEffect} from "./sideEffects/omo/circles/revokeInitialTrust";
 
 //
 // Schema
 //
-import { ChatRoom } from "./schema/omo/chatRoom";
-import { Event } from "./schema/omo/event";
-import { LoginRequest } from "./schema/omo/loginRequest";
-import { Message } from "./schema/omo/message";
-import { Odentity } from "./schema/omo/odentity";
-import { OdentityProvider } from "./schema/omo/odentityProvider";
-import { Quant } from "./schema/omo/quant";
-import { Safe } from "./schema/omo/safe/safe";
-import { Number } from "./schema/omo/number";
-import { Void } from "./schema/omo/void";
-import { Any } from "./schema/omo/any";
+import {ChatRoom} from "./schema/omo/chatRoom";
+import {Event} from "./schema/omo/event";
+import {LoginRequest} from "./schema/omo/loginRequest";
+import {Message} from "./schema/omo/message";
+import {Odentity} from "./schema/omo/odentity";
+import {OdentityProvider} from "./schema/omo/odentityProvider";
+import {Quant} from "./schema/omo/quant";
+import {Safe} from "./schema/omo/safe/safe";
+import {Number} from "./schema/omo/number";
+import {Void} from "./schema/omo/void";
+import {Any} from "./schema/omo/any";
 
-export function init() {
+export function init()
+{
   const w = <any>window;
   w.registrar = new Map();
   w.registrar.set("OmoHero", OmoHero);
@@ -138,6 +140,7 @@ export function init() {
     removeAuthProviderSeedPhraseFlow
   );
   w.flowRegistrar.set("flows:omo.dreams.createDream", createDreamFlow);
+  w.flowRegistrar.set("flows:omo.onboarding.createOmosapien", createOmosapienFlow);
 
   w.sideEffectRegistrar = new Map();
   [
@@ -152,7 +155,8 @@ export function init() {
     deploySafeSideEffect,
     createDreamSideEffect,
     revokeInitialTrustSideEffect,
-  ].forEach((o) => {
+  ].forEach((o) =>
+  {
     w.sideEffectRegistrar.set(o["_$schemaId"], o);
   });
 
@@ -169,7 +173,8 @@ export function init() {
     Number,
     Void,
     Any,
-  ].forEach((o) => {
+  ].forEach((o) =>
+  {
     w.schemaRegistrar.set(o["_$schemaId"], o);
   });
 }

@@ -44,9 +44,11 @@
     @apply h-full;
     overflow: hidden;
   }
+
   aside {
     grid-area: "aside";
   }
+
   main {
     grid-area: "main";
   }
