@@ -1,5 +1,5 @@
 import { JSONSchema } from "@textile/threads-database";
-import {ModelQuant} from "../../core/Data/ModelQuant";
+import {ModelQuant} from "../../../core/Data/ModelQuant";
 
 export const Location: JSONSchema = {
     $id: "https://example.com/message.schema.json",
@@ -18,6 +18,10 @@ export const Location: JSONSchema = {
         },
         country: {
             type: "string",
+        },
+        dreams: {
+            $ref: "#/definitions/oneToMany",
+            description: "Dream"
         }
     }
 };

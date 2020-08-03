@@ -27,10 +27,6 @@ export const Dream: JSONSchema = {
             $ref: "#/definitions/oneToMany",
             description: "TimeCommitment"
         },
-        votes: {
-            $ref: "#/definitions/oneToMany",
-            description: "Vote"
-        },
         subscriptions: {
             $ref: "#/definitions/oneToMany",
             description: "DreamSubscription"

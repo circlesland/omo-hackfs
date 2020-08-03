@@ -81,12 +81,10 @@ export class GraphQL {
     subscribe(query) : Observable<any> {
         return new Observable(observer =>
         {
-            this.query(query)
-                .then(queryResult => {
-                console.log("A:", queryResult);
+            this.query(query).then(queryResult =>
+            {
                 observer.next(queryResult);
-
-
+                
                 this.getSubscription(`subscription { ${query}}`).then(
                     subscription => {
                         (async () => {

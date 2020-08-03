@@ -16,6 +16,10 @@ export const Vote: JSONSchema = {
         creator: {
             $ref: "#/definitions/oneToOne",
             description: "Omosapien"
+        },
+        voteFor: {
+            $ref: "#/definitions/oneToOne",
+            description: "Dream"
         }
     }
 };

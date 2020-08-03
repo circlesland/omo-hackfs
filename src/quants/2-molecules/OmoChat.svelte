@@ -1,58 +1,26 @@
 <script>
     import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
+    import Observable from 'zen-observable';
     import moment from "moment";
+    import {Rooms as RoomMutations} from "./../../mutations/omo/chat/rooms"
+    import {Rooms as RoomQueries} from "./../../queries/omo/chat/rooms"
+    import {Messages as MessageQueries} from "./../../queries/omo/chat/messages"
+    import {Messages as MessageMutations} from "./../../mutations/omo/chat/messages"
     import {observe} from "svelte-observable";
 
-    export function list() {
-    }
+    let newRoomName = "";
+    let rooms = observe(RoomQueries.rooms());
+    let currentRoom = {id:""};
+    let newMessageText = "";
 
-    let newRoom = "";
-
-    async function createNewRoom() {
-        currentRoom = (await o.graphQL.mutation(
-                `addChatRoom(name:"${newRoom}") {_id name}`
-        )).data.addChatRoom;
-        newRoom = "";
-    }
-
-    async function deleteRoom(id) {
-        await o.graphQL.mutation(`deleteChatRoom(_id:"${id}") {name}`);
-        if (currentRoom._id == id) currentRoom = {_id: null};
-    }
-
-    function chooseRoom(room) {
-        currentRoom = room;
-    }
-
-    let rooms = observe(
-      window.o.graphQL.subscribe(
-              "ChatRooms{_id,name}"
-      ));
-
-
-    let currentRoom = {_id: null};
-    let messages;
+    let messages = null;
 
     $: {
-        console.warn(currentRoom);
-        console.warn("MESSAGES");
-        messages = observe(window.o.graphQL.subscribe(
-                "Messages{_id,text, name, date, ChatRoom{_id}}"
-        ));
+        if (currentRoom._id != "") {
+            messages = observe(MessageQueries.messagesByRoom(currentRoom._id));
+        }
     }
 
-    let newMessage;
-
-    async function sendMessage() {
-        await window.o.graphQL.mutation(
-                `addMessage(name: "${
-                        o.odentity.current._id
-                }",text: "${newMessage}", date: "${Date.now()}", chatroomId: "${
-                        currentRoom._id
-                }"){_id}`
-        );
-        newMessage = "";
-    }
 </script>
 
 <style>
@@ -102,12 +70,12 @@
               {:then result}
                 {#each result.data.ChatRooms as room}
                     <div
-                            on:click={() => chooseRoom(room)}
+                            on:click={() => currentRoom = room}
                             class="text-md w-full py-2 bg-gray-200 hover:bg-secondary
               text-center text-blue-900 uppercase font-bold cursor-pointer "
                             class:active={room._id === currentRoom._id}>
                       {room.name}
-                        <button on:click={() => deleteRoom(room._id)}>del</button>
+                        <button on:click={() => () => RoomMutations.deleteRoom(room._id)}>del</button>
                     </div>
                 {/each}
               {:catch error}
@@ -120,7 +88,7 @@
     <div class="bottom-right ">
         <div class="flex">
             <input
-                    bind:value={newRoom}
+                    bind:value={newRoomName}
                     class="w-full p-3 border-t mr-0 border-b border-l text-gray-800
         border-gray-200 bg-white"
                     placeholder="room name"/>
@@ -128,7 +96,7 @@
             <button
                     class="px-6 bg-primary hover:bg-secondary text-white font-bold p-3
         uppercase "
-                    on:click={createNewRoom}>
+                    on:click={() => RoomMutations.createNewRoom(newRoomName)}>
                 +room
             </button>
         </div>
@@ -141,7 +109,7 @@
       {#await $messages}
               pending - No value or error has been received yet
       {:then result}
-              {#each result.data.Messages.filter(x => x.ChatRoom !== null && x.ChatRoom._id == currentRoom._id) as message}
+              {#each result as message}
                   <li
                           class="flex flex-no-wrap items-center pr-3 text-black rounded-lg
               cursor-pointer mt-200 py-65 hover:bg-gray-200"
@@ -186,13 +154,14 @@
       <div class="bottom-left">
           <div class="flex">
               <input
-                      bind:value={newMessage}
+                      bind:value={newMessageText}
+
                       class="w-full p-3 border-t mr-0 border-b border-l text-gray-800
           border-gray-200 bg-white"
                       placeholder="enter your chat message here"/>
 
               <button
-                      on:click={sendMessage}
+                      on:click={() => MessageMutations.sendMessage(currentRoom.id, newMessageText)}
                       class="px-6 bg-primary hover:bg-secondary text-white font-bold p-3
           uppercase">
                   Send
@@ -202,4 +171,5 @@
   {:else}
       <div class="content-left">Please choose room</div>
   {/if}
+
 </div>

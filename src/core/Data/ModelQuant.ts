@@ -242,9 +242,17 @@ export class ModelQuant {
         this.ManyToManyRelations = [];
         this.ManyToOneRelations = [];
         this.oneToOneRelations = [];
-        if (quant) this.createByQuant(quant);
-        if (collection1 && collection2)
-            this.createManyToMany(collection1, collection2);
+        try
+        {
+            if (quant) this.createByQuant(quant);
+            if (collection1 && collection2)
+                this.createManyToMany(collection1, collection2);
+        }
+        catch (e)
+        {
+            console.log("Error while loading quant '"+ (!quant ? "<undefined>" : quant.name) + "':", e);
+            throw e;
+        }
     }
 
     private createByQuant(quant: Quant) {
