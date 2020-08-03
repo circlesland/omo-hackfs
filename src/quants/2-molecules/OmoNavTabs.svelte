@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from "svelte";
+  import {onMount} from "svelte";
 
   export let items = [];
   export let activeTabValue;
@@ -31,11 +31,11 @@
     {#if Array.isArray(items)}
       {#each items as item}
         <li
-          on:click={handleClick(item.value)}
-          class="flex flex-row items-center h-12 px-4 text-gray-600
+                on:click={handleClick(item.value)}
+                class="flex flex-row items-center h-12 px-4 text-gray-600
           hover:bg-white hover:border-2 hover:border-gray-300 my-px {activeTabValue === item.value ? 'active' : ''}">
           <span class="flex items-center justify-center text-lg text-gray-400">
-            <i class="text-lg fas {item.icon}" />
+            <i class="text-lg fas {item.icon}"/>
           </span>
           <span class="ml-3">{item.label}</span>
         </li>

@@ -5,11 +5,11 @@ import {Quantum} from "../Quantum";
  */
 export interface IProcessContext
 {
-    stepId:string;
-    o:Quantum;
+  stepId: string;
+  o: Quantum;
 
-    inputs:{name:string, value:any}[];
-    outputs:{name:string, value:any}[];
+  inputs: { name: string, value: any }[];
+  outputs: { name: string, value: any }[];
 
-    [others: string]: any;
+  [others: string]: any;
 }

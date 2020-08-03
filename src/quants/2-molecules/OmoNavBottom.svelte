@@ -2,9 +2,9 @@
   import ActionsList from "./ActionsList.svelte";
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
   import OmoModal from "./OmoModal.svelte";
-  import { onMount } from "svelte";
+  import {onMount} from "svelte";
   import OmoDialog from "../5-dapps/OmoDialog.svelte";
-  import { SubmitFlowStep } from "../../events/omo/shell/submitFlowStep";
+  import {SubmitFlowStep} from "../../events/omo/shell/submitFlowStep";
 
   let isOpen = false;
 
@@ -36,9 +36,9 @@
           const flowImpl = window.flowRegistrar.get(next.data.flow);
           if (!flowImpl) {
             throw new Error(
-              "Couldn't find a flow with id '" +
-                next.data.flow +
-                "' in 'window.flowRegistrar'"
+                    "Couldn't find a flow with id '" +
+                    next.data.flow +
+                    "' in 'window.flowRegistrar'"
             );
           }
           processNode = flowImpl();
@@ -101,28 +101,28 @@
 
 <OmoModal {triggerRef} bind:isOpen>
   {#if actions}
-    <ActionsList {actions} />
+    <ActionsList {actions}/>
   {/if}
   {#if processNode}
-    <OmoDialog {processNode} />
+    <OmoDialog {processNode}/>
   {/if}
-  <!-- <div class="h-64">
+        <!-- <div class="h-64">
     <OmoSpin />
   </div> -->
   <!--<OmoStatusResponse />-->
 </OmoModal>
 
-<OmoIconsFA />
+<OmoIconsFA/>
 <nav class="bottom-0 w-full bg-dark">
   <ul
-    class="flex justify-around md:justify-center items-center text-center
+          class="flex justify-around md:justify-center items-center text-center
     font-semibold">
 
     {#each navitems as item}
       <li href="#" on:click={() => item.link()} class={item.design}>
         <div>
-          <i class="text-lg fas {item.icon}" />
-          <br />
+          <i class="text-lg fas {item.icon}"/>
+          <br/>
           <span class="text-xs uppercase">{item.text}</span>
         </div>
       </li>

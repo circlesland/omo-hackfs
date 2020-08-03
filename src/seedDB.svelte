@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from "svelte";
+  import {onMount} from "svelte";
   import mocker from "mocker-data-generator";
 
   var user = {
@@ -16,11 +16,11 @@
       faker: "date.past"
     },
     username: {
-      function: function() {
+      function: function () {
         return (
-          this.object.lastName.substring(0, 5) +
-          this.object.firstName.substring(0, 3) +
-          Math.floor(Math.random() * 10)
+                this.object.lastName.substring(0, 5) +
+                this.object.firstName.substring(0, 3) +
+                Math.floor(Math.random() * 10)
         );
       }
     }
@@ -28,14 +28,14 @@
 
   onMount(async () => {
     mocker()
-      .schema("user", user, 20)
-      .build()
-      .then(
-        data => {
-          data = data;
-        },
-        err => console.error(err)
-      );
+            .schema("user", user, 20)
+            .build()
+            .then(
+                    data => {
+                      data = data;
+                    },
+                    err => console.error(err)
+            );
   });
 </script>
 

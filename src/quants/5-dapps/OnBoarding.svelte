@@ -51,7 +51,7 @@
     uptitle: "Welcome",
     title: "What is your name",
     subline:
-      "I am here to assist you in growing your passions and building your dreamteams"
+            "I am here to assist you in growing your passions and building your dreamteams"
   };
 
   export let firstname = "";
@@ -66,25 +66,26 @@
 <style>
   .omo-layout {
     display: grid;
-    grid-template-areas:
-      "aside content-top"
-      "aside content-center"
-      "aside content-bottom";
+    grid-template-areas: "aside content-top" "aside content-center" "aside content-bottom";
     grid-template-columns: 24rem 1fr;
     grid-template-rows: 1rem 1fr 3rem;
     overflow: hidden;
   }
+
   .aside {
     grid-area: aside;
     overflow-y: scroll;
     @apply bg-gray-200;
   }
+
   .content-top {
     grid-area: content-top;
   }
+
   .content-center {
     grid-area: content-center;
   }
+
   .content-bottom {
     grid-area: content-bottom;
   }
@@ -95,23 +96,23 @@
     <div class="omo-left py-6 px-8 text-md">
 
       {#each data.sort((first, second) => {
-        if (first.level < second.level) return -1;
-        if (first.level > second.level) return 1;
-        return 0;
+      if (first.level < second.level) return -1;
+      if (first.level > second.level) return 1;
+      return 0;
       }) as level, i}
         <p class="uppercase text-md font-bold text-gray-600">
           {level.level}. {level.title}
         </p>
         {#each level.steps.sort((first, second) => {
-          if (first.step < second.step) return -1;
-          if (first.step > second.step) return 1;
-          return 0;
+        if (first.step < second.step) return -1;
+        if (first.step > second.step) return 1;
+        return 0;
         }) as step, i}
           {#if step.locked}
             <div
-              class="flex flex-col justify-center bg-gray-300 h-12 mb-4 w-full">
+                    class="flex flex-col justify-center bg-gray-300 h-12 mb-4 w-full">
               <div class="text-center">
-                <i class="fas fa-lock text-gray-500" />
+                <i class="fas fa-lock text-gray-500"/>
               </div>
             </div>
           {:else}
@@ -131,7 +132,7 @@
   <div class="content-center">
     <div class="h-full flex flex-col justify-center">
       <div class="text-center">
-        <OmoHero data={hero} />
+        <OmoHero data={hero}/>
         <p class="text-gray-400 hover:text-secondary">skip</p>
       </div>
     </div>
@@ -139,13 +140,13 @@
   <div class="content-bottom">
     <div class="flex">
       <input
-        bind:value={firstname}
-        class="w-full p-3 border-t mr-0 border-b border-l text-gray-800
+              bind:value={firstname}
+              class="w-full p-3 border-t mr-0 border-b border-l text-gray-800
         border-gray-200 bg-white"
-        placeholder="placeholder" />
+              placeholder="placeholder"/>
       <button
-        on:click={saveFirstname}
-        class="px-6 bg-green-400 text-gray-800 font-bold p-3 uppercase ">
+              on:click={saveFirstname}
+              class="px-6 bg-green-400 text-gray-800 font-bold p-3 uppercase ">
         save
       </button>
     </div>

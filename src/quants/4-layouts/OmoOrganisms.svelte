@@ -15,7 +15,7 @@
         type: "molecule",
         slot: "molecule",
         quant: OmoMolecule,
-        data: { name: "I am an block" }
+        data: {name: "I am an block"}
       },
       {
         type: "organism",
@@ -39,14 +39,14 @@
 </style>
 
 <section
-  class="organisms"
-  style="--areas: {organisms.layout.areas}; --columns: {organisms.layout.columns};
+        class="organisms"
+        style="--areas: {organisms.layout.areas}; --columns: {organisms.layout.columns};
   --rows: {organisms.layout.rows}; ">
   {#each organisms.blocks as block}
     {#if block.type == 'molecule'}
-      <OmoMolecule transfer={JSON.stringify(block)} />
+      <OmoMolecule transfer={JSON.stringify(block)}/>
     {:else}
-      <OmoOrganism transfer={JSON.stringify(block)} />
+      <OmoOrganism transfer={JSON.stringify(block)}/>
     {/if}
   {/each}
 </section>

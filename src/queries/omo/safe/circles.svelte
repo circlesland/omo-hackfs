@@ -1,10 +1,10 @@
 <script context="module">
-  import ApolloClient, { gql } from "apollo-boost";
-  import { query } from "svelte-apollo";
+  import ApolloClient, {gql} from "apollo-boost";
+  import {query} from "svelte-apollo";
 
   const client = new ApolloClient({
     uri:
-      "https://graph.circles.garden/subgraphs/name/CirclesUBI/circles-subgraph"
+            "https://graph.circles.garden/subgraphs/name/CirclesUBI/circles-subgraph"
   });
 
   export async function getSafeAddressAsync(safeOwner) {
@@ -23,6 +23,7 @@
     let r = await queryReturn.result();
     return r;
   }
+
   export async function loadingTransferDataAsync(safeAddress) {
     let queryReturn = query(client, {
       query: queryTransfers(safeAddress)
@@ -102,7 +103,7 @@
   }
 
   // TODO:
-  function subscribeTo(){
+  function subscribeTo() {
     throw new Error("Not implemented.");
   }
 </script>

@@ -1,6 +1,6 @@
 <script>
   import OmoCardVote from "../2-molecules/OmoCardVote.svelte";
-  import { onMount } from "svelte";
+  import {onMount} from "svelte";
   import mocker from "mocker-data-generator";
 
   let omovotes = [];
@@ -32,7 +32,7 @@
       faker: "company.companyName"
     },
     image: {
-      function: function() {
+      function: function () {
         return "https://source.unsplash.com/featured/?" + this.object.name;
       }
     }
@@ -40,14 +40,14 @@
 
   onMount(async () => {
     mocker()
-      .schema("vote", vote, 20)
-      .build()
-      .then(
-        data => {
-          omovotes = data.vote;
-        },
-        err => console.error(err)
-      );
+            .schema("vote", vote, 20)
+            .build()
+            .then(
+                    data => {
+                      omovotes = data.vote;
+                    },
+                    err => console.error(err)
+            );
   });
 </script>
 
@@ -60,10 +60,10 @@
 <div class="overflow-y-scroll">
 
   <section
-    class="px-4 py-4 md:p-16 lg:py-20 lg:px-32 grid-cols-1 md:grid-cols-2
+          class="px-4 py-4 md:p-16 lg:py-20 lg:px-32 grid-cols-1 md:grid-cols-2
     lg:grid-cols-3">
     {#each omovotes as data, i (data.id)}
-      <OmoCardVote {data} />
+      <OmoCardVote {data}/>
     {/each}
   </section>
 

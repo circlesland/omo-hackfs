@@ -14,17 +14,17 @@
   import OmoActions from "./../../docs/OmoActions.svx";
 
   const blogs = [
-    { text: "Overview", component: Overview },
-    { text: "Introduction", component: Introduction },
-    { text: "OmoActions", component: OmoActions },
-    { text: "Odentity", component: OmoIdentity },
-    { text: "OmoEarthPOC", component: OmoEarthPOC },
-    { text: "Design System", component: DesignSystem },
-    { text: "Omo Blocks", component: OmoBlocks },
-    { text: "Model Designer", component: ModelDesigner },
-    { text: "GraphQL Editor", component: GraphQLEditor },
-    { text: "Data Store", component: DataStore },
-    { text: "Circles UBI Protocol", component: Circles }
+    {text: "Overview", component: Overview},
+    {text: "Introduction", component: Introduction},
+    {text: "OmoActions", component: OmoActions},
+    {text: "Odentity", component: OmoIdentity},
+    {text: "OmoEarthPOC", component: OmoEarthPOC},
+    {text: "Design System", component: DesignSystem},
+    {text: "Omo Blocks", component: OmoBlocks},
+    {text: "Model Designer", component: ModelDesigner},
+    {text: "GraphQL Editor", component: GraphQLEditor},
+    {text: "Data Store", component: DataStore},
+    {text: "Circles UBI Protocol", component: Circles}
   ];
   let selected = blogs[0];
 </script>
@@ -33,6 +33,7 @@
   .list {
     @apply py-4 px-6 bg-gray-100;
   }
+
   .item {
     @apply text-lg;
   }
@@ -48,5 +49,5 @@
 </ul>
 
 <OmoMarkdown>
-  <svelte:component this={selected.component} />
+  <svelte:component this={selected.component}/>
 </OmoMarkdown>

@@ -1,10 +1,11 @@
 <script>
-  export let data = { title: "title" };
-  export let design = { textsize: "" };
+  export let data = {title: "title"};
+  export let design = {textsize: ""};
 </script>
 
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap");
+
   .omo-font-title {
     font-family: "Montserrat", sans-serif;
     font-weight: 900;

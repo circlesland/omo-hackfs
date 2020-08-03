@@ -26,6 +26,7 @@
   .o-btn-2xl {
     @apply text-lg py-4;
   }
+
   .o-btn-sm {
     @apply py-1 px-3;
   }

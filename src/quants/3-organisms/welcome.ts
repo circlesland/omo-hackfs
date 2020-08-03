@@ -1,7 +1,7 @@
 export let welcome = {
   name: "Welcome",
   type: "organism",
-  layout: { areas: "'top' 'bottom'", columns: "1fr", rows: "1fr 3rem" },
+  layout: {areas: "'top' 'bottom'", columns: "1fr", rows: "1fr 3rem"},
   blocks: [
     {
       type: "molecule",

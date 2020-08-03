@@ -1,5 +1,6 @@
 <script>
   import OmoCard from "../2-molecules/OmoCard.svelte";
+
   export let logos = [];
 </script>
 
@@ -11,6 +12,6 @@
 
 <div class="wrap grid-cols-3 md:grid-cols-6">
   {#each logos as data, i (data.id)}
-    <OmoCard {data} />
+    <OmoCard {data}/>
   {/each}
 </div>

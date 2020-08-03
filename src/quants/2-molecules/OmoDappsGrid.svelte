@@ -63,5 +63,5 @@
 </style>
 
 <div class="wrap">
-  <OmoImageGrid {logos} />
+  <OmoImageGrid {logos}/>
 </div>

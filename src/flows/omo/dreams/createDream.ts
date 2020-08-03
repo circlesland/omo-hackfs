@@ -1,7 +1,8 @@
-import { ProcessBuilder } from "../../../core/Flows/ProcessBuilder";
-import { IProcessContext } from "../../../core/Flows/IProcessContext";
+import {ProcessBuilder} from "../../../core/Flows/ProcessBuilder";
+import {IProcessContext} from "../../../core/Flows/IProcessContext";
 
-export function createDream() {
+export function createDream()
+{
   return new ProcessBuilder<IProcessContext>("flows:omo.dreams.createDream")
     .category("Create dream", (build) =>
       build
@@ -13,7 +14,8 @@ export function createDream() {
         .withTitle("Give your dream a name")
     )
     .end()
-    .category("Show Details", (b) => {
+    .category("Show Details", (b) =>
+    {
       b.step("flows:omo.dreams.createDream:createDream")
         .withQuant("OmoLoading")
         .mapInput("name", "dreamName")

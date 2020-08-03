@@ -5,7 +5,7 @@
   let OmoHome = {
     name: "OmoHome",
     type: "organisms",
-    layout: { areas: "'full'", columns: "1fr", rows: "1fr" },
+    layout: {areas: "'full'", columns: "1fr", rows: "1fr"},
     blocks: [
       {
         type: "molecule",
@@ -22,4 +22,4 @@
   };
 </script>
 
-<OmoOrganisms organisms={OmoHome} />
+<OmoOrganisms organisms={OmoHome}/>

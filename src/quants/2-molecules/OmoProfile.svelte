@@ -1,6 +1,6 @@
 <script>
   import OmoSpin from "./../1-atoms/OmoSpin.svelte";
-  import { Notification } from "./../../events/omo/shell/notification.ts";
+  import {Notification} from "./../../events/omo/shell/notification.ts";
   import OmoNavTabs from "./../2-molecules/OmoNavTabs";
   import moment from "moment";
 
@@ -8,7 +8,7 @@
   let currentTab;
 
   let tabItems = [
-    { label: "Dashboard", value: 1, icon: "fa-home" },
+    {label: "Dashboard", value: 1, icon: "fa-home"},
     {
       label: "My Dreams",
       value: 2,
@@ -19,8 +19,8 @@
       value: 3,
       icon: "fa-users"
     },
-    { label: "My Processes", value: 4, icon: "fa-tasks" },
-    { label: "Notifications", value: 5, icon: "fa-bell" },
+    {label: "My Processes", value: 4, icon: "fa-tasks"},
+    {label: "Notifications", value: 5, icon: "fa-bell"},
     {
       label: "Safe Owners",
       value: 6,
@@ -43,9 +43,11 @@
     @apply h-full;
     overflow: hidden;
   }
+
   aside {
     grid-area: "aside";
   }
+
   main {
     grid-area: "main";
   }
@@ -53,7 +55,7 @@
 
 <section>
   <aside class="h-full overflow-y-scroll">
-    <OmoNavTabs bind:activeTabValue={currentTab} items={tabItems} />
+    <OmoNavTabs bind:activeTabValue={currentTab} items={tabItems}/>
   </aside>
 
   <main class="h-full w-full mt-12 md:w-5/6 mx-auto overflow-y-scroll">
@@ -64,37 +66,37 @@
     {#if 2 === currentTab}
       <h1 class="uppercase text-lg text-primary mb-10">List of my dreams</h1>
       <div
-        class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
+              class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
         <div class="py-3 w-12 h-12 text-center bg-primary">
-          <i class="fas fa-seedling text-white" />
+          <i class="fas fa-seedling text-white"/>
         </div>
         <p class="py-3 px-4 rounded flex-1">Dream 1</p>
         <img
-          alt=""
-          src="https://i.pravatar.cc/150?u=12345678"
-          class="h-full w-auto" />
+                alt=""
+                src="https://i.pravatar.cc/150?u=12345678"
+                class="h-full w-auto"/>
       </div>
       <div
-        class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
+              class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
         <div class="py-3 w-12 h-12 text-center bg-primary">
-          <i class="fas fa-seedling text-white" />
+          <i class="fas fa-seedling text-white"/>
         </div>
         <p class="py-3 px-4 rounded flex-1">dream 2</p>
         <img
-          alt=""
-          src="https://i.pravatar.cc/150?u=12345678"
-          class="h-full w-auto" />
+                alt=""
+                src="https://i.pravatar.cc/150?u=12345678"
+                class="h-full w-auto"/>
       </div>
     {/if}
     {#if 3 === currentTab}
       <h1 class="uppercase text-lg text-primary mb-10">List of my Orgas</h1>
       <div
-        class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
+              class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
         <div class="py-3 w-12 h-12 text-center bg-primary">
-          <i class="fas fa-users text-white" />
+          <i class="fas fa-users text-white"/>
         </div>
         <p class="py-3 px-4 rounded flex-1">Orga 1</p>
 
@@ -105,29 +107,29 @@
       <h1 class="uppercase text-lg text-primary mb-10">My Processes</h1>
       <div>Active</div>
       <div
-        class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
+              class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
         <div
-          class="h-12 w-12 py-2 px-4 text-xl bg-primary text-white font-bold">
+                class="h-12 w-12 py-2 px-4 text-xl bg-primary text-white font-bold">
           D
         </div>
         <p class="py-3 px-4 rounded w-full">Started new Dream</p>
       </div>
       <div
-        class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
+              class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
         <div class="py-3 w-12 h-12 text-center bg-red-400">
-          <i class="fas fa-exclamation-triangle text-white" />
+          <i class="fas fa-exclamation-triangle text-white"/>
         </div>
         <p class="py-3 px-4 rounded w-full">
           Failed trusting 0xasddfh8273w8do7fgaisdlfo87lkjansdf
         </p>
       </div>
       <div
-        class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
+              class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
         <div class="py-3 px-3 h-12 w-12 text-center bg-gray-200">
-          <OmoSpin />
+          <OmoSpin/>
         </div>
         <p class="py-3 px-2 rounded text-gray-500 w-full">
           Adding Owner Device
@@ -135,10 +137,10 @@
       </div>
       <div>Done</div>
       <div
-        class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
+              class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
         <div class="py-2 px-4 h-12 w-12 text-xl bg-tertiary font-bold">
-          <i class="fas fa-check-circle text-white" />
+          <i class="fas fa-check-circle text-white"/>
         </div>
         <p class="py-3 px-4 rounded w-full">Transaction Successful</p>
       </div>
@@ -153,102 +155,102 @@
         List of Safe Owners which have access to my safe
       </h1>
       <div
-        class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
+              class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
         <div class="py-3 w-12 h-12 text-center bg-primary">
-          <i class="fas fa-mobile text-white" />
+          <i class="fas fa-mobile text-white"/>
         </div>
         <p class="py-3 px-4 rounded flex-1">
           Type: iphone, owner: Samuel, access-level: root
         </p>
         <img
-          alt=""
-          src="https://i.pravatar.cc/150?u=1234"
-          class="h-full w-auto" />
+                alt=""
+                src="https://i.pravatar.cc/150?u=1234"
+                class="h-full w-auto"/>
       </div>
       <div
-        class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
+              class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
         <div class="py-3 w-12 h-12 text-center bg-primary">
-          <i class="fas fa-laptop text-white" />
+          <i class="fas fa-laptop text-white"/>
         </div>
         <p class="py-3 px-4 rounded flex-1">
           Type: macbook, owner: Samuel, access-level: root
         </p>
         <img
-          alt=""
-          src="https://i.pravatar.cc/150?u=1234"
-          class="h-full w-auto" />
+                alt=""
+                src="https://i.pravatar.cc/150?u=1234"
+                class="h-full w-auto"/>
       </div>
       <div
-        class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
+              class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
         <div class="py-3 w-12 h-12 text-center bg-primary">
-          <i class="fas fa-mobile text-white" />
+          <i class="fas fa-mobile text-white"/>
         </div>
         <p class="py-3 px-4 rounded flex-1">
           Type: iphone, owner: Philipp, access-level: root
         </p>
         <img
-          alt=""
-          src="https://i.pravatar.cc/150?u=12345"
-          class="h-full w-auto" />
+                alt=""
+                src="https://i.pravatar.cc/150?u=12345"
+                class="h-full w-auto"/>
       </div>
       <div
-        class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
+              class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
         <div class="py-3 w-12 h-12 text-center bg-primary">
-          <i class="fas fa-laptop text-white" />
+          <i class="fas fa-laptop text-white"/>
         </div>
         <p class="py-3 px-4 rounded flex-1">
           Type: laptop, owner: mela, access-level: root
         </p>
         <img
-          alt=""
-          src="https://i.pravatar.cc/150?u=123456"
-          class="h-full w-auto" />
+                alt=""
+                src="https://i.pravatar.cc/150?u=123456"
+                class="h-full w-auto"/>
       </div>
       <div
-        class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
+              class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
         <div class="py-3 w-12 h-12 text-center bg-primary">
-          <i class="fas fa-google text-white" />
+          <i class="fas fa-google text-white"/>
         </div>
         <p class="py-3 px-4 rounded flex-1">
           Type: google-auth, owner: samuel, access-level: root
         </p>
         <img
-          alt=""
-          src="https://i.pravatar.cc/150?u=1234"
-          class="h-full w-auto" />
+                alt=""
+                src="https://i.pravatar.cc/150?u=1234"
+                class="h-full w-auto"/>
       </div>
       <div
-        class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
+              class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
         <div class="py-3 w-12 h-12 text-center bg-primary">
-          <i class="fas fa-at text-white" />
+          <i class="fas fa-at text-white"/>
         </div>
         <p class="py-3 px-4 rounded flex-1">
           Type: omo-auth (mail), owner: samuel, access-level: root
         </p>
         <img
-          alt=""
-          src="https://i.pravatar.cc/150?u=1234"
-          class="h-full w-auto" />
+                alt=""
+                src="https://i.pravatar.cc/150?u=1234"
+                class="h-full w-auto"/>
       </div>
       <div
-        class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
+              class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
         <div class="py-3 w-12 h-12 text-center bg-primary">
-          <i class="fas fa-seedling text-white" />
+          <i class="fas fa-seedling text-white"/>
         </div>
         <p class="py-3 px-4 rounded flex-1">
           Type: circles-seedphrase, owner: samuel, access-level: root
         </p>
         <img
-          alt=""
-          src="https://i.pravatar.cc/150?u=1234"
-          class="h-full w-auto" />
+                alt=""
+                src="https://i.pravatar.cc/150?u=1234"
+                class="h-full w-auto"/>
       </div>
     {/if}
     {#if 7 === currentTab}
@@ -256,68 +258,68 @@
         List of my data backups
       </h1>
       <div
-        class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
+              class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
         <div class="py-3 w-12 h-12 text-center bg-primary">
-          <i class="fas fa-laptop text-white" />
+          <i class="fas fa-laptop text-white"/>
         </div>
         <p class="py-3 px-4 rounded flex-1">laptop 100% master</p>
         <img
-          alt=""
-          src="https://i.pravatar.cc/150?u=12345678"
-          class="h-full w-auto" />
+                alt=""
+                src="https://i.pravatar.cc/150?u=12345678"
+                class="h-full w-auto"/>
       </div>
       <div
-        class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
+              class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
         <div class="py-3 w-12 h-12 text-center bg-primary">
-          <i class="fas fa-mobile text-white" />
+          <i class="fas fa-mobile text-white"/>
         </div>
         <p class="py-3 px-4 rounded flex-1">iphone 80%</p>
         <img
-          alt=""
-          src="https://i.pravatar.cc/150?u=12345678"
-          class="h-full w-auto" />
+                alt=""
+                src="https://i.pravatar.cc/150?u=12345678"
+                class="h-full w-auto"/>
       </div>
 
       <div
-        class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
+              class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
         <div class="py-3 w-12 h-12 text-center bg-primary">
-          <i class="fas fa-database text-white" />
+          <i class="fas fa-database text-white"/>
         </div>
         <p class="py-3 px-4 rounded flex-1">
           100% snychronised / filecoin / textile / powergate
         </p>
         <img
-          alt=""
-          src="https://i.pravatar.cc/150?u=12345678"
-          class="h-full w-auto" />
+                alt=""
+                src="https://i.pravatar.cc/150?u=12345678"
+                class="h-full w-auto"/>
       </div>
       Controlled by others
       <div
-        class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
+              class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
         <div class="py-3 w-12 h-12 text-center bg-primary">
-          <i class="fas fa-database text-white" />
+          <i class="fas fa-database text-white"/>
         </div>
         <p class="py-3 px-4 rounded flex-1">Harddrive of mela</p>
         <img
-          alt=""
-          src="https://i.pravatar.cc/150?u=1234234"
-          class="h-full w-auto" />
+                alt=""
+                src="https://i.pravatar.cc/150?u=1234234"
+                class="h-full w-auto"/>
       </div>
       <div
-        class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
+              class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
         <div class="py-3 w-12 h-12 text-center bg-primary">
-          <i class="fas fa-database text-white" />
+          <i class="fas fa-database text-white"/>
         </div>
         <p class="py-3 px-4 rounded flex-1">google drive</p>
         <img
-          alt=""
-          src="https://i.pravatar.cc/150?u=123434"
-          class="h-full w-auto" />
+                alt=""
+                src="https://i.pravatar.cc/150?u=123434"
+                class="h-full w-auto"/>
       </div>
     {/if}
   </main>

@@ -20,4 +20,4 @@
   };
 </script>
 
-<OmoOrganisms organisms={OmoPreOrder} />
+<OmoOrganisms organisms={OmoPreOrder}/>

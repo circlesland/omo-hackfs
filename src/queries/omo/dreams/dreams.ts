@@ -1,6 +1,7 @@
 export class Dreams
 {
-    public static all() {
+  public static all()
+  {
 
-    }
+  }
 }

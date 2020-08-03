@@ -28,16 +28,16 @@
 </script>
 
 <aside
-  class="flex flex-col items-center bg-gray-200 text-gray-700 shadow h-full">
+        class="flex flex-col items-center bg-gray-200 text-gray-700 shadow h-full">
 
   <ul>
     {#each navitems as item}
       <li class="">
         <a
-          href={item.link}
-          class="{item.design} h-12 px-6 flex flex justify-center items-center
+                href={item.link}
+                class="{item.design} h-12 px-6 flex flex justify-center items-center
           w-full hover:bg-primary hover:text-white">
-          <i class="text-lg fas {item.icon}" />
+          <i class="text-lg fas {item.icon}"/>
         </a>
       </li>
     {/each}

@@ -9,7 +9,7 @@
       faker: "address.city"
     },
     image: {
-      function: function() {
+      function: function () {
         return "https://source.unsplash.com/featured/" + this.object.city;
       }
     },
@@ -69,17 +69,17 @@
   $: industries = [];
 
   mocker()
-    .schema("orgas", schemaOrga, 15)
-    .schema("countries", schemaCountry, 5)
-    .schema("cities", schemaCity, 7)
-    .schema("industries", schemaIndustry, 8)
-    .build()
-    .then(data => {
-      orgas = data.orgas;
-      countries = data.countries;
-      cities = data.cities;
-      industries = data.industries;
-    });
+          .schema("orgas", schemaOrga, 15)
+          .schema("countries", schemaCountry, 5)
+          .schema("cities", schemaCity, 7)
+          .schema("industries", schemaIndustry, 8)
+          .build()
+          .then(data => {
+            orgas = data.orgas;
+            countries = data.countries;
+            cities = data.cities;
+            industries = data.industries;
+          });
 </script>
 
 <style>
@@ -129,23 +129,24 @@
   }
 
   #carousel-1:checked
-    ~ .control-1
-    ~ .carousel-indicators
-    li:nth-child(1)
-    .carousel-bullet,
+  ~ .control-1
+  ~ .carousel-indicators
+  li:nth-child(1)
+  .carousel-bullet,
   #carousel-2:checked
-    ~ .control-2
-    ~ .carousel-indicators
-    li:nth-child(2)
-    .carousel-bullet,
+  ~ .control-2
+  ~ .carousel-indicators
+  li:nth-child(2)
+  .carousel-bullet,
   #carousel-3:checked
-    ~ .control-3
-    ~ .carousel-indicators
-    li:nth-child(3)
-    .carousel-bullet {
+  ~ .control-3
+  ~ .carousel-indicators
+  li:nth-child(3)
+  .carousel-bullet {
     color: #000;
     /*Set to match the Tailwind colour you want the active one to be */
   }
+
   .wrap {
     @apply p-10 grid gap-3;
   }
@@ -156,31 +157,31 @@
     <div class="carousel-inner relative overflow-hidden w-full">
       <!--Slide 1-->
       <input
-        class="carousel-open"
-        type="radio"
-        id="carousel-1"
-        name="carousel"
-        aria-hidden="true"
-        hidden=""
-        checked="checked" />
+              class="carousel-open"
+              type="radio"
+              id="carousel-1"
+              name="carousel"
+              aria-hidden="true"
+              hidden=""
+              checked="checked"/>
       <div class="carousel-item absolute opacity-0" style="height:50vh;">
         <div
-          class="block h-full w-full mx-auto flex pt-6 md:pt-0 md:items-center
+                class="block h-full w-full mx-auto flex pt-6 md:pt-0 md:items-center
           bg-cover bg-right"
-          style="background-image:
-          url('https://source.unsplash.com/featured/?food');" />
+                style="background-image:
+          url('https://source.unsplash.com/featured/?food');"/>
       </div>
       <label
-        for="carousel-3"
-        class="prev control-1 w-10 h-10 ml-2 md:ml-10 absolute cursor-pointer
+              for="carousel-3"
+              class="prev control-1 w-10 h-10 ml-2 md:ml-10 absolute cursor-pointer
         hidden text-3xl font-bold text-black hover:text-white rounded-full
         bg-white hover:bg-gray-900 leading-tight text-center z-10 inset-y-0
         left-0 my-auto">
         ‹
       </label>
       <label
-        for="carousel-2"
-        class="next control-1 w-10 h-10 mr-2 md:mr-10 absolute cursor-pointer
+              for="carousel-2"
+              class="next control-1 w-10 h-10 mr-2 md:mr-10 absolute cursor-pointer
         hidden text-3xl font-bold text-black hover:text-white rounded-full
         bg-white hover:bg-gray-900 leading-tight text-center z-10 inset-y-0
         right-0 my-auto">
@@ -189,32 +190,32 @@
 
       <!--Slide 2-->
       <input
-        class="carousel-open"
-        type="radio"
-        id="carousel-2"
-        name="carousel"
-        aria-hidden="true"
-        hidden="" />
+              class="carousel-open"
+              type="radio"
+              id="carousel-2"
+              name="carousel"
+              aria-hidden="true"
+              hidden=""/>
       <div
-        class="carousel-item absolute opacity-0 bg-cover bg-right"
-        style="height:50vh;">
+              class="carousel-item absolute opacity-0 bg-cover bg-right"
+              style="height:50vh;">
         <div
-          class="block h-full w-full mx-auto flex pt-6 md:pt-0 md:items-center
+                class="block h-full w-full mx-auto flex pt-6 md:pt-0 md:items-center
           bg-cover bg-right"
-          style="background-image:
-          url('https://source.unsplash.com/featured/?sport');" />
+                style="background-image:
+          url('https://source.unsplash.com/featured/?sport');"/>
       </div>
       <label
-        for="carousel-1"
-        class="prev control-2 w-10 h-10 ml-2 md:ml-10 absolute cursor-pointer
+              for="carousel-1"
+              class="prev control-2 w-10 h-10 ml-2 md:ml-10 absolute cursor-pointer
         hidden text-3xl font-bold text-black hover:text-white rounded-full
         bg-white hover:bg-gray-900 leading-tight text-center z-10 inset-y-0
         left-0 my-auto">
         ‹
       </label>
       <label
-        for="carousel-3"
-        class="next control-2 w-10 h-10 mr-2 md:mr-10 absolute cursor-pointer
+              for="carousel-3"
+              class="next control-2 w-10 h-10 mr-2 md:mr-10 absolute cursor-pointer
         hidden text-3xl font-bold text-black hover:text-white rounded-full
         bg-white hover:bg-gray-900 leading-tight text-center z-10 inset-y-0
         right-0 my-auto">
@@ -223,30 +224,30 @@
 
       <!--Slide 3-->
       <input
-        class="carousel-open"
-        type="radio"
-        id="carousel-3"
-        name="carousel"
-        aria-hidden="true"
-        hidden="" />
+              class="carousel-open"
+              type="radio"
+              id="carousel-3"
+              name="carousel"
+              aria-hidden="true"
+              hidden=""/>
       <div class="carousel-item absolute opacity-0" style="height:50vh;">
         <div
-          class="block h-full w-full mx-auto flex pt-6 md:pt-0 md:items-center
+                class="block h-full w-full mx-auto flex pt-6 md:pt-0 md:items-center
           bg-cover bg-bottom"
-          style="background-image:
-          url('https://source.unsplash.com/featured/?nature');" />
+                style="background-image:
+          url('https://source.unsplash.com/featured/?nature');"/>
       </div>
       <label
-        for="carousel-2"
-        class="prev control-3 w-10 h-10 ml-2 md:ml-10 absolute cursor-pointer
+              for="carousel-2"
+              class="prev control-3 w-10 h-10 ml-2 md:ml-10 absolute cursor-pointer
         hidden text-3xl font-bold text-black hover:text-white rounded-full
         bg-white hover:bg-gray-900 leading-tight text-center z-10 inset-y-0
         left-0 my-auto">
         ‹
       </label>
       <label
-        for="carousel-1"
-        class="next control-3 w-10 h-10 mr-2 md:mr-10 absolute cursor-pointer
+              for="carousel-1"
+              class="next control-3 w-10 h-10 mr-2 md:mr-10 absolute cursor-pointer
         hidden text-3xl font-bold text-black hover:text-white rounded-full
         bg-white hover:bg-gray-900 leading-tight text-center z-10 inset-y-0
         right-0 my-auto">
@@ -257,24 +258,24 @@
       <ol class="carousel-indicators">
         <li class="inline-block mr-3">
           <label
-            for="carousel-1"
-            class="carousel-bullet cursor-pointer block text-4xl text-gray-400
+                  for="carousel-1"
+                  class="carousel-bullet cursor-pointer block text-4xl text-gray-400
             hover:text-gray-900">
             •
           </label>
         </li>
         <li class="inline-block mr-3">
           <label
-            for="carousel-2"
-            class="carousel-bullet cursor-pointer block text-4xl text-gray-400
+                  for="carousel-2"
+                  class="carousel-bullet cursor-pointer block text-4xl text-gray-400
             hover:text-gray-900">
             •
           </label>
         </li>
         <li class="inline-block mr-3">
           <label
-            for="carousel-3"
-            class="carousel-bullet cursor-pointer block text-4xl text-gray-400
+                  for="carousel-3"
+                  class="carousel-bullet cursor-pointer block text-4xl text-gray-400
             hover:text-gray-900">
             •
           </label>
@@ -349,23 +350,23 @@ Alternatively if you want to just have a single hero
       <div class="wrap grid-cols-2 md:grid-cols-4 ">
         {#each orgas as orga}
           <div
-            class="container mx-auto max-w-sm overflow-hidden shadow-lg my-2
+                  class="container mx-auto max-w-sm overflow-hidden shadow-lg my-2
             bg-white">
             <div class="text-xs text-center bg-gray-300 text-primary">
               {orga.type}
             </div>
             <div
-              class="relative z-10"
-              style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% -
+                    class="relative z-10"
+                    style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% -
               5vw));">
               <div
-                class="z-0 relative group h-48 w-full flex justify-center
+                      class="z-0 relative group h-48 w-full flex justify-center
                 items-center">
                 <div
-                  class="h-full w-full absolute bg-cover z-10 bg-center "
-                  style="background-image: url('{orga.image}')" />
+                        class="h-full w-full absolute bg-cover z-10 bg-center "
+                        style="background-image: url('{orga.image}')"/>
                 <p
-                  class="w-full h-full bg-primary opacity-50 text-center pt-8
+                        class="w-full h-full bg-primary opacity-50 text-center pt-8
                   font-bold text-xl text-white absolute z-20 pointer-events-none
                   uppercase">
                   {orga.city}
@@ -373,14 +374,14 @@ Alternatively if you want to just have a single hero
               </div>
             </div>
             <div
-              class="h-12 flex justify-between items-center flex-row px-6 z-50
-              -mt-10" />
+                    class="h-12 flex justify-between items-center flex-row px-6 z-50
+              -mt-10"/>
             <div class="h-24 text-gray-600 text-center">
               <p class="text-primary text-sm">@{orga.name}</p>
               <p class="text-sm p-2">{orga.description}</p>
             </div>
             <div
-              class="w-full text-white text-center hover:bg-primary uppercase
+                    class="w-full text-white text-center hover:bg-primary uppercase
               p-2 bg-secondary font-bold">
               View Details
             </div>

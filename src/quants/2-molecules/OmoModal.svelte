@@ -1,7 +1,7 @@
 <script>
   // imports
-  import { afterUpdate } from "svelte";
-  import { fade, scale, fly } from "svelte/transition";
+  import {afterUpdate} from "svelte";
+  import {fade, scale, fly} from "svelte/transition";
 
   // public props
   export let triggerRef = undefined;
@@ -29,6 +29,7 @@
   * {
     box-sizing: border-box;
   }
+
   aside {
     z-index: 1000;
     position: fixed;
@@ -64,15 +65,15 @@
 
 {#if isOpen}
   <aside
-    on:keydown={handleEsc}
-    aria-labelledby="modal-heading"
-    aria-modal="true"
-    tabIndex={-1}
-    {role}
-    in:fade
-    out:fade
-    on:click|self={handleClose}
-    class="overlay ">
+          on:keydown={handleEsc}
+          aria-labelledby="modal-heading"
+          aria-modal="true"
+          tabIndex={-1}
+          {role}
+          in:fade
+          out:fade
+          on:click|self={handleClose}
+          class="overlay ">
 
     <div class="box w-full rounded-t-lg lg:w-4/5 bg-gray-100">
       <header class="rounded-t-lg ">
@@ -85,9 +86,9 @@
           </div>
         </div>
         <button
-          aria-label="Close modal"
-          bind:this={buttonRef}
-          on:click={handleClose} />
+                aria-label="Close modal"
+                bind:this={buttonRef}
+                on:click={handleClose}/>
       </header>
       <main>
         <slot>No content provided</slot>

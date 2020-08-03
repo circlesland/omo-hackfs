@@ -7,29 +7,28 @@
   let subscription = null;
   let value = "";
 
-  export let data = {
-  };
+  export let data = {};
 
   onDestroy(() => {
-      if (subscription) {
-          subscription.unsubscribe();
-      }
+    if (subscription) {
+      subscription.unsubscribe();
+    }
   });
 
   onMount(() => {
-      let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
-      subscription = notifications.observable.subscribe(event => {
-          if (!event._$schemaId) return;
+    let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
+    subscription = notifications.observable.subscribe(event => {
+      if (!event._$schemaId) return;
 
-          switch (event._$schemaId) {
-              case "events:omo.shell.requestSubmitFlowStep":
-                  if (!event.data.processNodeId === data.id) {
-                      return; // Not meant for our executing flow
-                  }
-                  submit()
-                  break;
+      switch (event._$schemaId) {
+        case "events:omo.shell.requestSubmitFlowStep":
+          if (!event.data.processNodeId === data.id) {
+            return; // Not meant for our executing flow
           }
-      });
+          submit()
+          break;
+      }
+    });
   });
 
   function submit() {
@@ -42,15 +41,15 @@
   let desc;
   let prompt;
   $:{
-      const copy = JSON.parse(JSON.stringify(data.processNode));
-      ProcessNode.restoreParentLinks(copy);
+    const copy = JSON.parse(JSON.stringify(data.processNode));
+    ProcessNode.restoreParentLinks(copy);
 
-      const activeNode = ProcessNode.findActiveLeaf(copy);
-      if (activeNode) {
-          title = activeNode.title;
-          desc = activeNode.description;
-          prompt = activeNode.prompt;
-      }
+    const activeNode = ProcessNode.findActiveLeaf(copy);
+    if (activeNode) {
+      title = activeNode.title;
+      desc = activeNode.description;
+      prompt = activeNode.prompt;
+    }
   }
 </script>
 
@@ -61,22 +60,22 @@
 </style>
 
 <section
-  class="flex flex-col justify-center text-center w-full lg:w-3/4 mx-auto px-12
+        class="flex flex-col justify-center text-center w-full lg:w-3/4 mx-auto px-12
   py-32">
   <h1 class="text-primary text-3xl">{title}</h1>
   <h2 class="text-gray-600 text-lg">
     {#if desc}
-    {desc}
+      {desc}
     {/if}
   </h2>
   <form class="flex flex-col pt-3 md:pt-8" onsubmit="event.preventDefault();">
     <div class="flex flex-col pt-6">
       <input
-        type="text"
-        bind:value={value}
-        placeholder="{prompt}"
-        class="appearance-none border rounded w-full py-4 px-6 text-gray-700
-        text-xl mt-1 leading-tight focus:outline-none focus:shadow-outline" />
+              type="text"
+              bind:value={value}
+              placeholder="{prompt}"
+              class="appearance-none border rounded w-full py-4 px-6 text-gray-700
+        text-xl mt-1 leading-tight focus:outline-none focus:shadow-outline"/>
     </div>
   </form>
 
