@@ -27,12 +27,3 @@ async function start()
 start();
 
 export default app;
-
-window["restore"] = function (key)
-{
-  return JSON.parse(localStorage.getItem(key) || "{}");
-};
-window["store"] = function (key, value)
-{
-  localStorage.setItem(key, JSON.stringify(value));
-};

@@ -46,10 +46,12 @@
   async function restoreFromSeed() {
     const restoredKey = mnemonicToEntropy(seedPhrase);
     const privateKey = `0x${restoredKey}`;
+    /*
     const safeOwner = window.o.web3.eth.accounts.privateKeyToAccount(privateKey);
     localStorage.setItem("safeOwner", JSON.stringify(safeOwner));
     const safeAddress = await getSafeAddressAsync(safeOwner);
     localStorage.setItem("safe", JSON.stringify({safeAddress: safeAddress}));
+     */
     navigate("omosafe");
   }
 

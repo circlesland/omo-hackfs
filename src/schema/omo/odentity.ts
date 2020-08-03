@@ -11,20 +11,30 @@ export const Odentity: JSONSchema = {
     _id: {
       type: "string",
     },
-    firstName: {
-      type: "string",
-    },
-    lastName: {
-      type: "string",
-    },
     threadId: {
       type: "string",
     },
-    profileImage: {
-      type: "string"
-    },
     cryptoIdentity: {
       type: "string"
+    },
+    circleSafe: {
+      type: "object",
+      properties: {
+        safeAddress: {
+          type:"string"
+        }
+      }
+    },
+    circleSafeOwner: {
+      type:"object",
+      properties: {
+        address: {
+          type: "string"
+        },
+        privateKey: {
+          type: "string"
+        }
+      }
     }
   },
 };

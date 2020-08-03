@@ -222,10 +222,10 @@
     {
       route: "?page=onboarding",
       quant: OnBoarding,
-      authenticate: true,
+      authenticate: false,
       actions: [{
         title: "Start onboarding",
-        event: () => new StartFlow("flows:omo.onboarding.createOmosapien")
+        event: () => new StartFlow("flows:omo.odentity.createOmosapien")
       }]
     },
     {route: "?page=omodialog", quant: OmoDialog, authenticate: true},

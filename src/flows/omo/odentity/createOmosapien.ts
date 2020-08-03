@@ -3,10 +3,10 @@ import {IProcessContext} from "../../../core/Flows/IProcessContext";
 
 export function createOmosapien()
 {
-  return new ProcessBuilder<IProcessContext>("flows:omo.onboarding.createOmosapien")
+  return new ProcessBuilder<IProcessContext>("flows:omo.odentity.createOmosapien")
     .category("Welcome", (b) =>
       {
-        b.step("flows:omo.onboarding.createOmosapien:intro1")
+        b.step("flows:omo.odentity.createOmosapien:intro1")
           .withQuant("OmoIntro", {
             slide: {
               title: "Welcome to Omo!"
@@ -14,7 +14,7 @@ export function createOmosapien()
           })
           .withTitle("Welcome to Omo!")
 
-          .step("flows:omo.onboarding.createOmosapien:intro2")
+          .step("flows:omo.odentity.createOmosapien:intro2")
           .withQuant("OmoIntro", {
             slide: {
               title: "This is the next page"
@@ -26,43 +26,55 @@ export function createOmosapien()
     .category("Create Omosapien", b =>
     {
       b
-        .step("flows:omo.onboarding.createOmosapien:getName")
+        .step("flows:omo.odentity.createOmosapien:getName")
         .withSideEffect("sideEffects:omo.shell.collectStepResult")
         .mapOutput("stepResult", "name")
         .withQuant("OmoInput")
         .withPrompt("Name")
-        .withTitle("Give your dream a name")
+        .withTitle("Your name")
 
-        .step("flows:omo.onboarding.createOmosapien:generatePpk")
+        .step("flows:omo.odentity.createOmosapien:generatePpk")
         .withSideEffect("sideEffects:omo.web3.generatePpk")
         .mapOutput("safeOwner", "safeOwner")
         .withTitle("Generate PPK")
 
-        .step("flows:omo.onboarding.createOmosapien:generateSafe")
+        .step("flows:omo.odentity.createOmosapien:generateSafe")
         .withSideEffect("sideEffects:omo.circles.generateSafe")
         .mapInput("safeOwner", "safeOwner")
         .mapOutput("safe", "safe")
         .withTitle("Generate Gnosis Safe")
 
-        .step("flows:omo.onboarding.createOmosapien:giveInitialTrust")
+        .step("flows:omo.odentity.createOmosapien:connectSafe")
+        .withSideEffect("sideEffects:omo.odentity.connectSafe")
+        .mapInput("safeOwner", "safeOwner")
+        .mapInput("safe", "safe")
+        .withTitle("Connecting the safe to your odentity")
+
+        .step("flows:omo.odentity.createOmosapien:createOmosapien")
+        .withSideEffect("sideEffects:omo.odentity.createOmosapien")
+        .mapInput("name", "name")
+        .mapInput("safe", "safe")
+        .withTitle("Creating your profile")
+
+        .step("flows:omo.odentity.createOmosapien:giveInitialTrust")
         .withSideEffect("sideEffects:omo.circles.giveInitialTrust")
         .mapInput("safeOwner", "safeOwner")
         .mapInput("trustReceiverSafe", "safe")
         .withTitle("Give initial trust")
 
-        .step("flows:omo.onboarding.createOmosapien:deploySafe")
+        .step("flows:omo.odentity.createOmosapien:deploySafe")
         .withSideEffect("sideEffects:omo.safe.deploySafe")
         .mapInput("safeOwner", "safeOwner")
         .mapInput("safe", "safe")
         .withTitle("Deploy Safe")
 
-        .step("flows:omo.onboarding.createOmosapien:deployToken")
+        .step("flows:omo.odentity.createOmosapien:deployToken")
         .withSideEffect("sideEffects:omo.safe.deployToken")
         .mapInput("safeOwner", "safeOwner")
         .mapInput("safe", "safe")
         .withTitle("Deploy Safe Token")
 
-        .step("flows:omo.onboarding.createOmosapien:revokeInitialTrust")
+        .step("flows:omo.odentity.createOmosapien:revokeInitialTrust")
         .withSideEffect("sideEffects:omo.circles.revokeInitialTrust")
         .mapInput("trustReceiverSafe", "safe")
         .withTitle("Revoke Trust")
