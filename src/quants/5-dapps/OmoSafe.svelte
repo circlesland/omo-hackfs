@@ -12,7 +12,7 @@
       navigate("omoauth"); // add redirect ...
       return;
     }
-    let safeAddress = window.o.odentity.current.circleSafe.safeAddress;
+    let safeAddress = window.o.odentity.current.circleSafe.safeAddress.toLowerCase();
 
     d.safeData = await loadingSafeDataAsync(safeAddress);
     d.transferData = await loadingTransferDataAsync(safeAddress);
