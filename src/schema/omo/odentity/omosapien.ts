@@ -15,6 +15,9 @@ export const Omosapien: JSONSchema = {
     },
     name: {
       type: "string"
+    },
+    safeAddress: {
+      type: "string"
     }
   }
 };

@@ -4,11 +4,9 @@ import {ThreadID} from "@textile/hub";
 export class OdentityEntity implements Instance
 {
   static CollectionName: string = "OdentityEntity";
+
   _id: string;
   threadId: string;
-  firstName?: string;
-  lastName?: string;
-  profileImage?: string;
   cryptoIdentity?: string;
   circleSafe?: { safeAddress: string; };
   circleSafeOwner?: { address: string, privateKey: string };
@@ -18,6 +16,4 @@ export class OdentityEntity implements Instance
     this._id = "";
     this.threadId = (ThreadID.fromRandom()).toString();
   }
-
-
 }
