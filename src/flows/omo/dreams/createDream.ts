@@ -17,14 +17,6 @@ export function createDream()
     .category("Show Details", (b) =>
     {
       b
-
-        /*
-        .step("flows:omo.dreams.createDream:generatePpk")
-        .withSideEffect("sideEffects:omo.web3.generatePpk")
-        .mapOutput("safeOwner", "safeOwner")
-        .withTitle("Generate PPK")
-        */
-
         .step("flows:omo.dreams.createDream:generateSafe")
         .withSideEffect("sideEffects:omo.circles.generateSafe")
         .mapInput("safeOwner", "currentSafeOwner")

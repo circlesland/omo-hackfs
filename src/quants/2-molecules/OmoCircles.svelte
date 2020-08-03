@@ -1,6 +1,7 @@
 <script>
   import OmoNavTabs from "./../2-molecules/OmoNavTabs";
   import moment from "moment";
+  import {Omosapiens} from "../../queries/omo/odentity/omosapiens";
 
   //Tabs
   let currentTab;
@@ -54,6 +55,14 @@
     var b = query.data.safes[0].balances;
     return b.sum("amount") / 1000000000000000000;
   }
+
+  async function lookupName(safeAddress) {
+    const omosapien = await Omosapiens.bySafeAddress(safeAddress);
+    if (!omosapien || omosapien.length == 0)
+      return safeAddress
+    else
+      return omosapien.name;
+  }
 </script>
 
 <style>
@@ -91,7 +100,12 @@
                         src="https://i.pravatar.cc/150?u={item.transfer.to}"
                         class="h-full w-auto"/>
                 <div class="text-sm py-2 px-4 w-full">
-                  <p>item.transfer.to}</p>
+                  <p>
+                    {#await lookupName(item.transfer.to)}
+                      Loading
+                    {:then name}
+                      {name}
+                    {/await}</p>
                   <p class="text-xs -mt-3 text-gray-600">
                     {moment
                     .unix(item.time)
@@ -108,7 +122,13 @@
                         src="https://i.pravatar.cc/150?u={item.transfer.from}"
                         class="h-full w-auto"/>
                 <div class="text-sm py-2 px-4 w-full">
-                  <p>{item.transfer.from}</p>
+                  <p>
+                    {#await lookupName(item.transfer.from)}
+                    Loading
+                      {:then name}
+                    {name}
+                    {/await}
+                  </p>
                   <p class="text-xs -mt-3 text-gray-600">
                     {moment
                     .unix(item.time)
@@ -142,7 +162,14 @@
                       alt=""
                       src="https://i.pravatar.cc/150?u={item.token.owner.id}"
                       class="h-full w-auto"/>
-              <p class="py-3 px-4 rounded flex-1">{item.token.owner.id}</p>
+              <p class="py-3 px-4 rounded flex-1">
+
+                {#await lookupName(item.token.owner.id)}
+                  Loading
+                {:then name}
+                  {name}
+                {/await}
+              </p>
             {/if}
             <div class="h-12 py-1 px-3 text-2xl text-blue-400">
               Ø{(item.amount / 1000000000000000000).toFixed(2)}
@@ -160,7 +187,13 @@
                     alt=""
                     src="https://i.pravatar.cc/150?u={item.canSendTo.id}"
                     class="h-full w-auto"/>
-            <p class="py-3 px-4 flex-1 text-gray-700">{item.canSendTo.id}</p>
+            <p class="py-3 px-4 flex-1 text-gray-700">
+              {#await lookupName(item.canSendTo.id)}
+                Loading
+              {:then name}
+                {name}
+              {/await}
+            </p>
             <div class="h-12 py-1 px-3 text-2xl text-blue-400">
               ({item.limitPercentage}%) Ø{(item.limit / 1000000000000000000).toFixed(0)}
             </div>
@@ -178,7 +211,12 @@
                       alt=""
                       src="https://i.pravatar.cc/150?u={item.user.id}"
                       class="h-full w-auto"/>
-              <div class="py-3 px-4 rounded flex-1">{item.user.id}</div>
+              <div class="py-3 px-4 rounded flex-1">
+                {#await lookupName(item.user.id)}
+                  Loading
+                {:then name}
+                  {name}
+                {/await}</div>
               <div class="h-12 py-1 px-3 text-2xl text-blue-400">
                 ({item.limitPercentage}%) Ø{(item.limit / 1000000000000000000).toFixed(2)}
               </div>

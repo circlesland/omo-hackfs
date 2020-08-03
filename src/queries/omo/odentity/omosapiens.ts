@@ -33,6 +33,7 @@ export class Omosapiens
     if (!omosapiens.data){
       throw new Error("Couldn't query the list of Omosapiens");
     }
-    return omosapiens.data.Omosapiens.filter(p => p.safeAddress == safeAddress);
+    const filteredOmosapien = omosapiens.data.Omosapiens.filter(p => (!p.safeAddress ? "" : p.safeAddress).toLowerCase() == safeAddress.toLowerCase());
+    return filteredOmosapien && filteredOmosapien.length == 1 ? filteredOmosapien[0] : null;
   }
 }
