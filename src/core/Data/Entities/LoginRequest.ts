@@ -1,7 +1,6 @@
-import {Instance} from "@textile/threads-store";
+import { Instance } from "@textile/threads-store";
 
-export class LoginRequest implements Instance
-{
+export class LoginRequest implements Instance {
   static CollectionName: string = "LoginRequest";
 
   _id: string;
@@ -9,8 +8,7 @@ export class LoginRequest implements Instance
   timestamp?: string;
   verified: boolean;
 
-  constructor()
-  {
+  constructor() {
     this._id = '';
     this.verified = false;
   }

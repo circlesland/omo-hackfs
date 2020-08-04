@@ -6,6 +6,9 @@ root = true
 # Unix-style newlines with a newline ending every file
 [*]
 end_of_line = lf
+insert_final_newline = false
+indent_brace_style = Allman
+spaces_around_brackets = both
 
 # 4 space indentation
 [*.ts]

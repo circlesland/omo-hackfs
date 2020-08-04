@@ -11,15 +11,13 @@ import {DreamSubscription} from "../../schema/omo/dreams/dreamSubscription";
 import {Location} from "../../schema/omo/dreams/location";
 import {Reservation} from "../../schema/omo/dreams/reservation";
 
-export interface SeedQuant
-{
+export interface SeedQuant {
   name: string,
   schema: JSONSchema,
   data: any[]
 }
 
-interface Seed
-{
+interface Seed {
   thread: {
     name: string,
     quanta: SeedQuant[]
@@ -83,14 +81,11 @@ const seeds: Seed[] = [{
   }
 }];
 
-export class Seeder
-{
-  async createCollections(registry: QuantRegistry)
-  {
+export class Seeder {
+  async createCollections(registry: QuantRegistry) {
     console.log("create collections");
 
-    for (let seed of seeds)
-    {
+    for (let seed of seeds) {
       await registry.RegisterSeedQuanta(seed.thread.quanta);
     }
 

@@ -1,4 +1,4 @@
-import { Quant } from "../Data/Entities/Quant";
+import { Quant } from "./Entities/Quant";
 import { JSONSchema } from "@textile/threads-database";
 import { PubSub } from "graphql-subscriptions";
 import { SyncedThread } from "../Textile/SyncedThread";
@@ -261,7 +261,10 @@ export class ModelQuant {
         this.ManyToOneRelations = [];
         this.oneToOneRelations = [];
         try {
-            if (quant) this.createByQuant(quant);
+            if (quant) {
+                debugger;
+                this.createByQuant(quant);
+            }
             if (collection1 && collection2)
                 this.createManyToMany(collection1, collection2);
         }

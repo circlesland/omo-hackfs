@@ -1,30 +1,32 @@
-const webpack = require("webpack");
-const dotenv = require('dotenv').config({path: __dirname + '/.env'});
+const webpack = require('webpack')
+const dotenv = require('dotenv').config({ path: __dirname + '/.env' })
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const path = require('path');
+const path = require('path')
 
-const mode = process.env.NODE_ENV || 'development';
-const prod = mode === 'production';
+const mode = process.env.NODE_ENV || 'development'
+const prod = mode === 'production'
 // const CopyPlugin = require('copy-webpack-plugin');
 
-const {mdsvex} = require('mdsvex')
+const { mdsvex } = require('mdsvex')
 
 module.exports = {
   entry: {
-    bundle: ['./src/index.ts', './src/styles.css']
+    bundle: ['./src/index.ts', './src/styles.css'],
   },
   resolve: {
     alias: {
-      svelte: path.resolve('node_modules', 'svelte')
+      svelte: path.resolve('node_modules', 'svelte'),
     },
     extensions: ['.mjs', '.tsx', '.ts', '.js', '.svelte', '.svx'],
-    mainFields: ['svelte', 'browser', 'module', 'main']
+    mainFields: ['svelte', 'browser', 'module', 'main'],
   },
   output: {
     path: __dirname + '/public',
     filename: '[name].js',
-    chunkFilename: '[name].[id].js'
+    chunkFilename: '[name].[id].js',
   },
   module: {
     rules: [
@@ -37,16 +39,16 @@ module.exports = {
             emitCss: true,
             hotReload: true,
             preprocess: mdsvex(),
-            preprocess: require('./svelte.config.js').preprocess
+            preprocess: require('./svelte.config.js').preprocess,
           },
-        }
+        },
       },
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
-            {loader: 'css-loader', options: {importLoaders: 1}},
+            { loader: 'css-loader', options: { importLoaders: 1 } },
             'postcss-loader',
           ],
         }),
@@ -55,8 +57,8 @@ module.exports = {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
-      }
-    ]
+      },
+    ],
   },
   mode: process.env.NODE_ENV,
   plugins: [
@@ -64,13 +66,14 @@ module.exports = {
       disable: process.env.NODE_ENV === 'development',
     }),
     new webpack.DefinePlugin({
-      "process.env": JSON.stringify(dotenv.parsed)
+      'process.env': JSON.stringify(dotenv.parsed),
     }),
+    new BundleAnalyzerPlugin(),
     // new CopyPlugin({
     // 	patterns: [
     // 		{ from: 'public', to: '' },
     // 	],
     // }),
   ],
-  devtool: prod ? false : 'source-map'
-};
+  devtool: prod ? false : 'source-map',
+}

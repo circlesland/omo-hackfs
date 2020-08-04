@@ -21,6 +21,10 @@ export interface ICollection<T extends Instance> {
 
   saveMany(values: T[]): Promise<T[]>;
 
+  createOrSave(value: T): Promise<T>;
+
+  createOrSaveMany(values: T[]): Promise<T[]>;
+
   delete(value: T): Promise<void>;
 
   deleteMany(values: T[]): Promise<void>;

@@ -134,7 +134,6 @@
       <h1 class="text-center p-3 uppercase">{currentRoom.name}</h1>
       <div class="py-6 px-8 text-md h-full overflow-y-scroll">
         {#if messages}
-          {messages}
           {#await $messages}
             pending - No value or error has been received yet
           {:then result}
@@ -165,9 +164,8 @@
                         </h2>
                         <div class="flex">
                           <span class="ml-1 text-xs font-medium text-gray-600">
-                            {message.date}
                             {moment
-                              .unix(message.date)
+                              .unix(Number.isInteger(message.date) ? message.date / 1000 : message.date)
                               .locale('en')
                               .fromNow()}
                           </span>

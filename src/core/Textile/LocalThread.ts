@@ -1,20 +1,17 @@
-import {KeyInfo, Database, JSONSchema} from "@textile/hub";
-import {Instance} from "@textile/threads-store";
-import {LocalCollection} from "./LocalCollection";
+import { KeyInfo, Database, JSONSchema } from "@textile/hub";
+import { Instance } from "@textile/threads-store";
+import { LocalCollection } from "./LocalCollection";
 
-export class LocalThread
-{
+export class LocalThread {
   private database: Database;
   private collections: LocalCollection<any>[];
 
-  private constructor(db: Database)
-  {
+  private constructor(db: Database) {
     this.database = db;
     this.collections = [];
   }
 
-  static async init(threadName: any): Promise<LocalThread>
-  {
+  static async init(threadName: any): Promise<LocalThread> {
     let localAuth: KeyInfo = {
       key: process.env.GROUP_API_KEY || '',
       secret: process.env.GROUP_API_SECRET || ''
@@ -24,25 +21,20 @@ export class LocalThread
     return instance;
   }
 
-  async start()
-  {
+  async start() {
     await this.database.start(await Database.randomIdentity());
   }
 
-  async hasCollection(collectionName: string): Promise<boolean>
-  {
+  async hasCollection(collectionName: string): Promise<boolean> {
     return this.database.collections.has(collectionName);
   }
 
-  async createCollection(collectionName: string, schema: JSONSchema)
-  {
+  async createCollection(collectionName: string, schema: JSONSchema) {
     await this.database.newCollection(collectionName, schema);
   }
 
-  async getCollection<X extends Instance>(collectionName: string): Promise<LocalCollection<X>>
-  {
-    if (this.collections.some(x => x.collectionName == collectionName))
-    {
+  async getCollection<X extends Instance>(collectionName: string): Promise<LocalCollection<X>> {
+    if (this.collections.some(x => x.collectionName == collectionName)) {
       return this.collections.find(x => x.collectionName == collectionName) as LocalCollection<X>;
     }
     var localCollection = new LocalCollection<X>(collectionName, this.database);
@@ -50,8 +42,7 @@ export class LocalThread
     return localCollection;
   }
 
-  async getOrCreateCollection<X extends Instance>(collectionName: string, schema: JSONSchema)
-  {
+  async getOrCreateCollection<X extends Instance>(collectionName: string, schema: JSONSchema) {
     if (!await this.hasCollection(collectionName))
       await this.createCollection(collectionName, schema);
     return await this.getCollection<X>(collectionName);

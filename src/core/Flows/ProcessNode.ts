@@ -1,6 +1,6 @@
-import {ProcessState} from "./ProcessState";
-import {IProcessContext} from "./IProcessContext";
-import {v4} from "uuid";
+import { ProcessState } from "./ProcessState";
+import { IProcessContext } from "./IProcessContext";
+import { v4 } from "uuid";
 
 export class ProcessNode<TContext extends IProcessContext>
 {
@@ -31,33 +31,26 @@ export class ProcessNode<TContext extends IProcessContext>
 
   isInteractive?: boolean;
 
-  constructor(parent?: ProcessNode<TContext>)
-  {
+  constructor(parent?: ProcessNode<TContext>) {
     this.parent = !parent ? null : parent;
     this.parentId = !this.parent ? undefined : this.parent.id;
   }
 
-  static findActiveBranch(node: ProcessNode<IProcessContext>)
-  {
+  static findActiveBranch(node: ProcessNode<IProcessContext>) {
     const activeLeaf = this.findActiveLeaf(node);
-    if (!activeLeaf)
-    {
+    if (!activeLeaf) {
       return [];
     }
     const path = this.path(activeLeaf);
     return path;
   }
 
-  static findActiveLeaf(node: ProcessNode<IProcessContext>)
-  {
-    for (let currentNode of ProcessNode.flattenSequencial(node))
-    {
-      if (!ProcessNode.isLeaf(currentNode))
-      {
+  static findActiveLeaf(node: ProcessNode<IProcessContext>) {
+    for (let currentNode of ProcessNode.flattenSequencial(node)) {
+      if (!ProcessNode.isLeaf(currentNode)) {
         continue;
       }
-      if (!ProcessNode.isActive(currentNode))
-      {
+      if (!ProcessNode.isActive(currentNode)) {
         continue;
       }
 
@@ -67,33 +60,26 @@ export class ProcessNode<TContext extends IProcessContext>
     return null;
   }
 
-  static flattenSequencial(node: ProcessNode<IProcessContext>)
-  {
+  static flattenSequencial(node: ProcessNode<IProcessContext>) {
     const stack: ProcessNode<IProcessContext>[] = [];
     const array: ProcessNode<IProcessContext>[] = [];
     const hashMap = {};
 
     stack.push(node);
 
-    while (stack.length !== 0)
-    {
+    while (stack.length !== 0) {
       var currentNode = stack.pop();
-      if (!currentNode)
-      {
+      if (!currentNode) {
         throw new Error("The stack returned an undefined element during the recursive iteration of a IProcessNode.");
       }
-      if (currentNode.children.length == 0)
-      {
-        if (!hashMap[currentNode.id])
-        {
+      if (currentNode.children.length == 0) {
+        if (!hashMap[currentNode.id]) {
           hashMap[currentNode.id] = true;
           array.push(currentNode);
         }
       }
-      else
-      {
-        for (var i = currentNode.children.length - 1; i >= 0; i--)
-        {
+      else {
+        for (var i = currentNode.children.length - 1; i >= 0; i--) {
           stack.push(currentNode.children[i]);
         }
       }
@@ -102,19 +88,15 @@ export class ProcessNode<TContext extends IProcessContext>
     return array;
   }
 
-  static findNextNode(node: ProcessNode<IProcessContext>, afterNodeId: string)
-  {
+  static findNextNode(node: ProcessNode<IProcessContext>, afterNodeId: string) {
     let next: boolean = false;
 
-    for (let currentNode of ProcessNode.flattenSequencial(node))
-    {
-      if (currentNode.id === afterNodeId)
-      {
+    for (let currentNode of ProcessNode.flattenSequencial(node)) {
+      if (currentNode.id === afterNodeId) {
         next = true;
         continue;
       }
-      if (next)
-      {
+      if (next) {
         return currentNode;
       }
     }
@@ -122,13 +104,10 @@ export class ProcessNode<TContext extends IProcessContext>
     return null;
   }
 
-  static findPreviousNode(node: ProcessNode<IProcessContext>, beforeNodeId: string)
-  {
+  static findPreviousNode(node: ProcessNode<IProcessContext>, beforeNodeId: string) {
     let previous: ProcessNode<IProcessContext> | null = null;
-    for (let currentNode of ProcessNode.flattenSequencial(node))
-    {
-      if (beforeNodeId == currentNode.id)
-      {
+    for (let currentNode of ProcessNode.flattenSequencial(node)) {
+      if (beforeNodeId == currentNode.id) {
         return previous;
       }
       previous = currentNode;
@@ -137,25 +116,21 @@ export class ProcessNode<TContext extends IProcessContext>
     return null;
   }
 
-  static isLeaf(node: ProcessNode<IProcessContext>)
-  {
+  static isLeaf(node: ProcessNode<IProcessContext>) {
     return node.children.length == 0;
   }
 
-  static isActive(node: ProcessNode<IProcessContext>)
-  {
+  static isActive(node: ProcessNode<IProcessContext>) {
     return node.state == ProcessState.Active || node.state == ProcessState.Working;
   }
 
-  static path(node: ProcessNode<IProcessContext>)
-  {
+  static path(node: ProcessNode<IProcessContext>) {
     const path: ProcessNode<IProcessContext>[] = [];
     let root: ProcessNode<IProcessContext> = node;
 
     path.unshift(root);
 
-    while (root.parent)
-    {
+    while (root.parent) {
       root = root.parent;
       path.unshift(root);
     }
@@ -163,15 +138,12 @@ export class ProcessNode<TContext extends IProcessContext>
     return path;
   }
 
-  static findById(node: ProcessNode<IProcessContext>, id: string)
-  {
+  static findById(node: ProcessNode<IProcessContext>, id: string) {
     let stack = [node];
 
-    while (stack.length > 0)
-    {
+    while (stack.length > 0) {
       let item = stack.pop();
-      if (!item)
-      {
+      if (!item) {
         continue;
       }
       if (item.id == id)
@@ -181,37 +153,31 @@ export class ProcessNode<TContext extends IProcessContext>
     }
   }
 
-  static root(node: ProcessNode<IProcessContext>)
-  {
+  static root(node: ProcessNode<IProcessContext>) {
     const path = ProcessNode.path(node);
     return path[0];
   }
 
-  private static visitNode(node, hashMap): ProcessNode<IProcessContext> | null
-  {
-    if (!hashMap[node.id])
-    {
+  private static visitNode(node, hashMap): ProcessNode<IProcessContext> | null {
+    if (!hashMap[node.id]) {
       hashMap[node.id] = true;
       return node;
     }
     return null;
   }
 
-  static restoreParentLinks(processNode)
-  {
+  static restoreParentLinks(processNode) {
     let map = {};
     let stack = [processNode];
 
-    while (stack.length > 0)
-    {
+    while (stack.length > 0) {
       let item = stack.pop();
       map[item.id] = item;
       item.children.forEach(child => stack.push(child));
     }
 
     stack = [processNode];
-    while (stack.length > 0)
-    {
+    while (stack.length > 0) {
       let item = stack.pop();
       let parent = map[item.parentId];
       item.parent = parent;

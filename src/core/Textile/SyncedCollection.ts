@@ -19,6 +19,7 @@ export class SyncedCollection<T extends Instance> implements ICollection<T>
     this.collectionName = collectionName;
   }
 
+
   static async init<T extends Instance>(collectionName: string, localThread: LocalThread, remoteThread: RemoteThread): Promise<SyncedCollection<T>> {
     let localCollection = await localThread.getCollection<T>(collectionName);
     let remoteCollection = await remoteThread.getCollection<T>(collectionName);
@@ -34,14 +35,14 @@ export class SyncedCollection<T extends Instance> implements ICollection<T>
     console.log(`start sync with ${collectionName}`)
     let foo = await remoteCollection.all();
     await localCollection.saveMany(foo);
-    // remoteCollection.observeUpdate(["CREATE"], "", async (instance) => {
-    //   console.log("CREATE", instance);
-    //   await localCollection.save(instance);
-    // })
-    // remoteCollection.observeUpdate(["SAVE"], "", async (instance) => {
-    //     console.log("SAVE", instance);
-    //     await localCollection.save(instance);
-    // })
+    remoteCollection.observeUpdate(["CREATE"], "", async (instance) => {
+      console.log("SYNC CREATE", instance);
+      await localCollection.createOrSave(instance);
+    }),
+      remoteCollection.observeUpdate(["SAVE"], "", async (instance) => {
+        console.log("SYNC SAVE", instance);
+        await localCollection.createOrSave(instance);
+      })
     // remoteCollection.observeUpdate(["DELETE"], "", async (instance) => {
     //     console.log("DELETE", instance);
     //     await localCollection.save(instance);
@@ -92,8 +93,18 @@ export class SyncedCollection<T extends Instance> implements ICollection<T>
 
   async saveMany(values: T[]): Promise<T[]> {
     values = await this.localCollection.saveMany(values);
-    if (this.remoteCollection)
-      this.remoteCollection.saveMany(values);
+    this.remoteCollection.saveMany(values);
+    return values;
+  }
+
+  async createOrSave(value: T): Promise<T> {
+    value = await this.localCollection.createOrSave(value);
+    this.remoteCollection.createOrSave(value);
+    return value;
+  }
+  async createOrSaveMany(values: T[]): Promise<T[]> {
+    values = await this.localCollection.createOrSaveMany(values);
+    this.remoteCollection.createOrSaveMany(values);
     return values;
   }
 
@@ -120,8 +131,4 @@ export class SyncedCollection<T extends Instance> implements ICollection<T>
   async observeUpdate(actionTypes: string[], id: string, callback: any): Promise<void> {
     await this.localCollection.observeUpdate(actionTypes, id, callback);
   }
-
-  // async observeAction(actionTypes: Map<string, Function>, id: string | null) {
-  //   await this.localCollection.observeAction(actionTypes, id);
-  // }
 }
