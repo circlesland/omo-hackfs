@@ -9,6 +9,7 @@ import {TimeCommitment} from "../../schema/omo/dreams/timeCommitment";
 import {Vote} from "../../schema/omo/dreams/vote";
 import {DreamSubscription} from "../../schema/omo/dreams/dreamSubscription";
 import {Location} from "../../schema/omo/dreams/location";
+import {Reservation} from "../../schema/omo/dreams/reservation";
 
 export interface SeedQuant
 {
@@ -71,6 +72,11 @@ const seeds: Seed[] = [{
       {
         name: "Location",
         schema: Location,
+        data: []
+      },
+      {
+        name: "Reservation",
+        schema: Reservation,
         data: []
       }
     ]

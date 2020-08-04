@@ -33,6 +33,10 @@ export const Dream: JSONSchema = {
     subscriptions: {
       $ref: "#/definitions/oneToMany",
       description: "DreamSubscription"
+    },
+    reservations: {
+      $ref: "#/definitions/oneToMany",
+      description: "Reservation"
     }
   }
 };
