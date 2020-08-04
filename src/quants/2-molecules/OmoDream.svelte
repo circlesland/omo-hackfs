@@ -14,7 +14,14 @@
   }
 
   let data = DreamsQueries.byId(dreamId);
-  let levelAndLeap = DreamsQueries.calcLevel(1000000);
+  let totalInteractions = 0;
+  let levelAndLeap = {level:0, leap:0};
+
+  async function calcInteractions() {
+    const d = await data;
+    totalInteractions = d.data.DreamById.Votes.length + d.data.DreamById.reservations.length + d.data.DreamById.subscriptions.length;
+    levelAndLeap = DreamsQueries.calcLevel(totalInteractions);
+  }
 
   async function vote() {
     const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
@@ -28,6 +35,8 @@
     const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
     await DreamsMutations.newSubscription(dreamId, omosapien._id);
   }
+
+  calcInteractions();
 </script>
 
 <style>
@@ -76,6 +85,25 @@ Loading...
       <input type="button" on:click={vote} value="Vote" />
       <input type="button" on:click={reservate} value="Reservate" />
       <input type="button" on:click={subscribe} value="Subscribe" />
+      <br/>
+      Total interactions: {totalInteractions}<br/>
+      Current leap: {levelAndLeap.leap}<br/>
+      Current level: {levelAndLeap.level}<br/>
+
+      Votes:<br/>
+        {#each data.data.DreamById.Votes as vote}
+          {vote._id}<br/>
+        {/each}
+      Reservations:<br/>
+        {#each data.data.DreamById.reservations as reservation}
+          {reservation._id}<br/>
+        {/each}
+      Subscription:<br/>
+        {#each data.data.DreamById.subscriptions as subscription}
+          {subscription._id}<br/>
+        {/each}
+
+
       <!--
       {#each levels.sort((first, second) => {
       if (first.order < second.order) return -1;
