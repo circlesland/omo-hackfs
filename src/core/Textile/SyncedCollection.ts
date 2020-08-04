@@ -54,6 +54,7 @@ export class SyncedCollection<T extends Instance> implements ICollection<T>
   }
 
   async find(query: FilterQuery<T>): Promise<T[]> {
+
     // return await this.localCollection.find(query);
     return await this.localCollection.find(query);
   }

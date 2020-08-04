@@ -26,6 +26,12 @@ export const Dream: JSONSchema = {
     safeAddress: {
       type: "string"
     },
+    /**
+     *
+     */
+    leap: {
+      type: "string"
+    },
     timeCommitments: {
       $ref: "#/definitions/oneToMany",
       description: "TimeCommitment"
@@ -33,6 +39,10 @@ export const Dream: JSONSchema = {
     subscriptions: {
       $ref: "#/definitions/oneToMany",
       description: "DreamSubscription"
+    },
+    reservations: {
+      $ref: "#/definitions/oneToMany",
+      description: "Reservation"
     }
   }
 };

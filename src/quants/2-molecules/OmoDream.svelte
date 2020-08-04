@@ -2,39 +2,32 @@
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
   import OmoVideo from "./OmoVideo";
   import OmoProfilePage from "./OmoProfilePage";
+  import {Dreams as DreamsQueries} from "../../queries/omo/dreams/dreams";
+  import {Dreams as DreamsMutations} from "../../mutations/omo/dreams/dreams";
+  import {Omosapiens} from "../../queries/omo/odentity/omosapiens";
 
-  export let dreamers = [];
+  let dreamId;
 
-  fetch("https://randomuser.me/api?results=10")
-          .then(response => response.json())
-          .then(
-                  data =>
-                          (dreamers = data.results.map(item => {
-                            item.amount = Math.floor(Math.random() * 200) - 100;
-                            item.name = item.name.first;
-                            item.level = Math.floor(Math.random() * 7) + 1;
-                            return item;
-                          }))
-          );
+  var urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has("data")) {
+    dreamId = urlParams.get("data");
+  }
 
-  export let data = {
-    leap: {
-      type: "leap",
-      title: "Omo Dreamers",
-      state: "active",
-      order: 1,
-      current: 4,
-      goal: 33
-    },
-    design: {bg: "bg-primary", text: "bg-primary"},
-    levels: []
-  };
+  let data = DreamsQueries.byId(dreamId);
+  let levelAndLeap = DreamsQueries.calcLevel(1000000);
 
-  let leap = data.leaps[0];
-  let design = data.design;
-  let levels = data.levels;
-
-  let progress = (leap.current / leap.goal) * 100;
+  async function vote() {
+    const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
+    await DreamsMutations.newVote(dreamId, omosapien._id);
+  }
+  async function reservate() {
+    const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
+    await DreamsMutations.newReservation(dreamId, omosapien._id);
+  }
+  async function subscribe() {
+    const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
+    await DreamsMutations.newSubscription(dreamId, omosapien._id);
+  }
 </script>
 
 <style>
@@ -62,8 +55,10 @@
   }
 </style>
 
+{#await data}
+Loading...
+{:then data}
 <OmoIconsFA/>
-
 <div class="omo-layout">
   <div class="top bg-gray-200 w-full">
     <div class="relative">
@@ -78,7 +73,10 @@
 
   <div class="content-right bg-gray-200">
     <div class="h-full py-6 px-8 text-md">
-
+      <input type="button" on:click={vote} value="Vote" />
+      <input type="button" on:click={reservate} value="Reservate" />
+      <input type="button" on:click={subscribe} value="Subscribe" />
+      <!--
       {#each levels.sort((first, second) => {
       if (first.order < second.order) return -1;
       if (first.order > second.order) return 1;
@@ -128,11 +126,6 @@
                 <p class="py-3 px-4 rounded w-full">{dreamer.name}</p>
               </div>
             {/each}
-                  <!-- <div class="m-4 flex flex-col justify-center h-12">
-              <div class="py-3 h-12 text-center bg-gray-300">
-                <i class="fas fa-check-circle text-secondary" />
-              </div>
-            </div> -->
           {:else}
             <div class="flex h-12 mb-4 w-full bg-gray-300">
               <div
@@ -144,19 +137,15 @@
                 <i class="fas fa-lock text-gray-500"/>
               </div>
             </div>
-            <!-- <div class="flex flex-wrap justify-center m-4 h-12">
-              <div class="w-12">3</div>
-              <div class="py-3 h-12 text-center bg-gray-300">
-                <i class="fas fa-lock text-gray-500" />
-              </div>
-            </div> -->
           {/if}
         {/each}
       {/each}
+  -->
     </div>
   </div>
   <div class="content-left bg-gray-100">
     <OmoVideo/>
-    <OmoProfilePage/>
+    <OmoProfilePage data={data.data.DreamById}/>
   </div>
 </div>
+{/await}

@@ -17,7 +17,11 @@ export const createOmosapien: ISideEffect<IProcessContext, any> = {
     const name = context.local.inputs["name"];
     const safeAddress = context.local.inputs["safe"].safeAddress;
 
-    const created = await OmosapiensMutations.createNewOmosapien(name, safeAddress);
+    if (!window.o.odentity.current) {
+      throw new Error("Cannot create Omosapien: No current odentity!")
+    }
+
+    const created = await OmosapiensMutations.createNewOmosapien(name, safeAddress, window.o.odentity.current._id);
     console.log("Created new Omosapien:", created);
 
     context.local.outputs["void"] = {};

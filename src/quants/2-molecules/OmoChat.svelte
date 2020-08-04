@@ -7,6 +7,7 @@
   import { Messages as MessageQueries } from "./../../queries/omo/chat/messages";
   import { Messages as MessageMutations } from "./../../mutations/omo/chat/messages";
   import { observe } from "svelte-observable";
+  import {Omosapiens} from "../../queries/omo/odentity/omosapiens";
 
   let newRoomName = "";
   let rooms = observe(RoomQueries.rooms());
@@ -36,6 +37,15 @@
   //     messages = null;
   //   }
   // }
+
+
+  async function lookupName(odentityId) {
+    const omosapien = await Omosapiens.byOdentityId(odentityId);
+    if (!omosapien || omosapien.length === 0)
+      return odentityId
+    else
+      return omosapien.name;
+  }
 </script>
 
 <style>
@@ -146,7 +156,11 @@
                     <div class="items-center flex-1 min-w-0">
                       <div class="flex justify-between">
                         <h2 class="text-sm font-semibold text-black -mb-2">
-                          {message.name}
+                          {#await lookupName(message.name)}
+                            Loading
+                          {:then name}
+                            {name}
+                          {/await}
                         </h2>
                         <div class="flex">
                           <span class="ml-1 text-xs font-medium text-gray-600">
