@@ -1,8 +1,7 @@
-import {ProcessBuilder} from "../../../core/Flows/ProcessBuilder";
-import {IProcessContext} from "../../../core/Flows/IProcessContext";
+import { ProcessBuilder } from "../../../core/Flows/ProcessBuilder";
+import { IProcessContext } from "../../../core/Flows/IProcessContext";
 
-export function createDream()
-{
+export function createDream() {
   return new ProcessBuilder<IProcessContext>("flows:omo.dreams.createDream")
     .category("Create dream", (build) =>
       build
@@ -14,10 +13,8 @@ export function createDream()
         .withTitle("Give your dream a name")
     )
     .end()
-    .category("Show Details", (b) =>
-    {
-      b
-        .step("flows:omo.dreams.createDream:generateSafe")
+    .category("Show Details", (b) => {
+      b.step("flows:omo.dreams.createDream:generateSafe")
         .withSideEffect("sideEffects:omo.circles.generateSafe")
         .mapInput("safeOwner", "currentSafeOwner")
         .mapOutput("safe", "safe")
@@ -53,8 +50,6 @@ export function createDream()
         .withSideEffect("sideEffects:omo.circles.revokeInitialTrust")
         .mapInput("trustReceiverSafe", "safe")
         .withTitle("Revoke Trust");
-
-
     })
     .end()
     .build();
