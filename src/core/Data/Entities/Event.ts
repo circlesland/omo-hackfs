@@ -1,20 +1,17 @@
-import {Instance} from "@textile/threads-store";
+import { Instance } from "@textile/threads-store";
 
-export interface IEvent
-{
+export interface IEvent {
   _$schemaId: string;
 }
 
-export abstract class Event implements Instance, IEvent
-{
+export abstract class Event implements Instance, IEvent {
   static CollectionName: string = "Events";
   abstract _$schemaId: string;
 
   _id: string;
   readonly timestamp?: string = new Date().toJSON();
 
-  constructor()
-  {
+  constructor() {
     this._id = '';
   }
 }

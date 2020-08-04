@@ -1,18 +1,17 @@
-import {Odentity} from "./Odentity";
-import {Threads} from "./Textile/Threads";
-import {QuantRegistry} from "./Quant/QuantRegistry";
-import {GraphQL} from "./Data/GraphQL";
-import {Seeder} from "./Data/Seeder";
-import {LocalThread} from "./Textile/LocalThread";
-import {throwError} from "rxjs";
-import {RemoteThread} from "./Textile/RemoteThread";
-import {StopWatch} from "./StopWatch";
+import { Odentity } from "./Odentity";
+import { Threads } from "./Textile/Threads";
+import { QuantRegistry } from "./Quant/QuantRegistry";
+import { GraphQL } from "./Data/GraphQL";
+import { Seeder } from "./Data/Seeder";
+import { LocalThread } from "./Textile/LocalThread";
+import { throwError } from "rxjs";
+import { RemoteThread } from "./Textile/RemoteThread";
+import { StopWatch } from "./StopWatch";
 import CirclesCore from "@circles/core";
 import Web3 from "web3";
-import {EventBroker} from "./../core/Events/EventBroker";
+import { EventBroker } from "./Events/EventBroker";
 
-export class Quantum
-{
+export class Quantum {
   readonly circlesCore: CirclesCore;
   readonly eventBroker: EventBroker;
   readonly web3: Web3;
@@ -30,8 +29,7 @@ export class Quantum
   //     this.quantRegistry = quantRegistry;
   //     this.graphQL = graphQL;
   // }
-  private constructor(threads: Threads, odentity: Odentity, quantRegistry: QuantRegistry, graphQL: GraphQL, web3: Web3, circlesCore: CirclesCore, eventBroker: EventBroker)
-  {
+  private constructor(threads: Threads, odentity: Odentity, quantRegistry: QuantRegistry, graphQL: GraphQL, web3: Web3, circlesCore: CirclesCore, eventBroker: EventBroker) {
     this.threads = threads;
     this.odentity = odentity;
     // this.localDB = thread;
@@ -43,24 +41,21 @@ export class Quantum
     this.eventBroker = eventBroker;
   }
 
-  async publishEventAsync(namespace: string, topic: string, event: any)
-  {
+  async publishEventAsync(namespace: string, topic: string, event: any) {
     const t = this.eventBroker.tryGetTopic(namespace, topic);
     if (!t)
       throw new Error("Topic '" + topic + "' doesn't exist in namespace '" + namespace + "'");
     await t.publish(event);
   }
 
-  async publishShellEventAsync(event: any)
-  {
+  async publishShellEventAsync(event: any) {
     const t = this.eventBroker.tryGetTopic("omo", "shell");
     if (!t)
       throw new Error("Topic 'shell' doesn't exist in namespace 'omo'");
     await t.publish(event);
   }
 
-  static async leap(): Promise<Quantum>
-  {
+  static async leap(): Promise<Quantum> {
     StopWatch.start("threads");
     var threads = new Threads();
     StopWatch.stop("threads");

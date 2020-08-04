@@ -1,24 +1,22 @@
-import {QuantRegistry} from "../Quant/QuantRegistry";
-import {JSONSchema} from "@textile/hub";
-import {Message} from "../../schema/omo/message";
-import {ChatRoom} from "../../schema/omo/chatRoom";
-import {Omosapien} from "../../schema/omo/odentity/omosapien";
-import {Dream} from "../../schema/omo/dreams/dream";
-import {Safe} from "../../schema/omo/safe/safe";
-import {TimeCommitment} from "../../schema/omo/dreams/timeCommitment";
-import {Vote} from "../../schema/omo/dreams/vote";
-import {DreamSubscription} from "../../schema/omo/dreams/dreamSubscription";
-import {Location} from "../../schema/omo/dreams/location";
+import { QuantRegistry } from "../Quant/QuantRegistry";
+import { JSONSchema } from "@textile/hub";
+import { Message } from "../../schema/omo/message";
+import { ChatRoom } from "../../schema/omo/chatRoom";
+import { Omosapien } from "../../schema/omo/odentity/omosapien";
+import { Dream } from "../../schema/omo/dreams/dream";
+import { Safe } from "../../schema/omo/safe/safe";
+import { TimeCommitment } from "../../schema/omo/dreams/timeCommitment";
+import { Vote } from "../../schema/omo/dreams/vote";
+import { DreamSubscription } from "../../schema/omo/dreams/dreamSubscription";
+import { Location } from "../../schema/omo/dreams/location";
 
-export interface SeedQuant
-{
+export interface SeedQuant {
   name: string,
   schema: JSONSchema,
   data: any[]
 }
 
-interface Seed
-{
+interface Seed {
   thread: {
     name: string,
     quanta: SeedQuant[]
@@ -77,14 +75,11 @@ const seeds: Seed[] = [{
   }
 }];
 
-export class Seeder
-{
-  async createCollections(registry: QuantRegistry)
-  {
+export class Seeder {
+  async createCollections(registry: QuantRegistry) {
     console.log("create collections");
 
-    for (let seed of seeds)
-    {
+    for (let seed of seeds) {
       await registry.RegisterSeedQuanta(seed.thread.quanta);
     }
 

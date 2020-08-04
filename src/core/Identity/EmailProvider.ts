@@ -1,12 +1,10 @@
-import {IdentityProviderInterface} from "./IdentityProviderInterface";
-import {OdentityEntity} from "./../Data/Entities/OdentityEntity";
-import {LoginRequest} from "./../Data/Entities/LoginRequest";
-import {OdentityProvider} from "./../Data/Entities/OdentityProvider";
+import { IdentityProviderInterface } from "./IdentityProviderInterface";
+import { OdentityEntity } from "../Data/Entities/OdentityEntity";
+import { LoginRequest } from "../Data/Entities/LoginRequest";
+import { OdentityProvider } from "../Data/Entities/OdentityProvider";
 
-export class EmailProvider implements IdentityProviderInterface
-{
-  async login(loginRequest: LoginRequest, providerIdentity: OdentityProvider): Promise<OdentityEntity | null>
-  {
+export class EmailProvider implements IdentityProviderInterface {
+  async login(loginRequest: LoginRequest, providerIdentity: OdentityProvider): Promise<OdentityEntity | null> {
     window['Email'].send({
       Host: process.env.SMTPHOST,
       Username: process.env.SMTPUSER,

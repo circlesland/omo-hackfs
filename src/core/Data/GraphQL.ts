@@ -10,32 +10,29 @@ import {
   Thunk,
   GraphQLBoolean
 } from "graphql";
-import {Quant} from "./Entities/Quant";
-import {QuantRegistry} from "../Quant/QuantRegistry";
-import {ModelHelper} from "./ModelHelper";
-import {makeExecutableSchema} from '@graphql-tools/schema';
-import {SyncedThread} from "../Textile/SyncedThread";
-import {JSONSchema} from "@textile/hub";
-import {from} from 'ix/asynciterable';
-import {map} from 'ix/asynciterable/operators';
-import {observe} from "svelte-observable"
+import { Quant } from "./Entities/Quant";
+import { QuantRegistry } from "../Quant/QuantRegistry";
+import { ModelHelper } from "./ModelHelper";
+import { makeExecutableSchema } from '@graphql-tools/schema';
+import { SyncedThread } from "../Textile/SyncedThread";
+import { JSONSchema } from "@textile/hub";
+import { from } from 'ix/asynciterable';
+import { map } from 'ix/asynciterable/operators';
+import { observe } from "svelte-observable"
 import Observable from 'zen-observable';
 
-export class GraphQL
-{
+export class GraphQL {
   private quanta: Quant[];
   private thread: SyncedThread;
   private graphQLSchema: GraphQLSchema;
 
-  private constructor(quanta: Quant[], thread: SyncedThread, schema: GraphQLSchema)
-  {
+  private constructor(quanta: Quant[], thread: SyncedThread, schema: GraphQLSchema) {
     this.quanta = quanta;
     this.thread = thread;
     this.graphQLSchema = schema;
   }
 
-  static async init(registry: QuantRegistry): Promise<GraphQL>
-  {
+  static async init(registry: QuantRegistry): Promise<GraphQL> {
     var quanta = await registry.quantaCollection.all();
     var schema = await this.updateGraphQLSchema(quanta, registry.quantThread);
     var graphql = new GraphQL(quanta, registry.quantThread, schema);
@@ -53,26 +50,22 @@ export class GraphQL
   //     //     })
   //     // }
 
-  getSchema(): GraphQLSchema
-  {
+  getSchema(): GraphQLSchema {
     return this.graphQLSchema;
   }
 
-  printSchema(): string
-  {
+  printSchema(): string {
     return printSchema(this.graphQLSchema);
   }
 
-  async execute(query)
-  {
+  async execute(query) {
     return await graphql(this.getSchema(), query);
   }
 
   /**
    * @param query example await o.graphql.query('Books {_id name}')
    */
-  async query(query)
-  {
+  async query(query) {
     return await graphql(this.getSchema(), `query { ${query}}`);
   }
 
@@ -80,43 +73,34 @@ export class GraphQL
    *
    * @param query example await o.graphql.mutation('addBook(name:"testbuch"){_id name}')
    */
-  async mutation(query)
-  {
+  async mutation(query) {
     return await graphql(this.getSchema(), `mutation { ${query} }`);
   }
 
-  private static async updateGraphQLSchema(quanta: Quant[], thread: SyncedThread): Promise<GraphQLSchema>
-  {
+  private static async updateGraphQLSchema(quanta: Quant[], thread: SyncedThread): Promise<GraphQLSchema> {
+    debugger;
     var modelHelper = new ModelHelper(quanta);
     var typeDefs: any = modelHelper.getGraphQLTypeDefs();
     var resolvers: any = await modelHelper.getGraphQLResolvers(thread);
-    return makeExecutableSchema({typeDefs, resolvers});
+    return makeExecutableSchema({ typeDefs, resolvers });
   }
 
-  async* concat(initialValue: any, iterable: AsyncIterableIterator<any>)
-  {
+  async* concat(initialValue: any, iterable: AsyncIterableIterator<any>) {
     yield initialValue;
-    for await (let element of iterable)
-    {
+    for await (let element of iterable) {
       yield element;
     }
   }
 
-  subscribe(query): Observable<any>
-  {
-    return new Observable(observer =>
-    {
-      this.query(query).then(queryResult =>
-      {
+  subscribe(query): Observable<any> {
+    return new Observable(observer => {
+      this.query(query).then(queryResult => {
         observer.next(queryResult);
 
         this.getSubscription(`subscription { ${query}}`).then(
-          subscription =>
-          {
-            (async () =>
-            {
-              for await (let value of subscription)
-              {
+          subscription => {
+            (async () => {
+              for await (let value of subscription) {
                 observer.next(value);
               }
             })();
@@ -126,8 +110,7 @@ export class GraphQL
     });
   }
 
-  private async getSubscription(query)
-  {
+  private async getSubscription(query) {
     return (await subscribe({
       schema: this.getSchema(),
       document: parse(query),

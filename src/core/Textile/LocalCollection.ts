@@ -66,6 +66,25 @@ export class LocalCollection<T extends Instance> implements ICollection<T>
     return values;
   }
 
+  async createOrSave(value: T): Promise<T> {
+    if (value._id)
+      return await this.save(value);
+    else
+      return await this.create(value);
+  }
+  async createOrSaveMany(values: T[]): Promise<T[]> {
+    var updates: T[] = [];
+    var creates: T[] = [];
+    for (let val of values) {
+      if (val._id && await this.collection.has(val._id)) updates.push(val);
+      else creates.push(val);
+    }
+    let updateAsync = this.saveMany(updates);
+    let createAsync = this.createMany(creates);
+    let result = await Promise.all([updateAsync, createAsync]);
+    return [...result[0], ...result[1]];
+  }
+
   async delete(value: T): Promise<void> {
     await this.collection.delete(value._id);
   }
