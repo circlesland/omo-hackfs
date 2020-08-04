@@ -43,7 +43,7 @@ export class LocalCollection<T extends Instance> implements ICollection<T>
 
   async truncate(): Promise<void> {
     var ids = (await this.find({})).map(x => x._id);
-    this.collection.delete(...ids);
+    await this.collection.delete(...ids);
   }
 
   async create(value: T): Promise<T> {

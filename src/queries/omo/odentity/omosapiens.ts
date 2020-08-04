@@ -23,6 +23,8 @@ export class Omosapiens
     {
       sub.subscribe(o =>
       {
+        if (o.error)
+          throw new o.error;
         console.log("Omosapien query result: ", o);
         s.next(o.data.Omosapiens.filter(p => p.safeAddress == safeAddress));
       });

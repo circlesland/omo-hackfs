@@ -7,9 +7,10 @@ import {Dream} from "../../schema/omo/dreams/dream";
 import {Safe} from "../../schema/omo/safe/safe";
 import {TimeCommitment} from "../../schema/omo/dreams/timeCommitment";
 import {Vote} from "../../schema/omo/dreams/vote";
-import {DreamSubscription} from "../../schema/omo/dreams/dreamSubscription";
+import {ProductSubscription} from "../../schema/omo/dreams/productSubscription";
 import {Location} from "../../schema/omo/dreams/location";
 import {Reservation} from "../../schema/omo/dreams/reservation";
+import {Product} from "../../schema/omo/dreams/product";
 
 export interface SeedQuant {
   name: string,
@@ -63,8 +64,8 @@ const seeds: Seed[] = [{
         data: []
       },
       {
-        name: "DreamSubscription",
-        schema: DreamSubscription,
+        name: "ProductSubscription",
+        schema: ProductSubscription,
         data: []
       },
       {
@@ -75,6 +76,11 @@ const seeds: Seed[] = [{
       {
         name: "Reservation",
         schema: Reservation,
+        data: []
+      },
+      {
+        name: "Product",
+        schema: Product,
         data: []
       }
     ]
