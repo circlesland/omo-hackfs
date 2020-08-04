@@ -76,12 +76,19 @@ export class ModelQuant {
         var retval: any = {};
         for (let rel of this.oneToManyRelations) {
             let collection = await thread.getCollection(rel.reference);
-            retval[rel.name] = async (x: any) => await collection.find({
+
+          retval[rel.name] = async (x: any) => {
+            let query:any = {};
+            query[this.collectionName.toLowerCase() + 'Id'] = x._id;
+            return await collection.find(
+              query
+              /*{
                 ands: [{
                     fieldPath: this.collectionName.toLowerCase() + 'Id',
                     value: { string: x._id }
                 }]
-            });
+            }*/
+            );}
         }
         ;
 

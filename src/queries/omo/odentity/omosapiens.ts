@@ -44,6 +44,10 @@ export class Omosapiens
       throw new Error("Couldn't query the list of Omosapiens");
     }
     const filteredOmosapien = omosapiens.data.Omosapiens.filter(p => (!p.odentityId ? "" : p.odentityId).toLowerCase() == odentityId.toLowerCase());
-    return filteredOmosapien && filteredOmosapien.length == 1 ? filteredOmosapien[0] : null;
+    if (filteredOmosapien.length > 1)
+    {
+      console.warn("There is more than one Omosapien for odentity '" + odentityId + "'");
+    }
+    return filteredOmosapien && filteredOmosapien.length >= 1 ? filteredOmosapien[filteredOmosapien.length -1] : null;
   }
 }

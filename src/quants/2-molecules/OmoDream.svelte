@@ -9,8 +9,8 @@
   let dreamId;
 
   var urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.has("dreamId")) {
-    dreamId = urlParams.get("dreamId");
+  if (urlParams.has("data")) {
+    dreamId = urlParams.get("data");
   }
 
   let data = DreamsQueries.byId(dreamId);

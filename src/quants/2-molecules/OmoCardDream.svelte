@@ -60,10 +60,8 @@
   </div>
 
   <div class="h-10 flex items-center justify-between bg-gray-100">
-    <a
-            href="javascript:navigate('omodream')"
-            class="w-full text-center text-white bg-tertiary font-bold text-lg px-4
-      py-2 uppercase hover:bg-secondary">
+    <a href="javascript:navigate('omodream', '{data._id}')"
+       class="w-full text-center text-white bg-tertiary font-bold text-lg px-4 py-2 uppercase hover:bg-secondary">
       join dream
     </a>
   </div>

@@ -26,6 +26,12 @@ export const Dream: JSONSchema = {
     safeAddress: {
       type: "string"
     },
+    /**
+     *
+     */
+    leap: {
+      type: "string"
+    },
     timeCommitments: {
       $ref: "#/definitions/oneToMany",
       description: "TimeCommitment"
