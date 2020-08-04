@@ -78,7 +78,7 @@ export class GraphQL {
   }
 
   private static async updateGraphQLSchema(quanta: Quant[], thread: SyncedThread): Promise<GraphQLSchema> {
-    debugger;
+    //debugger;
     var modelHelper = new ModelHelper(quanta);
     var typeDefs: any = modelHelper.getGraphQLTypeDefs();
     var resolvers: any = await modelHelper.getGraphQLResolvers(thread);
@@ -139,7 +139,7 @@ export class GraphQL {
   //         mutations[`add${quant.name}`] = {
   //             args,
   //             resolve: async (root: any, data: any) => {
-  //                 debugger;
+  //                 //debugger;
   //                 data = await collection.create(data);
   //                 return data;
   //             },

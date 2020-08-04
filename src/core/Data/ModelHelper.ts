@@ -33,7 +33,7 @@ export class ModelHelper {
 
   constructor(quanta: Quant[]) {
     this.modelQuanta = [];
-    debugger;
+    //debugger;
     for (let quant of quanta) {
       this.modelQuanta.push(ModelQuant.byQuant(quant));
     }

@@ -94,7 +94,7 @@ export class ModelQuant {
 
                     }
                     catch (e) {
-                        // debugger;
+                        // //debugger;
                         // await new Promise(resolve => setTimeout(resolve, 2000));
                         // return await collection.findById(x[rel.fieldName]);
 
@@ -262,7 +262,7 @@ export class ModelQuant {
         this.oneToOneRelations = [];
         try {
             if (quant) {
-                debugger;
+                //debugger;
                 this.createByQuant(quant);
             }
             if (collection1 && collection2)

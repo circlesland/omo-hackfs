@@ -33,7 +33,7 @@ export class Dreams
 
   static async newSubscription(dreamId:string, omosapienId:string)
   {
-    const newSubscription = await window.o.graphQL.mutation(`addDreamSubscription(creatorId: ${omosapienId}, dreamId: "${dreamId}") {_id}`);
+    const newSubscription = await window.o.graphQL.mutation(`addDreamSubscription(creatorId: "${omosapienId}", dreamId: "${dreamId}") {_id}`);
     if (!newSubscription.data) {
       throw new Error("Couldn't create a new subscription.");
     }

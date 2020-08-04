@@ -37,7 +37,7 @@ export class QuantRegistry {
       arr.push(newQuant);
       quanta = arr;
     }
-    debugger;
+    //debugger;
     var modelHelper = new ModelHelper(quanta);
     // await this.quantaCollection.truncate();
     await this.quantaCollection.createOrSaveMany(modelHelper.quanta);
