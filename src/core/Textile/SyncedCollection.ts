@@ -25,8 +25,6 @@ export class SyncedCollection<T extends Instance> implements ICollection<T>
     return instance;
   }
 
-
-
   static async fakeSyncCollections<T extends Instance>(localCollection: LocalCollection<T>, remoteCollectionPromise: Promise<RemoteCollection<T>>, collectionName: string) {
     console.log(`start sync with ${collectionName}`)
     let remoteCollection = await remoteCollectionPromise;
