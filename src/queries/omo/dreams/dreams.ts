@@ -26,7 +26,7 @@ export class Dreams
     " safeAddress " +
     " odentityId" +
     "} " +
-    "reservations {" +
+    "subscriptions {" +
     " _id" +
     "} " +
     "Votes {" +
