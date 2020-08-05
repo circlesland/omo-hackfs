@@ -107,6 +107,8 @@ dist/*
 
 public/styles.css
 public/bundle.js
+public/.textile
+public/.textileseed
 
 # Mac
 .DS_Store

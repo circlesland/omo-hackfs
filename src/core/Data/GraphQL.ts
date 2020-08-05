@@ -59,14 +59,28 @@ export class GraphQL {
   }
 
   async execute(query) {
-    return await graphql(this.getSchema(), query);
+    const result = await graphql(this.getSchema(), query);
+
+    if (result.errors) {
+      console.error("An error occurred while executing '" + query + "':");
+      throw result.errors;
+    }
+
+    return result;
   }
 
   /**
    * @param query example await o.graphql.query('Books {_id name}')
    */
   async query(query) {
-    return await graphql(this.getSchema(), `query { ${query}}`);
+    const result = await graphql(this.getSchema(), `query { ${query}}`);
+
+    if (result.errors) {
+      console.error("An error occurred while executing '" + query + "':");
+      throw result.errors;
+    }
+
+    return result;
   }
 
   /**
@@ -92,9 +106,14 @@ export class GraphQL {
     }
   }
 
-  subscribe(query): Observable<any> {
+  subscribe(query:string): Observable<any> {
     return new Observable(observer => {
       this.query(query).then(queryResult => {
+        if (queryResult.errors) {
+          console.error("An error occurred while executing '" + query + "':");
+          throw queryResult.errors;
+        }
+
         observer.next(queryResult);
 
         this.getSubscription(`subscription { ${query}}`).then(
