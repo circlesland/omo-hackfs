@@ -19,8 +19,10 @@ export const createDream: ISideEffect<IProcessContext, any> = {
   {
     const dreamName = context.local.inputs["name"];
     const safeAddress = context.local.inputs["safe"].safeAddress;
+    const description = context.local.inputs["dreamDescription"];
+    const city = context.local.inputs["cityName"];
 
-    const newDream = await DreamsMutations.createNewDream(dreamName, "", safeAddress);
+    const newDream = await DreamsMutations.createNewDream(dreamName, description, city, safeAddress);
     console.log("Created new dream:", newDream);
 
     context.local.outputs["void"] = {};

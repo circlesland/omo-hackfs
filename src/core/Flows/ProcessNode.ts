@@ -22,6 +22,7 @@ export class ProcessNode<TContext extends IProcessContext>
   submitButtonLabel: string = "Next";
 
   inputMap?: { localName: string; globalName: string }[];
+  staticInputs?: { localName: string; value: any }[];
   outputMap?: { localName: string; globalName: string }[];
 
   quant?: string;

@@ -236,7 +236,8 @@
           Logger.log(processNode.id + ":OmoDialog", "Executing SideEffect '" + currentlyActiveNode.sideEffect + "'...");
 
           // Map all inputs to the 'local' scope
-          currentlyActiveNode.inputMap.forEach(inputMap => {
+          currentlyActiveNode.inputMap.forEach(inputMap =>
+          {
             Logger.log(processNode.id + ":OmoDialog", "Mapping " + currentlyActiveNode.sideEffect + "' input '" + inputMap.globalName + "' to '" + inputMap.localName + "'");
 
             let globalValue = executionContext.global[inputMap.globalName];
@@ -253,6 +254,10 @@
               throw new Error("Couldn't find a matching input value for sideEffect '" + currentlyActiveNode.sideEffect + "' in step '" + currentlyActiveNode.stepId + "'. Requested globalName: " + inputMap.globalName);
             }
             executionContext.local.inputs[inputMap.localName] = globalValue;
+          });
+
+          currentlyActiveNode.staticInputs.forEach(staticValue => {
+            executionContext.local.inputs[staticValue.localName] = staticValue.value;
           });
 
           await sideEffect.execute(executionContext, argument);

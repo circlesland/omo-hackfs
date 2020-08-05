@@ -32,7 +32,7 @@ export const Dream: JSONSchema = {
     safeAddress: {
       type: "string"
     },
-    leap: {
+    city: {
       type: "string"
     },
     /**

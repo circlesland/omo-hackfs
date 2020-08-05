@@ -8,21 +8,13 @@ export class Dreams {
   static async createNewDream(
     name: string,
     description: string,
+    cityName: string,
     safeAddress: string
   ) {
     const newDream = await window.o.graphQL.mutation(
-      `addDream(name:"${name}" description:"${description}" safeAddress:"${safeAddress}" ) {_id name description safeAddress}`
+      `addDream(name:"${name}" description:"${description}" city:"${cityName}" safeAddress:"${safeAddress}" state:"dream") {_id name state description safeAddress}`
     );
     return !newDream.data ? null : newDream.data.addDream;
-  }
-
-  static async newReservation(dreamId:string, omosapienId:string)
-  {
-    const newReservation = await window.o.graphQL.mutation(`addReservation(creatorId: "${omosapienId}", dreamId: "${dreamId}") {_id}`);
-    if (!newReservation.data) {
-      throw new Error("Couldn't create a new reservation.");
-    }
-    return newReservation.data.addReservation._id;
   }
 
   static async newVote(dreamId:string, omosapienId:string)
@@ -34,27 +26,21 @@ export class Dreams {
     return newVote.data.addVote._id;
   }
 
-  static async newSubscription(dreamId:string, omosapienId:string)
+  static async newReservation(dreamId:string, omosapienId:string)
   {
-    const newSubscription = await window.o.graphQL.mutation(`addDreamSubscription(creatorId: "${omosapienId}", dreamId: "${dreamId}") {_id}`);
+    const newSubscription = await window.o.graphQL.mutation(`addDreamSubscription(state: "reservation", creatorId: "${omosapienId}", dreamId: "${dreamId}") {_id}`);
     if (!newSubscription.data) {
-      throw new Error("Couldn't create a new subscription.");
+      throw new Error("Couldn't create a new reservation.");
     }
     return newSubscription.data.addDreamSubscription._id;
   }
 
-  static async createProductFromDream(dreamId: string, omosapienId:string, price:number) {
-    const dream = await DreamsQueries.byId(dreamId);
-    if (!dream || !dream.data) {
-      throw new Error("Couldn't find the dream with the id " + dreamId);
+  static async newSubscription(dreamId:string, omosapienId:string)
+  {
+    const newSubscription = await window.o.graphQL.mutation(`addDreamSubscription(state: "subscription", creatorId: "${omosapienId}", dreamId: "${dreamId}") {_id}`);
+    if (!newSubscription.data) {
+      throw new Error("Couldn't create a new subscription.");
     }
-    const name = dream.data.DreamById.name;
-    const description = dream.data.DreamById.description;
-    const safeAddress = dream.data.DreamById.safeAddress;
-    const creatorId = dream.data.DreamById.creatorId;
-    const newProduct = await window.o.graphQL.mutation(`addProduct(name: "${name}", price: "${price}", description: "${description}", safeAddress: "${safeAddress}", creatorId: "${creatorId}", dreamId: "${dreamId}") {_id}`);
-    if (!newProduct || !newProduct.data) {
-      throw new Error("Couldn't create a new product from dream '" + dreamId + "'");
-    }
+    return newSubscription.data.addDreamSubscription._id;
   }
 }

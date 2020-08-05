@@ -15,6 +15,7 @@ export class StepBuilder<TContext extends IProcessContext>
   _isNonInteractive?: boolean;
 
   inputMap: { localName: string; globalName: string }[] = [];
+  staticInputs: { localName: string; value: any }[] = [];
   outputMap: { localName: string; globalName: string }[] = [];
   quantData?: any;
 
@@ -73,6 +74,7 @@ export class StepBuilder<TContext extends IProcessContext>
     step.description = this.description;
     step.prompt = this.prompt;
     step.inputMap = this.inputMap;
+    step.staticInputs = this.staticInputs;
     step.outputMap = this.outputMap;
     step.isInteractive = !!this.quant && !this._isNonInteractive;
     step.quantData = this.quantData;
@@ -93,6 +95,15 @@ export class StepBuilder<TContext extends IProcessContext>
     this.inputMap.push({
       localName: localName,
       globalName: globalName
+    });
+    return this;
+  }
+
+  withStaticInput(localName: string, value: any): StepBuilder<TContext>
+  {
+    this.staticInputs.push({
+      localName: localName,
+      value: value
     });
     return this;
   }
