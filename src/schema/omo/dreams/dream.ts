@@ -13,6 +13,12 @@ export const Dream: JSONSchema = {
     _id: {
       type: "string"
     },
+    /**
+     * Can be 'dream' or 'product'
+     */
+    type: {
+      type: "string"
+    },
     name: {
       type: "string"
     },

@@ -1,7 +1,19 @@
 import Observable from "zen-observable";
+import {Dream} from "../../../schema/omo/dreams/dream";
+
+export interface Interaction
+{
+  _id:string;
+}
 
 export class Dreams
 {
+  leapMap = {
+    1: "Leap 1",
+    2: "Leap 2",
+    3: "Leap 3"
+  }
+
   static readonly fields =
     "_id " +
     "name " +
@@ -40,30 +52,76 @@ export class Dreams
     });
   }
 
-  static byId(id:string)
+  static byId(id: string)
   {
     const dream = window.o.graphQL.query(`DreamById(_id:"${id}"){${Dreams.fields}}`);
     return dream;
   }
-
-  static calcLevel(targetSum:number) : {
-    leap:number,
-    level:number
-  } {
-
+/*
+  static allInteractions(dreamId:string) : Interaction[] {
+    let data = Dreams.byId(dreamId);
+    totalInteractions = d.data.DreamById.Votes.length + d.data.DreamById.reservations.length;
+  }
+*/
+  static *calcLevels(interactions: Interaction[])
+  {
     let sum = 0;
     let prev1 = 0;
     let prev2 = 1;
     let i = 1;
-    while(sum <= targetSum) {
+
+    for (let i = 0; i < interactions.length; i++)
+    {
       let fib = prev1 + prev2;
-      if (i == 1) {
+      if (i == 1)
+      {
         prev1 = 0;
         prev2 = 1;
-      } else if (i == 2) {
+      }
+      else if (i == 2)
+      {
         prev1 = 1;
         prev2 = 1;
-      } else {
+      }
+      else
+      {
+        prev1 = prev2;
+        prev2 = fib;
+      }
+      sum += fib;
+      //console.log("Fibonacci: " + fib + ", sum: " + sum + ", level: " + i + ", leap: " + Math.ceil(i / 5))
+    }
+
+    return {
+      leap: Math.ceil((i - 1) / 5),
+      level: i - 1
+    }
+  }
+
+  static calcLevel(targetSum: number): {
+    leap: number,
+    level: number
+  }
+  {
+    let sum = 0;
+    let prev1 = 0;
+    let prev2 = 1;
+    let i = 1;
+    while (sum <= targetSum)
+    {
+      let fib = prev1 + prev2;
+      if (i == 1)
+      {
+        prev1 = 0;
+        prev2 = 1;
+      }
+      else if (i == 2)
+      {
+        prev1 = 1;
+        prev2 = 1;
+      }
+      else
+      {
         prev1 = prev2;
         prev2 = fib;
       }
@@ -74,7 +132,7 @@ export class Dreams
 
     return {
       leap: Math.ceil((i - 1) / 5),
-      level: i -1
+      level: i - 1
     }
   }
 }

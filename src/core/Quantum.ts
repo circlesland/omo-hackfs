@@ -21,6 +21,8 @@ export class Quantum {
   readonly quantRegistry: QuantRegistry;
   readonly threads: Threads;
 
+  readonly isAdmin:boolean = true;
+
   private constructor(threads: Threads, odentity: Odentity, quantRegistry: QuantRegistry, graphQL: GraphQL, web3: Web3, circlesCore: CirclesCore, eventBroker: EventBroker) {
     this.threads = threads;
     this.odentity = odentity;
@@ -30,13 +32,6 @@ export class Quantum {
     this.web3 = web3;
     this.circlesCore = circlesCore;
     this.eventBroker = eventBroker;
-  }
-
-  async publishEventAsync(namespace: string, topic: string, event: any) {
-    const t = this.eventBroker.tryGetTopic(namespace, topic);
-    if (!t)
-      throw new Error("Topic '" + topic + "' doesn't exist in namespace '" + namespace + "'");
-    await t.publish(event);
   }
 
   async publishShellEventAsync(event: any) {
