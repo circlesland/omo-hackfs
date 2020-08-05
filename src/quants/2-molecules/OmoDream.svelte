@@ -2,9 +2,9 @@
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
   import OmoVideo from "./OmoVideo";
   import OmoProfilePage from "./OmoProfilePage";
-  import {Dreams as DreamsQueries} from "../../queries/omo/dreams/dreams";
-  import {Dreams as DreamsMutations} from "../../mutations/omo/dreams/dreams";
-  import {Omosapiens} from "../../queries/omo/odentity/omosapiens";
+  import { Dreams as DreamsQueries } from "../../queries/omo/dreams/dreams";
+  import { Dreams as DreamsMutations } from "../../mutations/omo/dreams/dreams";
+  import { Omosapiens } from "../../queries/omo/odentity/omosapiens";
 
   let dreamId;
 
@@ -15,25 +15,36 @@
 
   let data = DreamsQueries.byId(dreamId);
   let totalInteractions = 0;
-  let levelAndLeap = {level:0, leap:0};
+  let levelAndLeap = { level: 0, leap: 0 };
 
   async function calcInteractions() {
     const d = await data;
-    totalInteractions = d.data.DreamById.Votes.length + d.data.DreamById.subscriptions.length;
+    totalInteractions =
+      d.data.DreamById.Votes.length + d.data.DreamById.subscriptions.length;
     levelAndLeap = DreamsQueries.calcLevel(totalInteractions);
   }
 
   async function vote() {
-    const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
+    const omosapien = await Omosapiens.byOdentityId(
+      window.o.odentity.current._id
+    );
     await DreamsMutations.newVote(dreamId, omosapien._id);
   }
   async function reservate() {
-    const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
+    const omosapien = await Omosapiens.byOdentityId(
+      window.o.odentity.current._id
+    );
     await DreamsMutations.newReservation(dreamId, omosapien._id);
   }
   async function createProduct(price) {
-    const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
-    const product = await DreamsMutations.createProductFromDream(dreamId, omosapien._id, price);
+    const omosapien = await Omosapiens.byOdentityId(
+      window.o.odentity.current._id
+    );
+    const product = await DreamsMutations.createProductFromDream(
+      dreamId,
+      omosapien._id,
+      price
+    );
   }
   /*
   async function subscribe() {
@@ -99,6 +110,11 @@
             text-white justify-center bg-tertiary" />
         </div>
       </div>
+    </div>
+
+    <div class="content-left bg-gray-100">
+      <OmoVideo />
+      <OmoProfilePage data={data.data.DreamById} />
     </div>
 
     <div class="content-right bg-gray-200 py-6 px-8">
@@ -280,9 +296,5 @@
   -->
     </div>
   </div>
-  <div class="content-left bg-gray-100">
-    <OmoVideo/>
-    <OmoProfilePage data={data.data.DreamById}/>
-  </div>
-</div>
+
 {/await}
