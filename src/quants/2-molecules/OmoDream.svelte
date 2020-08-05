@@ -2,9 +2,10 @@
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
   import OmoVideo from "./OmoVideo";
   import OmoProfilePage from "./OmoProfilePage";
-  import {Dreams as DreamsQueries} from "../../queries/omo/dreams/dreams";
-  import {Dreams as DreamsMutations} from "../../mutations/omo/dreams/dreams";
-  import {Omosapiens} from "../../queries/omo/odentity/omosapiens";
+  import { Dreams as DreamsQueries } from "../../queries/omo/dreams/dreams";
+  import { Dreams as DreamsMutations } from "../../mutations/omo/dreams/dreams";
+  import { Omosapiens } from "../../queries/omo/odentity/omosapiens";
+  import OmoNavAside from "./../2-molecules/OmoNavAside.svelte";
 
   let dreamId;
 
@@ -15,25 +16,36 @@
 
   let data = DreamsQueries.byId(dreamId);
   let totalInteractions = 0;
-  let levelAndLeap = {level:0, leap:0};
+  let levelAndLeap = { level: 0, leap: 0 };
 
   async function calcInteractions() {
     const d = await data;
-    totalInteractions = d.data.DreamById.Votes.length + d.data.DreamById.subscriptions.length;
+    totalInteractions =
+      d.data.DreamById.Votes.length + d.data.DreamById.subscriptions.length;
     levelAndLeap = DreamsQueries.calcLevel(totalInteractions);
   }
 
   async function vote() {
-    const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
+    const omosapien = await Omosapiens.byOdentityId(
+      window.o.odentity.current._id
+    );
     await DreamsMutations.newVote(dreamId, omosapien._id);
   }
   async function reservate() {
-    const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
+    const omosapien = await Omosapiens.byOdentityId(
+      window.o.odentity.current._id
+    );
     await DreamsMutations.newReservation(dreamId, omosapien._id);
   }
   async function createProduct(price) {
-    const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
-    const product = await DreamsMutations.createProductFromDream(dreamId, omosapien._id, price);
+    const omosapien = await Omosapiens.byOdentityId(
+      window.o.odentity.current._id
+    );
+    const product = await DreamsMutations.createProductFromDream(
+      dreamId,
+      omosapien._id,
+      price
+    );
   }
   /*
   async function subscribe() {
@@ -48,8 +60,8 @@
 <style>
   .omo-layout {
     display: grid;
-    grid-template-areas: "top top" "content-left content-right";
-    grid-template-columns: 1fr 24rem;
+    grid-template-areas: "top top nav-right" "content-left content-right nav-right";
+    grid-template-columns: 1fr 24rem 3rem;
     grid-template-rows: 1rem 1fr;
     overflow: hidden;
   }
@@ -74,6 +86,11 @@
     grid-template-rows: 18rem 1fr;
   }
 
+  .nav-right {
+    grid-area: nav-right;
+    height: 100%;
+  }
+
   .aside-top {
     grid-area: aside-top;
     height: 100%;
@@ -92,7 +109,7 @@
   <div class="omo-layout">
     <div class="top bg-gray-200 w-full">
       <div class="relative">
-        <div class="overflow-hidden h-4 text-xs flex bg-primary">
+        <div class="overflow-hidden h-4 text-xs flex bg-dark">
           <div
             style="width: 33%"
             class="shadow-none flex flex-col text-center whitespace-nowrap
@@ -104,6 +121,10 @@
     <div class="content-left bg-gray-100">
       <OmoVideo />
       <OmoProfilePage data={data.data.DreamById} />
+    </div>
+
+    <div class="nav-right">
+      <OmoNavAside />
     </div>
 
     <div class="content-right bg-gray-200 py-6 px-8">
