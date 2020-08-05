@@ -20,22 +20,13 @@ export class Quantum {
   readonly graphQL: GraphQL;
   readonly quantRegistry: QuantRegistry;
   readonly threads: Threads;
-  // localDB: LocalThread;
-  // remoteDB: RemoteThread;
 
-  // private constructor(threads: Threads, odentity: Odentity, quantRegistry: QuantRegistry, graphQL: GraphQL) {
-  //     this.odentity = odentity;
-  //     this.threads = threads;
-  //     this.quantRegistry = quantRegistry;
-  //     this.graphQL = graphQL;
-  // }
   private constructor(threads: Threads, odentity: Odentity, quantRegistry: QuantRegistry, graphQL: GraphQL, web3: Web3, circlesCore: CirclesCore, eventBroker: EventBroker) {
     this.threads = threads;
     this.odentity = odentity;
-    // this.localDB = thread;
-    // this.remoteDB = thread2;
     this.quantRegistry = quantRegistry;
     this.graphQL = graphQL;
+
     this.web3 = web3;
     this.circlesCore = circlesCore;
     this.eventBroker = eventBroker;
@@ -59,17 +50,16 @@ export class Quantum {
     StopWatch.start("threads");
     var threads = new Threads();
     StopWatch.stop("threads");
-    StopWatch.start("Odentity");
-    var odentity = await Odentity.init(threads);
-    StopWatch.stop("Odentity");
 
-    var quantRegistry = await QuantRegistry.init(threads);
-    var seeder = new Seeder();
-    await seeder.createCollections(quantRegistry);
+    var odentity = await Odentity.init(threads);
+
+    StopWatch.start("registry");
+    var quantRegistry = await QuantRegistry.init(threads, true);
+    StopWatch.stop("registry");
+
+    StopWatch.start("graphQL");
     var graphQL = await GraphQL.init(quantRegistry);
-    // return new Quantum(threads, odentity, uantRegistry, graphQL);
-    // var local = await LocalThread.init("omodb");
-    // var remote = await RemoteThread.init("omoooooodb");
+    StopWatch.stop("graphQL");
 
     const provider = new Web3.providers.WebsocketProvider(
       !process.env.ETHEREUM_NODE_WS ? "-" : process.env.ETHEREUM_NODE_WS,

@@ -57,6 +57,7 @@ export class RemoteThread {
     catch (e) {
       if (e.message == "collection not found") return false;
       throw e;
+
     }
   }
 

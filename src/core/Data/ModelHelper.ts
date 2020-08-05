@@ -1,19 +1,20 @@
 import { Quant } from "./Entities/Quant";
 import { ModelQuant } from "./ModelQuant";
 import { SyncedThread } from "../Textile/SyncedThread";
+import { QuantRegistry } from "../Quant/QuantRegistry";
 
 export class ModelHelper {
-  async getGraphQLResolvers(thread: SyncedThread): Promise<any> {
+  async getGraphQLResolvers(quantRegistry: QuantRegistry): Promise<any> {
     var query: any = {};
     var subscription: any = {};
     var mutation: any = {};
     var typeResolvers: any = {};
 
     for (let modelQuant of this.modelQuanta) {
-      await modelQuant.addQueryResolver(query, thread);
-      await modelQuant.addMutationResolver(mutation, thread);
-      await modelQuant.addSubscriptionResolver(subscription, thread);
-      await modelQuant.addTypeResolver(typeResolvers, thread);
+      await modelQuant.addQueryResolver(query, quantRegistry);
+      await modelQuant.addMutationResolver(mutation, quantRegistry);
+      await modelQuant.addSubscriptionResolver(subscription, quantRegistry);
+      await modelQuant.addTypeResolver(typeResolvers, quantRegistry);
     }
 
     var resolvers = {
@@ -33,7 +34,6 @@ export class ModelHelper {
 
   constructor(quanta: Quant[]) {
     this.modelQuanta = [];
-    //debugger;
     for (let quant of quanta) {
       this.modelQuanta.push(ModelQuant.byQuant(quant));
     }

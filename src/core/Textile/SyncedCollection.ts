@@ -10,43 +10,48 @@ export class SyncedCollection<T extends Instance> implements ICollection<T>
 {
   collectionName: string;
   localCollection: LocalCollection<T>;
-  remoteCollection: RemoteCollection<T>;
+  remoteCollectionPromise: Promise<RemoteCollection<T>>;
   static syncedCollections: string[] = [];
 
-  private constructor(localCollection: LocalCollection<T>, remoteCollection: RemoteCollection<T>, collectionName: string) {
+  private constructor(localCollection: LocalCollection<T>, remoteCollectionPromise: Promise<RemoteCollection<T>>, collectionName: string) {
     this.localCollection = localCollection;
-    this.remoteCollection = remoteCollection;
+    this.remoteCollectionPromise = remoteCollectionPromise;
     this.collectionName = collectionName;
   }
 
-
-  static async init<T extends Instance>(collectionName: string, localThread: LocalThread, remoteThread: RemoteThread): Promise<SyncedCollection<T>> {
+  static async init<T extends Instance>(collectionName: string, localThread: LocalThread, remoteThread: RemoteThread, awaitSync: boolean = false): Promise<SyncedCollection<T>> {
     let localCollection = await localThread.getCollection<T>(collectionName);
-    let remoteCollection = await remoteThread.getCollection<T>(collectionName);
-    let instance = new SyncedCollection<T>(localCollection, remoteCollection, collectionName);
+    let remoteCollectionPromise = remoteThread.getCollection<T>(collectionName);
+    let instance = new SyncedCollection<T>(localCollection, remoteCollectionPromise, collectionName);
     if (!this.syncedCollections.some(x => x == collectionName)) {
       this.syncedCollections.push(collectionName);
-      this.fakeSyncCollections<T>(localCollection, remoteCollection, collectionName);
+      // if (awaitSync)
+      //   await this.fakeSyncCollections<T>(localCollection, remoteCollection, collectionName);
+      // else
+      this.fakeSyncCollections<T>(localCollection, remoteCollectionPromise, collectionName);
     }
     return instance;
   }
 
-  private static async fakeSyncCollections<T extends Instance>(localCollection: LocalCollection<T>, remoteCollection: RemoteCollection<T>, collectionName: string) {
+
+
+  private static async fakeSyncCollections<T extends Instance>(localCollection: LocalCollection<T>, remoteCollectionPromise: Promise<RemoteCollection<T>>, collectionName: string) {
     console.log(`start sync with ${collectionName}`)
-    let foo = await remoteCollection.all();
-    await localCollection.saveMany(foo);
+    let remoteCollection = await remoteCollectionPromise;
+    await localCollection.saveMany(await remoteCollection.all());
     remoteCollection.observeUpdate(["CREATE"], "", async (instance) => {
-      console.log("SYNC CREATE", instance);
-      await localCollection.createOrSave(instance);
-    }),
-      remoteCollection.observeUpdate(["SAVE"], "", async (instance) => {
-        console.log("SYNC SAVE", instance);
-        await localCollection.createOrSave(instance);
-      })
+      if (instance)
+        await localCollection.createOrSave(instance.instance);
+    });
+    remoteCollection.observeUpdate(["SAVE"], "", async (instance) => {
+      if (instance)
+        await localCollection.createOrSave(instance.instance);
+    });
     // remoteCollection.observeUpdate(["DELETE"], "", async (instance) => {
     //     console.log("DELETE", instance);
     //     await localCollection.save(instance);
     // })
+    console.log(`sync completed with ${collectionName}`)
   }
 
   async all(): Promise<T[]> {
@@ -54,7 +59,6 @@ export class SyncedCollection<T extends Instance> implements ICollection<T>
   }
 
   async find(query: FilterQuery<T>): Promise<T[]> {
-
     // return await this.localCollection.find(query);
     return await this.localCollection.find(query);
   }
@@ -64,68 +68,69 @@ export class SyncedCollection<T extends Instance> implements ICollection<T>
   }
 
   async deleteCollection(): Promise<void> {
-    this.remoteCollection.deleteCollection();
+    // this.remoteCollection.deleteCollection();
     return await this.localCollection.deleteCollection();
   }
 
   async truncate(): Promise<void> {
-    this.remoteCollection.truncate();
+    let rc = await this.remoteCollectionPromise;
+    await rc.truncate();
     return await this.localCollection.truncate();
   }
 
   async create(value: T): Promise<T> {
     value = await this.localCollection.create(value);
-    this.remoteCollection.create(value);
+    this.remoteCollectionPromise.then(rc => rc.createOrSave(value));
     return value;
   }
 
   async createMany(values: T[]): Promise<T[]> {
     values = await this.localCollection.createMany(values);
-    this.remoteCollection.createMany(values);
+    this.remoteCollectionPromise.then(rc => rc.createOrSaveMany(values));
     return values;
   }
 
   async save(value: T): Promise<T> {
     value = await this.localCollection.save(value);
-    if (this.remoteCollection)
-      this.remoteCollection.save(value);
+    this.remoteCollectionPromise.then(rc => rc.createOrSave(value));
     return value;
   }
 
   async saveMany(values: T[]): Promise<T[]> {
     values = await this.localCollection.saveMany(values);
-    this.remoteCollection.saveMany(values);
+    this.remoteCollectionPromise.then(rc => rc.createOrSaveMany(values));
     return values;
   }
 
   async createOrSave(value: T): Promise<T> {
     value = await this.localCollection.createOrSave(value);
-    this.remoteCollection.createOrSave(value);
+    this.remoteCollectionPromise.then(rc => rc.createOrSave(value));
     return value;
   }
+
   async createOrSaveMany(values: T[]): Promise<T[]> {
     values = await this.localCollection.createOrSaveMany(values);
-    this.remoteCollection.createOrSaveMany(values);
+    this.remoteCollectionPromise.then(rc => rc.createOrSaveMany(values));
     return values;
   }
 
   async delete(value: T): Promise<void> {
-    this.remoteCollection.delete(value);
+    this.remoteCollectionPromise.then(rc => rc.delete(value));
     return this.localCollection.delete(value);
   }
 
   async deleteMany(values: T[]): Promise<void> {
-    this.remoteCollection.deleteMany(values);
+    this.remoteCollectionPromise.then(rc => rc.deleteMany(values));
     return this.localCollection.deleteMany(values);
   }
 
   async deleteById(value: string): Promise<void> {
-    this.remoteCollection.deleteById(value);
+    this.remoteCollectionPromise.then(rc => rc.deleteById(value));
     return await this.localCollection.deleteById(value);
   }
 
   async deleteManyByIds(values: string[]): Promise<void> {
-    this.remoteCollection.deleteManyByIds(values);
+    this.remoteCollectionPromise.then(rc => rc.deleteManyByIds(values));
     return this.localCollection.deleteManyByIds(values);
   }
 

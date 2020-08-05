@@ -1,7 +1,8 @@
 import { Quant } from "./Entities/Quant";
 import { JSONSchema } from "@textile/threads-database";
 import { PubSub } from "graphql-subscriptions";
-import { SyncedThread } from "../Textile/SyncedThread";
+import { QuantRegistry } from "../Quant/QuantRegistry";
+import { StopWatch } from "../StopWatch";
 let pluralize = require('pluralize');
 
 
@@ -63,37 +64,37 @@ export class ModelQuant {
         `;
     }
 
-    async addQueryResolver(query: any, thread: SyncedThread) {
+    async addQueryResolver(query: any, quantRegistry: QuantRegistry) {
         if (this.isManyToMany) return "";
-        var collection = await thread.getCollection(this.collectionName);
+        StopWatch.start("GET COLLECTION");
+        var collection = await quantRegistry.getCollection(this.collectionName);
+        StopWatch.stop("GET COLLECTION");
         query[pluralize(this.typeName(this.name))] = {
             resolve: async () => await collection.find({})
         };
         query[this.typeName(this.name) + 'ById'] = async (_, { _id }) => await collection.findById(_id);
     }
 
-    async addTypeResolver(typeResolvers: any, thread: SyncedThread) {
+    async addTypeResolver(typeResolvers: any, quantRegistry: QuantRegistry) {
         var retval: any = {};
         for (let rel of this.oneToManyRelations) {
-            let collection = await thread.getCollection(rel.reference);
-
-          retval[rel.name] = async (x: any) => {
-            let query:any = {};
-            query[this.collectionName.toLowerCase() + 'Id'] = x._id;
-            return await collection.find(
-              query
+            let collection = await quantRegistry.getCollection(rel.reference);
+            retval[rel.name] = async (x: any) => {
+                let query: any = {};
+                query[this.collectionName.toLowerCase() + 'Id'] = x._id;
+                return await collection.find(
+                    query
               /*{
                 ands: [{
                     fieldPath: this.collectionName.toLowerCase() + 'Id',
                     value: { string: x._id }
                 }]
-            }*/
-            );}
-        }
-        ;
+            }*/);
+            }
+        };
 
         for (let rel of this.ManyToOneRelations) {
-            let collection = await thread.getCollection(rel.reference);
+            let collection = await quantRegistry.getCollection(rel.reference);
             retval[rel.name] = async (x: any) => {
                 if (x[rel.fieldName])
                     try {
@@ -101,7 +102,7 @@ export class ModelQuant {
 
                     }
                     catch (e) {
-                        // //debugger;
+                        // debugger;
                         // await new Promise(resolve => setTimeout(resolve, 2000));
                         // return await collection.findById(x[rel.fieldName]);
 
@@ -114,9 +115,9 @@ export class ModelQuant {
         typeResolvers[this.collectionName] = retval;
     }
 
-    async addMutationResolver(mutation: any, thread: SyncedThread) {
+    async addMutationResolver(mutation: any, quantRegistry: QuantRegistry) {
         if (this.isManyToMany) return "";
-        var collection = await thread.getCollection(this.collectionName);
+        var collection = await quantRegistry.getCollection(this.collectionName);
         mutation['add' + this.typeName(this.name)] = {
             resolve: async (_, data) => {
                 var entity: any = {};
@@ -133,7 +134,7 @@ export class ModelQuant {
                     let value = data[relation.fieldName];
                     if (value) {
                         entity[relation.reference.toLowerCase() + 'Id'] = value;
-                        var refCollection = await thread.getCollection(relation.reference);
+                        var refCollection = await quantRegistry.getCollection(relation.reference);
                         var refEntity = await refCollection.findById(data[relation.fieldName]);
                         if (refEntity == null) throw new Error("Referenced item not found");
                         refEntity[this.collectionName.toLowerCase() + 'Id'] = entity._id;
@@ -155,7 +156,7 @@ export class ModelQuant {
                 this.oneToManyRelations.forEach(async relation => {
                     let value = data[relation.fieldName];
                     if (value && Array.isArray(value) && value.length != 0) {
-                        var refCollection = await thread.getCollection(relation.reference);
+                        var refCollection = await quantRegistry.getCollection(relation.reference);
                         var entities = await refCollection.find({
                             ors: value.map(x => {
                                 return {
@@ -184,10 +185,9 @@ export class ModelQuant {
     }
     static subscriptions: { collection: string }[] = [];
 
-    async addSubscriptionResolver(subscription: any, thread: SyncedThread) {
+    async addSubscriptionResolver(subscription: any, quantRegistry: QuantRegistry) {
         if (this.isManyToMany) return "";
-        console.log(this.collectionName + "_changed");
-        var collection = await thread.getCollection(this.collectionName);
+        var collection = await quantRegistry.getCollection(this.collectionName);
         subscription[pluralize(this.typeName(this.name))] = {
             resolve: async () => {
                 return await collection.find({})
@@ -269,7 +269,6 @@ export class ModelQuant {
         this.oneToOneRelations = [];
         try {
             if (quant) {
-                //debugger;
                 this.createByQuant(quant);
             }
             if (collection1 && collection2)

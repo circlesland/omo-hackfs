@@ -82,22 +82,21 @@ export class RemoteCollection<T extends Instance> implements ICollection<T>
   }
 
   async createOrSave(value: T): Promise<T> {
-    if (value._id)
+    let client = await this.getClient();
+    if (value._id && await client.has(this.threadId, this.collectionName, [value._id]))
       return await this.save(value);
     else
       return await this.create(value);
   }
 
   async createOrSaveMany(values: T[]): Promise<T[]> {
+    let client = await this.getClient();
     var updates: T[] = [];
     var creates: T[] = [];
-    let client = await this.getClient();
-
     for (let val of values) {
       if (val._id && await client.has(this.threadId, this.collectionName, [val._id])) updates.push(val);
       else creates.push(val);
     }
-
     let updateAsync = this.saveMany(updates);
     let createAsync = this.createMany(creates);
     let result = await Promise.all([updateAsync, createAsync]);
@@ -130,14 +129,4 @@ export class RemoteCollection<T extends Instance> implements ICollection<T>
       actionTypes: actionTypes
     }], callback)
   };
-
-  // async observeAction(actionTypes: Map<string, Function>, id: string | null) {
-  //   let client = await this.getClient();
-  //   console.error(("NOT IMPLEMENTED"))
-  //   client.listen(this.threadId, [{
-  //     collectionName: this.collectionName,
-  //     instanceID: id || '',
-  //     actionTypes: ["ALL"]
-  //   }], (foo) => console.log(foo))
-  // }
 }
