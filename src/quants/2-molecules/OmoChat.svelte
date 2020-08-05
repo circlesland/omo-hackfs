@@ -7,7 +7,7 @@
   import { Messages as MessageQueries } from "./../../queries/omo/chat/messages";
   import { Messages as MessageMutations } from "./../../mutations/omo/chat/messages";
   import { observe } from "svelte-observable";
-  import {Omosapiens} from "../../queries/omo/odentity/omosapiens";
+  import { Omosapiens } from "../../queries/omo/odentity/omosapiens";
 
   let newRoomName = "";
   let rooms = observe(RoomQueries.rooms());
@@ -38,13 +38,10 @@
   //   }
   // }
 
-
   async function lookupName(odentityId) {
     const omosapien = await Omosapiens.byOdentityId(odentityId);
-    if (!omosapien || omosapien.length === 0)
-      return odentityId
-    else
-      return omosapien.name;
+    if (!omosapien || omosapien.length === 0) return odentityId;
+    else return omosapien.name;
   }
 </script>
 
@@ -131,8 +128,8 @@
 
   {#if currentRoom._id != null}
     <div class="content-left">
-      <h1 class="text-center p-3 uppercase">{currentRoom.name}</h1>
-      <div class="py-6 px-8 text-md h-full overflow-y-scroll">
+      <div class="h-full py-6 px-8 text-md overflow-y-scroll">
+        <h1 class="text-center p-3 uppercase">{currentRoom.name}</h1>
         {#if messages}
           {#await $messages}
             pending - No value or error has been received yet

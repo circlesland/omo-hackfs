@@ -6,8 +6,7 @@
   import {StartFlow} from "../../events/omo/shell/startFlow";
 
   const client = new ApolloClient({
-    uri:
-            "https://graph.circles.garden/subgraphs/name/CirclesUBI/circles-subgraph"
+    uri: "https://graph.circles.garden/subgraphs/name/CirclesUBI/circles-subgraph"
   });
 
   export let data = {
@@ -35,7 +34,7 @@
       if (o.odentity._current.circleSafe) {
         navigate("omosafe");
       } else {
-        o.publishEventAsync(new StartFlow("flows:omo.odentity.createOmosapien"));
+        o.publishShellEventAsync(new StartFlow("flows:omo.odentity.createOmosapien"));
         //navigate("mamaomo");
       }
     });

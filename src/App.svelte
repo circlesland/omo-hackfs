@@ -29,6 +29,7 @@
   import {Navigated} from "./events/omo/shell/navigated";
   import {Logout} from "./events/omo/shell/logout";
   import {ClosePopup} from "./events/omo/shell/closePopup";
+  import {ClearDatabase} from "./events/omo/shell/clearDatabase"
 
   let subscription = null;
   onDestroy(() => {
@@ -72,6 +73,9 @@
         case "events:omo.shell.logout":
           window.o.odentity.logout();
           window.o.publishShellEventAsync(new ClosePopup());
+          break;
+        case "events:omo.shell.clearDatabase":
+          console.error("Oida, was machst Du DB leer Lan?")
           break;
         case "events:omo.shell.log":
           if (next.data.dataJson) {
@@ -139,6 +143,10 @@
         {
           title: "Logout",
           event: () => new Logout()
+        },
+        {
+          title: "ClearDatabase",
+          event: () => new ClearDatabase()
         }
       ]
     },
@@ -149,18 +157,13 @@
       quant: OmoDream,
       authenticate: true,
       actions: [
-        // TODO: Custom actions should be available on every level
         {
-          title: "Start time commitment",
-          event: () => new StartFlow("flows:omo.safe.trust")
+          title: "Convert to product",
+          event: () => new StartFlow("flows:omo.dreams.convertToProduct")
         },
         {
-          title: "Ask question",
-          event: () => new StartFlow("flows:omo.safe.trust")
-        },
-        {
-          title: "Send chat message",
-          event: () => new StartFlow("flows:omo.safe.trust")
+          title: "Invite someone",
+          event: () => new StartFlow("flows:omo.dreams.inviteToDream")
         }
       ]
     },
