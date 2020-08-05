@@ -70,6 +70,8 @@ import { revokeInitialTrust as revokeInitialTrustSideEffect } from "./sideEffect
 import { convertToProduct as convertToProductSideEffect } from "./sideEffects/omo/dreams/convertToProduct";
 import { inviteToDream as inviteToDreamSideEffect } from "./sideEffects/omo/dreams/inviteToDream";
 import { createChatRoom as createChatRoomSideEffect } from "./sideEffects/omo/chat/createChatRoom";
+import { addReservation as addReservationSideEffect } from "./sideEffects/omo/dreams/addReservation";
+import { addSubscription as addSubscriptionSideEffect} from "./sideEffects/omo/dreams/addSubscription";
 
 //
 // Schema
@@ -189,8 +191,9 @@ export function init() {
     connectSafeSideEffect,
     convertToProductSideEffect,
     inviteToDreamSideEffect,
-    createChatRoomSideEffect
-
+    createChatRoomSideEffect,
+    addReservationSideEffect,
+    addSubscriptionSideEffect
   ].forEach((o) => {
     w.sideEffectRegistrar.set(o["_$schemaId"], o);
   });

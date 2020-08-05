@@ -3,8 +3,8 @@
   import OmoVideo from "./OmoVideo";
   import OmoProfilePage from "./OmoProfilePage";
   import {Dreams as DreamsQueries} from "../../queries/omo/dreams/dreams";
-  import {Dreams as DreamsMutations} from "../../mutations/omo/dreams/dreams";
-  import {Omosapiens} from "../../queries/omo/odentity/omosapiens";
+  import {StartFlow} from "../../events/omo/shell/startFlow";
+  import OmoNavAside from "./../2-molecules/OmoNavAside.svelte";
 
   let dreamId;
 
@@ -23,33 +23,14 @@
     levelAndLeap = DreamsQueries.calcLevel(totalInteractions);
   }
 
-  async function vote() {
-    const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
-    await DreamsMutations.newVote(dreamId, omosapien._id);
-  }
-  async function reservate() {
-    const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
-    await DreamsMutations.newReservation(dreamId, omosapien._id);
-  }
-  async function createProduct(price) {
-    const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
-    const product = await DreamsMutations.createProductFromDream(dreamId, omosapien._id, price);
-  }
-  /*
-  async function subscribe() {
-    const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
-    await DreamsMutations.newSubscription(dreamId, omosapien._id);
-  }
-   */
-
   calcInteractions();
 </script>
 
 <style>
   .omo-layout {
     display: grid;
-    grid-template-areas: "top top" "content-left content-right";
-    grid-template-columns: 1fr 24rem;
+    grid-template-areas: "top top nav-right" "content-left content-right nav-right";
+    grid-template-columns: 1fr 24rem 3rem;
     grid-template-rows: 1rem 1fr;
     overflow: hidden;
   }
@@ -72,6 +53,11 @@
     grid-template-areas: "aside-top" "aside-bottom";
     grid-template-columns: 1fr;
     grid-template-rows: 18rem 1fr;
+  }
+
+  .nav-right {
+    grid-area: nav-right;
+    height: 100%;
   }
 
   .aside-top {
@@ -106,6 +92,10 @@
       <OmoProfilePage data={data.data.DreamById} />
     </div>
 
+    <div class="nav-right">
+      <OmoNavAside />
+    </div>
+
     <div class="content-right bg-gray-200 py-6 px-8">
       <div class="aside-top text-md">
         <div class="bg-gray-300">
@@ -123,11 +113,22 @@
               future [product service title placeholder].
             </p>
           </div>
-          <p
-            class="text-md w-full py-2 bg-tertiary hover:bg-secondary
-            text-center text-white uppercase font-bold cursor-pointer">
-            reservate product now
-          </p>
+          {#if data.data.DreamById.state == "dream"}
+            <p
+                    class="text-md w-full py-2 bg-tertiary hover:bg-secondary
+            text-center text-white uppercase font-bold cursor-pointer"
+                    on:click={() => window.o.publishShellEventAsync(new StartFlow("flows:omo.dreams.addReservation", data.data.DreamById._id))}>
+              reservate product now
+            </p>
+          {/if}
+          {#if data.data.DreamById.state == "product"}
+            <p
+                    class="text-md w-full py-2 bg-tertiary hover:bg-secondary
+            text-center text-white uppercase font-bold cursor-pointer"
+                    on:click={() => window.o.publishShellEventAsync(new StartFlow("flows:omo.dreams.addSubscription", data.data.DreamById._id))}>
+              subscribe product now
+            </p>
+          {/if}
         </div>
         <!-- <input type="button" on:click={vote} value="Vote" />
         <input type="button" on:click={reservate} value="Reservate" />

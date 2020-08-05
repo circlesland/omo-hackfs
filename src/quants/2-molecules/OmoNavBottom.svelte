@@ -41,7 +41,7 @@
                     "' in 'window.flowRegistrar'"
             );
           }
-          processNode = flowImpl();
+          processNode = flowImpl(next.data.argument);
           if (!isOpen) isOpen = true;
           break;
         case "events:omo.shell.closePopup":
