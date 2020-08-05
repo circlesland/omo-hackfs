@@ -158,20 +158,12 @@
       authenticate: true,
       actions: [
         {
-          title: "Start time commitment",
-          event: () => new StartFlow("flows:omo.safe.trust")
-        },
-        {
-          title: "Ask question",
-          event: () => new StartFlow("flows:omo.safe.trust")
-        },
-        {
-          title: "Send chat message",
-          event: () => new StartFlow("flows:omo.safe.trust")
-        },
-        {
           title: "Convert to product",
           event: () => new StartFlow("flows:omo.dreams.convertToProduct")
+        },
+        {
+          title: "Invite someone",
+          event: () => new StartFlow("flows:omo.dreams.inviteToDream")
         }
       ]
     },

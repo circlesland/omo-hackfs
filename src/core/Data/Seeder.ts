@@ -9,7 +9,6 @@ import { Vote } from "../../schema/omo/dreams/vote";
 import { ProductSubscription } from "../../schema/omo/dreams/productSubscription";
 import { Location } from "../../schema/omo/dreams/location";
 import { Reservation } from "../../schema/omo/dreams/reservation";
-import { Product } from "../../schema/omo/dreams/product";
 
 export interface SeedQuant {
   name: string,
@@ -75,11 +74,6 @@ const seeds: Seed[] = [{
       {
         name: "Reservation",
         schema: Reservation,
-        data: []
-      },
-      {
-        name: "Product",
-        schema: Product,
         data: []
       }
     ]
