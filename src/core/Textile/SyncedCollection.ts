@@ -36,6 +36,7 @@ export class SyncedCollection<T extends Instance> implements ICollection<T>
 
 
   private static async fakeSyncCollections<T extends Instance>(localCollection: LocalCollection<T>, remoteCollectionPromise: Promise<RemoteCollection<T>>, collectionName: string) {
+    if (window.o.odentity.current == null) return;// No sync if not logged in
     console.log(`start sync with ${collectionName}`)
     let remoteCollection = await remoteCollectionPromise;
     await localCollection.saveMany(await remoteCollection.all());
