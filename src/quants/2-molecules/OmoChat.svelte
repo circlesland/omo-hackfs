@@ -90,7 +90,7 @@
         {#await $rooms}
           pending - No value or error has been received yet
         {:then result}
-          {#each result.data.ChatRooms as room}
+          {#each result as room}
             <div
               on:click={() => (currentRoom = room)}
               class="text-md w-full py-2 bg-gray-200 hover:bg-secondary

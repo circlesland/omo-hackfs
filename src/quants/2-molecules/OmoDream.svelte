@@ -93,7 +93,7 @@
     </div>
 
     <div class="nav-right">
-      <OmoNavAside />
+      <OmoNavAside dreamId={data.data.DreamById._id} />
     </div>
 
     <div class="content-right bg-gray-200 py-6 px-8">

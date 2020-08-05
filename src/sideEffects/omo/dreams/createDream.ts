@@ -12,8 +12,8 @@ export const createDream: ISideEffect<IProcessContext, any> = {
     type: "schema:omo.any"
   }],
   outputs: [{
-    name: "void",
-    type: "schema:omo.void"
+    name: "dreamId",
+    type: "schema:omo.string"
   }],
   execute: async (context, argument) =>
   {
@@ -25,7 +25,7 @@ export const createDream: ISideEffect<IProcessContext, any> = {
     const newDream = await DreamsMutations.createNewDream(dreamName, description, city, safeAddress);
     console.log("Created new dream:", newDream);
 
-    context.local.outputs["void"] = {};
+    context.local.outputs["dreamId"] = newDream._id;
   },
   canExecute: async context => true
 };

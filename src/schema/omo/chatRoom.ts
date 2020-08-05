@@ -19,6 +19,9 @@ export const ChatRoom: JSONSchema = {
     text: {
       type: "string",
     },
+    dreamId: {
+      type: "string",
+    },
     messages: {
       $ref: "#/definitions/oneToMany",
       description: "Message"

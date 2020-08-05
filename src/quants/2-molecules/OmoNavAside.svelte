@@ -1,4 +1,5 @@
 <script>
+  export let dreamId = null;
   export let navitems = [
     {
       icon: "fa-bullseye",

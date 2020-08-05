@@ -69,7 +69,7 @@ import { createDream as createDreamSideEffect } from "./sideEffects/omo/dreams/c
 import { revokeInitialTrust as revokeInitialTrustSideEffect } from "./sideEffects/omo/circles/revokeInitialTrust";
 import { convertToProduct as convertToProductSideEffect } from "./sideEffects/omo/dreams/convertToProduct";
 import { inviteToDream as inviteToDreamSideEffect } from "./sideEffects/omo/dreams/inviteToDream";
-import { createChatRoom as createChatRoomSideEffect } from "./sideEffects/omo/chat/createChatRoom";
+import { createChatRoom as createChatRoomSideEffect } from "./sideEffects/omo/dreams/createChatRoom";
 import { addReservation as addReservationSideEffect } from "./sideEffects/omo/dreams/addReservation";
 import { addSubscription as addSubscriptionSideEffect} from "./sideEffects/omo/dreams/addSubscription";
 
