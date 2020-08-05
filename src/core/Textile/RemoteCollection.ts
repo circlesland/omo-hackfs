@@ -83,10 +83,15 @@ export class RemoteCollection<T extends Instance> implements ICollection<T>
 
   async createOrSave(value: T): Promise<T> {
     let client = await this.getClient();
-    if (value._id && await client.has(this.threadId, this.collectionName, [value._id]))
-      return await this.save(value);
-    else
+    try {
       return await this.create(value);
+    }
+    catch (e) {
+      debugger;
+      if (e.message == "can't create already existing instance")
+        return await this.save(value);
+      throw e;
+    }
   }
 
   async createOrSaveMany(values: T[]): Promise<T[]> {
