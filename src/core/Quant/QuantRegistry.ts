@@ -5,16 +5,20 @@ import { Quant as QuantSchema } from "../../schema/omo/quant";
 import { ModelHelper } from "../Data/ModelHelper";
 import { SyncedCollection } from "../Textile/SyncedCollection";
 import { SyncedThread } from "../Textile/SyncedThread";
+import { Instance } from "@textile/threads-store";
+
 
 export class QuantRegistry {
   quantThread: SyncedThread;
   quantaCollection: SyncedCollection<Quant>;
   modelHelper: ModelHelper;
+  collections: SyncedCollection<Instance>[];
 
   private constructor(quantaCollection: SyncedCollection<Quant>, quantThread: SyncedThread, modelHelper: ModelHelper) {
     this.quantaCollection = quantaCollection;
     this.quantThread = quantThread;
     this.modelHelper = modelHelper;
+    this.collections = [];
   }
 
   async resetToDefault() {
@@ -30,10 +34,19 @@ export class QuantRegistry {
     return instance;
   }
 
-  async getCollection(collectionName) {
+  async getCollection<T extends Instance>(collectionName) {
     var quant = this.modelHelper.modelQuanta.find(x => x.collectionName == collectionName);
     if (!quant) throw new Error("Quant not registered");
-    return this.quantThread.getOrCreateCollection(collectionName, quant.toTextileSchema());
+    let collection = this.collections.find(x => x.collectionName == collectionName);
+    if (collection) return collection;
+    let col = await this.quantThread.getOrCreateCollection(collectionName, quant.toTextileSchema());
+    this.collections.push(col);
+    return col;
+  }
+
+  async syncAllCollections() {
+    for (let c of this.collections)
+      SyncedCollection.fakeSyncCollections(c.localCollection, c.remoteCollectionPromise, c.collectionName);
   }
 
   static async getModelHelper(collection: SyncedCollection<Quant>, seed: boolean): Promise<ModelHelper> {

@@ -21,7 +21,7 @@ export class Quantum {
   readonly quantRegistry: QuantRegistry;
   readonly threads: Threads;
 
-  readonly isAdmin:boolean = true;
+  readonly isAdmin: boolean = true;
 
   private constructor(threads: Threads, odentity: Odentity, quantRegistry: QuantRegistry, graphQL: GraphQL, web3: Web3, circlesCore: CirclesCore, eventBroker: EventBroker) {
     this.threads = threads;
@@ -55,6 +55,9 @@ export class Quantum {
     StopWatch.start("graphQL");
     var graphQL = await GraphQL.init(quantRegistry);
     StopWatch.stop("graphQL");
+
+    if (odentity.current != null)
+      quantRegistry.syncAllCollections();
 
     const provider = new Web3.providers.WebsocketProvider(
       !process.env.ETHEREUM_NODE_WS ? "-" : process.env.ETHEREUM_NODE_WS,

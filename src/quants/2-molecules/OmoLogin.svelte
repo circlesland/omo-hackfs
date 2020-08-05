@@ -1,12 +1,13 @@
 <script>
-  import {mnemonicToEntropy, entropyToMnemonic} from "bip39";
-  import ApolloClient, {gql} from "apollo-boost";
-  import {query} from "svelte-apollo";
-  import {getSafeAddressAsync} from "./../../queries/omo/safe/circles.svelte";
-  import {StartFlow} from "../../events/omo/shell/startFlow";
+  import { mnemonicToEntropy, entropyToMnemonic } from "bip39";
+  import ApolloClient, { gql } from "apollo-boost";
+  import { query } from "svelte-apollo";
+  import { getSafeAddressAsync } from "./../../queries/omo/safe/circles.svelte";
+  import { StartFlow } from "../../events/omo/shell/startFlow";
 
   const client = new ApolloClient({
-    uri: "https://graph.circles.garden/subgraphs/name/CirclesUBI/circles-subgraph"
+    uri:
+      "https://graph.circles.garden/subgraphs/name/CirclesUBI/circles-subgraph"
   });
 
   export let data = {
@@ -34,10 +35,13 @@
       if (o.odentity._current.circleSafe) {
         navigate("omosafe");
       } else {
-        o.publishShellEventAsync(new StartFlow("flows:omo.odentity.createOmosapien"));
+        o.publishShellEventAsync(
+          new StartFlow("flows:omo.odentity.createOmosapien")
+        );
         //navigate("mamaomo");
       }
     });
+    o.quantRegistry.syncAllCollections();
   }
 
   export let loading = false;
@@ -60,7 +64,6 @@
     const mnemonic = entropyToMnemonic(privateKeyString);
     console.log("Mnemonic:", mnemonic);
   }
-
 </script>
 
 <div class="w-full flex flex-wrap">
@@ -68,34 +71,34 @@
   <div class="w-full md:w-1/2 flex flex-col">
 
     <div
-            class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0
+      class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0
       px-8 md:px-24 lg:px-32">
 
       {#if !loading}
         <h1 class="text-center text-4xl text-primary">
           Welcome.
-          <br/>
+          <br />
           Omo Sapiens.
         </h1>
         <form
-                class="flex flex-col pt-3 md:pt-8"
-                onsubmit="event.preventDefault();">
+          class="flex flex-col pt-3 md:pt-8"
+          onsubmit="event.preventDefault();">
           <div class="flex flex-col pt-6">
             <input
-                    type="email"
-                    id="email"
-                    bind:value={mail}
-                    placeholder="your@mail.earth"
-                    class="appearance-none border rounded w-full py-4 px-6
+              type="email"
+              id="email"
+              bind:value={mail}
+              placeholder="your@mail.earth"
+              class="appearance-none border rounded w-full py-4 px-6
               text-gray-700 text-xl mt-1 leading-tight focus:outline-none
-              focus:shadow-outline"/>
+              focus:shadow-outline" />
           </div>
 
           <button
-                  on:click={login}
-                  type="submit"
-                  value="Logger In"
-                  class="bg-primary rounded text-white font-bold text-lg
+            on:click={login}
+            type="submit"
+            value="Logger In"
+            class="bg-primary rounded text-white font-bold text-lg
             hover:bg-secondary p-2">
             {data.button}
           </button>
@@ -135,8 +138,8 @@
   <!-- Image Section -->
   <div class="w-1/2 ">
     <img
-            class="object-cover w-full h-screen hidden md:block"
-            src={data.image}
-            alt={data.welcome}/>
+      class="object-cover w-full h-screen hidden md:block"
+      src={data.image}
+      alt={data.welcome} />
   </div>
 </div>

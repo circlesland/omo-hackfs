@@ -11,7 +11,6 @@ export class SyncedCollection<T extends Instance> implements ICollection<T>
   collectionName: string;
   localCollection: LocalCollection<T>;
   remoteCollectionPromise: Promise<RemoteCollection<T>>;
-  static syncedCollections: string[] = [];
 
   private constructor(localCollection: LocalCollection<T>, remoteCollectionPromise: Promise<RemoteCollection<T>>, collectionName: string) {
     this.localCollection = localCollection;
@@ -23,20 +22,12 @@ export class SyncedCollection<T extends Instance> implements ICollection<T>
     let localCollection = await localThread.getCollection<T>(collectionName);
     let remoteCollectionPromise = remoteThread.getCollection<T>(collectionName);
     let instance = new SyncedCollection<T>(localCollection, remoteCollectionPromise, collectionName);
-    if (!this.syncedCollections.some(x => x == collectionName)) {
-      this.syncedCollections.push(collectionName);
-      // if (awaitSync)
-      //   await this.fakeSyncCollections<T>(localCollection, remoteCollection, collectionName);
-      // else
-      this.fakeSyncCollections<T>(localCollection, remoteCollectionPromise, collectionName);
-    }
     return instance;
   }
 
 
 
-  private static async fakeSyncCollections<T extends Instance>(localCollection: LocalCollection<T>, remoteCollectionPromise: Promise<RemoteCollection<T>>, collectionName: string) {
-    if (window.o.odentity.current == null) return;// No sync if not logged in
+  static async fakeSyncCollections<T extends Instance>(localCollection: LocalCollection<T>, remoteCollectionPromise: Promise<RemoteCollection<T>>, collectionName: string) {
     console.log(`start sync with ${collectionName}`)
     let remoteCollection = await remoteCollectionPromise;
     await localCollection.saveMany(await remoteCollection.all());

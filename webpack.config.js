@@ -68,7 +68,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': JSON.stringify(dotenv.parsed),
     }),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
     // new CopyPlugin({
     // 	patterns: [
     // 		{ from: 'public', to: '' },
