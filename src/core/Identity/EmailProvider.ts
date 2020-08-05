@@ -12,7 +12,7 @@ export class EmailProvider implements IdentityProviderInterface {
       To: providerIdentity.externalReference,
       From: 'team@omo.earth',
       Subject: `Magic login link`,
-      Body: `Please follow this link to <a target="_blank" href="${window.location.protocol}//${window.location.host}/?page=magicLogin&accept=${loginRequest._id}">login</a>`
+      Body: `Please follow this link to <a target="_blank" href="${window.location.protocol}//${window.location.host}/magic.html?&accept=${loginRequest._id}">login</a>`
     }).then(
       message => console.log("MAIL", message)
     )

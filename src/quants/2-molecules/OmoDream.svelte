@@ -4,6 +4,7 @@
   import OmoProfilePage from "./OmoProfilePage";
   import {Dreams as DreamsQueries} from "../../queries/omo/dreams/dreams";
   import {StartFlow} from "../../events/omo/shell/startFlow";
+  import OmoNavAside from "./../2-molecules/OmoNavAside.svelte";
 
   let dreamId;
 
@@ -28,8 +29,8 @@
 <style>
   .omo-layout {
     display: grid;
-    grid-template-areas: "top top" "content-left content-right";
-    grid-template-columns: 1fr 24rem;
+    grid-template-areas: "top top nav-right" "content-left content-right nav-right";
+    grid-template-columns: 1fr 24rem 3rem;
     grid-template-rows: 1rem 1fr;
     overflow: hidden;
   }
@@ -52,6 +53,11 @@
     grid-template-areas: "aside-top" "aside-bottom";
     grid-template-columns: 1fr;
     grid-template-rows: 18rem 1fr;
+  }
+
+  .nav-right {
+    grid-area: nav-right;
+    height: 100%;
   }
 
   .aside-top {
@@ -86,6 +92,10 @@
       <OmoProfilePage data={data.data.DreamById} />
     </div>
 
+    <div class="nav-right">
+      <OmoNavAside />
+    </div>
+
     <div class="content-right bg-gray-200 py-6 px-8">
       <div class="aside-top text-md">
         <div class="bg-gray-300">
@@ -98,9 +108,9 @@
           </div>
           <div class="bg-gray-100">
             <p class="text-md p-6 text-gray-600">
-              By joining the dream now, you will reservate a pre-order slo,
+              By joining the dream now, you will reservate your pre-order slot,
               which will give you x percent discount for lifetime on using the
-              future [product service title placholder].
+              future [product service title placeholder].
             </p>
           </div>
           {#if data.data.DreamById.state == "dream"}
