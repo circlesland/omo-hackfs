@@ -129,9 +129,9 @@
           </div>
           <div class="bg-gray-100">
             <p class="text-md p-6 text-gray-600">
-              By joining the dream now, you will reservate a pre-order slo,
+              By joining the dream now, you will reservate your pre-order slot,
               which will give you x percent discount for lifetime on using the
-              future [product service title placholder].
+              future [product service title placeholder].
             </p>
           </div>
           <p
