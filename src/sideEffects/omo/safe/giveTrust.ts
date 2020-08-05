@@ -44,11 +44,18 @@ export const giveTrust: ISideEffect<IProcessContext, void> = {
     }
 
     Logger.log(context.local.processNodeId + ":sideEffects:omo.safe.giveTrust", "'" + context.local.inputs["trustGivingSafe"].safeAddress + "' is giving trust to '" + context.local.inputs["trustReceivingSafe"].safeAddress + "'.");
+
+
+    let trustReceivingSafeAddress = context.local.inputs["trustReceivingSafe"];
+    if (trustReceivingSafeAddress.safeAddress) {
+      trustReceivingSafeAddress = trustReceivingSafeAddress.safeAddress;
+    }
+
     await addTrustLineAsync(
       context.local.inputs["trustGivingSafeOwner"],
       context.local.inputs["trustGivingSafe"],
       {
-        safeAddress: context.local.inputs["trustReceivingSafe"]
+        safeAddress: trustReceivingSafeAddress
       },
       context.local.inputs["trustPercentage"]
     );

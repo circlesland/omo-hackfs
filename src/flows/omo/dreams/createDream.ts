@@ -77,7 +77,7 @@ export function createDream() {
         .mapInput("trustGivingSafeOwner", "currentSafeOwner")
         .mapInput("trustGivingSafe", "currentSafe")
         .mapInput("trustReceivingSafe", "safe")
-        .mapInput("trustPercentage", "100") // TODO: Allow for static valuess
+        .withStaticInput("trustPercentage", "100") // TODO: Allow for static values
         .isNonInteractive()
         .withTitle("Giving trust to dream-safe")
       // TODO: Dream creator-safe trusts dream-safe
