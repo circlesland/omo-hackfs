@@ -16,11 +16,11 @@ export class Dreams
     "reservations {" +
     " _id" +
     "} " +
-    "subscriptions {" +
-    " _id" +
-    "} " +
     "Votes {" +
     "  _id" +
+    "}" +
+    "Product {" +
+    " _id" +
     "}";
 
   static all()
@@ -33,6 +33,8 @@ export class Dreams
     {
       sub.subscribe(o =>
       {
+        if (o.error)
+          throw new o.error;
         s.next(o.data.Dreams);
       });
     });

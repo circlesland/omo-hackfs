@@ -1,11 +1,11 @@
 import {JSONSchema} from "@textile/threads-database";
 import {ModelQuant} from "../../../core/Data/ModelQuant";
 
-export const Dream: JSONSchema = {
+export const Product: JSONSchema = {
   $id: "https://example.com/message.schema.json",
   $schema: "http://json-schema.org/draft-07/schema#",
-  _$schemaId: "schema:omo.dreams.dream",
-  title: "dream",
+  _$schemaId: "schema:omo.dreams.product",
+  title: "product",
   type: "object",
   required: ["_id"],
   definitions: ModelQuant.definitons,
@@ -23,23 +23,19 @@ export const Dream: JSONSchema = {
       $ref: "#/definitions/oneToOne",
       description: "Omosapien"
     },
+    dream: {
+      $ref: "#/definitions/oneToOne",
+      description: "Dream"
+    },
+    price: {
+      type: "string"
+    },
     safeAddress: {
       type: "string"
-    },
-    leap: {
-      type: "string"
-    },
-    timeCommitments: {
-      $ref: "#/definitions/oneToMany",
-      description: "TimeCommitment"
     },
     subscriptions: {
       $ref: "#/definitions/oneToMany",
       description: "ProductSubscription"
-    },
-    reservations: {
-      $ref: "#/definitions/oneToMany",
-      description: "Reservation"
     }
   }
 };

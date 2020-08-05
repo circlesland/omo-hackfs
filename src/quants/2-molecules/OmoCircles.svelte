@@ -1,7 +1,7 @@
 <script>
   import OmoNavTabs from "./../2-molecules/OmoNavTabs";
   import moment from "moment";
-  import {Omosapiens} from "../../queries/omo/odentity/omosapiens";
+  import { Omosapiens } from "../../queries/omo/odentity/omosapiens";
 
   //Tabs
   let currentTab;
@@ -15,8 +15,8 @@
       icon: "fa-exchange-alt",
       category: "general"
     },
-    {label: "My streams", value: 2, icon: "fa-history"},
-    {label: "Token", value: 3, icon: "fa-coins"},
+    { label: "My streams", value: 2, icon: "fa-history" },
+    { label: "Token", value: 3, icon: "fa-coins" },
     {
       label: "Trust I receive",
       value: 4,
@@ -43,7 +43,7 @@
     transferData: {}
   };
 
-  Array.prototype.sum = function (prop) {
+  Array.prototype.sum = function(prop) {
     var total = 0;
     for (var i = 0, _len = this.length; i < _len; i++) {
       total += parseInt(this[i][prop]);
@@ -58,10 +58,8 @@
 
   async function lookupName(safeAddress) {
     const omosapien = await Omosapiens.bySafeAddress(safeAddress);
-    if (!omosapien || omosapien.length == 0)
-      return safeAddress
-    else
-      return omosapien.name;
+    if (!omosapien || omosapien.length == 0) return safeAddress;
+    else return omosapien.name;
   }
 </script>
 
@@ -86,7 +84,7 @@
 
 <section>
   <aside class="h-full overflow-y-scroll">
-    <OmoNavTabs bind:activeTabValue={currentTab} items={tabItems}/>
+    <OmoNavTabs bind:activeTabValue={currentTab} items={tabItems} />
   </aside>
   <main class="h-full w-full md:w-5/6 mx-auto overflow-y-scroll">
     {#if 1 === currentTab}
@@ -96,21 +94,23 @@
             <div class="flex h-12 mb-4 w-full bg-gray-100 text-gray-700">
               {#if item.transfer.from == data.safeAddress}
                 <img
-                        alt=""
-                        src="https://i.pravatar.cc/150?u={item.transfer.to}"
-                        class="h-full w-auto"/>
+                  alt=""
+                  src="https://i.pravatar.cc/150?u={item.transfer.to}"
+                  class="h-full w-auto" />
                 <div class="text-sm py-2 px-4 w-full">
                   <p>
                     {#await lookupName(item.transfer.to)}
                       Loading
                     {:then name}
                       {name}
-                    {/await}</p>
+                    {/await}
+                    - {item.transfer.to}
+                  </p>
                   <p class="text-xs -mt-3 text-gray-600">
                     {moment
-                    .unix(item.time)
-                    .locale('en')
-                    .fromNow()}
+                      .unix(item.time)
+                      .locale('en')
+                      .fromNow()}
                   </p>
                 </div>
                 <div class="h-12 py-1 px-3 text-2xl text-red-400">
@@ -118,22 +118,22 @@
                 </div>
               {:else}
                 <img
-                        alt=""
-                        src="https://i.pravatar.cc/150?u={item.transfer.from}"
-                        class="h-full w-auto"/>
+                  alt=""
+                  src="https://i.pravatar.cc/150?u={item.transfer.from}"
+                  class="h-full w-auto" />
                 <div class="text-sm py-2 px-4 w-full">
                   <p>
                     {#await lookupName(item.transfer.from)}
-                    Loading
-                      {:then name}
-                    {name}
+                      Loading
+                    {:then name}
+                      {name} {item.transfer.from}
                     {/await}
                   </p>
                   <p class="text-xs -mt-3 text-gray-600">
                     {moment
-                    .unix(item.time)
-                    .locale('en')
-                    .fromNow()}
+                      .unix(item.time)
+                      .locale('en')
+                      .fromNow()}
                   </p>
                 </div>
                 <div class="h-12 py-1 px-3 text-2xl text-green-400">
@@ -152,16 +152,16 @@
         {#each data.safeData.data.safes[0].balances as item}
           <div class="flex h-12 mb-4 w-full bg-gray-100">
             {#if item.token.owner.id == '0x0e22dfe2ff3d1734b69c099dd46632fa3ec16678'}
-              <img alt="" src="/profiles/samuel.jpg" class="h-full w-auto"/>
+              <img alt="" src="/profiles/samuel.jpg" class="h-full w-auto" />
               <p class="py-3 px-4 rounded flex-1">Samuel Taler</p>
             {:else if item.token.owner.id == '0x206b9f90df961871c1da12c7fd6d7fd32d357d11'}
-              <img alt="" src="/profiles/philipp.jpg" class="h-full w-auto"/>
+              <img alt="" src="/profiles/philipp.jpg" class="h-full w-auto" />
               <p class="py-3 px-4 rounded flex-1">Philipp Taler</p>
             {:else}
               <img
-                      alt=""
-                      src="https://i.pravatar.cc/150?u={item.token.owner.id}"
-                      class="h-full w-auto"/>
+                alt=""
+                src="https://i.pravatar.cc/150?u={item.token.owner.id}"
+                class="h-full w-auto" />
               <p class="py-3 px-4 rounded flex-1">
 
                 {#await lookupName(item.token.owner.id)}
@@ -169,6 +169,7 @@
                 {:then name}
                   {name}
                 {/await}
+                - {item.token.owner.id}
               </p>
             {/if}
             <div class="h-12 py-1 px-3 text-2xl text-blue-400">
@@ -184,15 +185,16 @@
         {#each data.safeData.data.safes[0].outgoing as item}
           <div class="flex h-12 mb-4 w-full bg-gray-100">
             <img
-                    alt=""
-                    src="https://i.pravatar.cc/150?u={item.canSendTo.id}"
-                    class="h-full w-auto"/>
+              alt=""
+              src="https://i.pravatar.cc/150?u={item.canSendTo.id}"
+              class="h-full w-auto" />
             <p class="py-3 px-4 flex-1 text-gray-700">
               {#await lookupName(item.canSendTo.id)}
                 Loading
               {:then name}
                 {name}
               {/await}
+              {item.canSendTo.id}
             </p>
             <div class="h-12 py-1 px-3 text-2xl text-blue-400">
               ({item.limitPercentage}%) Ø{(item.limit / 1000000000000000000).toFixed(0)}
@@ -208,15 +210,17 @@
           <div class="flex h-12 mb-4 w-full bg-gray-100 text-gray-700">
             {#if item.user}
               <img
-                      alt=""
-                      src="https://i.pravatar.cc/150?u={item.user.id}"
-                      class="h-full w-auto"/>
+                alt=""
+                src="https://i.pravatar.cc/150?u={item.user.id}"
+                class="h-full w-auto" />
               <div class="py-3 px-4 rounded flex-1">
                 {#await lookupName(item.user.id)}
                   Loading
                 {:then name}
                   {name}
-                {/await}</div>
+                {/await}
+                {item.user.id}
+              </div>
               <div class="h-12 py-1 px-3 text-2xl text-blue-400">
                 ({item.limitPercentage}%) Ø{(item.limit / 1000000000000000000).toFixed(2)}
               </div>
@@ -233,18 +237,18 @@
         {#each data.transferData.data.notifications as item}
           {#if item.transfer.from === '0x0000000000000000000000000000000000000000'}
             <div
-                    class="flex h-12 mb-4 w-full bg-gray-100 rounded text-gray-700">
+              class="flex h-12 mb-4 w-full bg-gray-100 rounded text-gray-700">
               <img
-                      alt="ubi payout"
-                      src="/logos/logo.png"
-                      class="h-full w-auto"/>
+                alt="ubi payout"
+                src="/logos/logo.png"
+                class="h-full w-auto" />
               <div class="text-sm py-2 px-4 w-full">
                 <p>Universal basic income payout</p>
                 <p class="text-xs -mt-3 text-gray-600">
                   {moment
-                  .unix(item.time)
-                  .locale('en')
-                  .fromNow()}
+                    .unix(item.time)
+                    .locale('en')
+                    .fromNow()}
                 </p>
               </div>
               <div class="h-12 py-1 px-3 text-2xl text-green-400">

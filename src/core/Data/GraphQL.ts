@@ -69,22 +69,43 @@ export class GraphQL {
   }
 
   async execute(query) {
-    return await graphql(this.getSchema(), query);
+    const result = await graphql(this.getSchema(), query);
+
+    if (result.errors) {
+      console.error("An error occurred while executing '" + query + "':");
+      throw result.errors;
+    }
+
+    return result;
   }
 
   /**
    * @param query example await o.graphql.query('Books {_id name}')
    */
   async query(query) {
-    return await graphql(this.getSchema(), `query { ${query}}`);
+    const result = await graphql(this.getSchema(), `query { ${query}}`);
+
+    if (result.errors) {
+      console.error("An error occurred while executing '" + query + "':");
+      throw result.errors;
+    }
+
+    return result;
   }
 
   /**
    *
    * @param query example await o.graphql.mutation('addBook(name:"testbuch"){_id name}')
    */
-  async mutation(query) {
-    return await graphql(this.getSchema(), `mutation { ${query} }`);
+  async mutation(query)
+  {
+    const result = await graphql(this.getSchema(), `mutation { ${query} }`);
+    if (result.errors) {
+      console.error("An error occurred while executing '" + query + "':");
+      throw result.errors;
+    }
+
+    return result;
   }
 
   private static async updateGraphQLSchema(quanta: Quant[], registry: QuantRegistry): Promise<GraphQLSchema> {
@@ -109,7 +130,7 @@ export class GraphQL {
     }
   }
 
-  subscribe(query): Observable<any> {
+  subscribe(query:string): Observable<any> {
     return new Observable(observer => {
       this.query(query).then(queryResult => {
         observer.next(queryResult);

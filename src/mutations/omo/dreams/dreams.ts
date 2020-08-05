@@ -1,3 +1,5 @@
+import {Dreams as DreamsQueries} from "../../../queries/omo/dreams/dreams";
+
 export class Dreams {
   static async deleteDream(id) {
     return await window.o.graphQL.mutation(`deleteDream(_id:"${id}") {name}`);
@@ -39,5 +41,20 @@ export class Dreams {
       throw new Error("Couldn't create a new subscription.");
     }
     return newSubscription.data.addDreamSubscription._id;
+  }
+
+  static async createProductFromDream(dreamId: string, omosapienId:string, price:number) {
+    const dream = await DreamsQueries.byId(dreamId);
+    if (!dream || !dream.data) {
+      throw new Error("Couldn't find the dream with the id " + dreamId);
+    }
+    const name = dream.data.DreamById.name;
+    const description = dream.data.DreamById.description;
+    const safeAddress = dream.data.DreamById.safeAddress;
+    const creatorId = dream.data.DreamById.creatorId;
+    const newProduct = await window.o.graphQL.mutation(`addProduct(name: "${name}", price: "${price}", description: "${description}", safeAddress: "${safeAddress}", creatorId: "${creatorId}", dreamId: "${dreamId}") {_id}`);
+    if (!newProduct || !newProduct.data) {
+      throw new Error("Couldn't create a new product from dream '" + dreamId + "'");
+    }
   }
 }

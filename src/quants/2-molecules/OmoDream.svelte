@@ -19,7 +19,7 @@
 
   async function calcInteractions() {
     const d = await data;
-    totalInteractions = d.data.DreamById.Votes.length + d.data.DreamById.reservations.length + d.data.DreamById.subscriptions.length;
+    totalInteractions = d.data.DreamById.Votes.length + d.data.DreamById.reservations.length;
     levelAndLeap = DreamsQueries.calcLevel(totalInteractions);
   }
 
@@ -31,10 +31,16 @@
     const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
     await DreamsMutations.newReservation(dreamId, omosapien._id);
   }
+  async function createProduct(price) {
+    const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
+    const product = await DreamsMutations.createProductFromDream(dreamId, omosapien._id, price);
+  }
+  /*
   async function subscribe() {
     const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
     await DreamsMutations.newSubscription(dreamId, omosapien._id);
   }
+   */
 
   calcInteractions();
 </script>
@@ -84,7 +90,11 @@ Loading...
     <div class="h-full py-6 px-8 text-md">
       <input type="button" on:click={vote} value="Vote" />
       <input type="button" on:click={reservate} value="Reservate" />
-      <input type="button" on:click={subscribe} value="Subscribe" />
+
+      {#if !data.data.DreamById.Product}
+        <input type="button" on:click={() => createProduct(100)} value="Create product from dream" />
+      {/if}
+      <!--<input type="button" on:click={subscribe} value="Subscribe" />-->
       <br/>
       Total interactions: {totalInteractions}<br/>
       Current leap: {levelAndLeap.leap}<br/>
@@ -98,11 +108,6 @@ Loading...
         {#each data.data.DreamById.reservations as reservation}
           {reservation._id}<br/>
         {/each}
-      Subscription:<br/>
-        {#each data.data.DreamById.subscriptions as subscription}
-          {subscription._id}<br/>
-        {/each}
-
 
       <!--
       {#each levels.sort((first, second) => {

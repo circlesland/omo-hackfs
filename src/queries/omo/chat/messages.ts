@@ -14,6 +14,8 @@ export class Messages {
       const oida = rId;
       if (this.sub)
         this.sub.subscribe(o => {
+          if (o.error)
+            throw new o.error;
           const filteredForRoom = o.data.Messages.filter(p => !p.ChatRoom ? false : p.ChatRoom._id == oida);
           console.log("Messages received", filteredForRoom);
 
