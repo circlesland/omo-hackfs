@@ -19,7 +19,7 @@
 
   async function calcInteractions() {
     const d = await data;
-    totalInteractions = d.data.DreamById.Votes.length + d.data.DreamById.reservations.length;
+    totalInteractions = d.data.DreamById.Votes.length + d.data.DreamById.subscriptions.length;
     levelAndLeap = DreamsQueries.calcLevel(totalInteractions);
   }
 
@@ -105,8 +105,8 @@ Loading...
           {vote._id}<br/>
         {/each}
       Reservations:<br/>
-        {#each data.data.DreamById.reservations as reservation}
-          {reservation._id}<br/>
+        {#each data.data.DreamById.subscriptions as subscriptions}
+          {subscriptions._id}<br/>
         {/each}
 
       <!--
