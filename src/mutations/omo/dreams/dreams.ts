@@ -53,9 +53,6 @@ export class Dreams {
     const safeAddress = dream.data.DreamById.safeAddress;
     const creatorId = dream.data.DreamById.creatorId;
     const newProduct = await window.o.graphQL.mutation(`addProduct(name: "${name}", price: "${price}", description: "${description}", safeAddress: "${safeAddress}", creatorId: "${creatorId}", dreamId: "${dreamId}") {_id}`);
-    if (newProduct.errors) {
-      throw newProduct.errors;
-    }
     if (!newProduct || !newProduct.data) {
       throw new Error("Couldn't create a new product from dream '" + dreamId + "'");
     }

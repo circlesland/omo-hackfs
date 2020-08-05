@@ -87,8 +87,15 @@ export class GraphQL {
    *
    * @param query example await o.graphql.mutation('addBook(name:"testbuch"){_id name}')
    */
-  async mutation(query) {
-    return await graphql(this.getSchema(), `mutation { ${query} }`);
+  async mutation(query)
+  {
+    const result = await graphql(this.getSchema(), `mutation { ${query} }`);
+    if (result.errors) {
+      console.error("An error occurred while executing '" + query + "':");
+      throw result.errors;
+    }
+
+    return result;
   }
 
   private static async updateGraphQLSchema(quanta: Quant[], thread: SyncedThread): Promise<GraphQLSchema> {
@@ -109,11 +116,6 @@ export class GraphQL {
   subscribe(query:string): Observable<any> {
     return new Observable(observer => {
       this.query(query).then(queryResult => {
-        if (queryResult.errors) {
-          console.error("An error occurred while executing '" + query + "':");
-          throw queryResult.errors;
-        }
-
         observer.next(queryResult);
 
         this.getSubscription(`subscription { ${query}}`).then(
