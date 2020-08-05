@@ -2,9 +2,9 @@
   import OmoIconsFA from "./../1-atoms/OmoIconsFA.svelte";
   import OmoVideo from "./OmoVideo";
   import OmoProfilePage from "./OmoProfilePage";
-  import {Dreams as DreamsQueries} from "../../queries/omo/dreams/dreams";
-  import {Dreams as DreamsMutations} from "../../mutations/omo/dreams/dreams";
-  import {Omosapiens} from "../../queries/omo/odentity/omosapiens";
+  import { Dreams as DreamsQueries } from "../../queries/omo/dreams/dreams";
+  import { Dreams as DreamsMutations } from "../../mutations/omo/dreams/dreams";
+  import { Omosapiens } from "../../queries/omo/odentity/omosapiens";
 
   let dreamId;
 
@@ -15,25 +15,36 @@
 
   let data = DreamsQueries.byId(dreamId);
   let totalInteractions = 0;
-  let levelAndLeap = {level:0, leap:0};
+  let levelAndLeap = { level: 0, leap: 0 };
 
   async function calcInteractions() {
     const d = await data;
-    totalInteractions = d.data.DreamById.Votes.length + d.data.DreamById.reservations.length;
+    totalInteractions =
+      d.data.DreamById.Votes.length + d.data.DreamById.reservations.length;
     levelAndLeap = DreamsQueries.calcLevel(totalInteractions);
   }
 
   async function vote() {
-    const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
+    const omosapien = await Omosapiens.byOdentityId(
+      window.o.odentity.current._id
+    );
     await DreamsMutations.newVote(dreamId, omosapien._id);
   }
   async function reservate() {
-    const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
+    const omosapien = await Omosapiens.byOdentityId(
+      window.o.odentity.current._id
+    );
     await DreamsMutations.newReservation(dreamId, omosapien._id);
   }
   async function createProduct(price) {
-    const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
-    const product = await DreamsMutations.createProductFromDream(dreamId, omosapien._id, price);
+    const omosapien = await Omosapiens.byOdentityId(
+      window.o.odentity.current._id
+    );
+    const product = await DreamsMutations.createProductFromDream(
+      dreamId,
+      omosapien._id,
+      price
+    );
   }
   /*
   async function subscribe() {
@@ -66,49 +77,150 @@
 
   .content-right {
     grid-area: content-right;
+    overflow: hidden;
+    display: grid;
+    height: 100%;
+    grid-template-areas: "aside-top" "aside-bottom";
+    grid-template-columns: 1fr;
+    grid-template-rows: 18rem 1fr;
+  }
+
+  .aside-top {
+    grid-area: aside-top;
+    height: 100%;
+  }
+  .aside-bottom {
+    grid-area: aside-bottom;
+    height: 100%;
     overflow-y: scroll;
   }
 </style>
 
 {#await data}
-Loading...
+  Loading...
 {:then data}
-<OmoIconsFA/>
-<div class="omo-layout">
-  <div class="top bg-gray-200 w-full">
-    <div class="relative">
-      <div class="overflow-hidden h-4 text-xs flex bg-primary">
-        <div
-                style="width: 33%"
-                class="shadow-none flex flex-col text-center whitespace-nowrap
-          text-white justify-center bg-tertiary"/>
+  <OmoIconsFA />
+  <div class="omo-layout">
+    <div class="top bg-gray-200 w-full">
+      <div class="relative">
+        <div class="overflow-hidden h-4 text-xs flex bg-primary">
+          <div
+            style="width: 33%"
+            class="shadow-none flex flex-col text-center whitespace-nowrap
+            text-white justify-center bg-tertiary" />
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="content-right bg-gray-200">
-    <div class="h-full py-6 px-8 text-md">
-      <input type="button" on:click={vote} value="Vote" />
-      <input type="button" on:click={reservate} value="Reservate" />
+    <div class="content-right bg-gray-200 py-6 px-8">
+      <div class="aside-top text-md">
+        <div class="bg-gray-300">
+          <div class="flex flex-col justify-center h-16 text-center">
+            <p
+              class="py-2 px-4 text-xl font-bold text-primary h-full flex
+              justify-center flex-col bg-gray-300 uppercase">
+              80% lifetime discount
+            </p>
+          </div>
+          <div class="bg-gray-100">
+            <p class="text-md p-6 text-gray-600">
+              By joining the dream now, you will reservate a pre-order slo,
+              which will give you x percent discount for lifetime on using the
+              future [product service title placholder].
+            </p>
+          </div>
+          <p
+            class="text-md w-full py-2 bg-tertiary hover:bg-secondary
+            text-center text-white uppercase font-bold cursor-pointer">
+            reservate product now
+          </p>
+        </div>
+        <!-- <input type="button" on:click={vote} value="Vote" />
+        <input type="button" on:click={reservate} value="Reservate" />
 
-      {#if !data.data.DreamById.Product}
-        <input type="button" on:click={() => createProduct(100)} value="Create product from dream" />
-      {/if}
+        {#if !data.data.DreamById.Product}
+          <input
+            type="button"
+            on:click={() => createProduct(100)}
+            value="Create product from dream" />
+        {/if} -->
+      </div>
       <!--<input type="button" on:click={subscribe} value="Subscribe" />-->
-      <br/>
-      Total interactions: {totalInteractions}<br/>
-      Current leap: {levelAndLeap.leap}<br/>
-      Current level: {levelAndLeap.level}<br/>
-
-      Votes:<br/>
+      <div class="aside-bottom">
+        <!-- <br />
+        Total interactions: {totalInteractions}
+        <br />
+        Current leap: {levelAndLeap.leap}
+        <br />
+        Current level: {levelAndLeap.level}
+        <br /> -->
+        <!-- Votes:
+        <br />
         {#each data.data.DreamById.Votes as vote}
-          {vote._id}<br/>
+          {vote._id}
+          <br />
         {/each}
-      Reservations:<br/>
+        Reservations: -->
+        Level 6
         {#each data.data.DreamById.reservations as reservation}
-          {reservation._id}<br/>
+          <div class="flex h-12 mb-4 w-full bg-gray-100">
+            <img
+              alt=""
+              src="https://i.pravatar.cc/150?u={reservation._id}"
+              class="h-full w-auto" />
+            <p class="py-3 px-4 rounded w-full">{reservation._id}</p>
+          </div>
         {/each}
-
+        Level 7
+        <div class="flex h-12 mb-4 w-full bg-gray-100">
+          <img
+            alt=""
+            src="https://i.pravatar.cc/150?u=sfghsfgh"
+            class="h-full w-auto" />
+          <p class="py-3 px-4 rounded w-full">324576456u56ezdtf</p>
+        </div>
+        <div class="flex h-12 mb-4 w-full bg-gray-300">
+          <div
+            class="h-full w-16 text-center flex justify-center flex-col
+            bg-gray-500 text-xl text-gray-300 uppercase font-bold">
+            <i class="fas fa-lock text-gray-300" />
+          </div>
+          <div class="py-3 h-12 w-full bg-gray-300">reservate for -80%</div>
+        </div>
+        <div class="flex h-12 mb-4 w-full bg-gray-300">
+          <div
+            class="h-full w-16 text-center flex justify-center flex-col
+            bg-gray-500 text-xl text-gray-300 uppercase font-bold">
+            <i class="fas fa-lock text-gray-300" />
+          </div>
+          <div class="py-3 h-12 w-full bg-gray-300">reservate for -80%</div>
+        </div>
+        Level 8
+        <div class="flex h-12 mb-4 w-full bg-gray-300">
+          <div
+            class="h-full w-16 text-center flex justify-center flex-col
+            bg-gray-500 text-xl text-gray-300 uppercase font-bold">
+            <i class="fas fa-lock text-gray-300" />
+          </div>
+          <div class="py-3 h-12 w-full bg-gray-300">reservate for -70%</div>
+        </div>
+        <div class="flex h-12 mb-4 w-full bg-gray-300">
+          <div
+            class="h-full w-16 text-center flex justify-center flex-col
+            bg-gray-500 text-xl text-gray-300 uppercase font-bold">
+            <i class="fas fa-lock text-gray-300" />
+          </div>
+          <div class="py-3 h-12 w-full bg-gray-300">reservate for -70%</div>
+        </div>
+        <div class="flex h-12 mb-4 w-full bg-gray-300">
+          <div
+            class="h-full w-16 text-center flex justify-center flex-col
+            bg-gray-500 text-xl text-gray-300 uppercase font-bold">
+            <i class="fas fa-lock text-gray-300" />
+          </div>
+          <div class="py-3 h-12 w-full bg-gray-300">reservate for -70%</div>
+        </div>
+      </div>
       <!--
       {#each levels.sort((first, second) => {
       if (first.order < second.order) return -1;
@@ -175,10 +287,9 @@ Loading...
       {/each}
   -->
     </div>
+    <div class="content-left bg-gray-100">
+      <OmoVideo />
+      <OmoProfilePage data={data.data.DreamById} />
+    </div>
   </div>
-  <div class="content-left bg-gray-100">
-    <OmoVideo/>
-    <OmoProfilePage data={data.data.DreamById}/>
-  </div>
-</div>
 {/await}
