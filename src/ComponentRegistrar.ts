@@ -50,6 +50,8 @@ import { createDream as createDreamFlow } from "./flows/omo/dreams/createDream";
 import { createOmosapien as createOmosapienFlow } from "./flows/omo/odentity/createOmosapien";
 import { convertToProduct as convertToProductFlow } from "./flows/omo/dreams/convertToProduct";
 import { inviteToDream as inviteToDreamFlow} from "./flows/omo/dreams/inviteToDream";
+import { addReservation as addReservationFlow } from "./flows/omo/dreams/addReservation";
+import { addSubscription as addSubscriptionFlow} from "./flows/omo/dreams/addSubscription";
 
 //
 // SideEffects
@@ -67,6 +69,7 @@ import { createDream as createDreamSideEffect } from "./sideEffects/omo/dreams/c
 import { revokeInitialTrust as revokeInitialTrustSideEffect } from "./sideEffects/omo/circles/revokeInitialTrust";
 import { convertToProduct as convertToProductSideEffect } from "./sideEffects/omo/dreams/convertToProduct";
 import { inviteToDream as inviteToDreamSideEffect } from "./sideEffects/omo/dreams/inviteToDream";
+import { createChatRoom as createChatRoomSideEffect } from "./sideEffects/omo/chat/createChatRoom";
 
 //
 // Schema
@@ -160,6 +163,14 @@ export function init() {
     "flows:omo.dreams.inviteToDream",
     inviteToDreamFlow
   );
+  w.flowRegistrar.set(
+    "flows:omo.dreams.addReservation",
+    addReservationFlow
+  );
+  w.flowRegistrar.set(
+    "flows:omo.dreams.addSubscription",
+    addSubscriptionFlow
+  );
 
   w.sideEffectRegistrar = new Map();
   [
@@ -177,7 +188,9 @@ export function init() {
     createOmosapienSideEffect,
     connectSafeSideEffect,
     convertToProductSideEffect,
-    inviteToDreamSideEffect
+    inviteToDreamSideEffect,
+    createChatRoomSideEffect
+
   ].forEach((o) => {
     w.sideEffectRegistrar.set(o["_$schemaId"], o);
   });

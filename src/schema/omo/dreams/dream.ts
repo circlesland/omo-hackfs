@@ -16,7 +16,7 @@ export const Dream: JSONSchema = {
     /**
      * Can be 'dream' or 'product'
      */
-    type: {
+    state: {
       type: "string"
     },
     name: {
@@ -35,17 +35,30 @@ export const Dream: JSONSchema = {
     leap: {
       type: "string"
     },
-    timeCommitments: {
-      $ref: "#/definitions/oneToMany",
-      description: "TimeCommitment"
+    /**
+     * Contains the id of the connected chatroom
+     */
+    chatRoomId: {
+      type: "string"
     },
+    /**
+     * If the dream is in 'dream' state, only 'reservation' subscriptions can be added
+     */
     subscriptions: {
       $ref: "#/definitions/oneToMany",
-      description: "ProductSubscription"
+      description: "DreamSubscription"
     },
-    reservations: {
-      $ref: "#/definitions/oneToMany",
-      description: "Reservation"
+    /**
+     * The following properties are only valid when the dream's state is 'product'
+     */
+    price: {
+      type: "string"
+    },
+    videoHash: {
+      type: "string"
+    },
+    bannerHash: {
+      type: "string"
     }
   }
 };

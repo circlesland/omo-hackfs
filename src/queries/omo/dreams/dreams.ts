@@ -19,6 +19,7 @@ export class Dreams
     "name " +
     "description " +
     "safeAddress " +
+    "state " +
     "creator {" +
     " _id " +
     " name " +
@@ -30,12 +31,13 @@ export class Dreams
     "} " +
     "Votes {" +
     "  _id" +
-    "}" +
-    "Product {" +
-    " _id" +
     "}";
 
-  static all()
+  /**
+   * Gets all dreams and optionally filters for the dream-state
+   * @param state
+   */
+  static all(state?:string)
   {
     const sub = window.o.graphQL.subscribe(
       "Dreams{" + Dreams.fields + "}"
@@ -47,7 +49,12 @@ export class Dreams
       {
         if (o.error)
           throw new o.error;
-        s.next(o.data.Dreams);
+
+        let allDreams = o.data.Dreams;
+        if (state) {
+          allDreams = allDreams.filter(o => o.state == state);
+        }
+        s.next(allDreams);
       });
     });
   }

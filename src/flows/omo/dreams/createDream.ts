@@ -65,8 +65,21 @@ export function createDream() {
         .step("flows:omo.dreams.createDream:revokeInitialTrust")
         .withSideEffect("sideEffects:omo.circles.revokeInitialTrust")
         .mapInput("trustReceiverSafe", "safe")
-        .withTitle("Revoke Trust");
+        .withTitle("Revoke Trust")
 
+      .step("flows:omo.dreams.createDream:createChatRoom")
+          .withSideEffect("sideEffects:omo.chat.createChatRoom")
+          .mapInput("name", "dreamName")
+          .withTitle("Create Chatroom")
+
+    .step("flows:omo.dreams.createDream:giveTrustToDreamSafe")
+        .withSideEffect("sideEffects:omo.safe.giveTrust")
+        .mapInput("trustGivingSafeOwner", "currentSafeOwner")
+        .mapInput("trustGivingSafe", "currentSafe")
+        .mapInput("trustReceivingSafe", "safe")
+        .mapInput("trustPercentage", "100") // TODO: Allow for static valuess
+        .isNonInteractive()
+        .withTitle("Giving trust to dream-safe")
       // TODO: Dream creator-safe trusts dream-safe
       // TODO: dream-safe trusts creator-safe
     })
