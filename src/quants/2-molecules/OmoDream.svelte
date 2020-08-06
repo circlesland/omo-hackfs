@@ -218,7 +218,6 @@
     grid-area: aside-top;
     height: 100%;
   }
-
   .aside-bottom {
     grid-area: aside-bottom;
     height: 100%;
@@ -243,13 +242,16 @@
     </div>
 
     <div class="content-left bg-gray-100">
-      <OmoVideo/>
-      <OmoProfilePage data={data.dream}/>
+      <OmoVideo />
+      <OmoProfilePage data={data.dream} />
+      <button
+        on:click={() => window.o.publishShellEventAsync(new StartFlow('flows:omo.dreams.inviteToDream', data.dream))}>
+        INVITE
+      </button>
     </div>
 
     <div class="nav-right">
-      <OmoNavAside dreamId={data.dream._id}/>
-      q
+      <OmoNavAside dreamId={data.dream._id} />
     </div>
 
     <div class="content-right bg-gray-200 py-6 px-8">
