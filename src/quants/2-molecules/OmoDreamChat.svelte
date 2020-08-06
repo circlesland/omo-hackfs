@@ -9,17 +9,19 @@
   import { observe } from "svelte-observable";
   import { Omosapiens } from "../../queries/omo/odentity/omosapiens";
 
-  let newRoomName = "";
-  let rooms = observe(RoomQueries.rooms());
-  let currentRoom = { id: "" };
-  let newMessageText = "";
+  export let data;
+  let currentRoom = { _id: "" };
 
-  $: messages = observe(MessageQueries.messagesByRoom(currentRoom._id));
-
-  function createNewRoom() {
-    RoomMutations.createNewRoom(newRoomName);
-    newRoomName = "";
+  async function init() {
+    let result = await o.graphQL.query("ChatRooms{ _id dreamId}");
+    currentRoom = result.data.ChatRooms.find(
+      (x) => x.dreamId == data.dream._id
+    );
   }
+  init();
+
+  let newMessageText = "";
+  $: messages = observe(MessageQueries.messagesByRoom(currentRoom._id));
 
   function sendNewMessage() {
     MessageMutations.sendMessage(currentRoom._id, newMessageText);
@@ -68,126 +70,73 @@
   }
 </style>
 
-<OmoIconsFA />
-
-<div class="omo-layout">
-
-  <div class="content-right bg-gray-100">
-    <div class="py-6 px-8 text-md ">
-      <div class="bg-gray-300 overflow-y-scroll">
-        {#await $rooms}
-          pending - No value or error has been received yet
-        {:then result}
-          {#each result as room}
-            <div
-              on:click={() => (currentRoom = room)}
-              class="text-md w-full py-2 bg-gray-200 hover:bg-secondary
-              text-center text-blue-900 uppercase font-bold cursor-pointer "
-              class:active={room._id === currentRoom._id}>
-              {room.name}
-              <button on:click={() => () => RoomMutations.deleteRoom(room._id)}>
-                del
-              </button>
+<!-- <OmoIconsFA /> -->
+{#if currentRoom._id != null}
+  <h1 class="text-center p-3 uppercase">{data.dream.name} onboarding chat</h1>
+  {#if messages}
+    {#await $messages}
+      chat is loading
+    {:then result}
+      {#each result as message}
+        <li
+          class="flex flex-no-wrap items-center pr-3 text-black rounded-lg
+          cursor-pointer mt-200 py-65 hover:bg-gray-200"
+          style="padding-top: 0.65rem; padding-bottom: 0.65rem">
+          <div class="flex justify-between w-full focus:outline-none">
+            <div class="flex justify-between w-full">
+              <div
+                class="relative flex items-center justify-center w-12 h-12 ml-2
+                mr-3 text-xl font-semibold text-white bg-blue-500 rounded
+                flex-no-shrink">
+                <img
+                  class="object-cover w-12 h-12 rounded"
+                  src="https://images.unsplash.com/photo-1589349133269-183a6c90fbfc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=100"
+                  alt="" />
+              </div>
+              <div class="items-center flex-1 min-w-0">
+                <div class="flex justify-between">
+                  <h2 class="text-sm font-semibold text-black -mb-2">
+                    {#await lookupName(message.name)}
+                      Loading
+                    {:then name}
+                      {name}
+                    {/await}
+                  </h2>
+                  <div class="flex">
+                    <span class="ml-1 text-xs font-medium text-gray-600">
+                      {moment
+                        .unix(Number.isInteger(message.date) ? message.date / 1000 : message.date)
+                        .locale('en')
+                        .fromNow()}
+                    </span>
+                  </div>
+                </div>
+                <div class="flex justify-between text-sm leading-none truncate">
+                  <span>{message.text}</span>
+                </div>
+              </div>
             </div>
-          {/each}
-        {:catch error}
-          rejected - Received an error
-        {/await}
-      </div>
-    </div>
-  </div>
-
-  <div class="bottom-right ">
+          </div>
+        </li>
+      {/each}
+    {/await}
+  {/if}
+  <div class="bottom-left">
     <div class="flex">
       <input
-        bind:value={newRoomName}
+        bind:value={newMessageText}
         class="w-full p-3 border-t mr-0 border-b border-l text-gray-800
         border-gray-200 bg-white"
-        placeholder="room name" />
+        placeholder="enter your chat message here" />
 
       <button
+        on:click={() => sendNewMessage()}
         class="px-6 bg-primary hover:bg-secondary text-white font-bold p-3
-        uppercase "
-        on:click={() => createNewRoom()}>
-        +room
+        uppercase">
+        Send
       </button>
     </div>
   </div>
-
-  {#if currentRoom._id != null}
-    <div class="content-left">
-      <div class="h-full py-6 px-8 text-md overflow-y-scroll">
-        <h1 class="text-center p-3 uppercase">{currentRoom.name}</h1>
-        {#if messages}
-          {#await $messages}
-            pending - No value or error has been received yet
-          {:then result}
-            {#each result as message}
-              <li
-                class="flex flex-no-wrap items-center pr-3 text-black rounded-lg
-                cursor-pointer mt-200 py-65 hover:bg-gray-200"
-                style="padding-top: 0.65rem; padding-bottom: 0.65rem">
-                <div class="flex justify-between w-full focus:outline-none">
-                  <div class="flex justify-between w-full">
-                    <div
-                      class="relative flex items-center justify-center w-12 h-12
-                      ml-2 mr-3 text-xl font-semibold text-white bg-blue-500
-                      rounded flex-no-shrink">
-                      <img
-                        class="object-cover w-12 h-12 rounded"
-                        src="https://images.unsplash.com/photo-1589349133269-183a6c90fbfc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=100"
-                        alt="" />
-                    </div>
-                    <div class="items-center flex-1 min-w-0">
-                      <div class="flex justify-between">
-                        <h2 class="text-sm font-semibold text-black -mb-2">
-                          {#await lookupName(message.name)}
-                            Loading
-                          {:then name}
-                            {name}
-                          {/await}
-                        </h2>
-                        <div class="flex">
-                          <span class="ml-1 text-xs font-medium text-gray-600">
-                            {moment
-                              .unix(Number.isInteger(message.date) ? message.date / 1000 : message.date)
-                              .locale('en')
-                              .fromNow()}
-                          </span>
-                        </div>
-                      </div>
-                      <div
-                        class="flex justify-between text-sm leading-none
-                        truncate">
-                        <span>{message.text}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            {/each}
-          {/await}
-        {/if}
-      </div>
-    </div>
-    <div class="bottom-left">
-      <div class="flex">
-        <input
-          bind:value={newMessageText}
-          class="w-full p-3 border-t mr-0 border-b border-l text-gray-800
-          border-gray-200 bg-white"
-          placeholder="enter your chat message here" />
-
-        <button
-          on:click={() => sendNewMessage()}
-          class="px-6 bg-primary hover:bg-secondary text-white font-bold p-3
-          uppercase">
-          Send
-        </button>
-      </div>
-    </div>
-  {:else}
-    <div class="content-left">Please choose room</div>
-  {/if}
-
-</div>
+{:else}
+  <div class="content-left">room is loading</div>
+{/if}
