@@ -1,8 +1,7 @@
-import {ProcessBuilder} from "../../../core/Flows/ProcessBuilder";
-import {IProcessContext} from "../../../core/Flows/IProcessContext";
+import { ProcessBuilder } from "../../../core/Flows/ProcessBuilder";
+import { IProcessContext } from "../../../core/Flows/IProcessContext";
 
-export function createOmosapien()
-{
+export function createOmosapien() {
   return new ProcessBuilder<IProcessContext>("flows:omo.odentity.createOmosapien")
     /*
     .category("Welcome", (b) =>
@@ -24,8 +23,7 @@ export function createOmosapien()
           .withTitle("Welcome to Omo 2")
       }
     ).end()*/
-    .category("Create Omosapien", b =>
-    {
+    .category("Create Omosapien", b => {
       b
         .step("flows:omo.odentity.createOmosapien:getName")
         .withSideEffect("sideEffects:omo.shell.collectStepResult")

@@ -119,6 +119,7 @@
   // export const omo = window.o.odentity.current;
   //@todo listen to changes
 
+  $: loggedIn = window.o.odentity.current != null;
   // ROUTING
   var routes = [
     { route: "/", quant: OmoHome, authenticate: false },
@@ -295,6 +296,10 @@
     grid-template-rows: 3rem 1fr 4rem;
   }
 
+  .no-header-footer {
+    grid-template-rows: 1fr;
+  }
+
   header {
     grid-area: "header";
   }
@@ -315,16 +320,20 @@
 
 <svelte:window on:popstate={handlerBackNavigation} />
 
-<div class="app">
-  <header>
-    <OmoNavTop />
-  </header>
+<div class="app" class:no-header-footer={!loggedIn}>
+  {#if loggedIn}
+    <header>
+      <OmoNavTop />
+    </header>
+  {/if}
   <main>
     <svelte:component this={getComponent($curRoute, routes)} {routes} />
   </main>
-  <footer>
-    <OmoNavBottom />
-  </footer>
+  {#if loggedIn}
+    <footer>
+      <OmoNavBottom />
+    </footer>
+  {/if}
   <!-- <footer>
       {#if omo != null}
         <OmoNavBottom />

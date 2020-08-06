@@ -4,24 +4,25 @@
   import { query } from "svelte-apollo";
   import { getSafeAddressAsync } from "./../../queries/omo/safe/circles.svelte";
   import { StartFlow } from "../../events/omo/shell/startFlow";
+  import { Omosapiens } from "../../queries/omo/odentity/omosapiens";
 
   const client = new ApolloClient({
     uri:
-      "https://graph.circles.garden/subgraphs/name/CirclesUBI/circles-subgraph"
+      "https://graph.circles.garden/subgraphs/name/CirclesUBI/circles-subgraph",
   });
 
   export let data = {
     welcome: "Welcome. Omo Sapiens.",
     image: "https://source.unsplash.com/random",
     magiclink: "magic login link has been send to your mail account",
-    button: "Login with Email Link"
+    button: "Login with Email Link",
   };
 
   export let mail;
 
   function login() {
     loading = true;
-    o.odentity.login(mail, "email", async it => {
+    o.odentity.login(mail, "email", async (it) => {
       if (o.odentity.current == null) {
         loading = false;
         alert("something went wrong.");
@@ -32,6 +33,7 @@
         window.navigate(urlParams.get("redirect"), urlParams.get("data"));
         return;
       }
+
       if (o.odentity._current.circleSafe) {
         navigate("omosafe");
       } else {
@@ -44,28 +46,38 @@
   }
 
   function circlesLogin() {
+    data.magiclink = "Your circles wallet will be connected to omo.earth";
     loading = true;
-    o.odentity.login(seedPhrase, "circles", async it => {
+    o.odentity.login(seedPhrase, "circles", async (it) => {
       if (o.odentity.current == null) {
         loading = false;
         alert("something went wrong.");
       }
-      console.log(it);
+
       var urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has("redirect")) {
+        o.quantRegistry.syncAllCollections();
         window.navigate(urlParams.get("redirect"), urlParams.get("data"));
         return;
       }
-      if (o.odentity._current.circleSafe) {
-        navigate("omosafe");
-      } else {
+
+      try {
+        const omosapien = await Omosapiens.byOdentityId(o.current._id);
+        if (omosapien) {
+          o.quantRegistry.syncAllCollections();
+          navigate("omosafe");
+          return;
+        }
         o.publishShellEventAsync(
           new StartFlow("flows:omo.odentity.createOmosapien")
         );
-        //navigate("mamaomo");
+      } catch (e) {
+        o.publishShellEventAsync(
+          new StartFlow("flows:omo.odentity.createOmosapien")
+        );
       }
+      // o.quantRegistry.syncAllCollections();
     });
-    o.quantRegistry.syncAllCollections();
   }
 
   export let loading = false;

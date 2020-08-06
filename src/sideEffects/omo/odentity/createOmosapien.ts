@@ -1,6 +1,6 @@
-import {IProcessContext} from "../../../core/Flows/IProcessContext";
-import {ISideEffect} from "../../../core/Flows/ISideEffect";
-import {Omosapiens as OmosapiensMutations} from "../../../mutations/omo/odentity/omosapiens";
+import { IProcessContext } from "../../../core/Flows/IProcessContext";
+import { ISideEffect } from "../../../core/Flows/ISideEffect";
+import { Omosapiens as OmosapiensMutations } from "../../../mutations/omo/odentity/omosapiens";
 
 export const createOmosapien: ISideEffect<IProcessContext, any> = {
   _$schemaId: "sideEffects:omo.odentity.createOmosapien",
@@ -12,8 +12,8 @@ export const createOmosapien: ISideEffect<IProcessContext, any> = {
     name: "void",
     type: "schema:omo.void"
   }],
-  execute: async (context, argument) =>
-  {
+  execute: async (context, argument) => {
+    window.o.quantRegistry.syncAllCollections();
     const name = context.local.inputs["name"];
     const safeAddress = context.local.inputs["safe"].safeAddress;
 
