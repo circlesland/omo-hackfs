@@ -3,8 +3,8 @@
   import { Notification } from "./../../events/omo/shell/notification.ts";
   import moment from "moment";
   import OmoNavTabs from "./../2-molecules/OmoNavTabs";
-  import {Omosapiens} from "../../queries/omo/odentity/omosapiens";
-  import {observe} from "svelte-observable";
+  import { Omosapiens } from "../../queries/omo/odentity/omosapiens";
+  import { observe } from "svelte-observable";
 
   //Tabs
   let currentTab;
@@ -14,29 +14,32 @@
     {
       label: "My Dreams",
       value: 2,
-      icon: "fa-user-ninja"
+      icon: "fa-user-ninja",
     },
-    {
-      label: "My Organisations",
-      value: 3,
-      icon: "fa-users"
-    },
+    // {
+    //   label: "My Organisations",
+    //   value: 3,
+    //   icon: "fa-users"
+    // },
     { label: "My Processes", value: 4, icon: "fa-tasks" },
-    { label: "Notifications", value: 5, icon: "fa-bell" },
+    // { label: "Notifications", value: 5, icon: "fa-bell" },
     {
       label: "Safe Owners",
       value: 6,
-      icon: "fa-user-shield"
+      icon: "fa-user-shield",
     },
     {
       label: "My Backups",
       value: 7,
-      icon: "fa-database"
-    }
+      icon: "fa-database",
+    },
   ];
 
-  let omosapiens = observe(Omosapiens.subscribeBySafeAddress(window.o.odentity.current.circleSafe.safeAddress));
-
+  let omosapiens = observe(
+    Omosapiens.subscribeBySafeAddress(
+      window.o.odentity.current.circleSafe.safeAddress
+    )
+  );
 </script>
 
 <style>
@@ -68,13 +71,14 @@
       <h1 class="uppercase text-lg text-primary">Dashboard</h1>
 
       {#await $omosapiens}
-      loading..
-        {:then omosapiens}
-      {#each omosapiens as omo}
-        <h1 class="uppercase text-lg text-primary">{omo.name} - {omo.safeAddress}</h1>
-      {/each}
+        loading..
+      {:then omosapiens}
+        {#each omosapiens as omo}
+          <h1 class="uppercase text-lg text-primary">
+            {omo.name} - {omo.safeAddress}
+          </h1>
+        {/each}
       {/await}
-
     {/if}
 
     {#if 2 === currentTab}
@@ -120,6 +124,7 @@
     {#if 4 === currentTab}
       <h1 class="uppercase text-lg text-primary mb-10">My Processes</h1>
       <div>Active</div>
+      <div>MOCKUP DEMO WIP</div>
       <div
         class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
@@ -168,6 +173,8 @@
       <h1 class="uppercase text-lg text-primary mb-10">
         List of Safe Owners which have access to my safe
       </h1>
+      <div>MOCKUP DEMO WIP</div>
+
       <div
         class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
@@ -271,13 +278,15 @@
       <h1 class="uppercase text-lg text-primary mb-10">
         List of my data backups
       </h1>
+      <div>MOCKUP DEMO WIP</div>
+      Controlled by me
       <div
         class="flex h-12 mb-4 w-full bg-gray-200 text-gray-800 hover:bg-primary
         hover:text-white">
         <div class="py-3 w-12 h-12 text-center bg-primary">
           <i class="fas fa-laptop text-white" />
         </div>
-        <p class="py-3 px-4 rounded flex-1">laptop 100% master</p>
+        <p class="py-3 px-4 rounded flex-1">laptop 100% sync</p>
         <img
           alt=""
           src="https://i.pravatar.cc/150?u=12345678"
@@ -289,7 +298,7 @@
         <div class="py-3 w-12 h-12 text-center bg-primary">
           <i class="fas fa-mobile text-white" />
         </div>
-        <p class="py-3 px-4 rounded flex-1">iphone 80%</p>
+        <p class="py-3 px-4 rounded flex-1">iphone 80% sync</p>
         <img
           alt=""
           src="https://i.pravatar.cc/150?u=12345678"
@@ -303,7 +312,7 @@
           <i class="fas fa-database text-white" />
         </div>
         <p class="py-3 px-4 rounded flex-1">
-          100% snychronised / filecoin / textile / powergate
+          100% synchronised / filecoin / textile / powergate
         </p>
         <img
           alt=""
