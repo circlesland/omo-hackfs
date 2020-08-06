@@ -1,6 +1,6 @@
 <script lang="ts">
-  import {getRoute, curRoute, navigate, getComponent} from "./Router.ts";
-  import {onMount, onDestroy} from "svelte";
+  import { getRoute, curRoute, navigate, getComponent } from "./Router.ts";
+  import { onMount, onDestroy } from "svelte";
   import MagicLogin from "./quants/5-dapps/MagicLogin.svelte";
 
   import OmoHome from "./quants/5-dapps/OmoHome";
@@ -25,11 +25,11 @@
 
   import OmoNavTop from "./quants/2-molecules/OmoNavTop.svelte";
   import OmoNavBottom from "./quants/2-molecules/OmoNavBottom.svelte";
-  import {StartFlow} from "./events/omo/shell/startFlow";
-  import {Navigated} from "./events/omo/shell/navigated";
-  import {Logout} from "./events/omo/shell/logout";
-  import {ClosePopup} from "./events/omo/shell/closePopup";
-  import {ClearDatabase} from "./events/omo/shell/clearDatabase"
+  import { StartFlow } from "./events/omo/shell/startFlow";
+  import { Navigated } from "./events/omo/shell/navigated";
+  import { Logout } from "./events/omo/shell/logout";
+  import { ClosePopup } from "./events/omo/shell/closePopup";
+  import { ClearDatabase } from "./events/omo/shell/clearDatabase";
 
   let subscription = null;
   onDestroy(() => {
@@ -52,13 +52,14 @@
     // });
     window.navigate = navigate;
     if (route) {
-      window.o.publishShellEventAsync(new Navigated(route.replace("?page=", "")));
+      window.o.publishShellEventAsync(
+        new Navigated(route.replace("?page=", ""))
+      );
     }
 
     let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
-    subscription = notifications.observable.subscribe(next => {
-      if (!next._$schemaId)
-        return;
+    subscription = notifications.observable.subscribe((next) => {
+      if (!next._$schemaId) return;
 
       switch (next._$schemaId) {
         case "events:omo.shell.notification":
@@ -75,24 +76,40 @@
           window.o.publishShellEventAsync(new ClosePopup());
           break;
         case "events:omo.shell.clearDatabase":
-          console.error("Oida, was machst Du DB leer Lan?")
+          console.error("Oida, was machst Du DB leer Lan?");
           break;
         case "events:omo.shell.log":
           if (next.data.dataJson) {
-            console.log(new Date().toJSON() + " | " + next.data.severity + " | " + next.data.source + " | " + next.data.message + " | " + next.data.dataJson)
+            console.log(
+              new Date().toJSON() +
+                " | " +
+                next.data.severity +
+                " | " +
+                next.data.source +
+                " | " +
+                next.data.message +
+                " | " +
+                next.data.dataJson
+            );
           } else {
-            console.log(new Date().toJSON() + " | " + next.data.severity + " | " + next.data.source + " | " + next.data.message)
+            console.log(
+              new Date().toJSON() +
+                " | " +
+                next.data.severity +
+                " | " +
+                next.data.source +
+                " | " +
+                next.data.message
+            );
           }
           break;
       }
     });
   });
 
-  function notify(next) {
-  }
+  function notify(next) {}
 
-  function navigated(page) {
-  }
+  function navigated(page) {}
 
   function handlerBackNavigation(event) {
     curRoute.set(event.state.route);
@@ -103,11 +120,11 @@
 
   // ROUTING
   var routes = [
-    {route: "/", quant: OmoHome, authenticate: false},
-    {route: "?page=home", quant: OmoHome, authenticate: false},
-    {route: "?page=mamaomo", quant: MamaOmo, authenticate: true},
-    {route: "?page=omoauth", quant: OmoAuth, authenticate: false},
-    {route: "?page=magicLogin", quant: MagicLogin, authenticate: false},
+    { route: "/", quant: OmoHome, authenticate: false },
+    { route: "?page=home", quant: OmoHome, authenticate: false },
+    { route: "?page=mamaomo", quant: MamaOmo, authenticate: true },
+    { route: "?page=omoauth", quant: OmoAuth, authenticate: false },
+    { route: "?page=magicLogin", quant: MagicLogin, authenticate: false },
     {
       route: "?page=odentity",
       quant: Odentity,
@@ -117,41 +134,42 @@
         {
           title: "Remove Circles SeedPhrase Auth",
           event: () =>
-                  new StartFlow("flows:omo.odentity.removeAuthProviderSeedPhrase")
+            new StartFlow("flows:omo.odentity.removeAuthProviderSeedPhrase"),
         },
         {
           title: "Remove Email Auth Provider",
-          event: () => new StartFlow("flows:omo.odentity.removeAuthProviderMail")
+          event: () =>
+            new StartFlow("flows:omo.odentity.removeAuthProviderMail"),
         },
         {
           title: "Remove owner Device",
-          event: () => new StartFlow("flows:omo.odentity.removeOwnerDevice")
+          event: () => new StartFlow("flows:omo.odentity.removeOwnerDevice"),
         },
         {
           title: "Add Circles SeedPhrase Auth",
           event: () =>
-                  new StartFlow("flows:omo.odentity.addAuthProviderSeedPhrase")
+            new StartFlow("flows:omo.odentity.addAuthProviderSeedPhrase"),
         },
         {
           title: "Add Email Auth Provider",
-          event: () => new StartFlow("flows:omo.odentity.addAuthProviderMail")
+          event: () => new StartFlow("flows:omo.odentity.addAuthProviderMail"),
         },
         {
           title: "Add owner Device",
-          event: () => new StartFlow("flows:omo.odentity.addOwnerDevice")
+          event: () => new StartFlow("flows:omo.odentity.addOwnerDevice"),
         },
         {
           title: "Logout",
-          event: () => new Logout()
+          event: () => new Logout(),
         },
         {
           title: "ClearDatabase",
-          event: () => new ClearDatabase()
-        }
-      ]
+          event: () => new ClearDatabase(),
+        },
+      ],
     },
-    {route: "?page=docs", quant: OmoDocs, authenticate: true},
-    {route: "?page=omodapps", quant: OmoDapps, authenticate: true},
+    { route: "?page=docs", quant: OmoDocs, authenticate: true },
+    { route: "?page=omodapps", quant: OmoDapps, authenticate: true },
     {
       route: "?page=omodream",
       quant: OmoDream,
@@ -159,25 +177,29 @@
       actions: [
         {
           title: "Convert to product",
-          event: () => new StartFlow("flows:omo.dreams.convertToProduct")
+          event: () => new StartFlow("flows:omo.dreams.convertToProduct"),
         },
         {
           title: "Invite someone",
-          event: () => new StartFlow("flows:omo.dreams.inviteToDream")
-        }
-      ]
+          event: () => new StartFlow("flows:omo.dreams.inviteToDream"),
+        },
+      ],
     },
-    {route: "?page=omofunding", quant: OmoFunding, authenticate: true},
-    {route: "?page=omoorgas", quant: OmoOrgas, authenticate: true},
-    {route: "?page=omomarket", quant: OmoMarket, authenticate: true,
+    { route: "?page=omofunding", quant: OmoFunding, authenticate: true },
+    { route: "?page=omoorgas", quant: OmoOrgas, authenticate: true },
+    {
+      route: "?page=omomarket",
+      quant: OmoMarket,
+      authenticate: true,
       actions: [
         {
           title: "Create new dream",
-          event: () => new StartFlow("flows:omo.dreams.createDream")
-        }
-      ]},
-    {route: "?page=omovoting", quant: OmoVoting, authenticate: true},
-    {route: "?page=omopreorders", quant: OmoPreOrders, authenticate: true},
+          event: () => new StartFlow("flows:omo.dreams.createDream"),
+        },
+      ],
+    },
+    { route: "?page=omovoting", quant: OmoVoting, authenticate: true },
+    { route: "?page=omopreorders", quant: OmoPreOrders, authenticate: true },
     {
       route: "?page=omosafe",
       quant: OmoSafe,
@@ -186,17 +208,17 @@
         // TODO: Custom actions should be available on every level
         {
           title: "Trust someone",
-          event: () => new StartFlow("flows:omo.safe.giveTrust")
+          event: () => new StartFlow("flows:omo.safe.giveTrust"),
         },
         {
           title: "Remove trust",
-          event: () => new StartFlow("flows:omo.safe.revokeTrust")
+          event: () => new StartFlow("flows:omo.safe.revokeTrust"),
         },
         {
           title: "Send Circles",
-          event: () => new StartFlow("flows:omo.safe.transferCircles")
-        }
-      ]
+          event: () => new StartFlow("flows:omo.safe.transferCircles"),
+        },
+      ],
     },
     {
       route: "?page=omodreams",
@@ -205,9 +227,9 @@
       actions: [
         {
           title: "Create new dream",
-          event: () => new StartFlow("flows:omo.dreams.createDream")
-        }
-      ]
+          event: () => new StartFlow("flows:omo.dreams.createDream"),
+        },
+      ],
     },
     {
       route: "?page=omochat",
@@ -216,38 +238,40 @@
       actions: [
         {
           title: "Create new Chat Room",
-          event: () => new StartFlow("flows:omo.chat.addChatRoom")
+          event: () => new StartFlow("flows:omo.chat.addChatRoom"),
         },
         {
           title: "Remove Chat Room",
-          event: () => new StartFlow("flows:omo.chat.removeChatRoom")
+          event: () => new StartFlow("flows:omo.chat.removeChatRoom"),
         },
         {
           title: "Send Message",
-          event: () => new StartFlow("flows:omo.chat.sendMessage")
-        }
-      ]
+          event: () => new StartFlow("flows:omo.chat.sendMessage"),
+        },
+      ],
     },
     {
       route: "?page=onboarding",
       quant: OnBoarding,
       authenticate: false,
-      actions: [{
-        title: "Start onboarding",
-        event: () => new StartFlow("flows:omo.odentity.createOmosapien")
-      }]
+      actions: [
+        {
+          title: "Start onboarding",
+          event: () => new StartFlow("flows:omo.odentity.createOmosapien"),
+        },
+      ],
     },
-    {route: "?page=omodialog", quant: OmoDialog, authenticate: true},
+    { route: "?page=omodialog", quant: OmoDialog, authenticate: true },
     {
       route: "?page=omoactions",
       quant: OmoActions,
-      authenticate: true
+      authenticate: true,
     },
     {
       route: "?page=omoconnectcircles",
       quant: OmoConnectCircles,
-      authenticate: true
-    }
+      authenticate: true,
+    },
   ];
   window.routes = routes; // TODO: Pfui!
 </script>
@@ -282,17 +306,17 @@
   }
 </style>
 
-<svelte:window on:popstate={handlerBackNavigation}/>
+<svelte:window on:popstate={handlerBackNavigation} />
 
 <div class="app">
   <header>
-    <OmoNavTop/>
+    <OmoNavTop />
   </header>
   <main>
-    <svelte:component this={getComponent($curRoute, routes)} {routes}/>
+    <svelte:component this={getComponent($curRoute, routes)} {routes} />
   </main>
   <footer>
-    <OmoNavBottom/>
+    <OmoNavBottom />
   </footer>
   <!-- <footer>
       {#if omo != null}
