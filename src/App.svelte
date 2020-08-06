@@ -59,7 +59,7 @@
     }
 
     let notifications = window.o.eventBroker.tryGetTopic("omo", "shell");
-    subscription = notifications.observable.subscribe((next) => {
+    subscription = notifications.observable.subscribe(next => {
       if (!next._$schemaId) return;
 
       switch (next._$schemaId) {
@@ -133,42 +133,42 @@
       authenticate: false,
       actions: [
         // TODO: Custom actions should be available on every level
-        {
-          title: "Remove Circles SeedPhrase Auth",
-          event: () =>
-            new StartFlow("flows:omo.odentity.removeAuthProviderSeedPhrase"),
-        },
-        {
-          title: "Remove Email Auth Provider",
-          event: () =>
-            new StartFlow("flows:omo.odentity.removeAuthProviderMail"),
-        },
-        {
-          title: "Remove owner Device",
-          event: () => new StartFlow("flows:omo.odentity.removeOwnerDevice"),
-        },
-        {
-          title: "Add Circles SeedPhrase Auth",
-          event: () =>
-            new StartFlow("flows:omo.odentity.addAuthProviderSeedPhrase"),
-        },
-        {
-          title: "Add Email Auth Provider",
-          event: () => new StartFlow("flows:omo.odentity.addAuthProviderMail"),
-        },
-        {
-          title: "Add owner Device",
-          event: () => new StartFlow("flows:omo.odentity.addOwnerDevice"),
-        },
+        // {
+        //   title: "Remove Circles SeedPhrase Auth",
+        //   event: () =>
+        //     new StartFlow("flows:omo.odentity.removeAuthProviderSeedPhrase"),
+        // },
+        // {
+        //   title: "Remove Email Auth Provider",
+        //   event: () =>
+        //     new StartFlow("flows:omo.odentity.removeAuthProviderMail"),
+        // },
+        // {
+        //   title: "Remove owner Device",
+        //   event: () => new StartFlow("flows:omo.odentity.removeOwnerDevice"),
+        // },
+        // {
+        //   title: "Add Circles SeedPhrase Auth",
+        //   event: () =>
+        //     new StartFlow("flows:omo.odentity.addAuthProviderSeedPhrase"),
+        // },
+        // {
+        //   title: "Add Email Auth Provider",
+        //   event: () => new StartFlow("flows:omo.odentity.addAuthProviderMail"),
+        // },
+        // {
+        //   title: "Add owner Device",
+        //   event: () => new StartFlow("flows:omo.odentity.addOwnerDevice"),
+        // },
         {
           title: "Logout",
-          event: () => new Logout(),
-        },
-        {
-          title: "ClearDatabase",
-          event: () => new ClearDatabase(),
-        },
-      ],
+          event: () => new Logout()
+        }
+        // {
+        //   title: "ClearDatabase",
+        //   event: () => new ClearDatabase(),
+        // },
+      ]
     },
     { route: "?page=docs", quant: OmoDocs, authenticate: true },
     { route: "?page=omodapps", quant: OmoDapps, authenticate: true },
@@ -179,13 +179,13 @@
       actions: [
         {
           title: "Convert to product",
-          event: () => new StartFlow("flows:omo.dreams.convertToProduct"),
+          event: () => new StartFlow("flows:omo.dreams.convertToProduct")
         },
         {
           title: "Invite someone",
-          event: () => new StartFlow("flows:omo.dreams.inviteToDream"),
-        },
-      ],
+          event: () => new StartFlow("flows:omo.dreams.inviteToDream")
+        }
+      ]
     },
     { route: "?page=omofunding", quant: OmoFunding, authenticate: true },
     { route: "?page=omoorgas", quant: OmoOrgas, authenticate: true },
@@ -196,9 +196,9 @@
       actions: [
         {
           title: "Create new dream",
-          event: () => new StartFlow("flows:omo.dreams.createDream"),
-        },
-      ],
+          event: () => new StartFlow("flows:omo.dreams.createDream")
+        }
+      ]
     },
     { route: "?page=omovoting", quant: OmoVoting, authenticate: true },
     { route: "?page=omopreorders", quant: OmoPreOrders, authenticate: true },
@@ -210,17 +210,17 @@
         // TODO: Custom actions should be available on every level
         {
           title: "Trust someone",
-          event: () => new StartFlow("flows:omo.safe.giveTrust"),
+          event: () => new StartFlow("flows:omo.safe.giveTrust")
         },
         {
           title: "Remove trust",
-          event: () => new StartFlow("flows:omo.safe.revokeTrust"),
+          event: () => new StartFlow("flows:omo.safe.revokeTrust")
         },
         {
           title: "Send Circles",
-          event: () => new StartFlow("flows:omo.safe.transferCircles"),
-        },
-      ],
+          event: () => new StartFlow("flows:omo.safe.transferCircles")
+        }
+      ]
     },
     {
       route: "?page=omodreams",
@@ -229,34 +229,34 @@
       actions: [
         {
           title: "Create new dream",
-          event: () => new StartFlow("flows:omo.dreams.createDream"),
-        },
-      ],
+          event: () => new StartFlow("flows:omo.dreams.createDream")
+        }
+      ]
     },
     {
       route: "?page=omochat",
       quant: OmoChat,
       authenticate: true,
       actions: [
-        {
-          title: "Create new Chat Room",
-          event: () => new StartFlow("flows:omo.chat.addChatRoom"),
-        },
-        {
-          title: "Remove Chat Room",
-          event: () => new StartFlow("flows:omo.chat.removeChatRoom"),
-        },
+        // {
+        //   title: "Create new Chat Room",
+        //   event: () => new StartFlow("flows:omo.chat.addChatRoom"),
+        // },
+        // {
+        //   title: "Remove Chat Room",
+        //   event: () => new StartFlow("flows:omo.chat.removeChatRoom"),
+        // },
         {
           title: "Send Message",
-          event: () => new StartFlow("flows:omo.chat.sendMessage"),
-        },
-      ],
+          event: () => new StartFlow("flows:omo.chat.sendMessage")
+        }
+      ]
     },
     {
       route: "?page=omodreamchat",
       quant: OmoDreamChat,
       authenticate: true,
-      actions: [],
+      actions: []
     },
     {
       route: "?page=onboarding",
@@ -265,21 +265,21 @@
       actions: [
         {
           title: "Start onboarding",
-          event: () => new StartFlow("flows:omo.odentity.createOmosapien"),
-        },
-      ],
+          event: () => new StartFlow("flows:omo.odentity.createOmosapien")
+        }
+      ]
     },
     { route: "?page=omodialog", quant: OmoDialog, authenticate: true },
     {
       route: "?page=omoactions",
       quant: OmoActions,
-      authenticate: true,
+      authenticate: true
     },
     {
       route: "?page=omoconnectcircles",
       quant: OmoConnectCircles,
-      authenticate: true,
-    },
+      authenticate: true
+    }
   ];
   window.routes = routes; // TODO: Pfui!
 </script>
