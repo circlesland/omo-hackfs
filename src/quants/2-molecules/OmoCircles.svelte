@@ -13,37 +13,37 @@
       label: "My transactions",
       value: 1,
       icon: "fa-exchange-alt",
-      category: "general"
+      category: "general",
     },
-    { label: "My streams", value: 2, icon: "fa-history" },
+    // { label: "My streams", value: 2, icon: "fa-history" },
     { label: "Token", value: 3, icon: "fa-coins" },
     {
       label: "Trust I receive",
       value: 4,
       icon: "fa-user-astronaut",
-      category: "general"
+      category: "general",
     },
     {
       label: "Trust I give",
       value: 5,
       icon: "fa-user-ninja",
-      category: "general"
+      category: "general",
     },
     {
       label: "UBI Payouts",
       value: 6,
       icon: "fa-hand-holding-heart",
-      category: "general"
-    }
+      category: "general",
+    },
   ];
 
   export let data = {
     safeAddress: "",
     safeData: {},
-    transferData: {}
+    transferData: {},
   };
 
-  Array.prototype.sum = function(prop) {
+  Array.prototype.sum = function (prop) {
     var total = 0;
     for (var i = 0, _len = this.length; i < _len; i++) {
       total += parseInt(this[i][prop]);
@@ -61,6 +61,11 @@
     if (!omosapien || omosapien.length == 0) return safeAddress;
     else return omosapien.name;
   }
+  let notshown = [
+    "0xd4f7f5afed7e869c42648c1b8ab7c394e3b11ecd",
+    "0xc1251f7a72b54d025338c4808b059699baa12472",
+    "0xa12adca8f70b1f3899ec4685c809f28bce1986dc",
+  ];
 </script>
 
 <style>
@@ -104,13 +109,10 @@
                     {:then name}
                       {name}
                     {/await}
-                    - {item.transfer.to}
+
                   </p>
                   <p class="text-xs -mt-3 text-gray-600">
-                    {moment
-                      .unix(item.time)
-                      .locale('en')
-                      .fromNow()}
+                    {moment.unix(item.time).locale('en').fromNow()}
                   </p>
                 </div>
                 <div class="h-12 py-1 px-3 text-2xl text-red-400">
@@ -126,14 +128,11 @@
                     {#await lookupName(item.transfer.from)}
                       Loading
                     {:then name}
-                      {name} {item.transfer.from}
+                      {name}
                     {/await}
                   </p>
                   <p class="text-xs -mt-3 text-gray-600">
-                    {moment
-                      .unix(item.time)
-                      .locale('en')
-                      .fromNow()}
+                    {moment.unix(item.time).locale('en').fromNow()}
                   </p>
                 </div>
                 <div class="h-12 py-1 px-3 text-2xl text-green-400">
@@ -169,7 +168,7 @@
                 {:then name}
                   {name}
                 {/await}
-                - {item.token.owner.id}
+
               </p>
             {/if}
             <div class="h-12 py-1 px-3 text-2xl text-blue-400">
@@ -183,23 +182,24 @@
     {#if 4 === currentTab}
       <div class="py-6 px-8 text-md mt-6">
         {#each data.safeData.data.safes[0].outgoing as item}
-          <div class="flex h-12 mb-4 w-full bg-gray-100">
-            <img
-              alt=""
-              src="https://i.pravatar.cc/150?u={item.canSendTo.id}"
-              class="h-full w-auto" />
-            <p class="py-3 px-4 flex-1 text-gray-700">
-              {#await lookupName(item.canSendTo.id)}
-                Loading
-              {:then name}
-                {name}
-              {/await}
-              {item.canSendTo.id}
-            </p>
-            <div class="h-12 py-1 px-3 text-2xl text-blue-400">
-              ({item.limitPercentage}%) Ø{(item.limit / 1000000000000000000).toFixed(0)}
+          {#if !notshown.some((x) => x == item.canSendTo.id)}
+            <div class="flex h-12 mb-4 w-full bg-gray-100">
+              <img
+                alt=""
+                src="https://i.pravatar.cc/150?u={item.canSendTo.id}"
+                class="h-full w-auto" />
+              <p class="py-3 px-4 flex-1 text-gray-700">
+                {#await lookupName(item.canSendTo.id)}
+                  Loading
+                {:then name}
+                  {name}
+                {/await}
+              </p>
+              <div class="h-12 py-1 px-3 text-2xl text-blue-400">
+                ({item.limitPercentage}%) Ø{(item.limit / 1000000000000000000).toFixed(0)}
+              </div>
             </div>
-          </div>
+          {/if}
         {/each}
       </div>
     {/if}
@@ -219,7 +219,7 @@
                 {:then name}
                   {name}
                 {/await}
-                {item.user.id}
+
               </div>
               <div class="h-12 py-1 px-3 text-2xl text-blue-400">
                 ({item.limitPercentage}%) Ø{(item.limit / 1000000000000000000).toFixed(2)}
@@ -245,10 +245,7 @@
               <div class="text-sm py-2 px-4 w-full">
                 <p>Universal basic income payout</p>
                 <p class="text-xs -mt-3 text-gray-600">
-                  {moment
-                    .unix(item.time)
-                    .locale('en')
-                    .fromNow()}
+                  {moment.unix(item.time).locale('en').fromNow()}
                 </p>
               </div>
               <div class="h-12 py-1 px-3 text-2xl text-green-400">

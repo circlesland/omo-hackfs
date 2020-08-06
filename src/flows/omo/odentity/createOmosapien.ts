@@ -47,7 +47,7 @@ export function createOmosapien() {
         .withSideEffect("sideEffects:omo.odentity.connectSafe")
         .mapInput("safeOwner", "safeOwner")
         .mapInput("safe", "safe")
-        .withTitle("Connecting the safe to your odentity")
+        .withTitle("Connecting safe to odentity")
 
         .step("flows:omo.odentity.createOmosapien:createOmosapien")
         .withSideEffect("sideEffects:omo.odentity.createOmosapien")
@@ -76,7 +76,7 @@ export function createOmosapien() {
         .step("flows:omo.odentity.createOmosapien:revokeInitialTrust")
         .withSideEffect("sideEffects:omo.circles.revokeInitialTrust")
         .mapInput("trustReceiverSafe", "safe")
-        .withTitle("Revoke Trust")
+        .withTitle("Cleaning up")
 
         .step("flows:omo.odentity.createOmosapien:navigate")
         .withSideEffect("sideEffects:omo.shell.navigate")
