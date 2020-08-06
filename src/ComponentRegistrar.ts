@@ -52,6 +52,8 @@ import { convertToProduct as convertToProductFlow } from "./flows/omo/dreams/con
 import { inviteToDream as inviteToDreamFlow} from "./flows/omo/dreams/inviteToDream";
 import { addReservation as addReservationFlow } from "./flows/omo/dreams/addReservation";
 import { addSubscription as addSubscriptionFlow} from "./flows/omo/dreams/addSubscription";
+import { addCommitment as addCommitmentFlow } from "./flows/omo/dreams/addCommitment";
+import { buyTokens as buyTokensFlow } from "./flows/omo/dreams/buyTokens";
 
 //
 // SideEffects
@@ -72,6 +74,10 @@ import { inviteToDream as inviteToDreamSideEffect } from "./sideEffects/omo/drea
 import { createChatRoom as createChatRoomSideEffect } from "./sideEffects/omo/dreams/createChatRoom";
 import { addReservation as addReservationSideEffect } from "./sideEffects/omo/dreams/addReservation";
 import { addSubscription as addSubscriptionSideEffect} from "./sideEffects/omo/dreams/addSubscription";
+import { createOmosapien as createOmosapienSideEffect } from "./sideEffects/omo/odentity/createOmosapien";
+import { connectSafe as connectSafeSideEffect } from "./sideEffects/omo/odentity/connectSafe";
+import { buyTokens as buyTokensSideEffect } from "./sideEffects/omo/dreams/buyTokens";
+import { addCommitment as addCommitmentSideEffect } from "./sideEffects/omo/dreams/addCommitment";
 
 //
 // Schema
@@ -87,8 +93,6 @@ import { Safe } from "./schema/omo/safe/safe";
 import { Number } from "./schema/omo/number";
 import { Void } from "./schema/omo/void";
 import { Any } from "./schema/omo/any";
-import { createOmosapien as createOmosapienSideEffect } from "./sideEffects/omo/odentity/createOmosapien";
-import { connectSafe as connectSafeSideEffect } from "./sideEffects/omo/odentity/connectSafe";
 
 
 export function init() {
@@ -173,6 +177,14 @@ export function init() {
     "flows:omo.dreams.addSubscription",
     addSubscriptionFlow
   );
+  w.flowRegistrar.set(
+    "flows:omo.dreams.addCommitment",
+    addCommitmentFlow
+  );
+  w.flowRegistrar.set(
+    "flows:omo.dreams.buyTokens",
+    buyTokensFlow
+  );
 
   w.sideEffectRegistrar = new Map();
   [
@@ -193,7 +205,9 @@ export function init() {
     inviteToDreamSideEffect,
     createChatRoomSideEffect,
     addReservationSideEffect,
-    addSubscriptionSideEffect
+    addSubscriptionSideEffect,
+    addCommitmentSideEffect,
+    buyTokensSideEffect
   ].forEach((o) => {
     w.sideEffectRegistrar.set(o["_$schemaId"], o);
   });

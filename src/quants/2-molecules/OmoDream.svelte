@@ -219,20 +219,36 @@
               future [product service title placeholder].
             </p>
           </div>
-          {#if data.dream.state == "dream"}
+          {#if data.dream.leap == "1"}
             <p
                     class="text-md w-full py-2 bg-tertiary hover:bg-secondary
             text-center text-white uppercase font-bold cursor-pointer"
                     on:click={() => window.o.publishShellEventAsync(new StartFlow("flows:omo.dreams.addReservation", data.dream._id))}>
-              reservate product now
+              Commit time
             </p>
           {/if}
-          {#if data.dream.state == "product"}
+          {#if data.dream.leap == "2"}
             <p
                     class="text-md w-full py-2 bg-tertiary hover:bg-secondary
             text-center text-white uppercase font-bold cursor-pointer"
                     on:click={() => window.o.publishShellEventAsync(new StartFlow("flows:omo.dreams.addSubscription", data.dream._id))}>
-              subscribe product now
+              Reserve subscription discount
+            </p>
+          {/if}
+          {#if data.dream.leap == "3"}
+            <p
+                    class="text-md w-full py-2 bg-tertiary hover:bg-secondary
+            text-center text-white uppercase font-bold cursor-pointer"
+                    on:click={() => window.o.publishShellEventAsync(new StartFlow("flows:omo.dreams.addSubscription", data.dream._id))}>
+              Subscribe
+            </p>
+          {/if}
+          {#if data.dream.leap == "4"}
+            <p
+                    class="text-md w-full py-2 bg-tertiary hover:bg-secondary
+            text-center text-white uppercase font-bold cursor-pointer"
+                    on:click={() => window.o.publishShellEventAsync(new StartFlow("flows:omo.dreams.addSubscription", data.dream._id))}>
+              Buy tokens with discount
             </p>
           {/if}
         </div>

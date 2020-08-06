@@ -5,7 +5,10 @@ import {Omosapiens} from "../../../queries/omo/odentity/omosapiens";
 
 export const addReservation: ISideEffect<IProcessContext, any> = {
   _$schemaId: "sideEffects:omo.dreams.addReservation",
-  inputs: [],
+  inputs: [{
+    name: "dreamId",
+    type: "schema:omo.string"
+  }],
   outputs: [{
     name: "void",
     type: "schema:omo.void"
