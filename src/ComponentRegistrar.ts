@@ -60,6 +60,7 @@ import { buyTokens as buyTokensFlow } from "./flows/omo/dreams/buyTokens";
 // SideEffects
 //
 import { collectStepResult } from "./sideEffects/omo/shell/collectStepResult";
+import { navigate as navigateSideEffect } from "./sideEffects/omo/shell/navigate";
 import { giveTrust as giveTrustSideEffect } from "./sideEffects/omo/safe/giveTrust";
 import { transferCircles as transferCirclesSideEffect } from "./sideEffects/omo/safe/transferCircles";
 import { revokeTrust as revokeTrustSideEffect } from "./sideEffects/omo/safe/revokeTrust";
@@ -193,6 +194,7 @@ export function init() {
   w.sideEffectRegistrar = new Map();
   [
     collectStepResult,
+    navigateSideEffect,
     giveTrustSideEffect,
     revokeTrustSideEffect,
     transferCirclesSideEffect,

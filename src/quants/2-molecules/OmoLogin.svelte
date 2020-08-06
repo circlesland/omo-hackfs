@@ -35,7 +35,7 @@
       }
 
       if (o.odentity._current.circleSafe) {
-        navigate("omosafe");
+        navigate("omomarket");
       } else {
         o.publishShellEventAsync(
           new StartFlow("flows:omo.odentity.createOmosapien")

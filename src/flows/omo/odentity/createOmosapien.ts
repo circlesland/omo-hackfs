@@ -77,6 +77,11 @@ export function createOmosapien() {
         .withSideEffect("sideEffects:omo.circles.revokeInitialTrust")
         .mapInput("trustReceiverSafe", "safe")
         .withTitle("Revoke Trust")
+
+        .step("flows:omo.odentity.createOmosapien:navigate")
+        .withSideEffect("sideEffects:omo.shell.navigate")
+        .withStaticInput("page", "omomarket")
+        .withTitle("Finish process")
     })
     .end()
     .build();
