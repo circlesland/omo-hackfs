@@ -13,17 +13,103 @@
     dreamId = urlParams.get("data");
   }
 
-  let data = DreamsQueries.byId(dreamId);
-  let totalInteractions = 0;
-  let levelAndLeap = {level:0, leap:0};
+  const discounts = [{
+    fromLevel: 0,
+    toLevel: 6,
+    discount: 100
+  },{
+    fromLevel: 7,
+    toLevel: 7,
+    discount: 90
+  },{
+    fromLevel: 8,
+    toLevel: 8,
+    discount: 80
+  },{
+    fromLevel: 9,
+    toLevel: 9,
+    discount: 70
+  },{
+    fromLevel: 10,
+    toLevel: 10,
+    discount: 60
+  },{
+    fromLevel: 11,
+    toLevel: 11,
+    discount: 50
+  },{
+    fromLevel: 12,
+    toLevel: 12,
+    discount: 33.33
+  },{
+    fromLevel: 13,
+    toLevel: 13,
+    discount: 20
+  },{
+    fromLevel: 14,
+    toLevel: 14,
+    discount: 12.50
+  },{
+    fromLevel: 15,
+    toLevel: 15,
+    discount: 7.69
+  },{
+    fromLevel: 16,
+    toLevel: 16,
+    discount: 4.76
+  },{
+    fromLevel: 17,
+    toLevel: 17,
+    discount: 2.94
+  },{
+    fromLevel: 18,
+    toLevel: 18,
+    discount: 1.82
+  },{
+    fromLevel: 19,
+    toLevel: 19,
+    discount: 1.12
+  },{
+    fromLevel: 20,
+    toLevel: 20,
+    discount: 0.69
+  }];
 
-  async function calcInteractions() {
-    const d = await data;
-    totalInteractions = d.data.DreamById.Votes.length + d.data.DreamById.subscriptions.length;
-    levelAndLeap = DreamsQueries.calcLevel(totalInteractions);
+  async function load() {
+    const d = await DreamsQueries.byId(dreamId);
+
+    const subscriptions = [];
+
+    let lastLevel = 0;
+    let lastLeap = 0;
+
+    for (let i = 0; i < d.data.DreamById.subscriptions.length; i++) {
+      const subscription = d.data.DreamById.subscriptions[i];
+      const levelAndLeap = DreamsQueries.calcLevel(i);
+
+      const discount = discounts.find(o => o.fromLevel <= levelAndLeap.level && o.toLevel >= levelAndLeap.level);
+      const subLevelAndDiscount = {
+        levelHeader: lastLevel !== levelAndLeap.level ? levelAndLeap.level : null,
+        leapHeader: lastLeap !== levelAndLeap.leap ? levelAndLeap.leap : null,
+        level: levelAndLeap.level,
+        leap: levelAndLeap.leap,
+        subscription: subscription,
+        discount: !discount ? "" : discount.discount
+      }
+
+      lastLeap = levelAndLeap.leap;
+      lastLevel = levelAndLeap.level;
+
+      subscriptions.push(subLevelAndDiscount);
+    }
+
+    return {
+      dream: d.data.DreamById,
+      subscriptions: subscriptions
+    };
   }
 
-  calcInteractions();
+  load();
 </script>
 
 <style>
@@ -71,7 +157,7 @@
   }
 </style>
 
-{#await data}
+{#await load()}
   Loading...
 {:then data}
   <OmoIconsFA />
@@ -89,11 +175,11 @@
 
     <div class="content-left bg-gray-100">
       <OmoVideo />
-      <OmoProfilePage data={data.data.DreamById} />
+      <OmoProfilePage data={data.dream} />
     </div>
 
     <div class="nav-right">
-      <OmoNavAside dreamId={data.data.DreamById._id} />q
+      <OmoNavAside dreamId={data.dream._id} />q
     </div>
 
     <div class="content-right bg-gray-200 py-6 px-8">
@@ -113,103 +199,41 @@
               future [product service title placeholder].
             </p>
           </div>
-          {#if data.data.DreamById.state == "dream"}
+          {#if data.dream.state == "dream"}
             <p
                     class="text-md w-full py-2 bg-tertiary hover:bg-secondary
             text-center text-white uppercase font-bold cursor-pointer"
-                    on:click={() => window.o.publishShellEventAsync(new StartFlow("flows:omo.dreams.addReservation", data.data.DreamById._id))}>
+                    on:click={() => window.o.publishShellEventAsync(new StartFlow("flows:omo.dreams.addReservation", data.dream._id))}>
               reservate product now
             </p>
           {/if}
-          {#if data.data.DreamById.state == "product"}
+          {#if data.dream.state == "product"}
             <p
                     class="text-md w-full py-2 bg-tertiary hover:bg-secondary
             text-center text-white uppercase font-bold cursor-pointer"
-                    on:click={() => window.o.publishShellEventAsync(new StartFlow("flows:omo.dreams.addSubscription", data.data.DreamById._id))}>
+                    on:click={() => window.o.publishShellEventAsync(new StartFlow("flows:omo.dreams.addSubscription", data.dream._id))}>
               subscribe product now
             </p>
           {/if}
         </div>
-        <!-- <input type="button" on:click={vote} value="Vote" />
-        <input type="button" on:click={reservate} value="Reservate" />
-
-        {#if !data.data.DreamById.Product}
-          <input
-            type="button"
-            on:click={() => createProduct(100)}
-            value="Create product from dream" />
-        {/if} -->
       </div>
-      <!--<input type="button" on:click={subscribe} value="Subscribe" />-->
       <div class="aside-bottom">
-        <!-- <br />
-        Total interactions: {totalInteractions}
-        <br />
-        Current leap: {levelAndLeap.leap}
-        <br />
-        Current level: {levelAndLeap.level}
-        <br /> -->
-        <!-- Votes:
-        <br />
-        {#each data.data.DreamById.Votes as vote}
-          {vote._id}
-          <br />
-        {/each}
-      Reservations:<br/>
-        {#each data.data.DreamById.subscriptions as subscriptions}
-          {subscriptions._id}<br/>
-        Reservations: -->
-        Level 6
-        {#each data.data.DreamById.subscriptions as reservation}
+        {#each data.subscriptions as reservation, i}
+          {#if reservation.leapHeader}
+            Leap {reservation.leapHeader}
+          {/if}
+          {#if reservation.levelHeader}
+            Level {reservation.levelHeader}
+          {/if}
           <div class="flex h-12 mb-4 w-full bg-gray-100">
             <img
               alt=""
-              src="https://i.pravatar.cc/150?u={reservation._id}"
+              src="https://i.pravatar.cc/150?u={reservation.subscription._id}"
               class="h-full w-auto" />
-            <p class="py-3 px-4 rounded w-full">{reservation._id}</p>
+            <p class="py-3 px-4 rounded w-full">{reservation.discount} {reservation.subscription._id}</p>
           </div>
         {/each}
-        Level 7
-        <div class="flex h-12 mb-4 w-full bg-gray-100">
-          <img
-            alt=""
-            src="https://i.pravatar.cc/150?u=sfghsfgh"
-            class="h-full w-auto" />
-          <p class="py-3 px-4 rounded w-full">324576456u56ezdtf</p>
-        </div>
-        <div class="flex h-12 mb-4 w-full bg-gray-300">
-          <div
-            class="h-full w-16 text-center flex justify-center flex-col
-            bg-gray-500 text-xl text-gray-300 uppercase font-bold">
-            <i class="fas fa-lock text-gray-300" />
-          </div>
-          <div class="py-3 h-12 w-full bg-gray-300">reservate for -80%</div>
-        </div>
-        <div class="flex h-12 mb-4 w-full bg-gray-300">
-          <div
-            class="h-full w-16 text-center flex justify-center flex-col
-            bg-gray-500 text-xl text-gray-300 uppercase font-bold">
-            <i class="fas fa-lock text-gray-300" />
-          </div>
-          <div class="py-3 h-12 w-full bg-gray-300">reservate for -80%</div>
-        </div>
-        Level 8
-        <div class="flex h-12 mb-4 w-full bg-gray-300">
-          <div
-            class="h-full w-16 text-center flex justify-center flex-col
-            bg-gray-500 text-xl text-gray-300 uppercase font-bold">
-            <i class="fas fa-lock text-gray-300" />
-          </div>
-          <div class="py-3 h-12 w-full bg-gray-300">reservate for -70%</div>
-        </div>
-        <div class="flex h-12 mb-4 w-full bg-gray-300">
-          <div
-            class="h-full w-16 text-center flex justify-center flex-col
-            bg-gray-500 text-xl text-gray-300 uppercase font-bold">
-            <i class="fas fa-lock text-gray-300" />
-          </div>
-          <div class="py-3 h-12 w-full bg-gray-300">reservate for -70%</div>
-        </div>
+        Level X
         <div class="flex h-12 mb-4 w-full bg-gray-300">
           <div
             class="h-full w-16 text-center flex justify-center flex-col

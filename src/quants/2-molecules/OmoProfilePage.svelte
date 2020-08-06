@@ -3,15 +3,8 @@
 
   export let data = {
     _id: "",
-    name: "",
-    description: "",
-    creator: {},
-    safeAddress: "",
-    timeCommitments: [],
-    subscriptions: []
+    name: ""
   };
-
-  console.log("OmoProfilePage:", data);
 
 </script>
 
