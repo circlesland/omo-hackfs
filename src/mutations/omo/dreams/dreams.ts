@@ -16,6 +16,7 @@ export class Dreams {
       throw new Error("No current odentity");
 
     const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
+    console.log("createNewDream mutation: omosapien:", omosapien);
 
     const newDream = await window.o.graphQL.mutation(
       `addDream(name:"${name}" description:"${description}" city:"${cityName}" safeAddress:"${safeAddress}" leap: "1", creatorId: "${omosapien._id}") { _id name leap description safeAddress creatorId }`

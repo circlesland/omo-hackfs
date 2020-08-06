@@ -8,6 +8,7 @@
   import OmoNavAside from "./../2-molecules/OmoNavAside.svelte";
   import OmoDreamChat from "./OmoDreamChat.svelte";
   import OmoDreamFollower from "./OmoDreamFollower.svelte";
+  import {afterUpdate, beforeUpdate} from "svelte";
 
   // TODO: Realtime updates of new subscriptions
   let dreamId;
@@ -150,6 +151,16 @@
     toLevel: 20,
     subscriptionDiscount: 0.69,
     tokenDiscount: 4.78
+  }, {
+    fromLevel: 21,
+    toLevel: 22,
+    subscriptionDiscount: 0,
+    tokenDiscount: 4.78
+  }, {
+    fromLevel: 22,
+    toLevel: 999,
+    subscriptionDiscount: 0,
+    tokenDiscount: 0
   }];
 
   let leapMetadata = [{
@@ -211,8 +222,10 @@
       subscriptions.push(levelMetadata);
     }
 
+    const nextLevelAndLeap = DreamsQueries.calcLevel(d.data.DreamById.subscriptions.length);
+
     const returnValue = {
-      leaps: leapMetadata.filter(o => o.fromLeap <= lastLeap && o.toLeap >= lastLeap),
+      leaps: leapMetadata.filter(o => o.fromLeap <= nextLevelAndLeap.leap && o.toLeap >= nextLevelAndLeap.leap),
       dream: d.data.DreamById,
       subscriptions: subscriptions,
     };
@@ -294,8 +307,7 @@
     <div class="content-right bg-gray-200 py-6 px-8">
       <svelte:component
         this={contentRight}
-        dream={data.dream}
-        subscriptions={data.subscriptions} />
+        data={data} />
     </div>
 
     <div class="nav-right">

@@ -50,7 +50,7 @@
         <!--<OmoAvatarsGrouped data={dreamers}/>-->
         <div class="text-center mt-4">
           <h3 class="text-4xl font-semibold leading-normal mb-2 text-gray-800">
-            {data.dream.name}
+            {data.name}
           </h3>
           <div
                   class="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold

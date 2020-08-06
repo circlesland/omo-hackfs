@@ -1,60 +1,38 @@
 <script>
-  export let dream;
-  export let subscriptions;
+  export let data;
+  import {StartFlow} from "../../events/omo/shell/startFlow";
 </script>
 
 <div class="aside-top text-md">
-  <div class="bg-gray-300">
-    <div class="flex flex-col justify-center h-16 text-center">
-      <p
-        class="py-2 px-4 text-xl font-bold text-primary h-full flex
-        justify-center flex-col bg-gray-300 uppercase">
-        80% lifetime subscriptionDiscount
-      </p>
+    <div class="bg-gray-300">
+      <div class="flex flex-col justify-center h-16 text-center">
+        <p class="py-2 px-4 text-xl font-bold text-primary h-full flex
+              justify-center flex-col bg-gray-300 uppercase">
+          80% lifetime subscriptionDiscount
+        </p>
+      </div>
+      <div class="bg-gray-100">
+        <p class="text-md p-6 text-gray-600">
+          By joining the dream now, you will reservate your pre-order slot,
+          which will give you x percent subscriptionDiscount for lifetime on using the
+          future [product service title placeholder].
+        </p>
+      </div>
+      <div class="flex">
+        {#each data.leaps as leap}
+
+          <p
+                  class=" text-md py-2 bg-tertiary hover:bg-secondary
+            text-center text-white uppercase font-bold cursor-pointer"
+                  on:click={leap.action}>
+            {leap.actionTitle}
+          </p>
+        {/each}
+      </div>
     </div>
-    <div class="bg-gray-100">
-      <p class="text-md p-6 text-gray-600">
-        By joining the dream now, you will reservate your pre-order slot, which
-        will give you x percent subscriptionDiscount for lifetime on using the
-        future [product service title placeholder].
-      </p>
-    </div>
-    {#if dream.leap == '1'}
-      <p
-        class="text-md w-full py-2 bg-tertiary hover:bg-secondary text-center
-        text-white uppercase font-bold cursor-pointer"
-        on:click={() => window.o.publishShellEventAsync(new StartFlow('flows:omo.dreams.addReservation', dream._id))}>
-        Commit time
-      </p>
-    {/if}
-    {#if dream.leap == '2'}
-      <p
-        class="text-md w-full py-2 bg-tertiary hover:bg-secondary text-center
-        text-white uppercase font-bold cursor-pointer"
-        on:click={() => window.o.publishShellEventAsync(new StartFlow('flows:omo.dreams.addSubscription', dream._id))}>
-        Reserve subscription discount
-      </p>
-    {/if}
-    {#if dream.leap == '3'}
-      <p
-        class="text-md w-full py-2 bg-tertiary hover:bg-secondary text-center
-        text-white uppercase font-bold cursor-pointer"
-        on:click={() => window.o.publishShellEventAsync(new StartFlow('flows:omo.dreams.addSubscription', dream._id))}>
-        Subscribe
-      </p>
-    {/if}
-    {#if dream.leap == '4'}
-      <p
-        class="text-md w-full py-2 bg-tertiary hover:bg-secondary text-center
-        text-white uppercase font-bold cursor-pointer"
-        on:click={() => window.o.publishShellEventAsync(new StartFlow('flows:omo.dreams.addSubscription', dream._id))}>
-        Buy tokens with discount
-      </p>
-    {/if}
-  </div>
 </div>
 <div class="aside-bottom">
-  {#each subscriptions as reservation, i}
+  {#each data.subscriptions as reservation, i}
     {#if reservation.leapHeader}Leap {reservation.leapHeader}{/if}
     {#if reservation.levelHeader}Level {reservation.levelHeader}{/if}
     <div class="flex h-12 mb-4 w-full bg-gray-100">

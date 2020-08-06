@@ -4,7 +4,7 @@ import {Dream} from "../../../schema/omo/dreams/dream";
 export class Dreams
 {
   static readonly allFields =
-    "_id name description safeAddress leap city creator { _id name safeAddress odentityId } subscriptions {_id} Votes {_id}";
+    "_id name description safeAddress leap city creatorId subscriptions {_id} Votes {_id}";
 
   /**
    * Gets all dreams and optionally filters for the dream-state
