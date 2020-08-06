@@ -52,6 +52,9 @@
     dreamId = urlParams.get("data");
   }
 
+  $: contentLeft = items[activeTabValue].left;
+  $: contentRight = items[activeTabValue].right;
+
 
   async function load() {
     const d = await DreamsQueries.byId(dreamId);
@@ -61,9 +64,6 @@
 
     return returnValue;
   }
-
-  $: contentLeft = items[activeTabValue].left;
-  $: contentRight = items[activeTabValue].right;
   load();
 </script>
 
@@ -130,7 +130,7 @@
     </div>
 
     <div class="content-left bg-gray-100">
-      <svelte:component this={contentLeft} dream={data.dream} />
+      <svelte:component this={contentLeft} data={data} />
     </div>
 
     <div class="content-right bg-gray-200 py-6 px-8">
