@@ -51,7 +51,7 @@
   </div>
   <div class="p-4 h-40">
     <div class="font-bold font-title text-xl text-center">
-      {data.creator.name}
+      {data.creator}
     </div>
     <p class="text-center text-gray-600 uppercase">{data.name}</p>
     <div class="text-sm font-light text-center py-1 px-4">
