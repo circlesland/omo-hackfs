@@ -295,8 +295,7 @@
     <div class="content-right bg-gray-200 py-6 px-8">
       <svelte:component
         this={contentRight}
-        dream={data.dream}
-        subscriptions={data.subscriptions} />
+        data={data} />
     </div>
 
     <div class="nav-right">
