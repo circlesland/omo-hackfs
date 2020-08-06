@@ -1,3 +1,4 @@
+/*
 import {ISideEffect} from "../../../core/Flows/ISideEffect";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
 
@@ -27,3 +28,4 @@ export const convertToProduct: ISideEffect<IProcessContext, any> = {
   },
   canExecute: async context => true
 };
+ */

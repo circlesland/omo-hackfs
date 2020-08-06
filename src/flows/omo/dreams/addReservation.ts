@@ -1,7 +1,7 @@
 import { ProcessBuilder } from "../../../core/Flows/ProcessBuilder";
 import { IProcessContext } from "../../../core/Flows/IProcessContext";
 
-export function addReservation(dreamId:number) {
+export function addReservation(dreamId:string) {
   return new ProcessBuilder<IProcessContext>("flows:omo.dreams.addReservation")
     .category("Invite someone to dream with you", (build) =>
       build

@@ -17,6 +17,16 @@ export const addCommitment: ISideEffect<IProcessContext, any> = {
   {
     const dreamId = context.local.inputs["dreamId"];
     context.local.outputs["void"] = {};
+
+    const odentity = window.o.odentity.current;
+    if (!odentity)
+      throw new Error("No current identity!");
+
+    for (let i = 0; i < 12; i++) {
+      const omosapien = await Omosapiens.byOdentityId(odentity._id)
+      const newCommitment = await DreamsMutations.newCommitment(dreamId, omosapien._id);
+      console.log("Created new commitment:", newCommitment);
+    }
   },
   canExecute: async context => true
 };
