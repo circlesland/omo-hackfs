@@ -1,4 +1,6 @@
 <script>
+  import {Omosapiens} from "../../queries/omo/odentity/omosapiens";
+
   export let data = {
     /*
     first: "firstname",
@@ -12,6 +14,15 @@
     name: "",
     description: ""
   };
+
+
+  async function lookupName(omosapienId) {
+    const omosapien = await Omosapiens.byId(omosapienId);
+    if (!omosapien || omosapien.length === 0)
+      return omosapienId;
+    else
+      return omosapien.name;
+  }
 </script>
 
 <div
@@ -51,7 +62,11 @@
   </div>
   <div class="p-4 h-40">
     <div class="font-bold font-title text-xl text-center">
-      {data.creatorId}
+      {#await lookupName(data.creatorId)}
+        Loading Omosapien ..
+        {:then name}
+      {name}
+      {/await}
     </div>
     <p class="text-center text-gray-600 uppercase">{data.name}</p>
     <div class="text-sm font-light text-center py-1 px-4">

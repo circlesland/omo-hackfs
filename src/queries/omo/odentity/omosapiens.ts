@@ -52,4 +52,12 @@ export class Omosapiens
     }
     return filteredOmosapien && filteredOmosapien.length >= 1 ? filteredOmosapien[filteredOmosapien.length -1] : null;
   }
+
+  static async byId(omosapienId:string) {
+    const omosapiens = await window.o.graphQL.query("OmosapienById(_id:\"" + omosapienId + "\") {_id name safeAddress odentityId}");
+    if (!omosapiens.data){
+      throw new Error("Couldn't query the list of Omosapiens");
+    }
+    return omosapiens.data.OmosapienById;
+  }
 }
