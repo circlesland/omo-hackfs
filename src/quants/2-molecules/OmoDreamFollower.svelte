@@ -1,6 +1,7 @@
 <script>
   export let dream;
   export let subscriptions;
+  import {StartFlow} from "../../events/omo/shell/startFlow";
 </script>
 
 <div class="aside-top text-md">
