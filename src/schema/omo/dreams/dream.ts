@@ -36,12 +36,6 @@ export const Dream: JSONSchema = {
       type: "string"
     },
     /**
-     * Contains the id of the connected chatroom
-     */
-    chatRoomId: {
-      type: "string"
-    },
-    /**
      * If the dream is in 'dream' state, only 'reservation' subscriptions can be added
      */
     subscriptions: {

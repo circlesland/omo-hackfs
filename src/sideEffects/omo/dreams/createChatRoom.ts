@@ -7,6 +7,9 @@ export const createChatRoom: ISideEffect<IProcessContext, any> = {
   inputs: [{
     name: "name",
     type: "schema:omo.string"
+  },{
+    name: "dreamId",
+    type: "schema:omo.string"
   }],
   outputs: [{
     name: "void",
@@ -15,7 +18,9 @@ export const createChatRoom: ISideEffect<IProcessContext, any> = {
   execute: async (context, argument) =>
   {
     const chatRoomName = context.local.inputs["name"];
-    await Rooms.createNewRoom(chatRoomName);
+    const dreamId = context.local.inputs["dreamId"];
+    const newRoom = await Rooms.createNewRoom(chatRoomName, dreamId);
+    console.log("Created new room:", newRoom);
     context.local.outputs["void"] = {};
   },
   canExecute: async context => true

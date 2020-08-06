@@ -40,6 +40,7 @@ export function createDream() {
         .mapInput("safe", "safe")
         .mapInput("dreamDescription", "dreamDescription")
         .mapInput("cityName", "cityName")
+        .mapOutput("dreamId", "dreamId")
         .isNonInteractive()
         .withSideEffect("sideEffects:omo.dreams.createDream")
         .withTitle("Save dream to database")
@@ -70,9 +71,10 @@ export function createDream() {
       .step("flows:omo.dreams.createDream:createChatRoom")
           .withSideEffect("sideEffects:omo.chat.createChatRoom")
           .mapInput("name", "dreamName")
+          .mapInput("dreamId", "dreamId")
           .withTitle("Create Chatroom")
 
-    .step("flows:omo.dreams.createDream:giveTrustToDreamSafe")
+        .step("flows:omo.dreams.createDream:giveTrustToDreamSafe")
         .withSideEffect("sideEffects:omo.safe.giveTrust")
         .mapInput("trustGivingSafeOwner", "currentSafeOwner")
         .mapInput("trustGivingSafe", "currentSafe")
@@ -80,7 +82,15 @@ export function createDream() {
         .withStaticInput("trustPercentage", "100") // TODO: Allow for static values
         .isNonInteractive()
         .withTitle("Giving trust to dream-safe")
-      // TODO: Dream creator-safe trusts dream-safe
+
+        .step("flows:omo.dreams.createDream:giveTrustToDreamCreator")
+        .withSideEffect("sideEffects:omo.safe.giveTrust")
+        .mapInput("trustGivingSafeOwner", "currentSafeOwner")
+        .mapInput("trustGivingSafe", "safe")
+        .mapInput("trustReceivingSafe", "currentSafe")
+        .withStaticInput("trustPercentage", "100") // TODO: Allow for static values
+        .isNonInteractive()
+        .withTitle("Dream is giving trust to dream-creator")
       // TODO: dream-safe trusts creator-safe
     })
     .end()
