@@ -26,6 +26,9 @@ export class Dreams {
 
   static async newCommitment(dreamId:string, omosapienId:string)
   {
+    if (!dreamId || dreamId == "")
+      throw new Error("No dreamId was supplied");
+
     const newSubscription = await window.o.graphQL.mutation(`addStream(state: "commitment", creatorId: "${omosapienId}", dreamId: "${dreamId}") {_id}`);
     if (!newSubscription.data) {
       throw new Error("Couldn't create a new commitment.");
@@ -35,6 +38,9 @@ export class Dreams {
 
   static async newReservation(dreamId:string, omosapienId:string)
   {
+    if (!dreamId || dreamId == "")
+      throw new Error("No dreamId was supplied");
+
     const newSubscription = await window.o.graphQL.mutation(`addStream(state: "reservation", creatorId: "${omosapienId}", dreamId: "${dreamId}") {_id}`);
     if (!newSubscription.data) {
       throw new Error("Couldn't create a new reservation.");
@@ -44,6 +50,9 @@ export class Dreams {
 
   static async newSubscription(dreamId:string, omosapienId:string)
   {
+    if (!dreamId || dreamId == "")
+      throw new Error("No dreamId was supplied");
+
     const newSubscription = await window.o.graphQL.mutation(`addStream(state: "subscription", creatorId: "${omosapienId}", dreamId: "${dreamId}") {_id}`);
     if (!newSubscription.data) {
       throw new Error("Couldn't create a new subscription.");

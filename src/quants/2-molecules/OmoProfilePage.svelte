@@ -56,13 +56,13 @@
                   class="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold
             uppercase">
             <i class="fas fa-map-marker-alt mr-2 text-lg text-gray-500"/>
-            <!--{data.city}-->
+            {data.city}
           </div>
         </div>
         <div class="mt-10 py-10 border-t border-gray-300 text-center">
           <div class="flex flex-wrap justify-center">
             <div class="w-full lg:w-9/12 px-4">
-              <!--<p class="text-lg leading-relaxed text-gray-800">{data.description}</p>-->
+              <p class="text-lg leading-relaxed text-gray-800">{data.description}</p>
             </div>
           </div>
         </div>

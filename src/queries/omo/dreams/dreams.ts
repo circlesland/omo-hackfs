@@ -4,7 +4,7 @@ import {Dream} from "../../../schema/omo/dreams/dream";
 export class Dreams
 {
   static readonly allFields =
-    "_id name description safeAddress leap city creatorId subscriptions {_id} Votes {_id}";
+    "_id name description safeAddress leap city creatorId subscriptions {_id state creator{ _id name safeAddress odentityId} }";
 
   /**
    * Gets all dreams and optionally filters for the dream-state
@@ -35,11 +35,6 @@ export class Dreams
   static byId(id: string)
   {
     return window.o.graphQL.query(`DreamById(_id:"${id}"){${Dreams.allFields}}`);
-  }
-
-  static streamsByDreamId(dreamId: string)
-  {
-    //return window.o.graphQL.query(`DreamById(_id:"${id}"){${Dreams.allFields}}`);
   }
 
   static calcLevel(targetSum: number): {
