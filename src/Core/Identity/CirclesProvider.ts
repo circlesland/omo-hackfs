@@ -4,10 +4,9 @@ import { LoginRequest } from "../Data/Entities/LoginRequest";
 import { OdentityProvider } from "../Data/Entities/OdentityProvider";
 import { RemoteThread } from "../Textile/RemoteThread";
 import { Odentity } from "../Odentity";
-import getSafeAddressAsync from "../../queries/omo/safe/circles.svelte";
 import ApolloClient, { gql } from "apollo-boost";
 import { query } from "svelte-apollo";
-import { mnemonicToEntropy, entropyToMnemonic } from "bip39";
+import { mnemonicToEntropy } from "bip39";
 
 
 export class CirclesProvider implements IdentityProviderInterface {
