@@ -8,6 +8,7 @@
   import OmoNavAside from "./../2-molecules/OmoNavAside.svelte";
   import OmoDreamChat from "./OmoDreamChat.svelte";
   import OmoDreamFollower from "./OmoDreamFollower.svelte";
+  import {afterUpdate, beforeUpdate} from "svelte";
 
   // TODO: Realtime updates of new subscriptions
   let dreamId;
