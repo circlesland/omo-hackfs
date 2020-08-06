@@ -102,7 +102,6 @@ export class ModelQuant {
 
                     }
                     catch (e) {
-                        // debugger;
                         // await new Promise(resolve => setTimeout(resolve, 2000));
                         // return await collection.findById(x[rel.fieldName]);
 
@@ -160,6 +159,7 @@ export class ModelQuant {
                         var entities = await refCollection.find({
                             ors: value.map(x => {
                                 return {
+                                    // check wrong local db syntax
                                     ands: [{ fieldPath: "_id", value: { string: x } }]
                                 };
                             })

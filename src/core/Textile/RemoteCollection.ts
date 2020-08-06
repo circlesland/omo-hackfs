@@ -87,7 +87,6 @@ export class RemoteCollection<T extends Instance> implements ICollection<T>
       return await this.create(value);
     }
     catch (e) {
-      debugger;
       if (e.message == "can't create already existing instance")
         return await this.save(value);
       throw e;

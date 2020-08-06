@@ -10,6 +10,7 @@ import { StopWatch } from "./StopWatch";
 import CirclesCore from "@circles/core";
 import Web3 from "web3";
 import { EventBroker } from "./Events/EventBroker";
+// import { KeyInfo, Client, ThreadID } from "@textile/hub";
 
 export class Quantum {
   readonly circlesCore: CirclesCore;
@@ -40,6 +41,22 @@ export class Quantum {
       throw new Error("Topic 'shell' doesn't exist in namespace 'omo'");
     await t.publish(event);
   }
+  // async getclient() {
+  //   let remoteAuth: KeyInfo = {
+  //     key: process.env.USER_API_KEY || '',
+  //     secret: process.env.USER_API_SECRET || ''
+  //   };
+  //   return await Client.withKeyInfo(remoteAuth);
+  // }
+
+  // async getQThread() {
+  //   return ThreadID.fromString("bafk2cgsww3quqhlgd6w47pvsolldhmo5l2bxi272pcv6vsahedfz7xq");
+  // }
+
+  // async cleanDreams() {
+  //   let client = await this.getclient();
+  //   console.log("threads", client.listThreads());
+  // }
 
   static async leap(): Promise<Quantum> {
     StopWatch.start("threads");

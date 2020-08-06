@@ -18,8 +18,14 @@ export class LocalCollection<T extends Instance> implements ICollection<T>
 
   private async toArray<T>(iterator: AsyncIterable<Result<T>>): Promise<T[]> {
     const arr = Array<T>();
-    for await (const entry of iterator) {
-      arr.push(entry.value);
+    try {
+
+      for await (const entry of iterator) {
+        arr.push(entry.value);
+      }
+    }
+    catch (e) {
+      debugger;
     }
     return arr;
   }
@@ -76,6 +82,7 @@ export class LocalCollection<T extends Instance> implements ICollection<T>
     var updates: T[] = [];
     var creates: T[] = [];
     for (let val of values) {
+      delete val.ID;
       if (val._id && await this.collection.has(val._id)) updates.push(val);
       else creates.push(val);
     }
@@ -102,15 +109,7 @@ export class LocalCollection<T extends Instance> implements ICollection<T>
   }
 
   async observeUpdate(actionTypes: string[], id: string, callback: any): Promise<void> {
-    this.database.emitter.on(`${this.collectionName}.*.*`,
-      async (update) => {
-        console.log("UPDATE", update);
-        callback(update);
-      });
-  }
-
-  observeAction(actionTypes: Map<string, Function>, id: string | null) {
-    actionTypes.forEach((callback, actionType, map) => {
+    actionTypes.forEach(actionType => {
       let observeType = '*'; // default listen to all
 
       switch (actionType.toLowerCase()) {
@@ -121,10 +120,11 @@ export class LocalCollection<T extends Instance> implements ICollection<T>
 
       this.database.emitter.on(`${this.collectionName}.*.${observeType}`,
         async (update) => {
-          console.log("UPDATE", update);
-          callback(update);
+          console.log("UPDATE LOCAL", update);
+          if (update.collection == this.collectionName && (update.type == observeType || observeType == '*'))
+            callback(update);
         });
-    })
+    });
   }
 }
 

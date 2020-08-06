@@ -27,8 +27,10 @@ export class SyncedCollection<T extends Instance> implements ICollection<T>
 
   static async fakeSyncCollections<T extends Instance>(localCollection: LocalCollection<T>, remoteCollectionPromise: Promise<RemoteCollection<T>>, collectionName: string) {
     console.log(`start sync with ${collectionName}`)
+
     let remoteCollection = await remoteCollectionPromise;
-    await localCollection.saveMany(await remoteCollection.all());
+    let all = await remoteCollection.all();
+    await localCollection.createOrSaveMany(all);
     remoteCollection.observeUpdate(["CREATE"], "", async (instance) => {
       if (instance)
         await localCollection.createOrSave(instance.instance);
