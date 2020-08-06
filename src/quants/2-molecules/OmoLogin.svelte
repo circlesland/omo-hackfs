@@ -38,6 +38,30 @@
         o.publishShellEventAsync(
           new StartFlow("flows:omo.odentity.createOmosapien")
         );
+      }
+    });
+    o.quantRegistry.syncAllCollections();
+  }
+
+  function circlesLogin() {
+    loading = true;
+    o.odentity.login(seedPhrase, "circles", async it => {
+      if (o.odentity.current == null) {
+        loading = false;
+        alert("something went wrong.");
+      }
+      console.log(it);
+      var urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has("redirect")) {
+        window.navigate(urlParams.get("redirect"), urlParams.get("data"));
+        return;
+      }
+      if (o.odentity._current.circleSafe) {
+        navigate("omosafe");
+      } else {
+        o.publishShellEventAsync(
+          new StartFlow("flows:omo.odentity.createOmosapien")
+        );
         //navigate("mamaomo");
       }
     });
@@ -46,7 +70,7 @@
 
   export let loading = false;
 
-  $: seedPhrase = "";
+  export let seedPhrase = "";
 
   async function restoreFromSeed() {
     const restoredKey = mnemonicToEntropy(seedPhrase);
@@ -104,7 +128,7 @@
           </button>
         </form>
 
-        <!-- <form
+        <form
           class="flex flex-col pt-3 md:pt-8"
           onsubmit="event.preventDefault();">
           <div class="flex flex-col pt-6">
@@ -119,14 +143,14 @@
           </div>
 
           <button
-            on:click={restoreFromSeed}
+            on:click={circlesLogin}
             type="submit"
             value="Logger In"
             class="bg-pink-700 rounded text-white font-bold text-lg
             hover:bg-secondary p-2">
             Login with Circles Seedphrase
           </button>
-        </form> -->
+        </form>
       {:else}
         <h1 class="text-center text-2xl text-primary">{data.magiclink}</h1>
       {/if}

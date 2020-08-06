@@ -1,4 +1,4 @@
-<script context="module">
+<script context="module" lang="ts">
   import ApolloClient, {gql} from "apollo-boost";
   import {query} from "svelte-apollo";
 

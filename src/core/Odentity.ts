@@ -9,7 +9,7 @@ import { IdentityProviderInterface } from "./Identity/IdentityProviderInterface"
 import { navigate } from "../Router";
 import { RemoteCollection } from "./Textile/RemoteCollection";
 import { RemoteThread } from "./Textile/RemoteThread";
-import { SeedPhraseProvider } from "./Identity/SeedPhraseProvider";
+import { CirclesProvider } from "./Identity/CirclesProvider";
 import { Account } from "web3-core";
 
 export class Odentity {
@@ -24,7 +24,7 @@ export class Odentity {
   private _current: OdentityEntity | null;
   private provider = {
     email: EmailProvider,
-    seedPhrase: SeedPhraseProvider
+    circles: CirclesProvider
   }
 
   /**
