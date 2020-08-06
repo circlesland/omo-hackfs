@@ -2,8 +2,7 @@
   import OmoAvatarsGrouped from "./../2-molecules/OmoAvatarsGrouped";
 
   export let data = {
-    _id: "",
-    name: ""
+    dream: {}
   };
 
 </script>
@@ -23,7 +22,7 @@
                 <!--{#if data}{data.follower}{:else}6{/if}-->
               </span>
               <span class="text-xs uppercase text-blue-400 font-bold">
-                of 13 dreamers
+                {data.subscriptions.length} Dreamers
               </span>
             </div>
             <div class="mr-4 p-3 text-center">
@@ -51,7 +50,7 @@
         <!--<OmoAvatarsGrouped data={dreamers}/>-->
         <div class="text-center mt-4">
           <h3 class="text-4xl font-semibold leading-normal mb-2 text-gray-800">
-            {data.name}
+            {data.dream.name}
           </h3>
           <div
                   class="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold

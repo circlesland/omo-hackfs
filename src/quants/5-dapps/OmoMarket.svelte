@@ -100,7 +100,7 @@
   </aside>
   <main class="h-full overflow-y-scroll">
     {#if 1 === currentTab}
-      <OmoCarousel />
+      <!--<OmoCarousel />-->
       <!-- <OmoHero data={herodreams} /> -->
       <OmoGridDreams />
     {/if}

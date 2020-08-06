@@ -1,4 +1,5 @@
 import {Dreams as DreamsQueries} from "../../../queries/omo/dreams/dreams";
+import {Omosapiens} from "../../../queries/omo/odentity/omosapiens";
 
 export class Dreams {
   static async deleteDream(id) {
@@ -11,8 +12,13 @@ export class Dreams {
     cityName: string,
     safeAddress: string
   ) {
+    if (!window.o.odentity.current)
+      throw new Error("No current odentity");
+
+    const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id);
+
     const newDream = await window.o.graphQL.mutation(
-      `addDream(name:"${name}" description:"${description}" city:"${cityName}" safeAddress:"${safeAddress}" leap: "1") {_id name leap description safeAddress}`
+      `addDream(name:"${name}" description:"${description}" city:"${cityName}" safeAddress:"${safeAddress}" leap: "1", creatorId: "${omosapien._id}") { _id name leap description safeAddress creatorId }`
     );
     return !newDream.data ? null : newDream.data.addDream;
   }

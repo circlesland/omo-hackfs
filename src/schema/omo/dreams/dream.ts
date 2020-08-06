@@ -26,6 +26,9 @@ export const Dream: JSONSchema = {
       $ref: "#/definitions/oneToOne",
       description: "Omosapien"
     },
+    creatorId: {
+      type: "string"
+    },
     safeAddress: {
       type: "string"
     },

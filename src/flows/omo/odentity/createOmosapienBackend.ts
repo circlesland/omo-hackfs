@@ -1,39 +1,12 @@
 import {ProcessBuilder} from "../../../core/Flows/ProcessBuilder";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
 
-export function createOmosapien()
+export function createOmosapienBackend(name:string)
 {
-  return new ProcessBuilder<IProcessContext>("flows:omo.odentity.createOmosapien")
-    /*
-    .category("Welcome", (b) =>
-      {
-        b.step("flows:omo.odentity.createOmosapien:intro1")
-          .withQuant("OmoIntro", {
-            slide: {
-              title: "Welcome to Omo!"
-            }
-          })
-          .withTitle("Welcome to Omo!")
-
-          .step("flows:omo.odentity.createOmosapien:intro2")
-          .withQuant("OmoIntro", {
-            slide: {
-              title: "This is the next page"
-            }
-          })
-          .withTitle("Welcome to Omo 2")
-      }
-    ).end()*/
+  return new ProcessBuilder<IProcessContext>("flows:omo.odentity.createOmosapienBackend")
     .category("Create Omosapien", b =>
     {
       b
-        .step("flows:omo.odentity.createOmosapien:getName")
-        .withSideEffect("sideEffects:omo.shell.collectStepResult")
-        .mapOutput("stepResult", "name")
-        .withQuant("OmoInput")
-        .withPrompt("Name")
-        .withTitle("Your name")
-
         .step("flows:omo.odentity.createOmosapien:generatePpk")
         .withSideEffect("sideEffects:omo.web3.generatePpk")
         .mapOutput("safeOwner", "safeOwner")
@@ -53,7 +26,7 @@ export function createOmosapien()
 
         .step("flows:omo.odentity.createOmosapien:createOmosapien")
         .withSideEffect("sideEffects:omo.odentity.createOmosapien")
-        .mapInput("name", "name")
+        .withStaticInput("name", name)
         .mapInput("safe", "safe")
         .withTitle("Creating your profile")
 
