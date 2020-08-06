@@ -12,18 +12,18 @@ export class Dreams {
     safeAddress: string
   ) {
     const newDream = await window.o.graphQL.mutation(
-      `addDream(name:"${name}" description:"${description}" city:"${cityName}" safeAddress:"${safeAddress}" state:"dream") {_id name state description safeAddress}`
+      `addDream(name:"${name}" description:"${description}" city:"${cityName}" safeAddress:"${safeAddress}" leap: "1") {_id name leap description safeAddress}`
     );
     return !newDream.data ? null : newDream.data.addDream;
   }
 
-  static async newVote(dreamId:string, omosapienId:string)
+  static async newCommitment(dreamId:string, omosapienId:string)
   {
-    const newVote = await window.o.graphQL.mutation(`addVote(creatorId: "${omosapienId}", voteforId: "${dreamId}") {_id}`);
-    if (!newVote.data) {
-      throw new Error("Couldn't create a new vote.");
+    const newSubscription = await window.o.graphQL.mutation(`addStream(state: "commitment", creatorId: "${omosapienId}", dreamId: "${dreamId}") {_id}`);
+    if (!newSubscription.data) {
+      throw new Error("Couldn't create a new commitment.");
     }
-    return newVote.data.addVote._id;
+    return newSubscription.data.addStream._id;
   }
 
   static async newReservation(dreamId:string, omosapienId:string)

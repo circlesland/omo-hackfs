@@ -20,9 +20,11 @@ export const addSubscription: ISideEffect<IProcessContext, any> = {
     if (!window.o.odentity.current)
       throw new Error("No current odentity.");
 
-    const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id)
-    const newSubscription = await DreamsMutations.newSubscription(dreamId, omosapien._id);
-    console.log("Created new subscription:", newSubscription);
+    for (let i = 0; i < 768; i++) {
+      const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id)
+      const newSubscription = await DreamsMutations.newSubscription(dreamId, omosapien._id);
+      console.log("Created new subscription:", newSubscription);
+    }
 
     context.local.outputs["void"] = {};
   },
