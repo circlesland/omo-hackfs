@@ -18,6 +18,7 @@
   import OmoFunding from "./quants/5-dapps/OmoFunding";
   import OmoConnectCircles from "./quants/5-dapps/OmoConnectCircles.svelte";
   import OmoChat from "./quants/5-dapps/OmoChat.svelte";
+  import OmoDreamChat from "./quants/5-dapps/OmoDreamChat.svelte";
   import OmoActions from "./quants/5-dapps/OmoActions.svelte";
   import OmoMarket from "./quants/5-dapps/OmoMarket.svelte";
   import OmoVoting from "./quants/5-dapps/OmoVoting.svelte";
@@ -249,6 +250,12 @@
           event: () => new StartFlow("flows:omo.chat.sendMessage"),
         },
       ],
+    },
+    {
+      route: "?page=omodreamchat",
+      quant: OmoDreamChat,
+      authenticate: true,
+      actions: [],
     },
     {
       route: "?page=onboarding",

@@ -8,6 +8,7 @@ import OmoBanner from "./quants/2-molecules/OmoBanner.svelte";
 import OmoLogin from "./quants/2-molecules/OmoLogin.svelte";
 import OmoIntro from "./quants/2-molecules/OmoIntro.svelte";
 import OmoChat from "./quants/2-molecules/OmoChat.svelte";
+import OmoDreamChat from "./quants/2-molecules/OmoDreamChat.svelte";
 import OmoNext from "./quants/2-molecules/OmoNext.svelte";
 import OmoHero from "./quants/2-molecules/OmoHero.svelte";
 import OmoGridDreams from "./quants/2-molecules/OmoGridDreams.svelte";
@@ -49,9 +50,9 @@ import { removeAuthProviderSeedPhrase as removeAuthProviderSeedPhraseFlow } from
 import { createDream as createDreamFlow } from "./flows/omo/dreams/createDream";
 import { createOmosapien as createOmosapienFlow } from "./flows/omo/odentity/createOmosapien";
 import { convertToProduct as convertToProductFlow } from "./flows/omo/dreams/convertToProduct";
-import { inviteToDream as inviteToDreamFlow} from "./flows/omo/dreams/inviteToDream";
+import { inviteToDream as inviteToDreamFlow } from "./flows/omo/dreams/inviteToDream";
 import { addReservation as addReservationFlow } from "./flows/omo/dreams/addReservation";
-import { addSubscription as addSubscriptionFlow} from "./flows/omo/dreams/addSubscription";
+import { addSubscription as addSubscriptionFlow } from "./flows/omo/dreams/addSubscription";
 import { addCommitment as addCommitmentFlow } from "./flows/omo/dreams/addCommitment";
 import { buyTokens as buyTokensFlow } from "./flows/omo/dreams/buyTokens";
 
@@ -73,7 +74,7 @@ import { convertToProduct as convertToProductSideEffect } from "./sideEffects/om
 import { inviteToDream as inviteToDreamSideEffect } from "./sideEffects/omo/dreams/inviteToDream";
 import { createChatRoom as createChatRoomSideEffect } from "./sideEffects/omo/dreams/createChatRoom";
 import { addReservation as addReservationSideEffect } from "./sideEffects/omo/dreams/addReservation";
-import { addSubscription as addSubscriptionSideEffect} from "./sideEffects/omo/dreams/addSubscription";
+import { addSubscription as addSubscriptionSideEffect } from "./sideEffects/omo/dreams/addSubscription";
 import { createOmosapien as createOmosapienSideEffect } from "./sideEffects/omo/odentity/createOmosapien";
 import { connectSafe as connectSafeSideEffect } from "./sideEffects/omo/odentity/connectSafe";
 import { buyTokens as buyTokensSideEffect } from "./sideEffects/omo/dreams/buyTokens";
@@ -105,6 +106,7 @@ export function init() {
   w.registrar.set("OmoLogin", OmoLogin);
   w.registrar.set("OmoIntro", OmoIntro);
   w.registrar.set("OmoChat", OmoChat);
+  w.registrar.set("OmoDreamChat", OmoDreamChat);
   w.registrar.set("OmoDream", OmoDream);
   w.registrar.set("OmoGridDreams", OmoGridDreams);
   w.registrar.set("OmoDappsGrid", OmoDappsGrid);
