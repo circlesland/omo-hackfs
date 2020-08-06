@@ -6,6 +6,8 @@
   import {StartFlow} from "../../events/omo/shell/startFlow";
   import OmoNavAside from "./../2-molecules/OmoNavAside.svelte";
 
+  // TODO: Realtime updates of new subscriptions
+
   let dreamId;
 
   var urlParams = new URLSearchParams(window.location.search);
@@ -13,66 +15,84 @@
     dreamId = urlParams.get("data");
   }
 
-  const discounts = [{
+  const leaps = [{
+    leap: 1,
+    title: "Time commitment",
+    description: ""
+  },{
+    leap: 2,
+    title: "Reservations",
+    description: ""
+  },{
+    leap: 3,
+    title: "Subscription",
+    description: ""
+  },{
+    leap: 4,
+    title: "Impact investors",
+    description: ""
+  }];
+
+  const subscriptionDiscounts = [{
     fromLevel: 0,
     toLevel: 6,
-    discount: 100
+    subscriptionDiscount: 100
   },{
     fromLevel: 7,
     toLevel: 7,
-    discount: 90
+    subscriptionDiscount: 90
   },{
     fromLevel: 8,
     toLevel: 8,
-    discount: 80
+    subscriptionDiscount: 80
   },{
     fromLevel: 9,
     toLevel: 9,
-    discount: 70
+    subscriptionDiscount: 70
   },{
     fromLevel: 10,
     toLevel: 10,
-    discount: 60
+    subscriptionDiscount: 60
   },{
     fromLevel: 11,
     toLevel: 11,
-    discount: 50
+    subscriptionDiscount: 50
   },{
     fromLevel: 12,
     toLevel: 12,
-    discount: 33.33
+    subscriptionDiscount: 33.33
   },{
     fromLevel: 13,
     toLevel: 13,
-    discount: 20
+    subscriptionDiscount: 20
   },{
     fromLevel: 14,
     toLevel: 14,
-    discount: 12.50
+    subscriptionDiscount: 12.50
   },{
     fromLevel: 15,
     toLevel: 15,
-    discount: 7.69
+    subscriptionDiscount: 7.69
   },{
     fromLevel: 16,
     toLevel: 16,
-    discount: 4.76
+    subscriptionDiscount: 4.76
   },{
     fromLevel: 17,
     toLevel: 17,
-    discount: 2.94
+    subscriptionDiscount: 2.94
   },{
     fromLevel: 18,
     toLevel: 18,
-    discount: 1.82
+    subscriptionDiscount: 1.82
   },{
     fromLevel: 19,
     toLevel: 19,
-    discount: 1.12
+    subscriptionDiscount: 1.12
   },{
     fromLevel: 20,
     toLevel: 20,
-    discount: 0.69
+    subscriptionDiscount: 0.69
   }];
 
   async function load() {
@@ -87,20 +107,20 @@
       const subscription = d.data.DreamById.subscriptions[i];
       const levelAndLeap = DreamsQueries.calcLevel(i);
 
-      const discount = discounts.find(o => o.fromLevel <= levelAndLeap.level && o.toLevel >= levelAndLeap.level);
-      const subLevelAndDiscount = {
+      const subscriptionDiscount = subscriptionDiscounts.find(o => o.fromLevel <= levelAndLeap.level && o.toLevel >= levelAndLeap.level);
+      const levelMetadata = {
         levelHeader: lastLevel !== levelAndLeap.level ? levelAndLeap.level : null,
         leapHeader: lastLeap !== levelAndLeap.leap ? levelAndLeap.leap : null,
         level: levelAndLeap.level,
         leap: levelAndLeap.leap,
         subscription: subscription,
-        discount: !discount ? "" : discount.discount
+        subscriptionDiscount: !subscriptionDiscount ? "" : subscriptionDiscount.subscriptionDiscount
       }
 
       lastLeap = levelAndLeap.leap;
       lastLevel = levelAndLeap.level;
 
-      subscriptions.push(subLevelAndDiscount);
+      subscriptions.push(levelMetadata);
     }
 
     return {
@@ -189,13 +209,13 @@
             <p
               class="py-2 px-4 text-xl font-bold text-primary h-full flex
               justify-center flex-col bg-gray-300 uppercase">
-              80% lifetime discount
+              80% lifetime subscriptionDiscount
             </p>
           </div>
           <div class="bg-gray-100">
             <p class="text-md p-6 text-gray-600">
               By joining the dream now, you will reservate your pre-order slot,
-              which will give you x percent discount for lifetime on using the
+              which will give you x percent subscriptionDiscount for lifetime on using the
               future [product service title placeholder].
             </p>
           </div>
@@ -230,7 +250,7 @@
               alt=""
               src="https://i.pravatar.cc/150?u={reservation.subscription._id}"
               class="h-full w-auto" />
-            <p class="py-3 px-4 rounded w-full">{reservation.discount} {reservation.subscription._id}</p>
+            <p class="py-3 px-4 rounded w-full">{reservation.subscriptionDiscount} {reservation.subscription._id}</p>
           </div>
         {/each}
         Level X

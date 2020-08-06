@@ -5,7 +5,7 @@ import { Omosapien } from "../../schema/omo/odentity/omosapien";
 import { Dream } from "../../schema/omo/dreams/dream";
 import { Safe } from "../../schema/omo/safe/safe";
 import { Vote } from "../../schema/omo/dreams/vote";
-import { Stream } from "../../schema/omo/dreams/dreamSubscription";
+import { Stream } from "../../schema/omo/dreams/stream";
 import { Location } from "../../schema/omo/dreams/location";
 
 export interface SeedQuant {
