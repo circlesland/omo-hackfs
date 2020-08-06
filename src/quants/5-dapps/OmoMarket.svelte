@@ -49,17 +49,7 @@
   var schemaIndustry = {
     name: {
       values: [
-        "food",
-        "movies",
-        "art",
-        "beverages",
-        "games",
-        "mobility",
-        "design",
-        "coding",
-        "hardware",
-        "bikes",
-        "cars"
+        "---"
       ]
     }
   };

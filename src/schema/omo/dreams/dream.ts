@@ -40,7 +40,7 @@ export const Dream: JSONSchema = {
      */
     subscriptions: {
       $ref: "#/definitions/oneToMany",
-      description: "DreamSubscription"
+      description: "Stream"
     },
     /**
      * The following properties are only valid when the dream's state is 'product'
