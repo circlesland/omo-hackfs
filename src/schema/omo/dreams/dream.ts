@@ -13,10 +13,7 @@ export const Dream: JSONSchema = {
     _id: {
       type: "string"
     },
-    /**
-     * Can be 'dream' or 'product'
-     */
-    state: {
+    leap: {
       type: "string"
     },
     name: {
