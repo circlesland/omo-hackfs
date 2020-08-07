@@ -297,7 +297,7 @@
   }
 
   .no-header-footer {
-    grid-template-rows: 1fr;
+    grid-template-rows: 1fr 0px;
   }
 
   header {
@@ -329,11 +329,10 @@
   <main>
     <svelte:component this={getComponent($curRoute, routes)} {routes} />
   </main>
-  {#if loggedIn}
-    <footer>
-      <OmoNavBottom />
-    </footer>
-  {/if}
+  <footer>
+    <OmoNavBottom />
+  </footer>
+
   <!-- <footer>
       {#if omo != null}
         <OmoNavBottom />
