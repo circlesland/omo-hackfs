@@ -266,6 +266,8 @@
         {
           title: "Start onboarding",
           event: () => new StartFlow("flows:omo.odentity.createOmosapien"),
+          event: () =>
+            new StartFlow("flows:omo.odentity.createOmosapienNameOnly"),
         },
       ],
     },

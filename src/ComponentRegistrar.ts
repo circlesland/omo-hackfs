@@ -49,6 +49,7 @@ import { addAuthProviderSeedPhrase as addAuthProviderSeedPhraseFlow } from "./fl
 import { removeAuthProviderSeedPhrase as removeAuthProviderSeedPhraseFlow } from "./flows/omo/odentity/removeAuthProviderSeedPhraseFlow";
 import { createDream as createDreamFlow } from "./flows/omo/dreams/createDream";
 import { createOmosapien as createOmosapienFlow } from "./flows/omo/odentity/createOmosapien";
+import { createOmosapienNameOnly as createOmosapienNameOnlyFlow } from "./flows/omo/odentity/createOmosapienNameOnly";
 //import { convertToProduct as convertToProductFlow } from "./flows/omo/dreams/convertToProduct";
 import { startCampaign as startCampaignFlow } from "./flows/omo/dreams/startCampaign";
 import { inviteToDream as inviteToDreamFlow } from "./flows/omo/dreams/inviteToDream";
@@ -165,6 +166,10 @@ export function init() {
   w.flowRegistrar.set(
     "flows:omo.odentity.createOmosapien",
     createOmosapienFlow
+  );
+  w.flowRegistrar.set(
+    "flows:omo.odentity.createOmosapienNameOnly",
+    createOmosapienNameOnlyFlow
   );
   /*
   w.flowRegistrar.set(
