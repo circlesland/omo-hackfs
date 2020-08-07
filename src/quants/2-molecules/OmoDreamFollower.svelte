@@ -1,10 +1,33 @@
 <script>
-  import {Dreams} from "../../queries/omo/dreams/dreams";
   import {observe} from "svelte-observable";
   import {StartFlow} from "../../events/omo/shell/startFlow";
   import {Dreams as DreamsQueries} from "../../queries/omo/dreams/dreams";
   import {afterUpdate, beforeUpdate} from "svelte";
   import Observable from "zen-observable";
+
+  import mocker from "mocker-data-generator";
+
+  async function getMockedPeople() {
+    const people = {
+      name: {
+        faker: "name.findName",
+        unique: true
+      },
+      image: {
+        function: function () {
+          return "https://source.unsplash.com/featured/?" + this.object.name;
+        }
+      }
+    };
+
+    return mocker()
+            .schema("people", people, 3000)
+            .build()
+            .then(
+                    data => data.people,
+                    err => console.error(err)
+            );
+  }
 
   export let data;
 
@@ -199,6 +222,23 @@
 
 </script>
 
+
+<style>
+
+
+  .aside-top {
+    grid-area: aside-top;
+    height: 100%;
+  }
+  .aside-bottom {
+    grid-area: aside-bottom;
+    height: 100%;
+    overflow-y: scroll;
+  }
+</style>
+
+{#await getMockedPeople()}
+  {:then mockedPeople}
 {#await $streams}
   loading..
 {:then data}
@@ -232,16 +272,19 @@
   </div>
   <div class="aside-bottom">
 
-    {#each data.subscriptions as reservation}
+    {#each data.subscriptions as reservation, i}
       {#if reservation.leapHeader}Leap {reservation.leapHeader}{/if}
       {#if reservation.levelHeader}Level {reservation.levelHeader}{/if}
       <div class="flex h-12 mb-4 w-full bg-gray-100">
         <img
                 alt=""
-                src="https://i.pravatar.cc/150?u={reservation.subscription._id}"
+                src={mockedPeople[i].image}
                 class="h-full w-auto"/>
         <p class="py-3 px-4 rounded w-full">
-          {reservation.subscriptionDiscount} {reservation.subscription._id}
+          {#if reservation.subscriptionDiscount > 0}
+          {reservation.subscriptionDiscount} %
+          {/if}
+          {mockedPeople[i].name}
         </p>
       </div>
     {/each}
@@ -255,4 +298,5 @@
       <div class="py-3 h-12 w-full bg-gray-300">reservate for -70%</div>
     </div>
   </div>
+{/await}
 {/await}
