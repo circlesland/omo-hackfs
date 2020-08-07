@@ -3,13 +3,12 @@ import { Dream } from "../../../schema/omo/dreams/dream";
 
 export class Dreams {
   static readonly allFields =
-    "_id name description safeAddress leap city creatorId subscriptions {_id} Votes {_id} price";
+    "_id name description safeAddress leap city creatorId price subscriptions {_id state creator{ _id name safeAddress odentityId} }";
 
   /**
    * Gets all dreams and optionally filters for the dream-state
-   * @param state
    */
-  static all(state?: string) {
+  static all(leap?: number) {
     const sub = window.o.graphQL.subscribe(
       "Dreams{" + Dreams.allFields + "}"
     );
@@ -20,8 +19,8 @@ export class Dreams {
           throw new o.error;
 
         let allDreams = o.data.Dreams;
-        if (state) {
-          allDreams = allDreams.filter(o => o.state == state);
+        if (leap) {
+          allDreams = allDreams.filter(o => this.calcLevel(o.subscriptions.length).leap == leap);
         }
         s.next(allDreams);
       });

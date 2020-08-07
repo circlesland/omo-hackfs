@@ -133,41 +133,41 @@
       authenticate: false,
       actions: [
         // TODO: Custom actions should be available on every level
-        {
-          title: "Remove Circles SeedPhrase Auth",
-          event: () =>
-            new StartFlow("flows:omo.odentity.removeAuthProviderSeedPhrase"),
-        },
-        {
-          title: "Remove Email Auth Provider",
-          event: () =>
-            new StartFlow("flows:omo.odentity.removeAuthProviderMail"),
-        },
-        {
-          title: "Remove owner Device",
-          event: () => new StartFlow("flows:omo.odentity.removeOwnerDevice"),
-        },
-        {
-          title: "Add Circles SeedPhrase Auth",
-          event: () =>
-            new StartFlow("flows:omo.odentity.addAuthProviderSeedPhrase"),
-        },
-        {
-          title: "Add Email Auth Provider",
-          event: () => new StartFlow("flows:omo.odentity.addAuthProviderMail"),
-        },
-        {
-          title: "Add owner Device",
-          event: () => new StartFlow("flows:omo.odentity.addOwnerDevice"),
-        },
+        // {
+        //   title: "Remove Circles SeedPhrase Auth",
+        //   event: () =>
+        //     new StartFlow("flows:omo.odentity.removeAuthProviderSeedPhrase"),
+        // },
+        // {
+        //   title: "Remove Email Auth Provider",
+        //   event: () =>
+        //     new StartFlow("flows:omo.odentity.removeAuthProviderMail"),
+        // },
+        // {
+        //   title: "Remove owner Device",
+        //   event: () => new StartFlow("flows:omo.odentity.removeOwnerDevice"),
+        // },
+        // {
+        //   title: "Add Circles SeedPhrase Auth",
+        //   event: () =>
+        //     new StartFlow("flows:omo.odentity.addAuthProviderSeedPhrase"),
+        // },
+        // {
+        //   title: "Add Email Auth Provider",
+        //   event: () => new StartFlow("flows:omo.odentity.addAuthProviderMail"),
+        // },
+        // {
+        //   title: "Add owner Device",
+        //   event: () => new StartFlow("flows:omo.odentity.addOwnerDevice"),
+        // },
         {
           title: "Logout",
           event: () => new Logout(),
         },
-        {
-          title: "ClearDatabase",
-          event: () => new ClearDatabase(),
-        },
+        // {
+        //   title: "ClearDatabase",
+        //   event: () => new ClearDatabase(),
+        // },
       ],
     },
     { route: "?page=docs", quant: OmoDocs, authenticate: true },
@@ -238,14 +238,14 @@
       quant: OmoChat,
       authenticate: true,
       actions: [
-        {
-          title: "Create new Chat Room",
-          event: () => new StartFlow("flows:omo.chat.addChatRoom"),
-        },
-        {
-          title: "Remove Chat Room",
-          event: () => new StartFlow("flows:omo.chat.removeChatRoom"),
-        },
+        // {
+        //   title: "Create new Chat Room",
+        //   event: () => new StartFlow("flows:omo.chat.addChatRoom"),
+        // },
+        // {
+        //   title: "Remove Chat Room",
+        //   event: () => new StartFlow("flows:omo.chat.removeChatRoom"),
+        // },
         {
           title: "Send Message",
           event: () => new StartFlow("flows:omo.chat.sendMessage"),
@@ -266,8 +266,6 @@
         {
           title: "Start onboarding",
           event: () => new StartFlow("flows:omo.odentity.createOmosapien"),
-          event: () =>
-            new StartFlow("flows:omo.odentity.createOmosapienNameOnly"),
         },
       ],
     },

@@ -20,11 +20,9 @@ export const addReservation: ISideEffect<IProcessContext, any> = {
     if (!window.o.odentity.current)
       throw new Error("No current odentity.");
 
-    for (let i = 0; i < 131; i++) {
-      const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id)
-      const newReservation = await DreamsMutations.newReservation(dreamId, omosapien._id);
-      console.log("Created new reservation:", newReservation);
-    }
+    const omosapien = await Omosapiens.byOdentityId(window.o.odentity.current._id)
+    const newReservation = await DreamsMutations.newReservation(dreamId, omosapien._id);
+    console.log("Created new reservation:", newReservation);
     context.local.outputs["void"] = {};
   },
   canExecute: async context => true
