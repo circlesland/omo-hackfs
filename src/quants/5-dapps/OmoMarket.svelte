@@ -14,25 +14,26 @@
   let currentTab;
 
   let tabItems = [
-    { label: "Unlock Dreams", value: 1, icon: "fa-lightbulb" },
+    { label: "Leap 1", value: 1, icon: "fa-lightbulb" },
     {
-      label: "Pre-Order",
+      label: "Leap 2",
       value: 2,
       icon: "fa-shopping-cart"
     },
-    { label: "Marketplace", value: 3, icon: "fa-store" },
+    { label: "Leap 3", value: 3, icon: "fa-store" },
     {
-      label: "Vote 2 Fund",
+      label: "Leap 4",
       value: 4,
       icon: "fa-vote-yea"
     },
-    { label: "Organisations", value: 5, icon: "fa-users" },
-    { label: "Cities", value: 6, icon: "fa-city" }
+    //{ label: "Organisations", value: 5, icon: "fa-users" },
+    //{ label: "Cities", value: 6, icon: "fa-city" }
   ];
 
   $: countries = [];
   $: cities = [];
   $: industries = [];
+  $: isLeap = [1,2,3,4].find(o => o == currentTab);
 
   var schemaCountry = {
     name: {
@@ -71,6 +72,7 @@
   //   title: "quick introduction to dreams",
   //   subline: "more detail description"
   // };
+
 </script>
 
 <style>
@@ -99,29 +101,26 @@
     <OmoNavTabs bind:activeTabValue={currentTab} items={tabItems} />
   </aside>
   <main class="h-full overflow-y-scroll">
-    {#if 1 === currentTab}
+    {#if isLeap}
       <!--<OmoCarousel />-->
       <!-- <OmoHero data={herodreams} /> -->
-      <OmoGridDreams />
+      <OmoGridDreams leap={currentTab} />
     {/if}
+    <!--
     {#if 2 === currentTab}
-      <OmoCarousel />
       <OmoGridPreOrders />
     {/if}
     {#if 3 === currentTab}
-      <OmoCarousel />
       <OmoGridProducts />
     {/if}
     {#if 4 === currentTab}
-      <OmoCarousel />
       <OmoGridVoting />
     {/if}
+    -->
     {#if 5 === currentTab}
-      <OmoCarousel />
       <OmoGridOrgas />
     {/if}
     {#if 6 === currentTab}
-      <OmoCarousel />
       <OmoGridOrgas />
     {/if}
   </main>

@@ -1,6 +1,6 @@
 <script>
   export let data = {
-    safeAddress: ""
+    safeAddress: "",
   };
 
   Array.prototype.sum = function (prop) {
@@ -23,7 +23,7 @@
       Ø{sumCircles(data.safeData).toFixed(2)}
     </h1>
     <span class="text-center text-gray-500">
-      OMO-IBAN: {data.safeData.data.safes[0].id}
+      gnosis safe address: {data.safeData.data.safes[0].id}
     </span>
   </div>
 </section>

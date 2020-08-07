@@ -4,8 +4,12 @@
   import {Dreams} from "../../queries/omo/dreams/dreams";
   import {observe} from "svelte-observable";
 
-  let omodreams = observe(Dreams.all());
+  export let leap;
 
+  let omodreams = observe(Dreams.all(leap));
+  $: {
+    omodreams= observe(Dreams.all(leap));
+  }
 
 /*
 

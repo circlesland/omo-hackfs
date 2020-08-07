@@ -133,41 +133,41 @@
       authenticate: false,
       actions: [
         // TODO: Custom actions should be available on every level
-        {
-          title: "Remove Circles SeedPhrase Auth",
-          event: () =>
-            new StartFlow("flows:omo.odentity.removeAuthProviderSeedPhrase"),
-        },
-        {
-          title: "Remove Email Auth Provider",
-          event: () =>
-            new StartFlow("flows:omo.odentity.removeAuthProviderMail"),
-        },
-        {
-          title: "Remove owner Device",
-          event: () => new StartFlow("flows:omo.odentity.removeOwnerDevice"),
-        },
-        {
-          title: "Add Circles SeedPhrase Auth",
-          event: () =>
-            new StartFlow("flows:omo.odentity.addAuthProviderSeedPhrase"),
-        },
-        {
-          title: "Add Email Auth Provider",
-          event: () => new StartFlow("flows:omo.odentity.addAuthProviderMail"),
-        },
-        {
-          title: "Add owner Device",
-          event: () => new StartFlow("flows:omo.odentity.addOwnerDevice"),
-        },
+        // {
+        //   title: "Remove Circles SeedPhrase Auth",
+        //   event: () =>
+        //     new StartFlow("flows:omo.odentity.removeAuthProviderSeedPhrase"),
+        // },
+        // {
+        //   title: "Remove Email Auth Provider",
+        //   event: () =>
+        //     new StartFlow("flows:omo.odentity.removeAuthProviderMail"),
+        // },
+        // {
+        //   title: "Remove owner Device",
+        //   event: () => new StartFlow("flows:omo.odentity.removeOwnerDevice"),
+        // },
+        // {
+        //   title: "Add Circles SeedPhrase Auth",
+        //   event: () =>
+        //     new StartFlow("flows:omo.odentity.addAuthProviderSeedPhrase"),
+        // },
+        // {
+        //   title: "Add Email Auth Provider",
+        //   event: () => new StartFlow("flows:omo.odentity.addAuthProviderMail"),
+        // },
+        // {
+        //   title: "Add owner Device",
+        //   event: () => new StartFlow("flows:omo.odentity.addOwnerDevice"),
+        // },
         {
           title: "Logout",
           event: () => new Logout(),
         },
-        {
-          title: "ClearDatabase",
-          event: () => new ClearDatabase(),
-        },
+        // {
+        //   title: "ClearDatabase",
+        //   event: () => new ClearDatabase(),
+        // },
       ],
     },
     { route: "?page=docs", quant: OmoDocs, authenticate: true },
@@ -178,8 +178,8 @@
       authenticate: true,
       actions: [
         {
-          title: "Convert to product",
-          event: () => new StartFlow("flows:omo.dreams.convertToProduct"),
+          title: "start campaign",
+          event: () => new StartFlow("flows:omo.dreams.startCampaign"),
         },
         {
           title: "Invite someone",
@@ -238,14 +238,14 @@
       quant: OmoChat,
       authenticate: true,
       actions: [
-        {
-          title: "Create new Chat Room",
-          event: () => new StartFlow("flows:omo.chat.addChatRoom"),
-        },
-        {
-          title: "Remove Chat Room",
-          event: () => new StartFlow("flows:omo.chat.removeChatRoom"),
-        },
+        // {
+        //   title: "Create new Chat Room",
+        //   event: () => new StartFlow("flows:omo.chat.addChatRoom"),
+        // },
+        // {
+        //   title: "Remove Chat Room",
+        //   event: () => new StartFlow("flows:omo.chat.removeChatRoom"),
+        // },
         {
           title: "Send Message",
           event: () => new StartFlow("flows:omo.chat.sendMessage"),
@@ -297,7 +297,7 @@
   }
 
   .no-header-footer {
-    grid-template-rows: 1fr;
+    grid-template-rows: 1fr 0px;
   }
 
   header {
@@ -329,11 +329,10 @@
   <main>
     <svelte:component this={getComponent($curRoute, routes)} {routes} />
   </main>
-  {#if loggedIn}
-    <footer>
-      <OmoNavBottom />
-    </footer>
-  {/if}
+  <footer>
+    <OmoNavBottom />
+  </footer>
+
   <!-- <footer>
       {#if omo != null}
         <OmoNavBottom />

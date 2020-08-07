@@ -41,6 +41,7 @@
           new StartFlow("flows:omo.odentity.createOmosapien")
         );
       }
+      // navigate("omomarket");
     });
     o.quantRegistry.syncAllCollections();
   }
@@ -69,14 +70,15 @@
           return;
         }
         o.publishShellEventAsync(
-          new StartFlow("flows:omo.odentity.createOmosapien")
+          new StartFlow("flows:omo.odentity.createOmosapienNameOnly")
         );
       } catch (e) {
         o.publishShellEventAsync(
-          new StartFlow("flows:omo.odentity.createOmosapien")
+          new StartFlow("flows:omo.odentity.createOmosapienNameOnly")
         );
       }
-      // o.quantRegistry.syncAllCollections();
+      o.quantRegistry.syncAllCollections();
+      // navigate("omomarket");
     });
   }
 

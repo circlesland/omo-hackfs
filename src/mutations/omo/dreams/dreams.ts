@@ -1,5 +1,5 @@
-import {Dreams as DreamsQueries} from "../../../queries/omo/dreams/dreams";
-import {Omosapiens} from "../../../queries/omo/odentity/omosapiens";
+import { Dreams as DreamsQueries } from "../../../queries/omo/dreams/dreams";
+import { Omosapiens } from "../../../queries/omo/odentity/omosapiens";
 
 export class Dreams {
   static async deleteDream(id) {
@@ -24,8 +24,13 @@ export class Dreams {
     return !newDream.data ? null : newDream.data.addDream;
   }
 
-  static async newCommitment(dreamId:string, omosapienId:string)
-  {
+  static startCampaign(id: string, videoHash: string, price: string) {
+    return window.o.graphQL.mutation(`updateDream(_id:"${id}",videoHash:"${videoHash}", price:"${price}"){_id}`);
+  }
+  static async newCommitment(dreamId: string, omosapienId: string) {
+    if (!dreamId || dreamId == "")
+      throw new Error("No dreamId was supplied");
+
     const newSubscription = await window.o.graphQL.mutation(`addStream(state: "commitment", creatorId: "${omosapienId}", dreamId: "${dreamId}") {_id}`);
     if (!newSubscription.data) {
       throw new Error("Couldn't create a new commitment.");
@@ -33,8 +38,10 @@ export class Dreams {
     return newSubscription.data.addStream._id;
   }
 
-  static async newReservation(dreamId:string, omosapienId:string)
-  {
+  static async newReservation(dreamId: string, omosapienId: string) {
+    if (!dreamId || dreamId == "")
+      throw new Error("No dreamId was supplied");
+
     const newSubscription = await window.o.graphQL.mutation(`addStream(state: "reservation", creatorId: "${omosapienId}", dreamId: "${dreamId}") {_id}`);
     if (!newSubscription.data) {
       throw new Error("Couldn't create a new reservation.");
@@ -42,8 +49,10 @@ export class Dreams {
     return newSubscription.data.addStream._id;
   }
 
-  static async newSubscription(dreamId:string, omosapienId:string)
-  {
+  static async newSubscription(dreamId: string, omosapienId: string) {
+    if (!dreamId || dreamId == "")
+      throw new Error("No dreamId was supplied");
+
     const newSubscription = await window.o.graphQL.mutation(`addStream(state: "subscription", creatorId: "${omosapienId}", dreamId: "${dreamId}") {_id}`);
     if (!newSubscription.data) {
       throw new Error("Couldn't create a new subscription.");

@@ -304,8 +304,10 @@
     }
     if (!nextNode.isInteractive) {
       oldOrg.layout = layoutWithoutNext;
+      oldOrg.blocks[2].quant = undefined;
     } else {
       oldOrg.layout = layoutWithNext;
+      oldOrg.blocks[2].quant = "OmoNextButton";
     }
 
     setTimeout(() => {
