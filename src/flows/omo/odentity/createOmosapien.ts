@@ -2,30 +2,22 @@ import { ProcessBuilder } from "../../../core/Flows/ProcessBuilder";
 import { IProcessContext } from "../../../core/Flows/IProcessContext";
 
 export function createOmosapien() {
-  return new ProcessBuilder<IProcessContext>("flows:omo.odentity.createOmosapien")
-    /*
-    .category("Welcome", (b) =>
-      {
-        b.step("flows:omo.odentity.createOmosapien:intro1")
-          .withQuant("OmoIntro", {
-            slide: {
-              title: "Welcome to Omo!"
-            }
-          })
-          .withTitle("Welcome to Omo!")
+  return new ProcessBuilder<IProcessContext>(
+    "flows:omo.odentity.createOmosapien"
+  )
 
-          .step("flows:omo.odentity.createOmosapien:intro2")
-          .withQuant("OmoIntro", {
-            slide: {
-              title: "This is the next page"
-            }
-          })
-          .withTitle("Welcome to Omo 2")
-      }
-    ).end()*/
-    .category("Create Omosapien", b => {
-      b
-        .step("flows:omo.odentity.createOmosapien:getName")
+    .category("Welcome", (b) => {
+      b.step("flows:omo.odentity.createOmosapien:intro1")
+        .withQuant("OmoIntro", {
+          slide: {
+            title: "Intro coming soon (alpha-test-demo)",
+          },
+        })
+        .withTitle("Welcome Intro");
+    })
+    .end()
+    .category("Create Omosapien", (b) => {
+      b.step("flows:omo.odentity.createOmosapien:getName")
         .withSideEffect("sideEffects:omo.shell.collectStepResult")
         .mapOutput("stepResult", "name")
         .withQuant("OmoInput")
@@ -81,7 +73,7 @@ export function createOmosapien() {
         .step("flows:omo.odentity.createOmosapien:navigate")
         .withSideEffect("sideEffects:omo.shell.navigate")
         .withStaticInput("page", "omomarket")
-        .withTitle("Finish process")
+        .withTitle("Finish process");
     })
     .end()
     .build();
