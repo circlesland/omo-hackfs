@@ -78,7 +78,7 @@
         );
       }
       o.quantRegistry.syncAllCollections();
-      navigate("omomarket");
+      // navigate("omomarket");
     });
   }
 
