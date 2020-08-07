@@ -12,6 +12,12 @@ export function createOmosapienNameOnly() {
         .withPrompt("Name")
         .withTitle("Your name")
 
+        .step("flows:omo.odentity.createOmosapien:createOmosapien")
+        .withSideEffect("sideEffects:omo.odentity.createOmosapien")
+        .mapInput("name", "name")
+        .mapInput("safe", "safe")
+        .withTitle("Creating your profile")
+
         .step("flows:omo.odentity.createOmosapienNameOnly:navigate")
         .withSideEffect("sideEffects:omo.shell.navigate")
         .withStaticInput("page", "omomarket")
