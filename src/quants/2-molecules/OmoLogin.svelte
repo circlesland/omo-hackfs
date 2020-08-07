@@ -41,7 +41,7 @@
           new StartFlow("flows:omo.odentity.createOmosapien")
         );
       }
-      navigate("omomarket");
+      // navigate("omomarket");
     });
     o.quantRegistry.syncAllCollections();
   }
