@@ -15,7 +15,7 @@ export function createOmosapienNameOnly() {
         .step("flows:omo.odentity.createOmosapien:createOmosapien")
         .withSideEffect("sideEffects:omo.odentity.createOmosapien")
         .mapInput("name", "name")
-        .mapInput("safe", "safe")
+        .mapInput("safe", "currentSafe")
         .withTitle("Creating your profile")
 
         .step("flows:omo.odentity.createOmosapienNameOnly:navigate")
