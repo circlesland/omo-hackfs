@@ -20,17 +20,17 @@
               <span
                       class="text-3xl font-bold block uppercase tracking-wide
                 text-white">
-                <!--{#if data}{data.follower}{:else}6{/if}-->
+                10
               </span>
               <span class="text-xs uppercase text-blue-400 font-bold">
-                {data.dream.subscriptions.length} Dreamers
+                Dreamers
               </span>
             </div>
             <div class="mr-4 p-3 text-center">
               <span
                       class="text-3xl font-bold block uppercase tracking-wide
                 text-white">
-                <!--{data.follower * 7.69} %-->
+                33
               </span>
               <span class="text-xs uppercase text-blue-400 font-bold">
                 of 100% reached
@@ -40,7 +40,7 @@
               <span
                       class="text-3xl font-bold block uppercase tracking-wide
                 text-white">
-                <!--Ø {data.follower * 7}-->
+                60
               </span>
               <span class="text-xs uppercase text-blue-400 font-bold">
                 of Ø 91 / week goal
