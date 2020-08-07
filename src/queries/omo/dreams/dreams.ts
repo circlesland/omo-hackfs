@@ -8,9 +8,8 @@ export class Dreams
 
   /**
    * Gets all dreams and optionally filters for the dream-state
-   * @param state
    */
-  static all(state?:string)
+  static all(leap?:number)
   {
     const sub = window.o.graphQL.subscribe(
       "Dreams{" + Dreams.allFields + "}"
@@ -24,8 +23,8 @@ export class Dreams
           throw new o.error;
 
         let allDreams = o.data.Dreams;
-        if (state) {
-          allDreams = allDreams.filter(o => o.state == state);
+        if (leap) {
+          allDreams = allDreams.filter(o => this.calcLevel(o.subscriptions.length).leap == leap);
         }
         s.next(allDreams);
       });
