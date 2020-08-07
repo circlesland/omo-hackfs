@@ -21,7 +21,7 @@
     };
 
     return mocker()
-            .schema("preorder", people, 2000)
+            .schema("people", people, 3000)
             .build()
             .then(
                     data => data.people,
@@ -237,7 +237,8 @@
   }
 </style>
 
-
+{#await getMockedPeople()}
+  {:then mockedPeople}
 {#await $streams}
   loading..
 {:then data}
@@ -271,16 +272,19 @@
   </div>
   <div class="aside-bottom">
 
-    {#each data.subscriptions as reservation}
+    {#each data.subscriptions as reservation, i}
       {#if reservation.leapHeader}Leap {reservation.leapHeader}{/if}
       {#if reservation.levelHeader}Level {reservation.levelHeader}{/if}
       <div class="flex h-12 mb-4 w-full bg-gray-100">
         <img
                 alt=""
-                src="https://i.pravatar.cc/150?u={reservation.subscription._id}"
+                src={mockedPeople[i].image}
                 class="h-full w-auto"/>
         <p class="py-3 px-4 rounded w-full">
-          {reservation.subscriptionDiscount} {reservation.subscription._id}
+          {#if reservation.subscriptionDiscount > 0}
+          {reservation.subscriptionDiscount} %
+          {/if}
+          {mockedPeople[i].name}
         </p>
       </div>
     {/each}
@@ -294,4 +298,5 @@
       <div class="py-3 h-12 w-full bg-gray-300">reservate for -70%</div>
     </div>
   </div>
+{/await}
 {/await}
