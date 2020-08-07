@@ -153,7 +153,7 @@
     toLeap: 2,
     title: "Reservations",
     description: "",
-    actionTitle: "Reservate the subscription at a discount",
+    actionTitle: "Reservate",
     action: () => window.o.publishShellEventAsync(new StartFlow("flows:omo.dreams.addReservation", data.dream._id))
   }, {
     fromLeap: 3,
@@ -166,7 +166,7 @@
     toLeap: 4,
     title: "Impact investors",
     description: "",
-    actionTitle: "Buy tokens at a discount",
+    actionTitle: "Buy tokens",
     action: () => window.o.publishShellEventAsync(new StartFlow("flows:omo.dreams.buyTokens", data.dream._id))
   }];
 
@@ -262,7 +262,7 @@
 
           <p
                   class=" text-md py-2 bg-tertiary hover:bg-secondary
-            text-center text-white uppercase font-bold cursor-pointer"
+            text-center text-white w-full uppercase font-bold cursor-pointer"
                   on:click={leap.action}>
             {leap.actionTitle}
           </p>
@@ -278,7 +278,7 @@
       <div class="flex h-12 mb-4 w-full bg-gray-100">
         <img
                 alt=""
-                src={mockedPeople[i].image}
+                src="https://i.pravatar.cc/150?u={i}"
                 class="h-full w-auto"/>
         <p class="py-3 px-4 rounded w-full">
           {#if reservation.subscriptionDiscount > 0}
@@ -288,15 +288,6 @@
         </p>
       </div>
     {/each}
-    Level X
-    <div class="flex h-12 mb-4 w-full bg-gray-300">
-      <div
-              class="h-full w-16 text-center flex justify-center flex-col bg-gray-500
-      text-xl text-gray-300 uppercase font-bold">
-        <i class="fas fa-lock text-gray-300"/>
-      </div>
-      <div class="py-3 h-12 w-full bg-gray-300">reservate for -70%</div>
-    </div>
   </div>
 {/await}
 {/await}

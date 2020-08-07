@@ -6,7 +6,9 @@
 
 <OmoVideo />
 <OmoProfilePage {data} />
+<!--
 <button
   on:click={() => window.o.publishShellEventAsync(new StartFlow('flows:omo.dreams.inviteToDream', data.dream))}>
   INVITE
 </button>
+-->
