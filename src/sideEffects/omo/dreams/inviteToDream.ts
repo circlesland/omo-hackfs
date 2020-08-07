@@ -20,7 +20,6 @@ export const inviteToDream: ISideEffect<IProcessContext, any> = {
     type: "schema:omo.void"
   }],
   execute: async (context, argument) => {
-    debugger;
     const invitee = context.local.inputs["invitee"];
     const email = context.local.inputs["email"];
     const text = context.local.inputs["text"];

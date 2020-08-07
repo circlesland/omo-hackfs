@@ -50,6 +50,7 @@ import { removeAuthProviderSeedPhrase as removeAuthProviderSeedPhraseFlow } from
 import { createDream as createDreamFlow } from "./flows/omo/dreams/createDream";
 import { createOmosapien as createOmosapienFlow } from "./flows/omo/odentity/createOmosapien";
 //import { convertToProduct as convertToProductFlow } from "./flows/omo/dreams/convertToProduct";
+import { startCampaign as startCampaignFlow } from "./flows/omo/dreams/startCampaign";
 import { inviteToDream as inviteToDreamFlow } from "./flows/omo/dreams/inviteToDream";
 import { addReservation as addReservationFlow } from "./flows/omo/dreams/addReservation";
 import { addSubscription as addSubscriptionFlow } from "./flows/omo/dreams/addSubscription";
@@ -72,6 +73,7 @@ import { deploySafe as deploySafeSideEffect } from "./sideEffects/omo/safe/deplo
 import { createDream as createDreamSideEffect } from "./sideEffects/omo/dreams/createDream";
 import { revokeInitialTrust as revokeInitialTrustSideEffect } from "./sideEffects/omo/circles/revokeInitialTrust";
 //import { convertToProduct as convertToProductSideEffect } from "./sideEffects/omo/dreams/convertToProduct";
+import { startCampaign as startCampaignSideEffect } from "./sideEffects/omo/dreams/startCampaign";
 import { inviteToDream as inviteToDreamSideEffect } from "./sideEffects/omo/dreams/inviteToDream";
 import { createChatRoom as createChatRoomSideEffect } from "./sideEffects/omo/dreams/createChatRoom";
 import { addReservation as addReservationSideEffect } from "./sideEffects/omo/dreams/addReservation";
@@ -171,6 +173,10 @@ export function init() {
   );
    */
   w.flowRegistrar.set(
+    "flows:omo.dreams.startCampaign",
+    startCampaignFlow
+  );
+  w.flowRegistrar.set(
     "flows:omo.dreams.inviteToDream",
     inviteToDreamFlow
   );
@@ -207,6 +213,7 @@ export function init() {
     revokeInitialTrustSideEffect,
     createOmosapienSideEffect,
     connectSafeSideEffect,
+    startCampaignSideEffect,
     //convertToProductSideEffect,
     inviteToDreamSideEffect,
     createChatRoomSideEffect,

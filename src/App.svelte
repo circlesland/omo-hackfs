@@ -178,8 +178,8 @@
       authenticate: true,
       actions: [
         {
-          title: "Convert to product",
-          event: () => new StartFlow("flows:omo.dreams.convertToProduct"),
+          title: "start campaign",
+          event: () => new StartFlow("flows:omo.dreams.startCampaign"),
         },
         {
           title: "Invite someone",

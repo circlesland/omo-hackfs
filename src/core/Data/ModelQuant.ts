@@ -176,6 +176,66 @@ export class ModelQuant {
             }
         };
 
+        mutation['update' + this.typeName(this.name)] = {
+            resolve: async (_, data) => {
+                var entity: any = {};
+                Object.keys(data).forEach(key => {
+                    if (this.properties.some(x => x.name == key)) {
+                        entity[key] = data[key];
+                        delete data[key];
+                    }
+                });
+                entity = await collection.save(entity);
+
+                //relations
+                this.oneToOneRelations.forEach(async (relation) => {
+                    let value = data[relation.fieldName];
+                    if (value) {
+                        entity[relation.reference.toLowerCase() + 'Id'] = value;
+                        var refCollection = await quantRegistry.getCollection(relation.reference);
+                        var refEntity = await refCollection.findById(data[relation.fieldName]);
+                        if (refEntity == null) throw new Error("Referenced item not found");
+                        refEntity[this.collectionName.toLowerCase() + 'Id'] = entity._id;
+                        refCollection.save(refEntity);
+                        delete data[relation.fieldName];
+                    }
+                })
+
+                this.ManyToOneRelations.forEach(relation => {
+                    let value = data[relation.fieldName];
+                    if (value) {
+                        entity[relation.reference.toLowerCase() + 'Id'] = value;
+                        delete data[relation.fieldName];
+                    }
+                });
+                entity = await collection.save(entity);
+
+
+                this.oneToManyRelations.forEach(async relation => {
+                    let value = data[relation.fieldName];
+                    if (value && Array.isArray(value) && value.length != 0) {
+                        var refCollection = await quantRegistry.getCollection(relation.reference);
+                        var entities = await refCollection.find({
+                            ors: value.map(x => {
+                                return {
+                                    // check wrong local db syntax
+                                    ands: [{ fieldPath: "_id", value: { string: x } }]
+                                };
+                            })
+                        });
+                        let updated = entities.map((e: any) => {
+                            e[this.collectionName.toLowerCase() + 'Id'] = entity._id;
+                            return e;
+                        });
+                        await refCollection.saveMany(updated);
+                        delete data[relation.fieldName];
+                    }
+                })
+                return entity;
+            }
+        };
+
+
         mutation['delete' + this.typeName(this.name)] = {
             resolve: async (_, { _id }) => {
                 await collection.deleteById(_id);

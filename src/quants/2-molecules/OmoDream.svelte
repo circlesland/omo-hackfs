@@ -14,22 +14,14 @@
   let dreamId;
   export let activeTabValue = 0;
   let items = [
-    {
-      icon: "fa-bullseye",
-      text: "dapps",
-      link: "javascript:navigate('omofunding')",
-      design: "text-white bg-blue-600",
-      left: OmoDreamGoal,
-      right: OmoDreamFollower,
-    },
-    {
-      icon: "fa-users",
-      text: "messages",
-      link: "javascript:navigate('omochat')",
-      design: "text-white bg-blue-600",
-      left: OmoDreamChat,
-      right: OmoDreamFollower,
-    },
+    // {
+    //   icon: "fa-users",
+    //   text: "messages",
+    //   link: "javascript:navigate('omochat')",
+    //   design: "text-white bg-blue-600",
+    //   left: OmoDreamChat,
+    //   right: OmoDreamFollower,
+    // },
     {
       icon: "fa-comments",
       text: "messages",
@@ -38,14 +30,14 @@
       left: OmoDreamChat,
       right: OmoDreamFollower,
     },
-    {
-      icon: "fa-bell",
-      text: "messages",
-      link: "javascript:navigate('docs')",
-      design: "text-white bg-blue-600",
-      left: OmoDreamGoal,
-      right: OmoDreamFollower,
-    },
+    // {
+    //   icon: "fa-bell",
+    //   text: "messages",
+    //   link: "javascript:navigate('docs')",
+    //   design: "text-white bg-blue-600",
+    //   left: OmoDreamGoal,
+    //   right: OmoDreamFollower,
+    // },
   ];
 
   /**
@@ -232,6 +224,27 @@
 
   async function load() {
     const d = await DreamsQueries.byId(dreamId);
+
+    if (d.data.DreamById.price) {
+      items = [
+        {
+          icon: "fa-comments",
+          text: "messages",
+          link: "javascript:navigate('omochat')",
+          design: "text-white bg-blue-600",
+          left: OmoDreamChat,
+          right: OmoDreamFollower,
+        },
+        {
+          icon: "fa-bullseye",
+          text: "dapps",
+          link: "javascript:navigate('omofunding')",
+          design: "text-white bg-blue-600",
+          left: OmoDreamGoal,
+          right: OmoDreamFollower,
+        },
+      ];
+    }
 
     const subscriptions = [];
 
