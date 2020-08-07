@@ -28,8 +28,8 @@
       link: "javascript:navigate('omochat')",
       design: "text-white bg-blue-600",
       left: OmoDreamChat,
-      right: OmoDreamFollower,
-    },
+      right: OmoDreamFollower
+    }
     // {
     //   icon: "fa-bell",
     //   text: "messages",
@@ -73,104 +73,104 @@
       fromLevel: 0,
       toLevel: 6,
       subscriptionDiscount: 100,
-      tokenDiscount: null,
+      tokenDiscount: null
     },
     {
       fromLevel: 7,
       toLevel: 7,
       subscriptionDiscount: 90,
-      tokenDiscount: null,
+      tokenDiscount: null
     },
     {
       fromLevel: 8,
       toLevel: 8,
       subscriptionDiscount: 80,
-      tokenDiscount: null,
+      tokenDiscount: null
     },
     {
       fromLevel: 9,
       toLevel: 9,
       subscriptionDiscount: 70,
-      tokenDiscount: null,
+      tokenDiscount: null
     },
     {
       fromLevel: 10,
       toLevel: 10,
       subscriptionDiscount: 60,
-      tokenDiscount: null,
+      tokenDiscount: null
     },
     {
       fromLevel: 11,
       toLevel: 11,
       subscriptionDiscount: 50,
-      tokenDiscount: null,
+      tokenDiscount: null
     },
     {
       fromLevel: 12,
       toLevel: 12,
       subscriptionDiscount: 33.33,
-      tokenDiscount: null,
+      tokenDiscount: null
     },
     {
       fromLevel: 13,
       toLevel: 13,
       subscriptionDiscount: 20,
-      tokenDiscount: null,
+      tokenDiscount: null
     },
     {
       fromLevel: 14,
       toLevel: 14,
       subscriptionDiscount: 12.5,
-      tokenDiscount: null,
+      tokenDiscount: null
     },
     {
       fromLevel: 15,
       toLevel: 15,
       subscriptionDiscount: 7.69,
-      tokenDiscount: null,
+      tokenDiscount: null
     },
     {
       fromLevel: 16,
       toLevel: 16,
       subscriptionDiscount: 4.76,
-      tokenDiscount: 33.33,
+      tokenDiscount: 33.33
     },
     {
       fromLevel: 17,
       toLevel: 17,
       subscriptionDiscount: 2.94,
-      tokenDiscount: 20,
+      tokenDiscount: 20
     },
     {
       fromLevel: 18,
       toLevel: 18,
       subscriptionDiscount: 1.82,
-      tokenDiscount: 12.5,
+      tokenDiscount: 12.5
     },
     {
       fromLevel: 19,
       toLevel: 19,
       subscriptionDiscount: 1.12,
-      tokenDiscount: 7.69,
+      tokenDiscount: 7.69
     },
     {
       fromLevel: 20,
       toLevel: 20,
       subscriptionDiscount: 0.69,
-      tokenDiscount: 4.78,
+      tokenDiscount: 4.78
     },
     {
       fromLevel: 21,
       toLevel: 22,
       subscriptionDiscount: 0,
-      tokenDiscount: 4.78,
+      tokenDiscount: 4.78
     },
     {
       fromLevel: 22,
       toLevel: 999,
       subscriptionDiscount: 0,
-      tokenDiscount: 0,
-    },
+      tokenDiscount: 0
+    }
   ];
 
   let leapMetadata = [
@@ -183,7 +183,7 @@
       action: () =>
         window.o.publishShellEventAsync(
           new StartFlow("flows:omo.dreams.addCommitment", dreamId)
-        ),
+        )
     },
     {
       fromLeap: 2,
@@ -194,7 +194,7 @@
       action: () =>
         window.o.publishShellEventAsync(
           new StartFlow("flows:omo.dreams.addReservation", dreamId)
-        ),
+        )
     },
     {
       fromLeap: 3,
@@ -204,7 +204,7 @@
       action: () =>
         window.o.publishShellEventAsync(
           new StartFlow("flows:omo.dreams.addSubscription", dreamId)
-        ),
+        )
     },
     {
       fromLeap: 4,
@@ -215,8 +215,8 @@
       action: () =>
         window.o.publishShellEventAsync(
           new StartFlow("flows:omo.dreams.buyTokens", dreamId)
-        ),
-    },
+        )
+    }
   ];
 
   let lastLevel = 0;
@@ -233,7 +233,7 @@
           link: "javascript:navigate('omochat')",
           design: "text-white bg-blue-600",
           left: OmoDreamChat,
-          right: OmoDreamFollower,
+          right: OmoDreamFollower
         },
         {
           icon: "fa-bullseye",
@@ -241,8 +241,8 @@
           link: "javascript:navigate('omofunding')",
           design: "text-white bg-blue-600",
           left: OmoDreamGoal,
-          right: OmoDreamFollower,
-        },
+          right: OmoDreamFollower
+        }
       ];
     }
 
@@ -253,7 +253,7 @@
       const levelAndLeap = DreamsQueries.calcLevel(i);
 
       const level = levelMetadatas.find(
-        (o) =>
+        o =>
           o.fromLevel <= levelAndLeap.level && o.toLevel >= levelAndLeap.level
       );
 
@@ -267,7 +267,7 @@
         subscriptionDiscount: !level.subscriptionDiscount
           ? ""
           : level.subscriptionDiscount,
-        tokenDiscount: !level.tokenDiscount ? "" : level.tokenDiscount,
+        tokenDiscount: !level.tokenDiscount ? "" : level.tokenDiscount
       };
 
       lastLeap = levelAndLeap.leap;
@@ -282,12 +282,12 @@
 
     const returnValue = {
       leaps: leapMetadata.filter(
-        (o) =>
+        o =>
           o.fromLeap <= nextLevelAndLeap.leap &&
           o.toLeap >= nextLevelAndLeap.leap
       ),
       dream: d.data.DreamById,
-      subscriptions: subscriptions,
+      subscriptions: subscriptions
     };
 
     return returnValue;
@@ -350,7 +350,7 @@
   <div class="omo-layout">
     <div class="top bg-gray-200 w-full">
       <div class="relative">
-        <div class="overflow-hidden h-4 text-xs flex bg-primary">
+        <div class="overflow-hidden h-4 text-xs flex bg-dark">
           <div
             style="width: 33%"
             class="shadow-none flex flex-col text-center whitespace-nowrap

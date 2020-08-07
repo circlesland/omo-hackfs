@@ -14,7 +14,7 @@
     {
       label: "My Dreams",
       value: 2,
-      icon: "fa-user-ninja",
+      icon: "fa-user-ninja"
     },
     // {
     //   label: "My Organisations",
@@ -26,13 +26,13 @@
     {
       label: "Safe Owners",
       value: 6,
-      icon: "fa-user-shield",
+      icon: "fa-user-shield"
     },
     {
       label: "My Backups",
       value: 7,
-      icon: "fa-database",
-    },
+      icon: "fa-database"
+    }
   ];
 
   let omosapiens = observe(
@@ -68,17 +68,17 @@
 
   <main class="h-full w-full mt-12 md:w-5/6 mx-auto overflow-y-scroll">
     {#if 1 === currentTab}
-      <h1 class="uppercase text-lg text-primary">Dashboard</h1>
-
-      {#await $omosapiens}
-        loading..
-      {:then omosapiens}
-        {#each omosapiens as omo}
-          <h1 class="uppercase text-lg text-primary">
-            {omo.name} - {omo.safeAddress}
-          </h1>
-        {/each}
-      {/await}
+      <h1 class="uppercase text-lg text-primary">
+        WELCOME
+        {#await $omosapiens}
+          loading..
+        {:then omosapiens}
+          {#each omosapiens as omo}{omo.name}{/each}
+        {/await}
+      </h1>
+      this is your omo sapiens profile
+      <br />
+      (WIP: more options coming soon)
     {/if}
 
     {#if 2 === currentTab}
