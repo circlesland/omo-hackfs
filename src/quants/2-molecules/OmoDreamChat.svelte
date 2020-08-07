@@ -17,6 +17,12 @@
     currentRoom = result.data.ChatRooms.find(
       (x) => x.dreamId == data.dream._id
     );
+    if (currentRoom == null) {
+      var res = await o.graphQL.mutation(
+        `addChatRoom(dreamId:"${data.dreamId}"){ _id,name,dreamId}`
+      );
+      currentRoom = res.data.addChatRoom;
+    }
   }
   init();
 
