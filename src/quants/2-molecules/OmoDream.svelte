@@ -229,19 +229,19 @@
     if (d.data.DreamById.price) {
       items = [
         {
-          icon: "fa-comments",
-          text: "messages",
-          link: "javascript:navigate('omochat')",
-          design: "text-white bg-blue-600",
-          left: OmoDreamChat,
-          right: OmoDreamFollower,
-        },
-        {
           icon: "fa-bullseye",
           text: "dapps",
           link: "javascript:navigate('omofunding')",
           design: "text-white bg-blue-600",
           left: OmoDreamGoal,
+          right: OmoDreamFollower,
+        },
+        {
+          icon: "fa-comments",
+          text: "messages",
+          link: "javascript:navigate('omochat')",
+          design: "text-white bg-blue-600",
+          left: OmoDreamChat,
           right: OmoDreamFollower,
         },
       ];
@@ -332,7 +332,6 @@
     grid-area: nav-right;
     height: 100%;
   }
-
 </style>
 
 {#await load()}
