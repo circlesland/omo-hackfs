@@ -278,7 +278,7 @@
       <div class="flex h-12 mb-4 w-full bg-gray-100">
         <img
                 alt=""
-                src={mockedPeople[i].image}
+                src="https://i.pravatar.cc/150?u={i}"
                 class="h-full w-auto"/>
         <p class="py-3 px-4 rounded w-full">
           {#if reservation.subscriptionDiscount > 0}
