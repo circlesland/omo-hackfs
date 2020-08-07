@@ -332,15 +332,6 @@
     height: 100%;
   }
 
-  .aside-top {
-    grid-area: aside-top;
-    height: 100%;
-  }
-  .aside-bottom {
-    grid-area: aside-bottom;
-    height: 100%;
-    overflow-y: scroll;
-  }
 </style>
 
 {#await load()}

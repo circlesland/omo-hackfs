@@ -1,10 +1,33 @@
 <script>
-  import {Dreams} from "../../queries/omo/dreams/dreams";
   import {observe} from "svelte-observable";
   import {StartFlow} from "../../events/omo/shell/startFlow";
   import {Dreams as DreamsQueries} from "../../queries/omo/dreams/dreams";
   import {afterUpdate, beforeUpdate} from "svelte";
   import Observable from "zen-observable";
+
+  import mocker from "mocker-data-generator";
+
+  async function getMockedPeople() {
+    const people = {
+      name: {
+        faker: "name.findName",
+        unique: true
+      },
+      image: {
+        function: function () {
+          return "https://source.unsplash.com/featured/?" + this.object.name;
+        }
+      }
+    };
+
+    return mocker()
+            .schema("preorder", people, 2000)
+            .build()
+            .then(
+                    data => data.people,
+                    err => console.error(err)
+            );
+  }
 
   export let data;
 
@@ -198,6 +221,22 @@
   const streams = observe(streamObservable);
 
 </script>
+
+
+<style>
+
+
+  .aside-top {
+    grid-area: aside-top;
+    height: 100%;
+  }
+  .aside-bottom {
+    grid-area: aside-bottom;
+    height: 100%;
+    overflow-y: scroll;
+  }
+</style>
+
 
 {#await $streams}
   loading..
