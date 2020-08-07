@@ -178,7 +178,7 @@ export class ModelQuant {
 
         mutation['update' + this.typeName(this.name)] = {
             resolve: async (_, data) => {
-                var entity: any = {};
+                var entity = (await collection.findById(data._id));
                 Object.keys(data).forEach(key => {
                     if (this.properties.some(x => x.name == key)) {
                         entity[key] = data[key];
