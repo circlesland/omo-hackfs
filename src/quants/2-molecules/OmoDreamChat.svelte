@@ -54,7 +54,7 @@
   .main {
     grid-area: main;
     height: 100%;
-    overflow: hidden;
+    overflow-y: scroll;
   }
 
   .bottom {
