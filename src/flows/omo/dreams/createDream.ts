@@ -27,7 +27,8 @@ export function createDream() {
         .withTitle("Where are you located (City)?")
     )
     .end()
-    .category("Show Details", (b) => {
+    .category("Safe dream", (b) => {
+
       b.step("flows:omo.dreams.createDream:generateSafe")
         .withSideEffect("sideEffects:omo.circles.generateSafe")
         .mapInput("safeOwner", "currentSafeOwner")
@@ -91,6 +92,7 @@ export function createDream() {
         .withStaticInput("trustPercentage", "100") // TODO: Allow for static values
         .isNonInteractive()
         .withTitle("Dream is giving trust to dream-creator")
+
       // TODO: dream-safe trusts creator-safe
     })
     .end()

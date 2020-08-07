@@ -27,9 +27,9 @@ export const startCampaign: ISideEffect<IProcessContext, any> = {
     if (urlParams.has("data")) {
       dreamId = urlParams.get("data") || "";
     }
-    const videoHash = context.local.inputs["videoHash"];
+    //const videoHash = context.local.inputs["videoHash"];
     const price = context.local.inputs["price"];
-    DreamsMutations.startCampaign(dreamId, videoHash, price);
+    await DreamsMutations.startCampaign(dreamId, "https://ipfs.io/ipfs/QmQn4Wih8PYHBzrkq55y4gnrhe2z9SYtYnsLrJHGenNTXC", price);
     context.local.outputs["void"] = {};
   },
   canExecute: async context => true

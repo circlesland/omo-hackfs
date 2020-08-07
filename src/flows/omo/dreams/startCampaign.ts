@@ -5,12 +5,13 @@ export function startCampaign() {
   return new ProcessBuilder<IProcessContext>("flows:omo.dreams.startCampaign")
     .category("Convert dream to product", (build) =>
       build
+        /*
         .step("flows:omo.dreams.startCampaign:uploadVideo")
         .withSideEffect("sideEffects:omo.shell.collectStepResult")
         .mapOutput("stepResult", "videoHash")
         .withQuant("OmoInput")
         .withPrompt("Video URL")
-        .withTitle("Link to your video")
+        .withTitle("Link to your video")*/
 
         // .step("flows:omo.dreams.startCampaign:uploadBanner")
         //   .withSideEffect("sideEffects:omo.shell.collectStepResult")
@@ -28,7 +29,7 @@ export function startCampaign() {
 
         .step("flows:omo.dreams.startCampaign:startCampaign")
         .withQuant("OmoLoading")
-        .mapInput("videoHash", "videoHash")
+        // .mapInput("videoHash", "videoHash")
         // .mapInput("bannerHash", "bannerHash")
         .mapInput("price", "price")
         .isNonInteractive()
