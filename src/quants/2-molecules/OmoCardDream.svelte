@@ -1,27 +1,12 @@
 <script>
-  import {Omosapiens} from "../../queries/omo/odentity/omosapiens";
+  import { Omosapiens } from "../../queries/omo/odentity/omosapiens";
 
-  export let data = {
-    /*
-    first: "firstname",
-    last: "lastname",
-    image: "image",
-    profile: "image",
-    dream: "dream description",
-    link: "link",
-    follower: "10"
-     */
-    name: "",
-    description: ""
-  };
-
+  export let data = {};
 
   async function lookupName(omosapienId) {
     const omosapien = await Omosapiens.byId(omosapienId);
-    if (!omosapien || omosapien.length === 0)
-      return omosapienId;
-    else
-      return omosapien.name;
+    if (!omosapien || omosapien.length === 0) return omosapienId;
+    else return omosapien.name;
   }
 </script>
 
@@ -30,15 +15,15 @@
   overflow-hidden">
   <span
     class="font-title w-full text-center text-sm font-bold inline-block p-2
-    uppercase text-white bg-leap1">
-    <!--{data.follower} / 12-->
+    uppercase text-white bg-leap3">
+    14 / 143
   </span>
   <div class="relative">
     <div class="overflow-hidden h-3 text-xs flex bg-dark">
-      <!-- <div
-        style="width: {(data.follower * 100) / 12}%"
+      <div
+        style="width: 50%"
         class="shadow-none flex flex-col text-center whitespace-nowrap
-        text-white justify-center bg-tertiary" /> -->
+        text-white justify-center bg-tertiary" />
     </div>
   </div>
   <div class="z-0 relative group h-48 w-full flex justify-center items-center">
@@ -64,8 +49,8 @@
     <div class="font-bold font-title text-xl text-center">
       {#await lookupName(data.creatorId)}
         Loading Omosapien ..
-        {:then name}
-      {name}
+      {:then name}
+        {name}
       {/await}
     </div>
     <p class="text-center text-gray-600 uppercase">{data.name}</p>

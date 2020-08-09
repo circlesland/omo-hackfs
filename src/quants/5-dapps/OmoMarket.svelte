@@ -14,18 +14,18 @@
   let currentTab;
 
   let tabItems = [
-    { label: "Leap 1", value: 1, icon: "fa-lightbulb" },
+    { label: "Dreams", value: 1, icon: "fa-lightbulb" },
     {
-      label: "Leap 2",
+      label: "Reservate",
       value: 2,
-      icon: "fa-shopping-cart"
+      icon: "fa-ticket-alt"
     },
-    { label: "Leap 3", value: 3, icon: "fa-store" },
+    { label: "Pre-Order", value: 3, icon: "fa-shopping-cart" },
     {
-      label: "Leap 4",
+      label: "Buy Token",
       value: 4,
-      icon: "fa-vote-yea"
-    },
+      icon: "fa-coins"
+    }
     //{ label: "Organisations", value: 5, icon: "fa-users" },
     //{ label: "Cities", value: 6, icon: "fa-city" }
   ];
@@ -33,7 +33,7 @@
   $: countries = [];
   $: cities = [];
   $: industries = [];
-  $: isLeap = [1,2,3,4].find(o => o == currentTab);
+  $: isLeap = [1, 2, 3, 4].find(o => o == currentTab);
 
   var schemaCountry = {
     name: {
@@ -49,9 +49,7 @@
 
   var schemaIndustry = {
     name: {
-      values: [
-        "---"
-      ]
+      values: ["---"]
     }
   };
 
@@ -72,7 +70,6 @@
   //   title: "quick introduction to dreams",
   //   subline: "more detail description"
   // };
-
 </script>
 
 <style>
