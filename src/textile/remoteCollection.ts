@@ -1,7 +1,7 @@
 import { Instance } from "@textile/threads-store";
 import { ThreadID, KeyInfo} from "@textile/hub";
 import Client from "@textile/threads-client";
-import { ICollection } from "./ICollection";
+import { ICollection } from "./collection";
 
 export class RemoteCollection<T extends Instance> implements ICollection<T>
 {

@@ -1,5 +1,5 @@
 import { Instance } from "@textile/threads-store";
-import { ICollection } from "./ICollection";
+import { ICollection } from "./collection";
 import { RemoteCollection } from "./remoteCollection";
 import { LocalCollection } from "./localCollection";
 import { FilterQuery } from "@textile/hub";

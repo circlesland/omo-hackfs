@@ -1,6 +1,6 @@
 import { Instance } from "@textile/threads-store";
 import { Collection, FilterQuery } from "@textile/hub";
-import { ICollection } from "./ICollection";
+import { ICollection } from "./collection";
 import { Result, Database } from "@textile/threads-database";
 
 export class LocalCollection<T extends Instance> implements ICollection<T>
