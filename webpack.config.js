@@ -14,7 +14,7 @@ const { mdsvex } = require('mdsvex')
 
 module.exports = {
   entry: {
-    bundle: ['./src/index.ts', './src/styles.css'],
+    bundle: ['./src/index.ts'],
   },
   resolve: {
     alias: {
