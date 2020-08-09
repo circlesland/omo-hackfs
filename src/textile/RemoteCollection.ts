@@ -14,7 +14,6 @@ export class RemoteCollection<T extends Instance> implements ICollection<T>
   }
 
   private async getClient() {
-    console.log("getClient() called.")
     let remoteAuth: KeyInfo = {
       key: process.env.USER_API_KEY || '',
       secret: process.env.USER_API_SECRET || ''
