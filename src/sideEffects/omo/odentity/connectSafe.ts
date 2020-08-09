@@ -1,4 +1,4 @@
-import {IProcessContext} from "../../../core/Flows/IProcessContext";
+/*import {IProcessContext} from "../../../core/Flows/IProcessContext";
 import {ISideEffect} from "../../../core/Flows/ISideEffect";
 
 export const connectSafe: ISideEffect<IProcessContext, any> = {
@@ -25,3 +25,4 @@ export const connectSafe: ISideEffect<IProcessContext, any> = {
   },
   canExecute: async context => true
 };
+*/

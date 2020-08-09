@@ -1,4 +1,4 @@
-import { ISideEffect } from "../../../core/Flows/ISideEffect";
+/*import { ISideEffect } from "../../../core/Flows/ISideEffect";
 import { IProcessContext } from "../../../core/Flows/IProcessContext";
 
 export const navigate: ISideEffect<IProcessContext, any> = {
@@ -14,3 +14,4 @@ export const navigate: ISideEffect<IProcessContext, any> = {
   },
   canExecute: async context => true
 };
+*/

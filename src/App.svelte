@@ -122,7 +122,7 @@
   // export const omo = window.o.odentity.current;
   //@todo listen to changes
 
-  $: loggedIn = window.o.odentity.current != null;
+  $: loggedIn = false; // window.o.odentity.current != null;
 
   // ROUTING
   var routes = [

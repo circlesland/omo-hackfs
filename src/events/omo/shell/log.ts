@@ -1,6 +1,4 @@
-import {Event} from "../../../core/Data/Entities/Event"
-
-export class Log extends Event
+export class Log
 {
   readonly _$schemaId = "events:omo.shell.log";
 
@@ -19,7 +17,6 @@ export class Log extends Event
 
   constructor(source: string, severity: string, message: string, dataJson?: any)
   {
-    super();
     this.data.severity = severity;
     this.data.source = source;
     this.data.message = message;

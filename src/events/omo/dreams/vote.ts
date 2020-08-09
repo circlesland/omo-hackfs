@@ -1,6 +1,4 @@
-import {Event} from "../../../core/Data/Entities/Event"
-
-export class Vote extends Event
+export class Vote
 {
   readonly _$schemaId = "events:omo.dreams.vote";
 
@@ -12,7 +10,6 @@ export class Vote extends Event
 
   constructor(dreamId: string)
   {
-    super();
     this.data.dreamId = dreamId;
   }
 }

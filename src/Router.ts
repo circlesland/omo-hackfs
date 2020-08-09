@@ -23,11 +23,14 @@ export function getComponent(route, routes) {
     alert(`route "${route}" not defined`);
     return;
   }
+  // TODO: Re-implement isAuthenticated check
+  /*
   if (component.authenticate && window.o.odentity.current == null) {
     var urlParams = new URLSearchParams(window.location.search);
     navigate("omoauth", urlParams.get("data"), page)
     return;
   }
+   */
   return component.quant;
 }
 
@@ -42,6 +45,4 @@ export function navigate(page: string, data: string | null, redirect: string) {
   }
   window.history.pushState({ route: route }, page, route);
   curRoute.set(route);
-
-  window.o.publishShellEventAsync(new Navigated(page));
 }

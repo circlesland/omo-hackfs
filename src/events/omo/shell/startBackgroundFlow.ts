@@ -1,6 +1,4 @@
-import {Event} from "../../../core/Data/Entities/Event"
-
-export class StartBackgroundFlow extends Event
+export class StartBackgroundFlow
 {
   readonly _$schemaId = "events:omo.shell.startBackgroundFlow";
 
@@ -13,7 +11,6 @@ export class StartBackgroundFlow extends Event
 
   constructor(flow: string, argument?: any)
   {
-    super();
     this.data.flow = flow;
     this.data.argument = argument;
   }

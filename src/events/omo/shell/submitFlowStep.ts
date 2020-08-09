@@ -1,6 +1,4 @@
-import {Event} from "../../../core/Data/Entities/Event"
-
-export class SubmitFlowStep extends Event
+export class SubmitFlowStep
 {
   readonly _$schemaId = "events:omo.shell.submitFlowStep";
 
@@ -14,7 +12,6 @@ export class SubmitFlowStep extends Event
 
   constructor(processNodeId: string, argument: any)
   {
-    super();
     this.data.processNodeId = processNodeId;
     this.data.argument = argument;
   }

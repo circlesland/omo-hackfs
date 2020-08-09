@@ -1,6 +1,4 @@
-import {Event} from "../../../core/Data/Entities/Event"
-
-export class Subscribe extends Event
+export class Subscribe
 {
   readonly _$schemaId = "events:omo.dreams.subscribe";
 
@@ -12,7 +10,6 @@ export class Subscribe extends Event
 
   constructor(dreamId: string)
   {
-    super();
     this.data.dreamId = dreamId;
   }
 }

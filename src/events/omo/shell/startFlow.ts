@@ -1,6 +1,4 @@
-import {Event} from "../../../core/Data/Entities/Event"
-
-export class StartFlow extends Event
+export class StartFlow
 {
   readonly _$schemaId = "events:omo.shell.startFlow";
 
@@ -13,7 +11,6 @@ export class StartFlow extends Event
 
   constructor(flow: string, argument?: any)
   {
-    super();
     this.data.flow = flow;
     this.data.argument = argument;
   }

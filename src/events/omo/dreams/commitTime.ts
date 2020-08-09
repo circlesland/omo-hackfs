@@ -1,6 +1,4 @@
-import {Event} from "../../../core/Data/Entities/Event"
-
-export class CommitTime extends Event
+export class CommitTime
 {
   readonly _$schemaId = "events:omo.dreams.commitTime";
 
@@ -14,7 +12,6 @@ export class CommitTime extends Event
 
   constructor(dreamId: string, hoursPerWeek: number)
   {
-    super();
     this.data.dreamId = dreamId;
     this.data.hoursPerWeek = hoursPerWeek;
   }

@@ -1,4 +1,4 @@
-import {ISideEffect} from "../../../core/Flows/ISideEffect";
+/*import {ISideEffect} from "../../../core/Flows/ISideEffect";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
 import {giveTrust} from "../safe/giveTrust";
 import {Logger} from "../../../core/Log/logger";
@@ -116,3 +116,6 @@ export const revokeInitialTrust: ISideEffect<IProcessContext, any> = {
   },
   canExecute: async context => true
 };
+
+
+ */

@@ -1,9 +1,6 @@
 import App from "./App.svelte";
-import {Quantum} from "./core/Quantum";
-import {Threads} from "./core/Textile/Threads";
-import {RemoteThread} from "./core/Textile/RemoteThread";
-import {async} from "rxjs";
 import {init} from "./ComponentRegistrar";
+import {Quantum} from "../textile-graphql/src/quantum";
 
 declare global
 {

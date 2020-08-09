@@ -1,6 +1,4 @@
-import {Event} from "../../../core/Data/Entities/Event"
-
-export class Logout extends Event
+export class Logout
 {
   readonly _$schemaId = "events:omo.shell.logout";
 
@@ -8,6 +6,5 @@ export class Logout extends Event
 
   constructor()
   {
-    super();
   }
 }

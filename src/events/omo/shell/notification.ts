@@ -1,6 +1,4 @@
-import {Event} from "../../../core/Data/Entities/Event"
-
-export class Notification extends Event
+export class Notification
 {
   readonly _$schemaId = "events:omo.shell.notification";
 

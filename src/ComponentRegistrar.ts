@@ -62,6 +62,7 @@ import { requestUbi as requestUbiFlow } from "./flows/omo/circles/requestUbi";
 //
 // SideEffects
 //
+/*
 import { collectStepResult } from "./sideEffects/omo/shell/collectStepResult";
 import { navigate as navigateSideEffect } from "./sideEffects/omo/shell/navigate";
 import { giveTrust as giveTrustSideEffect } from "./sideEffects/omo/safe/giveTrust";
@@ -85,7 +86,7 @@ import { buyTokens as buyTokensSideEffect } from "./sideEffects/omo/dreams/buyTo
 import { addCommitment as addCommitmentSideEffect } from "./sideEffects/omo/dreams/addCommitment";
 import { requestUbi as requestUbiSideEffect } from "./sideEffects/omo/circles/requestUbi";
 //import { convertToProduct as convertToProductSideEffect } from "./sideEffects/omo/dreams/convertToProduct";
-
+*/
 //
 // Schema
 //
@@ -210,7 +211,7 @@ export function init() {
 
   w.sideEffectRegistrar = new Map();
   [
-    collectStepResult,
+    /*collectStepResult,
     navigateSideEffect,
     giveTrustSideEffect,
     revokeTrustSideEffect,
@@ -232,7 +233,7 @@ export function init() {
     addSubscriptionSideEffect,
     addCommitmentSideEffect,
     buyTokensSideEffect,
-    requestUbiSideEffect
+    requestUbiSideEffect*/
   ].forEach((o) => {
     w.sideEffectRegistrar.set(o["_$schemaId"], o);
   });

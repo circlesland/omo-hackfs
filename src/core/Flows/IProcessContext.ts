@@ -1,8 +1,8 @@
-import {Quantum} from "../Quantum";
-
 /**
  * Must be supplied to every action of a IProcessNode.
  */
+import {Quantum} from "../../../textile-graphql/src/quantum";
+
 export interface IProcessContext
 {
   stepId: string;

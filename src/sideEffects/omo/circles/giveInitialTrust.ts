@@ -1,3 +1,4 @@
+/*
 import {ISideEffect} from "../../../core/Flows/ISideEffect";
 import {IProcessContext} from "../../../core/Flows/IProcessContext";
 import {giveTrust} from "../safe/giveTrust";
@@ -81,3 +82,4 @@ export const giveInitialTrust: ISideEffect<IProcessContext, any> = {
   },
   canExecute: async context => true
 };
+ */

@@ -1,6 +1,4 @@
-import {Event} from "../../../core/Data/Entities/Event"
-
-export class Navigate extends Event
+export class Navigate
 {
   readonly _$schemaId = "events:omo.shell.navigate";
 
@@ -13,7 +11,6 @@ export class Navigate extends Event
 
   constructor(page: string)
   {
-    super();
     this.data.page = page;
   }
 }

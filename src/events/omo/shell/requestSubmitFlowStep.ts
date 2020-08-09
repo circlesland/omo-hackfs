@@ -1,6 +1,4 @@
-import {Event} from "../../../core/Data/Entities/Event"
-
-export class RequestSubmitFlowStep extends Event
+export class RequestSubmitFlowStep
 {
   readonly _$schemaId = "events:omo.shell.requestSubmitFlowStep";
 
@@ -12,7 +10,6 @@ export class RequestSubmitFlowStep extends Event
 
   constructor(processNodeId: string)
   {
-    super();
     this.data.processNodeId = processNodeId;
   }
 }

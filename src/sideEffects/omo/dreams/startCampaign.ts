@@ -1,4 +1,4 @@
-import { ISideEffect } from "../../../core/Flows/ISideEffect";
+/*import { ISideEffect } from "../../../core/Flows/ISideEffect";
 import { IProcessContext } from "../../../core/Flows/IProcessContext";
 
 import { Dreams as DreamsMutations } from "../../../mutations/omo/dreams/dreams";
@@ -33,4 +33,4 @@ export const startCampaign: ISideEffect<IProcessContext, any> = {
     context.local.outputs["void"] = {};
   },
   canExecute: async context => true
-};
+};*/

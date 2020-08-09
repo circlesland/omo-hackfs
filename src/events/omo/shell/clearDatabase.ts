@@ -1,6 +1,4 @@
-import {Event} from "../../../core/Data/Entities/Event"
-
-export class ClearDatabase extends Event
+export class ClearDatabase
 {
   readonly _$schemaId = "events:omo.shell.clearDatabase";
 
@@ -8,6 +6,5 @@ export class ClearDatabase extends Event
 
   constructor()
   {
-    super();
   }
 }
