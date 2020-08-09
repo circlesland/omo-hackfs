@@ -1,8 +1,8 @@
-import { Quant } from "./Quant";
+import { Quant } from "./quant";
 import { JSONSchema } from "@textile/threads-database";
 import { PubSub } from "graphql-subscriptions";
-import { QuantRegistry } from "../quant/QuantRegistry";
-import { StopWatch } from "../StopWatch";
+import { QuantRegistry } from "../quant/quantRegistry";
+import { StopWatch } from "../stopWatch";
 let pluralize = require('pluralize');
 
 

@@ -1,5 +1,5 @@
 import {JSONSchema} from "@textile/threads-database";
-import {ModelQuant} from "../data/ModelQuant";
+import {ModelQuant} from "../data/modelQuant";
 
 export const Message: JSONSchema = {
   $id: "https://example.com/message.schema.json",

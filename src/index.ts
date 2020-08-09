@@ -1,4 +1,4 @@
-import {Quantum} from "./Quantum";
+import {Quantum} from "./quantum";
 
 declare global
 {

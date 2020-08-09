@@ -1,4 +1,4 @@
-import { SyncedThread } from "./SyncedThread";
+import { SyncedThread } from "./syncedThread";
 
 type ThreadType = {
   threadName: string;

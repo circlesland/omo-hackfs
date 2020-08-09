@@ -1,11 +1,11 @@
-import { Quant } from "../data/Quant";
-import { Threads } from "../textile/Threads";
-import { Seeder } from "../data/Seeder";
-import { ModelHelper } from "../data/ModelHelper";
-import { SyncedCollection } from "../textile/SyncedCollection";
-import { SyncedThread } from "../textile/SyncedThread";
+import { Quant } from "../data/quant";
+import { Threads } from "../textile/threads";
+import { Seeder } from "../data/seeder";
+import { ModelHelper } from "../data/modelHelper";
+import { SyncedCollection } from "../textile/syncedCollection";
+import { SyncedThread } from "../textile/syncedThread";
 import { Instance } from "@textile/threads-store";
-import {QuantSchema} from "../data/QuantSchema";
+import {QuantSchema} from "../data/quantSchema";
 
 export class QuantRegistry {
   quantThread: SyncedThread;

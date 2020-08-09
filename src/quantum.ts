@@ -1,7 +1,7 @@
-import { Threads } from "./textile/Threads";
-import { QuantRegistry } from "./quant/QuantRegistry";
-import { GraphQL } from "./data/GraphQL";
-import { StopWatch } from "./StopWatch";
+import { Threads } from "./textile/threads";
+import { QuantRegistry } from "./quant/quantRegistry";
+import { GraphQL } from "./data/graphQL";
+import { StopWatch } from "./stopWatch";
 
 export class Quantum {
   readonly graphQL: GraphQL;

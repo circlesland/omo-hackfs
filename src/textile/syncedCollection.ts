@@ -1,10 +1,10 @@
 import { Instance } from "@textile/threads-store";
 import { ICollection } from "./ICollection";
-import { RemoteCollection } from "./RemoteCollection";
-import { LocalCollection } from "./LocalCollection";
+import { RemoteCollection } from "./remoteCollection";
+import { LocalCollection } from "./localCollection";
 import { FilterQuery } from "@textile/hub";
-import { LocalThread } from "./LocalThread";
-import { RemoteThread } from "./RemoteThread";
+import { LocalThread } from "./localThread";
+import { RemoteThread } from "./remoteThread";
 
 export class SyncedCollection<T extends Instance> implements ICollection<T>
 {

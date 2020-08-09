@@ -1,6 +1,6 @@
-import { Quant } from "./Quant";
-import { ModelQuant } from "./ModelQuant";
-import { QuantRegistry } from "../quant/QuantRegistry";
+import { Quant } from "./quant";
+import { ModelQuant } from "./modelQuant";
+import { QuantRegistry } from "../quant/quantRegistry";
 
 export class ModelHelper {
   async getGraphQLResolvers(quantRegistry: QuantRegistry): Promise<any> {

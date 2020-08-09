@@ -2,7 +2,7 @@ import { KeyInfo, JSONSchema, Client, ThreadID } from "@textile/hub";
 import { Instance } from "@textile/threads-store";
 import { GetThreadReply } from "@textile/users-grpc/users_pb";
 import { isString } from "util";
-import { RemoteCollection } from "./RemoteCollection";
+import { RemoteCollection } from "./remoteCollection";
 
 export class RemoteThread {
   private collections: RemoteCollection<Instance>[];

@@ -1,6 +1,6 @@
 import { KeyInfo, Database, JSONSchema } from "@textile/hub";
 import { Instance } from "@textile/threads-store";
-import { LocalCollection } from "./LocalCollection";
+import { LocalCollection } from "./localCollection";
 
 export class LocalThread {
   private database: Database;

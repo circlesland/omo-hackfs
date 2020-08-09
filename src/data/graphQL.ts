@@ -6,12 +6,12 @@ import {
   parse,
   ExecutionResult
 } from "graphql";
-import { Quant } from "./Quant";
-import { QuantRegistry } from "../quant/QuantRegistry";
-import { ModelHelper } from "./ModelHelper";
+import { Quant } from "./quant";
+import { QuantRegistry } from "../quant/quantRegistry";
+import { ModelHelper } from "./modelHelper";
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import Observable from "zen-observable";
-import { StopWatch } from "../StopWatch";
+import { StopWatch } from "../stopWatch";
 
 export class GraphQL {
   private graphQLSchema: GraphQLSchema;

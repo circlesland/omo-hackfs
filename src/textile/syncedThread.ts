@@ -1,7 +1,7 @@
 import { Instance } from "@textile/threads-store";
-import { SyncedCollection } from "./SyncedCollection";
-import { RemoteThread } from "./RemoteThread";
-import { LocalThread } from "./LocalThread";
+import { SyncedCollection } from "./syncedCollection";
+import { RemoteThread } from "./remoteThread";
+import { LocalThread } from "./localThread";
 import { JSONSchema } from "@textile/hub";
 
 export class SyncedThread {
