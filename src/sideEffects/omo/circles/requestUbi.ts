@@ -17,10 +17,29 @@ export const requestUbi: ISideEffect<IProcessContext, any> = {
   }],
   execute: async (context, argument) =>
   {
-    Logger.log(context.local.processNodeId + ":sideEffects:omo.circles.requestUbi", "Sending request for UBI..");
-    const payout = await window.o.circlesCore.token.requestUBIPayout(
-      context.local.inputs["safeOwner"],
-      context.local.inputs["safe"]);
+    // Check the localStorage if the UBI was requested less than 24 hours ago
+    // if not, request it now.
+    const lastRequestDateString = localStorage.getItem("LastUBIRequested");
+    let requestNew = false;
+
+    if (lastRequestDateString)
+    {
+      const lastRequestDate = new Date(parseInt(lastRequestDateString));
+      requestNew = lastRequestDate.getTime() + (24 * 60 * 60 * 1000) < new Date().getTime();
+    }
+
+    if (requestNew)
+    {
+      Logger.log(context.local.processNodeId + ":sideEffects:omo.circles.requestUbi", "Sending request for UBI..");
+
+      const payout = await window.o.circlesCore.token.requestUBIPayout(
+        context.local.inputs["safeOwner"],
+        context.local.inputs["safe"]);
+    }
+    else
+    {
+      Logger.log(context.local.processNodeId + ":sideEffects:omo.circles.requestUbi", "Less than 24h passed by since the last UBI request..");
+    }
     context.local.outputs["void"] = {};
   },
   canExecute: async context => true

@@ -154,19 +154,6 @@ export class ProcessNode<TContext extends IProcessContext>
     }
   }
 
-  static root(node: ProcessNode<IProcessContext>) {
-    const path = ProcessNode.path(node);
-    return path[0];
-  }
-
-  private static visitNode(node, hashMap): ProcessNode<IProcessContext> | null {
-    if (!hashMap[node.id]) {
-      hashMap[node.id] = true;
-      return node;
-    }
-    return null;
-  }
-
   static restoreParentLinks(processNode) {
     let map = {};
     let stack = [processNode];

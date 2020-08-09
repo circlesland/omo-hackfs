@@ -66,6 +66,9 @@
         case "events:omo.shell.notification":
           notify(next.data);
           break;
+        case "events:omo.shell.startBackgroundFlow":
+          throw new Error("Not implemented!");
+          break;
         case "events:omo.shell.navigate":
           navigate(next.data.page);
           break;
@@ -120,6 +123,7 @@
   //@todo listen to changes
 
   $: loggedIn = window.o.odentity.current != null;
+
   // ROUTING
   var routes = [
     { route: "/", quant: OmoHome, authenticate: false },

@@ -107,6 +107,7 @@ dist/*
 
 public/styles.css
 public/bundle.js
+/public/.textile/
 public/.textile
 public/.textileseed
 

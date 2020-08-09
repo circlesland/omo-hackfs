@@ -50,13 +50,14 @@ import { removeAuthProviderSeedPhrase as removeAuthProviderSeedPhraseFlow } from
 import { createDream as createDreamFlow } from "./flows/omo/dreams/createDream";
 import { createOmosapien as createOmosapienFlow } from "./flows/omo/odentity/createOmosapien";
 import { createOmosapienNameOnly as createOmosapienNameOnlyFlow } from "./flows/omo/odentity/createOmosapienNameOnly";
-//import { convertToProduct as convertToProductFlow } from "./flows/omo/dreams/convertToProduct";
 import { startCampaign as startCampaignFlow } from "./flows/omo/dreams/startCampaign";
 import { inviteToDream as inviteToDreamFlow } from "./flows/omo/dreams/inviteToDream";
 import { addReservation as addReservationFlow } from "./flows/omo/dreams/addReservation";
 import { addSubscription as addSubscriptionFlow } from "./flows/omo/dreams/addSubscription";
 import { addCommitment as addCommitmentFlow } from "./flows/omo/dreams/addCommitment";
 import { buyTokens as buyTokensFlow } from "./flows/omo/dreams/buyTokens";
+import { requestUbi as requestUbiFlow } from "./flows/omo/circles/requestUbi";
+//import { convertToProduct as convertToProductFlow } from "./flows/omo/dreams/convertToProduct";
 
 //
 // SideEffects
@@ -73,7 +74,6 @@ import { deployToken as deployTokenSideEffect } from "./sideEffects/omo/safe/dep
 import { deploySafe as deploySafeSideEffect } from "./sideEffects/omo/safe/deploySafe";
 import { createDream as createDreamSideEffect } from "./sideEffects/omo/dreams/createDream";
 import { revokeInitialTrust as revokeInitialTrustSideEffect } from "./sideEffects/omo/circles/revokeInitialTrust";
-//import { convertToProduct as convertToProductSideEffect } from "./sideEffects/omo/dreams/convertToProduct";
 import { startCampaign as startCampaignSideEffect } from "./sideEffects/omo/dreams/startCampaign";
 import { inviteToDream as inviteToDreamSideEffect } from "./sideEffects/omo/dreams/inviteToDream";
 import { createChatRoom as createChatRoomSideEffect } from "./sideEffects/omo/dreams/createChatRoom";
@@ -83,6 +83,8 @@ import { createOmosapien as createOmosapienSideEffect } from "./sideEffects/omo/
 import { connectSafe as connectSafeSideEffect } from "./sideEffects/omo/odentity/connectSafe";
 import { buyTokens as buyTokensSideEffect } from "./sideEffects/omo/dreams/buyTokens";
 import { addCommitment as addCommitmentSideEffect } from "./sideEffects/omo/dreams/addCommitment";
+import { requestUbi as requestUbiSideEffect } from "./sideEffects/omo/circles/requestUbi";
+//import { convertToProduct as convertToProductSideEffect } from "./sideEffects/omo/dreams/convertToProduct";
 
 //
 // Schema
@@ -201,6 +203,10 @@ export function init() {
     "flows:omo.dreams.buyTokens",
     buyTokensFlow
   );
+  w.flowRegistrar.set(
+    "flows:omo.circles.requestUbi",
+    requestUbiFlow
+  );
 
   w.sideEffectRegistrar = new Map();
   [
@@ -225,7 +231,8 @@ export function init() {
     addReservationSideEffect,
     addSubscriptionSideEffect,
     addCommitmentSideEffect,
-    buyTokensSideEffect
+    buyTokensSideEffect,
+    requestUbiSideEffect
   ].forEach((o) => {
     w.sideEffectRegistrar.set(o["_$schemaId"], o);
   });
