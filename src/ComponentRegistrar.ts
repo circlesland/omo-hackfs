@@ -84,6 +84,7 @@ import { createOmosapien as createOmosapienSideEffect } from "./sideEffects/omo/
 import { connectSafe as connectSafeSideEffect } from "./sideEffects/omo/odentity/connectSafe";
 import { buyTokens as buyTokensSideEffect } from "./sideEffects/omo/dreams/buyTokens";
 import { addCommitment as addCommitmentSideEffect } from "./sideEffects/omo/dreams/addCommitment";
+import { checkAuthentification as checkAuthentificationSideEffect } from "./sideEffects/omo/dreams/checkAuthentification";
 
 //
 // Schema
@@ -227,7 +228,8 @@ export function init() {
     addSubscriptionSideEffect,
     addCommitmentSideEffect,
     buyTokensSideEffect,
-    transferCirclesDreamSideEffect
+    transferCirclesDreamSideEffect,
+    checkAuthentificationSideEffect
   ].forEach((o) => {
     w.sideEffectRegistrar.set(o["_$schemaId"], o);
   });

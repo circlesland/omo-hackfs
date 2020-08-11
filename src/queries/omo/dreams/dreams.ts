@@ -3,7 +3,7 @@ import { Dream } from "../../../schema/omo/dreams/dream";
 
 export class Dreams {
   static readonly allFields =
-    "_id name description safeAddress leap city creatorId price subscriptions {_id state creator{ _id name safeAddress odentityId} }";
+    "_id name description safeAddress leap city creatorId price subscriptions {_id state creator{ _id name safeAddress odentityId} } creator{ _id odentityId}";
 
   /**
    * Gets all dreams and optionally filters for the dream-state

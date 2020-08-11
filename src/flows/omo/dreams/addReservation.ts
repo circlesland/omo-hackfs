@@ -10,19 +10,22 @@ export function addReservation(dreamId: string) {
         .mapOutput("stepResult", "yesNo")
         .withQuant("OmoInput") // TODO: Add OmoYesNo
         .withPrompt("Yes/No")
-        .withTitle("Do you want to reservate the Dream with XX% discount?")
+        .withTitle("Do you want to reservate?")
+
+        .step("flows:omo.dreams.addReservation:checkAuthentification")
+        .withQuant("OmoLoading")
+        .withSideEffect("sideEffects:omo.dreams.checkAuthentification")
+        .withStaticInput("dreamId", dreamId)
+        .isNonInteractive()
+        .withTitle("Check verification")
+
 
         .step("flows:omo.dreams.addReservation:transferCircles")
         .withSideEffect("sideEffects:omo.dreams.transferCircles")
         .withStaticInput("dreamId", dreamId)
-
-        // .mapInput("sendingSafeOwner", "currentSafeOwner")
-        // .mapInput("sendingSafeAddress", "currentSafe")
-        // .mapInput("receivingSafeAddress", "receivingSafeAddress")
-        // .mapInput("amount", "amount")
         .withQuant("OmoLoading")
         .isNonInteractive()
-        .withTitle("Review & confirm")
+        .withTitle("transaction pending")
 
         .step("flows:omo.dreams.addReservation:addReservation")
         .withSideEffect("sideEffects:omo.dreams.addReservation")

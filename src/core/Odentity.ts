@@ -48,6 +48,10 @@ export class Odentity {
     return this._instance;
   }
 
+  async getSafe(id: string) {
+    return await this.odentityCollection.findById(id);
+  }
+
   static async createSchemas(threads: Threads): Promise<Odentity> {
     if (this._instance == undefined) {
       var restored = await this.restoreOdentity();
