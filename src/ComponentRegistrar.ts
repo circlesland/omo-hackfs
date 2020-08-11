@@ -31,6 +31,7 @@ import OmoAside from "./quants/2-molecules/OmoAside.svelte";
 import OmoProfilePage from "./quants/2-molecules/OmoProfilePage.svelte";
 import OmoProfile from "./quants/2-molecules/OmoProfile.svelte";
 import OmoLoading from "./quants/2-molecules/OmoLoading.svelte";
+import OmoCRUDTable from "./quants/2-molecules/OmoCRUDTable.svelte";
 
 //
 // Flows
@@ -135,6 +136,7 @@ export function init() {
   w.registrar.set("OmoProfilePage", OmoProfilePage);
   w.registrar.set("OmoAside", OmoAside);
   w.registrar.set("OmoProfile", OmoProfile);
+  w.registrar.set("OmoCRUDTable", OmoCRUDTable);
 
   w.flowRegistrar = new Map();
   w.flowRegistrar.set("flows:omo.safe.giveTrust", giveTrustFlow);

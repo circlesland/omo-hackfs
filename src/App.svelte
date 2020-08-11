@@ -1,4 +1,5 @@
 <script lang="ts">
+  import OmoCRUDTable from "./quants/2-molecules/OmoCRUDTable.svelte";
   import { getRoute, curRoute, navigate, getComponent } from "./Router.ts";
   import { onMount, onDestroy } from "svelte";
   import MagicLogin from "./quants/5-dapps/MagicLogin.svelte";
@@ -31,6 +32,7 @@
   import { Logout } from "./events/omo/shell/logout";
   import { ClosePopup } from "./events/omo/shell/closePopup";
   import { ClearDatabase } from "./events/omo/shell/clearDatabase";
+  import OmoEditor from "./quants/5-dapps/OmoEditor.svelte";
 
   let subscription = null;
   onDestroy(() => {
@@ -127,6 +129,7 @@
     { route: "?page=mamaomo", quant: MamaOmo, authenticate: true },
     { route: "?page=omoauth", quant: OmoAuth, authenticate: false },
     { route: "?page=magicLogin", quant: MagicLogin, authenticate: false },
+    { route: "?page=editor", quant: OmoEditor, authenticate: false },
     {
       route: "?page=odentity",
       quant: Odentity,
