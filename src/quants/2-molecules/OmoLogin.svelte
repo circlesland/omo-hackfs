@@ -63,7 +63,7 @@
       }
 
       try {
-        const omosapien = await Omosapiens.byOdentityId(o.current._id);
+        const omosapien = await Omosapiens.byOdentityId(o.odentity.current._id);
         if (omosapien) {
           o.quantRegistry.syncAllCollections();
           navigate("omosafe");
