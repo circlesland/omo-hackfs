@@ -65,6 +65,7 @@ import { collectStepResult } from "./sideEffects/omo/shell/collectStepResult";
 import { navigate as navigateSideEffect } from "./sideEffects/omo/shell/navigate";
 import { giveTrust as giveTrustSideEffect } from "./sideEffects/omo/safe/giveTrust";
 import { transferCircles as transferCirclesSideEffect } from "./sideEffects/omo/safe/transferCircles";
+import { transferCircles as transferCirclesDreamSideEffect } from "./sideEffects/omo/dreams/transferCircles";
 import { revokeTrust as revokeTrustSideEffect } from "./sideEffects/omo/safe/revokeTrust";
 import { generatePpk as generatePpkSideEffect } from "./sideEffects/omo/web3/generatePpk";
 import { generateSafe as generateSafeSideEffect } from "./sideEffects/omo/circles/generateSafe";
@@ -225,7 +226,8 @@ export function init() {
     addReservationSideEffect,
     addSubscriptionSideEffect,
     addCommitmentSideEffect,
-    buyTokensSideEffect
+    buyTokensSideEffect,
+    transferCirclesDreamSideEffect
   ].forEach((o) => {
     w.sideEffectRegistrar.set(o["_$schemaId"], o);
   });

@@ -1,7 +1,7 @@
 import { ProcessBuilder } from "../../../core/Flows/ProcessBuilder";
 import { IProcessContext } from "../../../core/Flows/IProcessContext";
 
-export function addReservation(dreamId:string) {
+export function addReservation(dreamId: string) {
   return new ProcessBuilder<IProcessContext>("flows:omo.dreams.addReservation")
     .category("Invite someone to dream with you", (build) =>
       build
@@ -12,11 +12,25 @@ export function addReservation(dreamId:string) {
         .withPrompt("Yes/No")
         .withTitle("Do you want to reservate the Dream with XX% discount?")
 
+        .step("flows:omo.dreams.addReservation:transferCircles")
+        .withSideEffect("sideEffects:omo.dreams.transferCircles")
+        .withStaticInput("dreamId", dreamId)
+
+        // .mapInput("sendingSafeOwner", "currentSafeOwner")
+        // .mapInput("sendingSafeAddress", "currentSafe")
+        // .mapInput("receivingSafeAddress", "receivingSafeAddress")
+        // .mapInput("amount", "amount")
+        .withQuant("OmoLoading")
+        .isNonInteractive()
+        .withTitle("Review & confirm")
+
         .step("flows:omo.dreams.addReservation:addReservation")
         .withSideEffect("sideEffects:omo.dreams.addReservation")
         .withStaticInput("dreamId", dreamId)
         .isNonInteractive()
         .withTitle("Creating your reservation..")
+
+
     ).end()
     .build();
 }
