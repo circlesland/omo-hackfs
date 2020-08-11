@@ -8,6 +8,7 @@
   import { Messages as MessageMutations } from "./../../mutations/omo/chat/messages";
   import { observe } from "svelte-observable";
   import { Omosapiens } from "../../queries/omo/odentity/omosapiens";
+  import { loadingSafeDataAsync } from "../../queries/omo/safe/circles.svelte";
 
   export let data;
   let currentRoom = { _id: "" };
@@ -66,13 +67,13 @@
   }
 </style>
 
-<div class="omo-layout">
+<div class="omo-layout bg-gray-100">
   <!-- <OmoIconsFA /> -->
   {#if currentRoom._id != null}
-    <div class="main">
-      <h1 class="text-center p-3 uppercase">
+    <div class="main p-8">
+      <!-- <h1 class="text-center p-3 uppercase">
         {data.dream.name} onboarding chat
-      </h1>
+      </h1> -->
       {#if messages}
         {#await $messages}
           chat is loading
@@ -86,12 +87,14 @@
                 <div class="flex justify-between w-full">
                   <div
                     class="relative flex items-center justify-center w-12 h-12
-                    ml-2 mr-3 text-xl font-semibold text-white bg-blue-500
+                    ml-2 mr-3 text-xl font-semibold text-white bg-primary
                     rounded flex-no-shrink">
-                    <img
-                      class="object-cover w-12 h-12 rounded"
-                      src="https://images.unsplash.com/photo-1589349133269-183a6c90fbfc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=100"
-                      alt="" />
+                    {#await lookupName(message.name) then name}
+                      <img
+                        class="object-cover w-12 h-12 rounded"
+                        src="https://i.pravatar.cc/150?u={name}"
+                        alt="" />
+                    {/await}
                   </div>
                   <div class="items-center flex-1 min-w-0">
                     <div class="flex justify-between">

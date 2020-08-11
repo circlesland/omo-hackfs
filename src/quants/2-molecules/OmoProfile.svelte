@@ -14,7 +14,7 @@
     {
       label: "My Dreams",
       value: 2,
-      icon: "fa-user-ninja"
+      icon: "fa-user-ninja",
     },
     // {
     //   label: "My Organisations",
@@ -26,13 +26,13 @@
     {
       label: "Safe Owners",
       value: 6,
-      icon: "fa-user-shield"
+      icon: "fa-user-shield",
     },
     {
       label: "My Backups",
       value: 7,
-      icon: "fa-database"
-    }
+      icon: "fa-database",
+    },
   ];
 
   let omosapiens = observe(
@@ -62,7 +62,7 @@
 </style>
 
 <section>
-  <aside class="h-full overflow-y-scroll">
+  <aside class="h-full overflow-y-scroll bg-gray-100">
     <OmoNavTabs bind:activeTabValue={currentTab} items={tabItems} />
   </aside>
 
@@ -76,9 +76,8 @@
           {#each omosapiens as omo}{omo.name}{/each}
         {/await}
       </h1>
-      this is your omo sapiens profile
+      this is your omo sapiens profile, more profile options coming soon
       <br />
-      (WIP: more options coming soon)
     {/if}
 
     {#if 2 === currentTab}

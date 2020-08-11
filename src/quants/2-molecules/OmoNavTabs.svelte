@@ -1,5 +1,5 @@
 <script>
-  import {onMount} from "svelte";
+  import { onMount } from "svelte";
 
   export let items = [];
   export let activeTabValue;
@@ -11,7 +11,7 @@
     }
   });
 
-  const handleClick = tabValue => () => (activeTabValue = tabValue);
+  const handleClick = (tabValue) => () => (activeTabValue = tabValue);
 </script>
 
 <style>
@@ -20,7 +20,7 @@
   }
 </style>
 
-<div class="min-h-full flex w-full max-w-xs p-4 bg-gray-100 overflow-y-scroll">
+<div class="min-h-full flex w-full max-w-xs p-4 overflow-y-scroll">
   <ul class="flex flex-col w-full">
     <!-- <li class="my-px">
           <span
@@ -31,11 +31,11 @@
     {#if Array.isArray(items)}
       {#each items as item}
         <li
-                on:click={handleClick(item.value)}
-                class="flex flex-row items-center h-12 px-4 text-gray-600
+          on:click={handleClick(item.value)}
+          class="flex flex-row items-center h-12 px-4 text-gray-600
           hover:bg-white hover:border-2 hover:border-gray-300 my-px {activeTabValue === item.value ? 'active' : ''}">
           <span class="flex items-center justify-center text-lg text-gray-400">
-            <i class="text-lg fas {item.icon}"/>
+            <i class="text-lg fas {item.icon}" />
           </span>
           <span class="ml-3">{item.label}</span>
         </li>

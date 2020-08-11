@@ -18,14 +18,16 @@
   // getSafe();
 </script>
 
-<section class="bg-white py-4 font-sans">
+<section class="bg-gray-100 py-4 font-sans">
   <section class="relative py-16">
     <div class="container mx-auto px-20">
       <div
-        class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6
+        class=" relative flex flex-col min-w-0 break-words bg-white w-full mb-6
         shadow-xl rounded-lg -mt-40">
-        <OmoCirclesBalance
-          data={{ safeAddress: data.safeAddress, safeData: data.safeData }} />
+        <div class="bg-gray-200 py-6">
+          <OmoCirclesBalance
+            data={{ safeAddress: data.safeAddress, safeData: data.safeData }} />
+        </div>
         <!-- <div class="w-full px-6 bg-primary text-white">
           <div class="flex py-4 flex-wrap justify-center lg:pt-4 pt-8">
             <div class="mr-4 p-3 text-center">

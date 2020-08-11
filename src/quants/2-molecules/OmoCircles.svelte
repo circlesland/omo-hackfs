@@ -88,7 +88,7 @@
 </style>
 
 <section>
-  <aside class="h-full overflow-y-scroll">
+  <aside class="h-full overflow-y-scroll bg-gray-100">
     <OmoNavTabs bind:activeTabValue={currentTab} items={tabItems} />
   </aside>
   <main class="h-full w-full md:w-5/6 mx-auto overflow-y-scroll">

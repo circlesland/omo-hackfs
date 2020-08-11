@@ -20,7 +20,7 @@
   ];
 </script>
 
-<section class="flex justify-center flex-col text-center bg-gray-200">
+<section class="flex justify-center flex-col bg-white">
   {#if data != null}
     {#if 1 === subTab}
       <div class="py-6 px-8 text-md mt-6">

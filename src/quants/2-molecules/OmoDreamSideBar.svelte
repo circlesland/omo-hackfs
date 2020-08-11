@@ -4,20 +4,20 @@
   export let subTab;
   let tabItems = [
     {
-      label: "My transactions",
+      label: "Dream Transactions",
       value: 1,
       icon: "fa-exchange-alt",
       category: "general",
     },
     { label: "Token", value: 3, icon: "fa-coins" },
     {
-      label: "Trust I receive",
+      label: "Trust dream receives",
       value: 4,
       icon: "fa-user-astronaut",
       category: "general",
     },
     {
-      label: "Trust I give",
+      label: "Trust dream gives",
       value: 5,
       icon: "fa-user-ninja",
       category: "general",

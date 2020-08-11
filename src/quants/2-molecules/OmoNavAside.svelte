@@ -22,7 +22,7 @@
       <li>
         <button
           on:click={handleClick(i)}
-          class="{item.design} h-12 px-6 flex justify-center items-center w-full
+          class="{item.design} h-12 w-12 px-6 flex justify-center items-center
           hover:bg-primary hover:text-white"
           class:active={current == i}>
           <i class="text-lg fas {item.icon}" />
