@@ -329,8 +329,8 @@
 <style>
   .omo-layout {
     display: grid;
-    grid-template-areas: "top top nav-right" "content-left content-right nav-right";
-    grid-template-columns: 1fr 24rem 3rem;
+    grid-template-areas: "nav top top" "nav content-left content-right";
+    grid-template-columns: 3rem 1fr 24rem;
     grid-template-rows: 1rem 1fr;
     overflow: hidden;
   }
@@ -355,8 +355,8 @@
     grid-template-rows: 18rem 1fr;
   }
 
-  .nav-right {
-    grid-area: nav-right;
+  .nav {
+    grid-area: nav;
     height: 100%;
   }
 </style>
@@ -366,9 +366,16 @@
 {:then data}
   <OmoIconsFA />
   <div class="omo-layout">
+    <div class="nav">
+      <OmoNavAside
+        dreamId={data.dream._id}
+        items={JSON.stringify(items)}
+        bind:current={activeTabValue} />
+    </div>
+
     <div class="top bg-gray-200 w-full">
       <div class="relative">
-        <div class="overflow-hidden h-4 text-xs flex bg-dark">
+        <div class="overflow-hidden h-4 text-xs flex bg-primary">
           <div
             style="width: 33%"
             class="shadow-none flex flex-col text-center whitespace-nowrap
@@ -377,7 +384,7 @@
       </div>
     </div>
 
-    <div class="content-left bg-gray-100">
+    <div class="content-left">
       <svelte:component this={contentLeft} {data} bind:subTab />
     </div>
 
@@ -385,12 +392,6 @@
       <svelte:component this={contentRight} {data} bind:subTab />
     </div>
 
-    <div class="nav-right">
-      <OmoNavAside
-        dreamId={data.dream._id}
-        items={JSON.stringify(items)}
-        bind:current={activeTabValue} />
-    </div>
   </div>
 
 {/await}
