@@ -24,11 +24,8 @@
       <div
         class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6
         shadow-xl rounded-lg -mt-40">
-        <!-- {#await safe}
-          safe loading
-        {:then safe}
-          <OmoCirclesBalance data={safe} />
-        {/await} -->
+        <OmoCirclesBalance
+          data={{ safeAddress: data.safeAddress, safeData: data.safeData }} />
         <!-- <div class="w-full px-6 bg-primary text-white">
           <div class="flex py-4 flex-wrap justify-center lg:pt-4 pt-8">
             <div class="mr-4 p-3 text-center">
