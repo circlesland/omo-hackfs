@@ -10,10 +10,17 @@
   import OmoDreamFollower from "./OmoDreamFollower.svelte";
   import { afterUpdate, beforeUpdate } from "svelte";
   import OmoDreamChatParticipants from "./OmoDreamChatParticipants.svelte";
+  import OmoDreamSideBar from "./OmoDreamSideBar.svelte";
+  import OmoDreamSafe from "./OmoDreamSafe.svelte";
+  import {
+    loadingSafeDataAsync,
+    loadingTransferDataAsync,
+  } from "./../../queries/omo/safe/circles";
 
   // TODO: Realtime updates of new subscriptions
   let dreamId;
   export let activeTabValue = 0;
+  export let subTab = 0;
   let items = [
     // {
     //   icon: "fa-users",
@@ -30,6 +37,13 @@
       design: "text-white bg-blue-600",
       left: OmoDreamChat,
       right: OmoDreamChatParticipants,
+    },
+    {
+      icon: "fa-user-shield",
+      text: "dapps",
+      design: "text-white bg-blue-600",
+      left: OmoDreamSafe,
+      right: OmoDreamSideBar,
     },
     // {
     //   icon: "fa-bell",
@@ -237,12 +251,19 @@
           right: OmoDreamFollower,
         },
         {
+          icon: "fa-user-shield",
+          text: "dapps",
+          design: "text-white bg-blue-600",
+          left: OmoDreamSafe,
+          right: OmoDreamSideBar,
+        },
+        {
           icon: "fa-comments",
           text: "messages",
           link: "javascript:navigate('omochat')",
           design: "text-white bg-blue-600",
           left: OmoDreamChat,
-          right: OmoDreamFollower,
+          right: OmoDreamChatParticipants,
         },
       ];
     }
@@ -290,6 +311,12 @@
       dream: d.data.DreamById,
       subscriptions: subscriptions,
     };
+
+    let safeAddress = returnValue.dream.safeAddress.toLowerCase();
+
+    returnValue.safeData = await loadingSafeDataAsync(safeAddress);
+    returnValue.transferData = await loadingTransferDataAsync(safeAddress);
+    returnValue.safeAddress = safeAddress;
 
     return returnValue;
   }
@@ -351,11 +378,11 @@
     </div>
 
     <div class="content-left bg-gray-100">
-      <svelte:component this={contentLeft} {data} />
+      <svelte:component this={contentLeft} {data} bind:subTab />
     </div>
 
     <div class="content-right bg-gray-200 py-6 px-8">
-      <svelte:component this={contentRight} {data} />
+      <svelte:component this={contentRight} {data} bind:subTab />
     </div>
 
     <div class="nav-right">
