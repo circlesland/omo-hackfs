@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from "svelte";
+  import {onMount} from "svelte";
   import mocker from "mocker-data-generator";
   import OmoNavTabs from "./../2-molecules/OmoNavTabs";
   import OmoGridVoting from "./../2-molecules/OmoGridVoting";
@@ -9,18 +9,27 @@
   import OmoGridProducts from "./../2-molecules/OmoGridProducts";
   import OmoCarousel from "./../2-molecules/OmoCarousel";
   import OmoHero from "./../2-molecules/OmoHero";
+  import OmoGridMarket from "../2-molecules/OmoGridMarket.svelte";
 
   //Tabs
   let currentTab;
 
   let tabItems = [
-    { label: "Dreams", value: 1, icon: "fa-lightbulb" },
+    {
+      label: "Dreams",
+      value: 1,
+      icon: "fa-lightbulb"
+    },
     {
       label: "Reservate",
       value: 2,
       icon: "fa-ticket-alt"
     },
-    { label: "Pre-Order", value: 3, icon: "fa-shopping-cart" },
+    {
+      label: "Pre-Order",
+      value: 3,
+      icon: "fa-shopping-cart"
+    },
     {
       label: "Buy Token",
       value: 4,
@@ -30,40 +39,7 @@
     //{ label: "Cities", value: 6, icon: "fa-city" }
   ];
 
-  $: countries = [];
-  $: cities = [];
-  $: industries = [];
-  $: isLeap = [1, 2, 3, 4].find(o => o == currentTab);
-
-  var schemaCountry = {
-    name: {
-      faker: "address.country"
-    }
-  };
-
-  var schemaCity = {
-    name: {
-      faker: "address.city"
-    }
-  };
-
-  var schemaIndustry = {
-    name: {
-      values: ["---"]
-    }
-  };
-
   onMount(async () => {
-    mocker()
-      .schema("countries", schemaCountry, 5)
-      .schema("cities", schemaCity, 7)
-      .schema("industries", schemaIndustry, 8)
-      .build()
-      .then(data => {
-        countries = data.countries;
-        cities = data.cities;
-        industries = data.industries;
-      });
   });
 
   // const herodreams = {
@@ -98,27 +74,6 @@
     <OmoNavTabs bind:activeTabValue={currentTab} items={tabItems} />
   </aside>
   <main class="h-full overflow-y-scroll">
-    {#if isLeap}
-      <!--<OmoCarousel />-->
-      <!-- <OmoHero data={herodreams} /> -->
-      <OmoGridDreams leap={currentTab} />
-    {/if}
-    <!--
-    {#if 2 === currentTab}
-      <OmoGridPreOrders />
-    {/if}
-    {#if 3 === currentTab}
-      <OmoGridProducts />
-    {/if}
-    {#if 4 === currentTab}
-      <OmoGridVoting />
-    {/if}
-    -->
-    {#if 5 === currentTab}
-      <OmoGridOrgas />
-    {/if}
-    {#if 6 === currentTab}
-      <OmoGridOrgas />
-    {/if}
+      <OmoGridMarket category={currentTab} />
   </main>
 </section>
