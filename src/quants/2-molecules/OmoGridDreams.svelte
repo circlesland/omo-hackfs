@@ -27,7 +27,7 @@
         {:else if leap == '2'}
           <OmoCardPreOrder {data} />
         {:else if leap == '3'}
-          {JSON.stringify(data)}
+          <OmoCardPreOrder {data} />
         {:else if leap == '4'}{JSON.stringify(data)}{/if}
       {/each}
     {/await}
