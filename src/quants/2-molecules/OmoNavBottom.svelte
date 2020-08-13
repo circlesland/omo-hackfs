@@ -61,7 +61,7 @@
     {
       icon: "fa-users",
       text: "Dreams",
-      link: () => window.navigate("omomarket"),
+      link: () => window.navigate("omodreams"),
       design: "text-secondary hover:bg-white"
     },
     {

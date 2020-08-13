@@ -35,13 +35,13 @@
       }
 
       if (o.odentity._current.circleSafe) {
-        navigate("omomarket");
+        navigate("omodreams");
       } else {
         o.publishShellEventAsync(
           new StartFlow("flows:omo.odentity.createOmosapien")
         );
       }
-      // navigate("omomarket");
+      // navigate("omodreams");
     });
     o.quantRegistry.syncAllCollections();
   }
@@ -78,7 +78,7 @@
         );
       }
       o.quantRegistry.syncAllCollections();
-      // navigate("omomarket");
+      // navigate("omodreams");
     });
   }
 

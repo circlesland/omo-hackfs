@@ -190,7 +190,7 @@
     { route: "?page=omofunding", quant: OmoFunding, authenticate: true },
     { route: "?page=omoorgas", quant: OmoOrgas, authenticate: true },
     {
-      route: "?page=omomarket",
+      route: "?page=omodreams",
       quant: OmoMarket,
       authenticate: true,
       actions: [
@@ -231,6 +231,13 @@
           title: "Create new dream",
           event: () => new StartFlow("flows:omo.dreams.createDream"),
         },
+      ],
+    },
+    {
+      route: "?page=omomarket",
+      quant: OmoMarket,
+      authenticate: true,
+      actions: [
       ],
     },
     {
