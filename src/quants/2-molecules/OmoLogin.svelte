@@ -35,13 +35,13 @@
       }
 
       if (o.odentity._current.circleSafe) {
-        navigate("omomarket");
+        navigate("omodreams");
       } else {
         o.publishShellEventAsync(
           new StartFlow("flows:omo.odentity.createOmosapien")
         );
       }
-      // navigate("omomarket");
+      // navigate("omodreams");
     });
     o.quantRegistry.syncAllCollections();
   }
@@ -63,7 +63,7 @@
       }
 
       try {
-        const omosapien = await Omosapiens.byOdentityId(o.current._id);
+        const omosapien = await Omosapiens.byOdentityId(o.odentity.current._id);
         if (omosapien) {
           o.quantRegistry.syncAllCollections();
           navigate("omosafe");
@@ -78,7 +78,7 @@
         );
       }
       o.quantRegistry.syncAllCollections();
-      // navigate("omomarket");
+      // navigate("omodreams");
     });
   }
 

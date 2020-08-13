@@ -7,6 +7,7 @@ import { Safe } from "../../schema/omo/safe/safe";
 import { Vote } from "../../schema/omo/dreams/vote";
 import { Stream } from "../../schema/omo/dreams/stream";
 import { Location } from "../../schema/omo/dreams/location";
+import {Product} from "../../schema/omo/dreams/product";
 
 export interface SeedQuant {
   name: string,
@@ -62,6 +63,11 @@ const seeds: Seed[] = [{
       {
         name: "Location",
         schema: Location,
+        data: []
+      },
+      {
+        name: "Product",
+        schema: Product,
         data: []
       }
     ]

@@ -72,7 +72,7 @@ export function createOmosapien() {
 
         .step("flows:omo.odentity.createOmosapien:navigate")
         .withSideEffect("sideEffects:omo.shell.navigate")
-        .withStaticInput("page", "omomarket")
+        .withStaticInput("page", "omodreams")
         .withTitle("Finish process");
     })
     .end()

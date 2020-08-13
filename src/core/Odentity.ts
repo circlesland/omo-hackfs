@@ -76,7 +76,7 @@ export class Odentity {
   }
 
   async login(reference: string, type: string, callback: any) {
-    var odentityProvider = await this.createOdentityProviderIfNotExist(reference, "email");
+    var odentityProvider = await this.createOdentityProviderIfNotExist(reference, type);
     var request = await this.createLoginRequest(odentityProvider);
     var provider: IdentityProviderInterface = new this.provider[type]();
     var odentity = await provider.login(request, odentityProvider);

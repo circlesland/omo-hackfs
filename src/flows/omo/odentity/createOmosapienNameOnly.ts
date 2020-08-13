@@ -20,7 +20,7 @@ export function createOmosapienNameOnly() {
 
         .step("flows:omo.odentity.createOmosapienNameOnly:navigate")
         .withSideEffect("sideEffects:omo.shell.navigate")
-        .withStaticInput("page", "omomarket")
+        .withStaticInput("page", "omodreams")
         .withTitle("Finish process")
     })
     .end()
