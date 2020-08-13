@@ -16,9 +16,9 @@ export class Products {
           throw new o.error;
 
         let allProducts = o.data.Products;
-        if (category) {
+        /*if (category) {
           allProducts = allProducts.filter(o => o.category == category);
-        }
+        }*/
         s.next(allProducts);
       });
     });

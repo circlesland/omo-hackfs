@@ -238,6 +238,10 @@
       quant: OmoMarket,
       authenticate: true,
       actions: [
+        {
+          title: "Create product",
+          event: () => new StartFlow("flows:omo.dreams.createProduct")
+        }
       ],
     },
     {
